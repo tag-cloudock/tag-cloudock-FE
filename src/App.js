@@ -11,8 +11,9 @@ import SignUp from "./component/page/SignUp";
 import Chat from "./component/page/Chat";
 import InChat from "./component/page/InChat";
 const MainLayout = styled.div`
-  min-height: 1000px;
-  background: #eeeeee;
+  min-height: 2000px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
 `;
 function App() {
   return ( 
