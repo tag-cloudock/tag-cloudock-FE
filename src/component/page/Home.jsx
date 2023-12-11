@@ -1,6 +1,9 @@
+import MenuBar from "../layout/MenuBar";
 const Home = () => {
     return (
-        <div>Home</div>
+      <div>
+        <MenuBar></MenuBar>
+      </div>
     );
   };
 
