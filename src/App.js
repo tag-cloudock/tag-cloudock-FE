@@ -11,8 +11,8 @@ import SignUp from "./component/page/SignUp";
 import Chat from "./component/page/Chat";
 import InChat from "./component/page/InChat";
 const MainLayout = styled.div`
-  min-height: 2000px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  /* min-height: 1000px; */
+  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
 
 `;
 function App() {
@@ -29,7 +29,7 @@ function App() {
           <Route path="/signin" Component={SignIn} />
           <Route path="/signup" Component={SignUp} />
           <Route path="/chat" Component={Chat} />
-          <Route path="/chat/:id" Component={InChat} />
+          <Route path="/chat/:metype/:id/:other" Component={InChat} />
         </Routes>
       </BrowserRouter>
     </MainLayout>
