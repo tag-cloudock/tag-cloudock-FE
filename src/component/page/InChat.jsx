@@ -6,8 +6,8 @@ import axios from "axios";
 import Header from "../layout/Header";
 
 const MessagesBox = styled.ul`
-  position: absolute;
-  bottom: 0;
+  /* height: 1000px; */
+  /* margin: 100px 0px; */
   @media screen and (min-width: 1001px) {
     margin: 0px auto;
     max-width: 1001px;
@@ -76,9 +76,14 @@ const SendBtn = styled.button`
    height: 40px;
    background: none;
    border: none;
-   & img{
-     width: 30px;
-   }
+   width: 15%;
+   border-radius: 13px;
+   border: 1px solid #cccccc;
+   color:#4784ffe9;
+   font-weight: 500;
+   /* & img{
+     width: 20px;
+   } */
 `;
 
 const BottomPoint = styled.div`
@@ -150,7 +155,7 @@ const InChat = () => {
   };
 
   useEffect(() => {
-    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current.scrollIntoView();
   }, [messageList]);
   
   useEffect(() => {
@@ -206,7 +211,8 @@ const InChat = () => {
           ref={inputMessageRef}
           ></InputBox>
             <SendBtn onClick={sendMessage}>
-                <img src="/image/send.png" alt="" />    
+                SEND
+                {/* <img src="/image/send.png" alt="" />     */}
             </SendBtn>
         </MessageInputBox>
       </div>
