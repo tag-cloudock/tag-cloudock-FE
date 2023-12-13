@@ -3,13 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderBox = styled.div`
-  z-index: 1;
+  z-index: 2;
   background: #ffffff;
   position: fixed;
   left: 0;
   right: 0;
-  height: 50px;
-  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+  height: 70px;
+  box-shadow: rgba(113, 113, 113, 0.2) 0px 10px 10px -10px;
   @media screen and (min-width: 1001px) {
     margin: 0px auto;
     max-width: 1001px;
@@ -17,13 +17,15 @@ const HeaderBox = styled.div`
 `;
 
 const EmptyBox = styled.div`
-  height: 50px;
+  height: 70px;
 `;
 
 const HeaderText = styled.span`
+  display: inline-block;
   padding-left: 20px;
-  height: 50px;
-  line-height: 50px;
+  padding-top: 30px;
+  /* height: 70px; */
+  /* line-height: 70px; */
   color: #707070;
   font-weight: 700;
   font-size: 20px;
@@ -36,7 +38,7 @@ const HeaderOtherUser = styled.span`
   width: 80%;
   height: 50px;
   line-height: 50px;
-  color: #707070;
+  color: #9d9d9d;
   font-weight: 700;
   font-size: 20px;
 `;
@@ -44,8 +46,8 @@ const HeaderOtherUser = styled.span`
 const HeaderBackBtn = styled.button`
   width: 10%;
   /* padding-left: 20px; */
-  height: 50px;
-  line-height: 50px;
+  height: 70px;
+  line-height: 70px;
   color: #707070;
   font-weight: 700;
   font-size: 20px;
@@ -53,22 +55,25 @@ const HeaderBackBtn = styled.button`
   border: none;
 `;
 
-const ChatBtn = styled.button`
+const ChatBtn = styled.div`
   position: relative;
   float: right;
-  margin-top: 3px;
+  margin-top: 27px;
   margin-right: 20px;
-  height: 50px;
   background: none;
   border: none;
+  & a{
+    display: inline-block;
+  }
 `;
 
 const NewMsgCircle= styled.div`
   position: absolute;
-  left: 15px;
+  top: -2px;
+  left: 23px;
   float: right;
-  width: 15px;
-  height: 15px;
+  width: 8px;
+  height: 8px;
   background: #8CB3FF;
   border-radius: 15px;
 
@@ -137,10 +142,11 @@ const Header = ({headerType, headerText, otherUserNickname}) => {
         return (
           <div>
             <HeaderBox>
-            <HeaderBackBtn onClick={handleGoBack}>{headerText}</HeaderBackBtn>
+            <HeaderBackBtn onClick={handleGoBack}><img src="image/go_back.png"></img></HeaderBackBtn>
             <HeaderOtherUser>{otherUserNickname}</HeaderOtherUser>
           </HeaderBox>
           <EmptyBox></EmptyBox>
+          
           </div>
           
         );

@@ -6,12 +6,14 @@ const MenuBarBox = styled.div`
   @media screen and (max-width: 1000px) {
     justify-content: space-between;
     position: fixed;
-    bottom: 0;
+    margin: 0 auto;
+    bottom: 15px;
+    width: 90%;
     left: 0; 
     right: 0;
-    border-radius: 20px 20px 0px 0px;
-    height: 75px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 0px 24px;
+    border-radius: 30px 30px 30px 30px;
+    height: 65px;
+    box-shadow: rgba(149, 157, 165, 0.3) 0px 0px 20px;
   }
   @media screen and (min-width: 1001px) {
     flex-direction: column;
@@ -20,7 +22,7 @@ const MenuBarBox = styled.div`
     float:left;
     margin-left: -100px;
     margin-top: 50px;
-    width: 75px;
+    width: 65px;
     height: 500px;
     border-radius: 20px 20px 20px 20px;
     background: #ffffff;

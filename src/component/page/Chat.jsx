@@ -12,17 +12,51 @@ const ChatRoom = styled.li`
   line-height: 23px;
   border-bottom: 1px solid #eeeeee;
   list-style: none;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const UserImg = styled.a`
+  display: block;
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+  border: 1px solid #dddddd;
+  margin-right: 10px;
+
+  text-align: center;
+  line-height: 50px;
+  font-weight: bold;
+  color: #dddddd;
+
+`;
+const ChatRoomContent = styled.div`
+  flex: 1;
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden;
+  & span{
+    overflow: hidden;
+    text-overflow: ellipsis; 
+  }
+  
+`;
+const PostImg = styled.div`
+  height: 50px;
+  width: 50px;
+  margin-left: 10px;
+  border-radius: 10px;
+  background: #eeeeee;
 `;
 const NickName = styled.span`
   font-weight: 800;
-  color: #555555;
+  color: #777777;
 `;
 const LastMessageTime = styled.span`
   color: #aaaaaa;
   font-size: 13px;
 `;
 const LastMessage = styled.span`
-  /* font-weight: 800; */
+  display: block;
   color : #000000;
 `;
 
@@ -61,11 +95,15 @@ const Chat = () => {
         <Header headerType={"chat"} headerText={"채팅"}></Header>
         <ul>
           {chatRoomList.map((chatRoom) => (
-            <Link to={"/chat/"+(chatRoom.userType == "BORROWER" ? 'b' : 'l')+"/"+chatRoom.roomId+"/"+(chatRoom.userType == "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)}>
+            <Link to={"/chat/"+(chatRoom.userType == "BORROWER" ? 'b' : 'l')+"/"+chatRoom.roomId+"/"+(chatRoom.userType == "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)} state={{ postId:chatRoom.postId }}>
               <ChatRoom key={chatRoom.id}>
+                <Link to={"/signin"}><UserImg href="/signin">아.어?</UserImg></Link>
+                <ChatRoomContent>
                 <NickName>{chatRoom.userType == "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname}</NickName>
                 <LastMessageTime>{chatRoom.lastMessage != "no message" ? " "+chatRoom.lastMessageTime[3]+"시 "+chatRoom.lastMessageTime[4]+"분" : ""}</LastMessageTime><br></br>
                 <LastMessage>{chatRoom.lastMessage != "no message" ? chatRoom.lastMessage : "채팅이 시작되었습니다!"}</LastMessage>
+                </ChatRoomContent>
+                <Link to={"/signin"}><PostImg></PostImg></Link>
               </ChatRoom>
             </Link>
           ))}
