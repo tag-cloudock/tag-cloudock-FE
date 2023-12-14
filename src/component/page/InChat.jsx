@@ -4,6 +4,15 @@ import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import axios from "axios";
 import Header from "../layout/Header";
+import Loading from "../layout/Loading";
+
+const DurationText = styled.span`
+  color:#aaaaaa;
+`;
+
+const DurationDate = styled.span`
+  color:#457be8;
+`;
 
 const PostImg = styled.div`
   margin: 10px 10px;
@@ -114,6 +123,9 @@ const InputBox = styled.input`
         font-size: 18px;
     }
 `;
+const EmptyBox = styled.div`
+  height: 70px;
+`;
 
 const SendBtn = styled.button`
    margin: 10px 10px 0px 0px;
@@ -148,10 +160,35 @@ const InChat = () => {
   const navigate = useNavigate();
   const ws = useRef(null);
   const [inputMessage, setInputMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+
 
   const [postInfo, setPostInfo] = useState({needAt: [], returnAt:[]});
 
   useEffect(() => {
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [messageList]);
+  
+  useEffect(() => {
+    setLoading(true);
+    const fetchMessages = async () => {
+      try {
+        if (!cookies.token) {
+          navigate("/signin");
+          return;
+        }
+        const response = await axios.get("http://127.0.0.1:8080/chat/message/"+id, {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        });
+        console.log(response.data);
+
+        setMessageList(response.data);
+      } catch (error) {
+        console.error("오류 발생:", error);
+      }
+    };
     const fetchPostInfo = async () => {
       try {
         if (!cookies.token) {
@@ -171,8 +208,11 @@ const InChat = () => {
         console.error("오류 발생:", error);
       }
     };
+    fetchMessages();
     fetchPostInfo();
-  }, );
+    // setLoading(false); 
+  }, []); 
+
 
   useEffect(() => {
     
@@ -238,33 +278,6 @@ const InChat = () => {
     inputMessageRef.current.focus();
   };
 
-  useEffect(() => {
-    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [messageList]);
-  
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        if (!cookies.token) {
-          navigate("/signin");
-          return;
-        }
-        const response = await axios.get("http://127.0.0.1:8080/chat/message/"+id, {
-          headers: {
-            Authorization: `Bearer ${cookies.token}`,
-          },
-        });
-        console.log(response.data);
-
-        setMessageList(response.data);
-      } catch (error) {
-        console.error("오류 발생:", error);
-      }
-    };
-
-    fetchMessages();
-  }, []); 
-
   const activeEnter = (event) => {
     if (event.code === 'Enter') {
       sendMessage();
@@ -277,9 +290,10 @@ const InChat = () => {
           <PostInfo>
               <PostImg></PostImg>
               <PostTitle>{postInfo.title}</PostTitle>
-              <PostDuration>{postInfo.needAt[1]}월{postInfo.needAt[2]}일 - {postInfo.returnAt[1]}월{postInfo.returnAt[2]}일</PostDuration>
+              <PostDuration>  <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText></PostDuration>
           </PostInfo>
         </Link>
+        <EmptyBox></EmptyBox>
         <MessagesBox>
           {messageList.map((message) => (
             <MessageBlock isMe={(message.userType === "BORROWER" && metype === "b")||(message.userType === "LENDER" && metype === "l")}>
@@ -301,6 +315,7 @@ const InChat = () => {
           onKeyDown={(e) => {activeEnter(e)}}
           ref={inputMessageRef}
           ></InputBox>
+          {loading ? <Loading /> : null}
             <SendBtn onClick={sendMessage} isNoText={inputMessage < 1}>
                 SEND
                 {/* <img src="/image/send.png" alt="" />     */}

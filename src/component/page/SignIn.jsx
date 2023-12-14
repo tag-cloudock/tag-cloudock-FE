@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import axios from "axios";
 import moment from "moment";
+import Footer from "../layout/Footer";
 
 const LoginBox = styled.div`
     margin: 100px auto;
@@ -55,12 +56,7 @@ const InputBox = styled.input`
     font-size: 18px; 
     outline: none;
     padding-left: 20px;
-    @media screen and (max-width: 1000px) {
-      width: 70%;
-    }
-    @media screen and (min-width: 1001px) {
-      width: 60%;
-    }
+    width: 300px;
     &::placeholder {
         color: #aaaaaa; 
     /* font-style: italic;  */
@@ -80,12 +76,7 @@ const SubmitBtn = styled.button`
     color:#ffffff;
     font-size: 18px; 
     outline: none;
-    @media screen and (max-width: 1000px) {
-      width: 70%;
-    }
-    @media screen and (min-width: 1001px) {
-      width: 60%;
-    }
+    width: 320px;
     &::placeholder {
         color: #aaaaaa; 
     /* font-style: italic;  */
@@ -160,6 +151,9 @@ const SignIn = () => {
     }
   };
   return (
+      <div>
+
+      
       <LoginBox>
         <Title>아.어?</Title>
         <InputBox
@@ -186,6 +180,8 @@ const SignIn = () => {
           <ForgotPassword>비밀 번호를 잊으셨나요?</ForgotPassword>
           <GoToSignUp>회원가입</GoToSignUp>
       </LoginBox>
+      <Footer></Footer>
+      </div>
   );
 };
 

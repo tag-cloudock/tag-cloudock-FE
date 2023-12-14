@@ -97,13 +97,13 @@ const Chat = () => {
           {chatRoomList.map((chatRoom) => (
             <Link to={"/chat/"+(chatRoom.userType == "BORROWER" ? 'b' : 'l')+"/"+chatRoom.roomId+"/"+(chatRoom.userType == "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)} state={{ postId:chatRoom.postId }}>
               <ChatRoom key={chatRoom.id}>
-                <Link to={"/signin"}><UserImg href="/signin">아.어?</UserImg></Link>
+                <Link to={"/"}><UserImg>아.어?</UserImg></Link>
                 <ChatRoomContent>
                 <NickName>{chatRoom.userType == "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname}</NickName>
                 <LastMessageTime>{chatRoom.lastMessage != "no message" ? " "+chatRoom.lastMessageTime[3]+"시 "+chatRoom.lastMessageTime[4]+"분" : ""}</LastMessageTime><br></br>
                 <LastMessage>{chatRoom.lastMessage != "no message" ? chatRoom.lastMessage : "채팅이 시작되었습니다!"}</LastMessage>
                 </ChatRoomContent>
-                <Link to={"/signin"}><PostImg></PostImg></Link>
+                <Link to={"/"}><PostImg></PostImg></Link>
               </ChatRoom>
             </Link>
           ))}

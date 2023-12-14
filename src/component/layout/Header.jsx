@@ -37,10 +37,11 @@ const HeaderOtherUser = styled.span`
   /* float: right; */
   width: 80%;
   height: 50px;
-  line-height: 50px;
+  /* line-height: 50px; */
   color: #9d9d9d;
   font-weight: 700;
   font-size: 20px;
+  margin-top: 30px;
 `;
 
 const HeaderBackBtn = styled.button`
@@ -53,6 +54,11 @@ const HeaderBackBtn = styled.button`
   font-size: 20px;
   background: none;
   border: none;
+  float: left;
+  & img{
+    margin-top: 20px;
+    /* height: 50px; */
+  }
 `;
 
 const ChatBtn = styled.div`
@@ -142,7 +148,7 @@ const Header = ({headerType, headerText, otherUserNickname}) => {
         return (
           <div>
             <HeaderBox>
-            <HeaderBackBtn onClick={handleGoBack}><img src="image/go_back.png"></img></HeaderBackBtn>
+            <HeaderBackBtn onClick={handleGoBack}><img src="/image/go_back.png" alt="" /></HeaderBackBtn>
             <HeaderOtherUser>{otherUserNickname}</HeaderOtherUser>
           </HeaderBox>
           <EmptyBox></EmptyBox>

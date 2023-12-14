@@ -10,6 +10,7 @@ import SignIn from "./component/page/SignIn";
 import SignUp from "./component/page/SignUp";
 import Chat from "./component/page/Chat";
 import InChat from "./component/page/InChat";
+import Admin from "./component/page/Admin";
 const MainLayout = styled.div`
   /* min-height: 1000px; */
   /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
@@ -21,6 +22,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" Component={Home} />
+          <Route path="/admin" Component={Admin} />
           <Route path="/user" Component={User} />
           <Route path="/post" Component={Post} />
           <Route path="/post/:id" component={PostDetail} />
