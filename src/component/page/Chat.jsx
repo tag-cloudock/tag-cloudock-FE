@@ -45,7 +45,7 @@ const PostImg = styled.div`
   width: 50px;
   margin-left: 10px;
   border-radius: 10px;
-  background: #eeeeee;
+  border: 1px solid #dddddd;
 `;
 const NickName = styled.span`
   font-weight: 800;

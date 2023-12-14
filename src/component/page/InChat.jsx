@@ -14,26 +14,32 @@ const DurationDate = styled.span`
   color:#457be8;
 `;
 
+const DateChange = styled.div`
+  margin: 20px auto;
+  width: 70%;
+  height: 30px;
+  border-radius: 20px;
+  background: #eeeeee56;
+  text-align: center;
+  line-height: 30px;
+  color:#aaaaaa;
+`;
+
+
 const PostImg = styled.div`
   margin: 10px 10px;
   width:40px;
   height: 40px;
   border-radius: 10px;
-  background: #dddddd;
+  border: 1px solid #dddddd;
   float:left;
-  /* font-size: 20px;
-  color:#222222;
-  margin-top: 5px;
-  line-height: 30px; */
 `;
 const PostTitle = styled.div`
   font-size: 20px;
   color:#222222;
   margin-top: 8px;
-  /* line-height: 30px; */
 `;
 const PostDuration = styled.div`
-  /* line-height: 30px; */
   color:#555555;
 `;
 const PostInfo = styled.div`
@@ -47,8 +53,6 @@ const PostInfo = styled.div`
   border-bottom: 1px solid #eeeeee;
 `;
 const MessagesBox = styled.ul`
-  /* height: 1000px; */
-  /* margin: 100px 0px; */
   @media screen and (min-width: 1001px) {
     margin: 0px auto;
     max-width: 1001px;
@@ -67,9 +71,8 @@ const MessageTime= styled.span`
   color: #aaaaaa;
   order:  ${({ isMe }) => (isMe ? 1 : 2)};
   position: relative;
-  /* display: inline-block; */
   top: 12px;
-  right: -5px;
+  right: ${({ isMe }) => (isMe ? '-5px' : '5px')};
 `;
 const Message = styled.li`
   order:  ${({ isMe }) => (isMe ? 2 : 1)};
@@ -81,7 +84,6 @@ const Message = styled.li`
   max-width: 250px;
   background: ${({ isMe }) => (isMe ? '#4784ffe9' : 'none')};
   color: ${({ isMe }) => (isMe ? '#ffffff' : '000000')};
-  /* background: #eeeeee; */
   padding: 12px;
   line-height: 20px;
   list-style: none;
@@ -167,7 +169,7 @@ const InChat = () => {
 
   useEffect(() => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [messageList]);
+  }, );
   
   useEffect(() => {
     setLoading(true);
@@ -210,7 +212,9 @@ const InChat = () => {
     };
     fetchMessages();
     fetchPostInfo();
-    // setLoading(false); 
+    setTimeout(() => {
+      setLoading(false); 
+    },300)
   }, []); 
 
 
@@ -286,26 +290,36 @@ const InChat = () => {
   return (
       <div>
         <Header headerType={"inChat"} headerText={"<"} otherUserNickname={other}></Header>
+        {loading ? null :
         <Link to={'/post/'+postInfo.postId}>
           <PostInfo>
               <PostImg></PostImg>
               <PostTitle>{postInfo.title}</PostTitle>
               <PostDuration>  <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText></PostDuration>
           </PostInfo>
-        </Link>
+        </Link> 
+        }
         <EmptyBox></EmptyBox>
+        {loading ? <Loading /> : null}
         <MessagesBox>
-          {messageList.map((message) => (
-            <MessageBlock isMe={(message.userType === "BORROWER" && metype === "b")||(message.userType === "LENDER" && metype === "l")}>
-            <MessageTime isMe={(message.userType === "BORROWER" && metype === "b")||(message.userType === "LENDER" && metype === "l")}>{message.sentAt[3]}:{message.sentAt[4]}</MessageTime>
-            <Message key={message.chatId} isMe={(message.userType === "BORROWER" && metype === "b")||(message.userType === "LENDER" && metype === "l")}>
-                {message.message}
-            </Message>
-            </MessageBlock>
-          ))}
+          {loading ? null : messageList.map((message, index) => {
+            const isMe = (message.userType === "BORROWER" && metype === "b") ||
+            (message.userType === "LENDER" && metype === "l");
+            return (
+            <div>
+              {index != 0 && messageList[index-1].sentAt[2] !=  message.sentAt[2] ? <DateChange>{message.sentAt[0]}년 {message.sentAt[1]}월 {message.sentAt[2]}일</DateChange> : null }
+              <MessageBlock isMe={isMe}>
+                <MessageTime isMe={isMe}>{message.sentAt[3]}:{message.sentAt[4]}</MessageTime>
+                <Message key={message.chatId} isMe={isMe}>
+                    {message.message}
+                </Message>
+              </MessageBlock>
+            </div>
+            );
+            
+            })}
           <BottomPoint ref={messagesEndRef}></BottomPoint>
         </MessagesBox>
-        
         <MessageInputBox>
             <InputBox placeholder="메세지 보내기" 
             value={inputMessage}
@@ -315,7 +329,6 @@ const InChat = () => {
           onKeyDown={(e) => {activeEnter(e)}}
           ref={inputMessageRef}
           ></InputBox>
-          {loading ? <Loading /> : null}
             <SendBtn onClick={sendMessage} isNoText={inputMessage < 1}>
                 SEND
                 {/* <img src="/image/send.png" alt="" />     */}

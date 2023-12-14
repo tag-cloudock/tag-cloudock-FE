@@ -7,13 +7,16 @@ const MenuBarBox = styled.div`
     justify-content: space-between;
     position: fixed;
     margin: 0 auto;
-    bottom: 15px;
-    width: 90%;
+    bottom: 20px;
+    width: 80%;
     left: 0; 
     right: 0;
     border-radius: 30px 30px 30px 30px;
-    height: 65px;
+    height: 45px;
     box-shadow: rgba(149, 157, 165, 0.3) 0px 0px 20px;
+    & img{
+      width: 30px;
+    }
   }
   @media screen and (min-width: 1001px) {
     flex-direction: column;
