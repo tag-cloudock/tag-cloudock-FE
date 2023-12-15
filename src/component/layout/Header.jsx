@@ -8,24 +8,22 @@ const HeaderBox = styled.div`
   position: fixed;
   left: 0;
   right: 0;
-  height: 70px;
-  box-shadow: rgba(113, 113, 113, 0.2) 0px 10px 10px -10px;
-  @media screen and (min-width: 1001px) {
+  height: 50px;
+  border-bottom: 1px solid #eeeeee;
+  @media screen and (min-width: 701px) {
     margin: 0px auto;
-    max-width: 1001px;
+    max-width: 701px;
   }
 `;
 
 const EmptyBox = styled.div`
-  height: 70px;
+  height: 50px;
 `;
 
 const HeaderText = styled.span`
   display: inline-block;
   padding-left: 20px;
-  padding-top: 30px;
-  /* height: 70px; */
-  /* line-height: 70px; */
+  padding-top: 20px;
   color: #707070;
   font-weight: 700;
   font-size: 20px;
@@ -34,19 +32,16 @@ const HeaderText = styled.span`
 const HeaderOtherUser = styled.span`
   display: inline-block;
   text-align: center;
-  /* float: right; */
   width: 80%;
   height: 50px;
-  /* line-height: 50px; */
-  color: #9d9d9d;
+  color: #757575;
   font-weight: 700;
   font-size: 20px;
-  margin-top: 30px;
+  margin-top: 20px;
 `;
 
 const HeaderBackBtn = styled.button`
   width: 10%;
-  /* padding-left: 20px; */
   height: 70px;
   line-height: 70px;
   color: #707070;
@@ -56,15 +51,14 @@ const HeaderBackBtn = styled.button`
   border: none;
   float: left;
   & img{
-    margin-top: 20px;
-    /* height: 50px; */
+    margin-top: 12px;
   }
 `;
 
 const ChatBtn = styled.div`
   position: relative;
   float: right;
-  margin-top: 27px;
+  margin-top: 20px;
   margin-right: 20px;
   background: none;
   border: none;
@@ -99,8 +93,8 @@ const Header = ({headerType, headerText, otherUserNickname}) => {
             <HeaderText>{headerText}</HeaderText>
             <ChatBtn>
               <Link to={"/chat"}>
-                <NewMsgCircle></NewMsgCircle>
-                <img src="image/chat_icon.png" alt="" />
+                {/* <NewMsgCircle></NewMsgCircle> */}
+                <img src="image/chat.svg" alt="" />
               </Link>
             </ChatBtn>
           </HeaderBox>
@@ -115,8 +109,8 @@ const Header = ({headerType, headerText, otherUserNickname}) => {
             <HeaderText>{headerText}</HeaderText>
             <ChatBtn>
               <Link to={"/chat"}>
-                <NewMsgCircle></NewMsgCircle>
-                <img src="image/chat_icon.png" alt="" />
+                {/* <NewMsgCircle></NewMsgCircle> */}
+                <img src="image/chat.svg" alt="" />
               </Link>
             </ChatBtn>
           </HeaderBox>
@@ -148,7 +142,7 @@ const Header = ({headerType, headerText, otherUserNickname}) => {
         return (
           <div>
             <HeaderBox>
-            <HeaderBackBtn onClick={handleGoBack}><img src="/image/go_back.png" alt="" /></HeaderBackBtn>
+            <HeaderBackBtn onClick={handleGoBack}><img src="/image/back.svg" alt="" /></HeaderBackBtn>
             <HeaderOtherUser>{otherUserNickname}</HeaderOtherUser>
           </HeaderBox>
           <EmptyBox></EmptyBox>

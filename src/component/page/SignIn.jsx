@@ -27,14 +27,14 @@ const Title = styled.div`
     margin-bottom: 30px;
     font-size: 50px;
     font-weight: 850;
-    color : #5A8CEF;
+    color : #559BFF;
 `;
 
 const ForgotPassword = styled.span`
     margin-top: -15px;
     display: block;
     text-align: center;
-    color : #5A8CEF;
+    color : #559BFF;
 `;
 const GoToSignUp = styled.span`
     margin-top: 10px;
@@ -62,6 +62,9 @@ const InputBox = styled.input`
     /* font-style: italic;  */
         font-size: 18px;
     }
+    &:focus {
+      border-color: #559BFF; /* 원하는 색상으로 변경 */
+    }
 `;
 
 const SubmitBtn = styled.button`
@@ -71,7 +74,7 @@ const SubmitBtn = styled.button`
     background: #efefef;
     border: none;
     border-radius: 10px;
-    background: #5A8CEF;
+    background: #559BFF;
     font-weight: bold;
     color:#ffffff;
     font-size: 18px; 
@@ -155,7 +158,7 @@ const SignIn = () => {
 
       
       <LoginBox>
-        <Title>아.어?</Title>
+        <Title>바로보로우</Title>
         <InputBox
           type="text"
           ref={useridRef}

@@ -6,6 +6,11 @@ const Loding = styled.div`
   width: 100%;
   /* height: 100%; */
   /* background-color: #ffffff; */
+  @media screen and (min-width: 701px) {
+    top: 40%;
+    margin: 0px auto;
+    width: 701px;
+  }
   & img{
     width: 20%;
     display: block;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const MenuBarBox = styled.div`
   display: flex;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 700px) {
     justify-content: space-between;
     position: fixed;
     margin: 0 auto;
@@ -18,7 +18,7 @@ const MenuBarBox = styled.div`
       width: 30px;
     }
   }
-  @media screen and (min-width: 1001px) {
+  @media screen and (min-width: 701px) {
     flex-direction: column;
     position: fixed;
     top:50px;
@@ -36,13 +36,14 @@ const MenuBarBox = styled.div`
 
 const NavBtn = styled.div`
   display: flex;
-  @media screen and (max-width: 1000px) {
+  opacity: ${({ isOn }) => (isOn ? '100%' : '40%')};
+  @media screen and (max-width: 700px) {
     width: 33%;;
     height: 100%;
     background: none;
     border: none;
   }
-  @media screen and (min-width: 1001px) {
+  @media screen and (min-width: 701px) {
     height: 33%;;
     background: none;
     border: none;
@@ -53,24 +54,57 @@ const NavBtn = styled.div`
   }
 `;
 
+const BigCircle = styled.div`
+  opacity: 100%;
+  width: 59px;
+  height: 59px;
+  margin-top: -7px;
+  border-radius: 100px;
+  background: #ffffff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 0px 20px;
+  position: relative;
+`;
+
+const SmallCircle = styled.div`
+  margin: 0 auto;
+  opacity: 100%;
+  width: 49px;
+  height: 49px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  /* margin-bottom: -10px; */
+  border-radius: 100px;
+  background: #559BFF;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 0px 20px;
+  & img{
+    width: 49px;
+  }
+`;
+
 
 const MenuBar = () => {
     const location = useLocation();
     return (
         <MenuBarBox>
-          <NavBtn>
+          <NavBtn isOn={location.pathname === "/"}>
             <Link to={"/"}>
-              <img src={location.pathname === "/" ? "/image/home_nav_icon_on.png" : "/image/home_nav_icon.png"} alt="" />
+              <img src={"/image/home.svg"} alt="" />
             </Link>
           </NavBtn>
-          <NavBtn>
+          <NavBtn isOn={true}>
             <Link to={"/write"}>
-              <img src="/image/write_nav_icon.png" alt="" />
+              <BigCircle>
+                <SmallCircle>
+                  <img src="/image/write.svg" alt="" />
+                </SmallCircle>
+              </BigCircle>
+              
             </Link>
           </NavBtn>
-          <NavBtn>
+          <NavBtn isOn={location.pathname === "/user"}>
             <Link to={"/user"}>
-              <img src={location.pathname === "/user" ? "/image/user_nav_icon_on.png" : "/image/user_nav_icon.png"} alt="" />
+              <img src={"/image/user.svg"} alt="" />
             </Link>
           </NavBtn>
         </MenuBarBox>

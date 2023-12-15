@@ -11,7 +11,7 @@ const DurationText = styled.span`
 `;
 
 const DurationDate = styled.span`
-  color:#457be8;
+  color:#559BFF;
 `;
 
 const DateChange = styled.div`
@@ -34,6 +34,61 @@ const PostImg = styled.div`
   border: 1px solid #dddddd;
   float:left;
 `;
+const State = styled.div`
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  @media screen and (min-width: 701px) {
+    margin: 0px auto;
+    width: 701px;
+  }
+`;
+const Done = styled.div`
+  display: inline-block;
+  margin: 10px 10px;
+  border-radius: 40px;
+  border: 1px solid #50e15a;
+  background: #ffffff7a;
+  padding: 0px 18px;
+  height: 40px;
+  float: right;
+  text-align: center;
+  line-height: 40px;
+  color:#50e15a;
+  font-weight: 600;
+  font-size: 18px;
+`;
+
+const TurnToDone = styled.div`
+  display: inline-block;
+  margin: 10px 10px;
+  border-radius: 40px;
+  border: 1px solid #5A8CEF;
+  background: #ffffff7a;
+  padding: 0px 18px;
+  height: 40px;
+  float: right;
+  text-align: center;
+  line-height: 40px;
+  color:#5A8CEF;
+  font-weight: 600;
+  font-size: 18px;
+`;
+
+const TurnToOn = styled.div`
+  display: inline-block;
+  margin: 10px 10px;
+  border-radius: 40px;
+  border: 1px solid #efb15a;
+  background: #ffffff7a;
+  padding: 0px 18px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  color:#efb15a;
+  font-weight: 600;
+  font-size: 18px;
+`;
 const PostTitle = styled.div`
   font-size: 20px;
   color:#222222;
@@ -43,7 +98,6 @@ const PostDuration = styled.div`
   color:#555555;
 `;
 const PostInfo = styled.div`
-  padding: 5px;
   z-index: 1;
   position: fixed;
   left: 0;
@@ -51,12 +105,18 @@ const PostInfo = styled.div`
   height: 60px;
   background-color: #ffffff;
   border-bottom: 1px solid #eeeeee;
+
+  @media screen and (min-width: 701px) {
+    margin: 0 auto;
+    width: 700px;
+  }
 `;
+
 const MessagesBox = styled.ul`
-  @media screen and (min-width: 1001px) {
+  /* @media screen and (min-width: 1001px) {
     margin: 0px auto;
     max-width: 1001px;
-  }
+  } */
   width: 100%;
 `;
 const MessageBlock= styled.div`
@@ -82,7 +142,7 @@ const Message = styled.li`
   vertical-align: left;
   text-align: left;
   max-width: 250px;
-  background: ${({ isMe }) => (isMe ? '#4784ffe9' : 'none')};
+  background: ${({ isMe }) => (isMe ? '#559BFF' : 'none')};
   color: ${({ isMe }) => (isMe ? '#ffffff' : '000000')};
   padding: 12px;
   line-height: 20px;
@@ -102,9 +162,9 @@ const MessageInputBox = styled.div`
     height: 75px;
     background: #ffffff;
     /* box-shadow: rgba(149, 157, 165, 0.3) 0px 0px 24px; */
-    @media screen and (min-width: 1001px) {
+    @media screen and (min-width: 701px) {
       margin: 0px auto;
-      max-width: 1001px;
+      max-width: 701px;
     }
 `;
 
@@ -136,11 +196,11 @@ const SendBtn = styled.button`
    border: none;
    width: 15%;
    border-radius: 13px;
-   border: ${({ isNoText }) => (isNoText ? '1px solid #cccccc' : 'none')};
-   background: ${({ isNoText }) => (isNoText ? 'none' : '#76a4ffe9')};
-   color: ${({ isNoText }) => (isNoText ? '#8CB3FF' : '#ffffff')};
+   /* border: ${({ isNoText }) => (isNoText ? '1px solid #cccccc' : 'none')}; */
+   background: ${({ isNoText }) => (isNoText ? '#eeeeee' : '#559BFF')};
+   color: ${({ isNoText }) => (isNoText ? '#aaaaaa' : '#ffffff')};
 
-   font-weight: 500;
+   font-weight: 600;
    /* & img{
      width: 20px;
    } */
@@ -295,11 +355,26 @@ const InChat = () => {
           <PostInfo>
               <PostImg></PostImg>
               <PostTitle>{postInfo.title}</PostTitle>
-              <PostDuration>  <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText></PostDuration>
+              <PostDuration>  
+                <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText>
+              </PostDuration>
           </PostInfo>
         </Link> 
         }
         <EmptyBox></EmptyBox>
+
+        {/* {loading ? null : 
+        <Done>대여완료</Done>
+        } */}
+
+        {/* {loading ? null : 
+        <TurnToDone>대여완료 하기</TurnToDone>
+        } */}
+
+        {loading ? null : 
+        <State><TurnToOn>대여중으로 전환하기</TurnToOn></State>
+        }
+
         {loading ? <Loading /> : null}
         <MessagesBox>
           {loading ? null : messageList.map((message, index) => {
