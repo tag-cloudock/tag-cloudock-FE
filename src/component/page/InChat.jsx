@@ -1,34 +1,150 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import axios from "axios";
 import Header from "../layout/Header";
+import Loading from "../layout/Loading";
+
+const DurationText = styled.span`
+  color:#aaaaaa;
+`;
+
+const DurationDate = styled.span`
+  color:#559BFF;
+`;
+
+const DateChange = styled.div`
+  margin: 20px auto;
+  width: 70%;
+  height: 30px;
+  border-radius: 20px;
+  background: #eeeeee56;
+  text-align: center;
+  line-height: 30px;
+  color:#aaaaaa;
+`;
+
+
+const PostImg = styled.div`
+  margin: 10px 10px;
+  width:40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #dddddd;
+  float:left;
+`;
+const State = styled.div`
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  @media screen and (min-width: 701px) {
+    margin: 0px auto;
+    width: 701px;
+  }
+`;
+const Done = styled.div`
+  display: inline-block;
+  margin: 10px 10px;
+  border-radius: 40px;
+  border: 1px solid #50e15a;
+  background: #ffffff7a;
+  padding: 0px 18px;
+  height: 40px;
+  float: right;
+  text-align: center;
+  line-height: 40px;
+  color:#50e15a;
+  font-weight: 600;
+  font-size: 18px;
+`;
+
+const TurnToDone = styled.div`
+  display: inline-block;
+  margin: 10px 10px;
+  border-radius: 40px;
+  border: 1px solid #5A8CEF;
+  background: #ffffff7a;
+  padding: 0px 18px;
+  height: 40px;
+  float: right;
+  text-align: center;
+  line-height: 40px;
+  color:#5A8CEF;
+  font-weight: 600;
+  font-size: 18px;
+`;
+
+const TurnToOn = styled.div`
+  display: inline-block;
+  margin: 10px 10px;
+  border-radius: 40px;
+  border: 1px solid #efb15a;
+  background: #ffffff7a;
+  padding: 0px 18px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  color:#efb15a;
+  font-weight: 600;
+  font-size: 18px;
+`;
+const PostTitle = styled.div`
+  font-size: 20px;
+  color:#222222;
+  margin-top: 8px;
+`;
+const PostDuration = styled.div`
+  color:#555555;
+`;
+const PostInfo = styled.div`
+  z-index: 1;
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #eeeeee;
+
+  @media screen and (min-width: 701px) {
+    margin: 0 auto;
+    width: 700px;
+  }
+`;
 
 const MessagesBox = styled.ul`
-  /* height: 1000px; */
-  /* margin: 100px 0px; */
-  @media screen and (min-width: 1001px) {
+  /* @media screen and (min-width: 1001px) {
     margin: 0px auto;
     max-width: 1001px;
-  }
+  } */
+  background: #ffffff;
   width: 100%;
 `;
 const MessageBlock= styled.div`
   text-align:  ${({ isMe }) => (isMe ? 'right' : 'left')};
   width: 100%;
+  display: flex;
+  justify-content: ${({ isMe }) => (isMe ? 'flex-end' : 'flex-start')};
+`;
+
+const MessageTime= styled.span`
+  font-size: 12px;
+  color: #aaaaaa;
+  order:  ${({ isMe }) => (isMe ? 1 : 2)};
+  position: relative;
+  top: 12px;
+  right: ${({ isMe }) => (isMe ? '-5px' : '5px')};
 `;
 const Message = styled.li`
+  order:  ${({ isMe }) => (isMe ? 2 : 1)};
   word-break: break-all;
   margin: 10px;
-  /* float: right; */
   display:inline-block ;
   vertical-align: left;
   text-align: left;
-  max-width: 200px;
-  background: ${({ isMe }) => (isMe ? '#4784ffe9' : 'none')};
+  max-width: 250px;
+  background: ${({ isMe }) => (isMe ? '#559BFF' : 'none')};
   color: ${({ isMe }) => (isMe ? '#ffffff' : '000000')};
-  /* background: #eeeeee; */
   padding: 12px;
   line-height: 20px;
   list-style: none;
@@ -47,9 +163,9 @@ const MessageInputBox = styled.div`
     height: 75px;
     background: #ffffff;
     /* box-shadow: rgba(149, 157, 165, 0.3) 0px 0px 24px; */
-    @media screen and (min-width: 1001px) {
+    @media screen and (min-width: 701px) {
       margin: 0px auto;
-      max-width: 1001px;
+      max-width: 701px;
     }
 `;
 
@@ -70,6 +186,9 @@ const InputBox = styled.input`
         font-size: 18px;
     }
 `;
+const EmptyBox = styled.div`
+  height: 60px;
+`;
 
 const SendBtn = styled.button`
    margin: 10px 10px 0px 0px;
@@ -78,9 +197,11 @@ const SendBtn = styled.button`
    border: none;
    width: 15%;
    border-radius: 13px;
-   border: 1px solid #cccccc;
-   color:#4784ffe9;
-   font-weight: 500;
+   /* border: ${({ isNoText }) => (isNoText ? '1px solid #cccccc' : 'none')}; */
+   background: ${({ isNoText }) => (isNoText ? '#eeeeee' : '#559BFF')};
+   color: ${({ isNoText }) => (isNoText ? '#aaaaaa' : '#ffffff')};
+
+   font-weight: 600;
    /* & img{
      width: 20px;
    } */
@@ -88,9 +209,30 @@ const SendBtn = styled.button`
 
 const BottomPoint = styled.div`
    /* height: 100px; */
-   margin-bottom: 80px;
+   margin-bottom: 70px;
+   background: #ffffff;
 `;
+const HiddenTextBox = styled.div`
+   /* height: 100px; */
+   /* margin-bottom: 70px; */
+   /* background: #ffffff; */
+   position: absolute;
+   width: 100%;
+   /* text-align: center; */
+`;
+const HiddenText = styled.div`
+   text-align: center;
+   margin: 10px;
+   font-size: 30px;
+   font-weight: 700;
+   color : #ccd3d8;
+`;
+
+
 const InChat = () => {
+  const location = useLocation();
+  console.log(location)
+  const postId = location.state.postId;
   const inputMessageRef = useRef();
   const messagesEndRef = useRef(null);
   const [messageList, setMessageList] = useState([]);
@@ -99,8 +241,72 @@ const InChat = () => {
   const navigate = useNavigate();
   const ws = useRef(null);
   const [inputMessage, setInputMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+
+
+  const [postInfo, setPostInfo] = useState({needAt: [], returnAt:[]});
 
   useEffect(() => {
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, );
+  
+  useEffect(() => {
+    setLoading(true);
+    const fetchMessages = async () => {
+      try {
+        if (!cookies.token) {
+          navigate("/signin");
+          return;
+        }
+        const response = await axios.get("http://127.0.0.1:8080/chat/message/"+id, {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        });
+        console.log(response.data);
+
+        setMessageList(response.data);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          navigate("/signin");
+        } else {
+          console.error("오류 발생:", error);
+        }
+      }
+    };
+    const fetchPostInfo = async () => {
+      try {
+        if (!cookies.token) {
+          navigate("/signin");
+          return;
+        }
+
+        // API 요청 시 Authorization 헤더에 토큰을 추가
+        const response = await axios.get("http://127.0.0.1:8080/post/"+postId, {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        });
+
+        setPostInfo(response.data);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          navigate("/signin");
+        } else {
+          console.error("오류 발생:", error);
+        }
+      }
+    };
+    fetchMessages();
+    fetchPostInfo();
+    setTimeout(() => {
+      setLoading(false); 
+    },300)
+  }, []); 
+
+
+  useEffect(() => {
+    
     // 컴포넌트가 마운트되면 웹 소켓 연결
     ws.current = new WebSocket('ws://localhost:8080/ws/chat');
     
@@ -119,13 +325,22 @@ const InChat = () => {
       // 메시지를 받으면 실행될 코드
       const receivedMessage = JSON.parse(event.data);
       console.log(receivedMessage);
-
+      const currentDate = new Date();
       const newMessage = {
         chatId: new Date(),
-        sentAt:  new Date(),
+        sentAt:  [
+          currentDate.getFullYear(),
+          currentDate.getMonth() + 1, 
+          currentDate.getDate(),
+          currentDate.getHours(),
+          currentDate.getMinutes(),
+          currentDate.getSeconds(),
+          currentDate.getMilliseconds()
+        ],
         message: receivedMessage.message,
         userType: receivedMessage.userType,
       };
+      console.log(newMessage);
     
       // const newMessageList = [...messageList, message];
       setMessageList(prevMessageList => [...prevMessageList, newMessage]);
@@ -154,63 +369,79 @@ const InChat = () => {
     inputMessageRef.current.focus();
   };
 
-  useEffect(() => {
-    messagesEndRef.current.scrollIntoView();
-  }, [messageList]);
-  
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        if (!cookies.token) {
-          navigate("/signin");
-          return;
-        }
-        const response = await axios.get("http://127.0.0.1:8080/chat/message/"+id, {
-          headers: {
-            Authorization: `Bearer ${cookies.token}`,
-          },
-        });
-        console.log(response.data);
-
-        setMessageList(response.data);
-      } catch (error) {
-        console.error("오류 발생:", error);
-      }
-    };
-
-    fetchMessages();
-  }, []); 
-
   const activeEnter = (event) => {
-    if (event.code == 'Enter') {
+    if (event.code === 'Enter') {
       sendMessage();
     }
   };
   return (
       <div>
         <Header headerType={"inChat"} headerText={"<"} otherUserNickname={other}></Header>
+        {loading ? null :
+        <Link to={'/post/'+postInfo.postId}>
+          <PostInfo>
+              <PostImg></PostImg>
+              <PostTitle>{postInfo.title}</PostTitle>
+              <PostDuration>  
+                <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText>
+              </PostDuration>
+          </PostInfo>
+        </Link> 
+        }
+        <EmptyBox>
+          {loading ? null : 
+            <HiddenTextBox>
+              <HiddenText>까꿍</HiddenText>
+            </HiddenTextBox>}
+        </EmptyBox>
 
+        {/* {loading ? null : 
+        <Done>대여완료</Done>
+        } */}
+
+        {/* {loading ? null : 
+        <TurnToDone>대여완료 하기</TurnToDone>
+        } */}
+
+        {loading ? null : 
+        <State><TurnToOn>대여중으로 전환하기</TurnToOn></State>
+        }
+
+        {loading ? <Loading /> : null}
         <MessagesBox>
-          {messageList.map((message) => (
-            <MessageBlock isMe={(message.userType === "BORROWER" && metype === "b")||(message.userType === "LENDER" && metype === "l")}>
-            <Message key={message.chatId} isMe={(message.userType === "BORROWER" && metype === "b")||(message.userType === "LENDER" && metype === "l")}>
-                {message.message}
-            </Message>
-            </MessageBlock>
-          ))}
-          <BottomPoint ref={messagesEndRef}></BottomPoint>
+          {loading ? null : messageList.map((message, index) => {
+            const isMe = (message.userType === "BORROWER" && metype === "b") ||
+            (message.userType === "LENDER" && metype === "l");
+            return (
+            <div>
+              {index != 0 && messageList[index-1].sentAt[2] !=  message.sentAt[2] ? <DateChange>{message.sentAt[0]}년 {message.sentAt[1]}월 {message.sentAt[2]}일</DateChange> : null }
+              <MessageBlock isMe={isMe}>
+                <MessageTime isMe={isMe}>{message.sentAt[3]}:{message.sentAt[4]}</MessageTime>
+                <Message key={message.chatId} isMe={isMe}>
+                    {message.message}
+                </Message>
+              </MessageBlock>
+            </div>
+            );
+            
+            })}
+          <BottomPoint ref={messagesEndRef}>
+            {loading ? null : 
+            <HiddenTextBox>
+              <HiddenText>까꿍</HiddenText>
+            </HiddenTextBox>}
+          </BottomPoint>
         </MessagesBox>
-        
         <MessageInputBox>
             <InputBox placeholder="메세지 보내기" 
             value={inputMessage}
             onChange={(e) => {
               setInputMessage(e.target.value);
           }}
-          onKeyDown={(e) => {activeEnter(e)}}
+          onKeyPress={(e) => {activeEnter(e)}}
           ref={inputMessageRef}
           ></InputBox>
-            <SendBtn onClick={sendMessage}>
+            <SendBtn onClick={sendMessage} isNoText={inputMessage < 1}>
                 SEND
                 {/* <img src="/image/send.png" alt="" />     */}
             </SendBtn>

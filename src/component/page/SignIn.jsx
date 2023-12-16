@@ -1,10 +1,100 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import styled from "styled-components";
 import axios from "axios";
 import moment from "moment";
-import styled from "styled-components";
+import Footer from "../layout/Footer";
 
+const LoginBox = styled.div`
+    margin: 100px auto;
+    padding: 70px 0px;
+    @media screen and (max-width: 1000px) {
+      width: 90%;
+    }
+    @media screen and (min-width: 1001px) {
+      width: 50%;
+    }
+    background : #ffffff;
+    border-radius: 20px;
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 15px 0px; */
+`;
+
+const Title = styled.div`
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+    margin-bottom: 100px;
+    font-size: 50px;
+    font-weight: 850;
+    color : #559BFF;
+`;
+
+const SubTitle = styled.div`
+    text-align: center;
+    /* height: 30px;
+    line-height: 30px; */
+    font-size: 18px;
+    font-weight: 600;
+    color : #adb5c2;
+`;
+
+const ForgotPassword = styled.span`
+    margin-top: -15px;
+    display: block;
+    text-align: center;
+    color : #559BFF;
+`;
+const GoToSignUp = styled.span`
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+    color : #aaaaaa;
+`;
+
+const InputBox = styled.input`
+    display: block;
+    margin: 10px auto;
+    
+    height: 40px;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    color:#333333;
+    /* padding: 0px 20px; */
+    font-size: 18px; 
+    outline: none;
+    padding-left: 20px;
+    width: 300px;
+    &::placeholder {
+        color: #aaaaaa; 
+    /* font-style: italic;  */
+        font-size: 18px;
+    }
+    &:focus {
+      border-color: #559BFF; /* 원하는 색상으로 변경 */
+    }
+`;
+
+const SubmitBtn = styled.button`
+    display: block;
+    margin: 30px auto;
+    height: 40px;
+    background: #efefef;
+    border: none;
+    border-radius: 10px;
+    background: #559BFF;
+    font-weight: bold;
+    color:#ffffff;
+    font-size: 18px; 
+    outline: none;
+    width: 320px;
+    &::placeholder {
+        color: #aaaaaa; 
+    /* font-style: italic;  */
+        font-size: 18px;
+    }
+`;
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -38,12 +128,16 @@ const SignIn = () => {
     );
 
     if (loginResponse.status === 200) {
-      const expires = moment().add(1, "hours").toDate();
+      const expires = moment().add(2, "hours").toDate();
       setCookie("token", loginResponse.data.token, {
         path: "/",
         expires: expires,
       });
       setCookie("userId", loginResponse.data.userId, {
+        path: "/",
+        expires: expires,
+      });
+      setCookie("nickname", loginResponse.data.nickname, {
         path: "/",
         expires: expires,
       });
@@ -56,22 +150,30 @@ const SignIn = () => {
         expires: expires,
       });
       navigate("/");
-    } else if (loginResponse.status == 404) {
+    } else if (loginResponse.status === 404) {
       window.alert("ID를 다시 확인해주세요.");
       return;
-    } else if (loginResponse.status == 401) {
+    } else if (loginResponse.status === 401) {
       window.alert("비밀번호가 올바르지 않습니다.");
     }
   };
   const activeEnter = (event) => {
-    if (event.code == 'Enter') {
+    if (event.code === 'Enter') {
       handleLogin(event);
     }
   };
   return (
       <div>
-        <h2>Login</h2>
-        <input
+
+      
+      <LoginBox>
+        <Title>
+          <SubTitle>
+            당장 필요할때 바로 빌리자
+          </SubTitle>
+          바로바로
+        </Title>
+        <InputBox
           type="text"
           ref={useridRef}
           name="ID"
@@ -81,16 +183,21 @@ const SignIn = () => {
           }}
           onKeyDown={(e) => {activeEnter(e)}}
         />
-        <input
+        <InputBox
           type="password"
           ref={passwordRef}
           name="password"
-          placeholder="password"
+          placeholder="PASSWORD"
           onChange={(e) => {
             setPassword(e.target.value);
           }}
           onKeyDown={(e) => {activeEnter(e)}}/>
-          <button onClick={handleLogin}>Login</button>
+          <SubmitBtn onClick={handleLogin}>LOGIN</SubmitBtn>
+          
+          <ForgotPassword>비밀 번호를 잊으셨나요?</ForgotPassword>
+          <GoToSignUp>회원가입</GoToSignUp>
+      </LoginBox>
+      <Footer></Footer>
       </div>
   );
 };
