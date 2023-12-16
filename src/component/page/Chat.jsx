@@ -7,6 +7,7 @@ import Header from "../layout/Header";
 import MenuBar from "../layout/MenuBar";
 
 const ChatRoom = styled.li`
+  background: #ffffff;
   padding: 18px 20px;
   height : 50px;
   line-height: 23px;
@@ -23,10 +24,11 @@ const UserImg = styled.a`
   border-radius: 50px;
   border: 1px solid #dddddd;
   margin-right: 10px;
-
+  background: #ffffff;
   text-align: center;
   line-height: 50px;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 900;
   color: #dddddd;
 
 `;
@@ -41,6 +43,7 @@ const ChatRoomContent = styled.div`
   
 `;
 const PostImg = styled.div`
+  background: #ffffff;
   height: 50px;
   width: 50px;
   margin-left: 10px;
@@ -68,6 +71,7 @@ const Chat = () => {
   useEffect(() => {
     const fetchChatRooms = async () => {
       try {
+        console.log(!cookies.token);
         if (!cookies.token) {
           navigate("/signin");
           return;
@@ -83,7 +87,11 @@ const Chat = () => {
 
         setChatRoomList(response.data);
       } catch (error) {
-        console.error("오류 발생:", error);
+        if (error.response && error.response.status === 401) {
+          navigate("/signin");
+        } else {
+          console.error("오류 발생:", error);
+        }
       }
     };
 
@@ -97,7 +105,7 @@ const Chat = () => {
           {chatRoomList.map((chatRoom) => (
             <Link to={"/chat/"+(chatRoom.userType == "BORROWER" ? 'b' : 'l')+"/"+chatRoom.roomId+"/"+(chatRoom.userType == "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)} state={{ postId:chatRoom.postId }}>
               <ChatRoom key={chatRoom.id}>
-                <Link to={"/"}><UserImg>아.어?</UserImg></Link>
+                <Link to={"/"}><UserImg>바로</UserImg></Link>
                 <ChatRoomContent>
                 <NickName>{chatRoom.userType == "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname}</NickName>
                 <LastMessageTime>{chatRoom.lastMessage != "no message" ? " "+chatRoom.lastMessageTime[3]+"시 "+chatRoom.lastMessageTime[4]+"분" : ""}</LastMessageTime><br></br>

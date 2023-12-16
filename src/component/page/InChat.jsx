@@ -117,6 +117,7 @@ const MessagesBox = styled.ul`
     margin: 0px auto;
     max-width: 1001px;
   } */
+  background: #ffffff;
   width: 100%;
 `;
 const MessageBlock= styled.div`
@@ -186,7 +187,7 @@ const InputBox = styled.input`
     }
 `;
 const EmptyBox = styled.div`
-  height: 70px;
+  height: 60px;
 `;
 
 const SendBtn = styled.button`
@@ -208,8 +209,26 @@ const SendBtn = styled.button`
 
 const BottomPoint = styled.div`
    /* height: 100px; */
-   margin-bottom: 80px;
+   margin-bottom: 70px;
+   background: #ffffff;
 `;
+const HiddenTextBox = styled.div`
+   /* height: 100px; */
+   /* margin-bottom: 70px; */
+   /* background: #ffffff; */
+   position: absolute;
+   width: 100%;
+   /* text-align: center; */
+`;
+const HiddenText = styled.div`
+   text-align: center;
+   margin: 10px;
+   font-size: 30px;
+   font-weight: 700;
+   color : #ccd3d8;
+`;
+
+
 const InChat = () => {
   const location = useLocation();
   console.log(location)
@@ -248,7 +267,11 @@ const InChat = () => {
 
         setMessageList(response.data);
       } catch (error) {
-        console.error("오류 발생:", error);
+        if (error.response && error.response.status === 401) {
+          navigate("/signin");
+        } else {
+          console.error("오류 발생:", error);
+        }
       }
     };
     const fetchPostInfo = async () => {
@@ -267,7 +290,11 @@ const InChat = () => {
 
         setPostInfo(response.data);
       } catch (error) {
-        console.error("오류 발생:", error);
+        if (error.response && error.response.status === 401) {
+          navigate("/signin");
+        } else {
+          console.error("오류 발생:", error);
+        }
       }
     };
     fetchMessages();
@@ -361,7 +388,12 @@ const InChat = () => {
           </PostInfo>
         </Link> 
         }
-        <EmptyBox></EmptyBox>
+        <EmptyBox>
+          {loading ? null : 
+            <HiddenTextBox>
+              <HiddenText>까꿍</HiddenText>
+            </HiddenTextBox>}
+        </EmptyBox>
 
         {/* {loading ? null : 
         <Done>대여완료</Done>
@@ -393,7 +425,12 @@ const InChat = () => {
             );
             
             })}
-          <BottomPoint ref={messagesEndRef}></BottomPoint>
+          <BottomPoint ref={messagesEndRef}>
+            {loading ? null : 
+            <HiddenTextBox>
+              <HiddenText>까꿍</HiddenText>
+            </HiddenTextBox>}
+          </BottomPoint>
         </MessagesBox>
         <MessageInputBox>
             <InputBox placeholder="메세지 보내기" 
@@ -401,7 +438,7 @@ const InChat = () => {
             onChange={(e) => {
               setInputMessage(e.target.value);
           }}
-          onKeyDown={(e) => {activeEnter(e)}}
+          onKeyPress={(e) => {activeEnter(e)}}
           ref={inputMessageRef}
           ></InputBox>
             <SendBtn onClick={sendMessage} isNoText={inputMessage < 1}>

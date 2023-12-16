@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const MenuBarBox = styled.div`
   display: flex;
+  background: #ffffff;
   @media screen and (max-width: 700px) {
     justify-content: space-between;
     position: fixed;
@@ -73,7 +74,6 @@ const SmallCircle = styled.div`
   position: absolute;
   left: 5px;
   top: 5px;
-  /* margin-bottom: -10px; */
   border-radius: 100px;
   background: #559BFF;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 0px 20px;

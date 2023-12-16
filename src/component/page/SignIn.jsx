@@ -22,12 +22,21 @@ const LoginBox = styled.div`
 
 const Title = styled.div`
     text-align: center;
-    height: 100px;
-    line-height: 100px;
-    margin-bottom: 30px;
+    height: 45px;
+    line-height: 45px;
+    margin-bottom: 100px;
     font-size: 50px;
     font-weight: 850;
     color : #559BFF;
+`;
+
+const SubTitle = styled.div`
+    text-align: center;
+    /* height: 30px;
+    line-height: 30px; */
+    font-size: 18px;
+    font-weight: 600;
+    color : #adb5c2;
 `;
 
 const ForgotPassword = styled.span`
@@ -158,7 +167,12 @@ const SignIn = () => {
 
       
       <LoginBox>
-        <Title>바로보로우</Title>
+        <Title>
+          <SubTitle>
+            당장 필요할때 바로 빌리자
+          </SubTitle>
+          바로바로
+        </Title>
         <InputBox
           type="text"
           ref={useridRef}
