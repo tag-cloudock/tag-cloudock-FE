@@ -1,8 +1,9 @@
 import MenuBar from "../layout/MenuBar";
+import Header from "../layout/Header";
 const Home = () => {
     return (
       <div>
-        홈 페이지
+        <Header headerType={"home"}></Header>
         <MenuBar></MenuBar>
       </div>
     );

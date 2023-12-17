@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const FooterBox = styled.div`
     height: 5%;
     position: fixed;
+    left: 0;
     bottom: 0;
     width: 100%;
-    max-width: 1000px;
+    /* max-width: 1000px; */
 `;
 const FooterText = styled.div`
     text-align: center;

@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { useCookies } from "react-cookie";
 
 const MenuBarBox = styled.div`
   display: flex;
@@ -37,7 +38,7 @@ const MenuBarBox = styled.div`
 
 const NavBtn = styled.div`
   display: flex;
-  opacity: ${({ isOn }) => (isOn ? '100%' : '40%')};
+  opacity: ${({ ison }) => (ison === 'true' ? '100%' : '40%')};
   @media screen and (max-width: 700px) {
     width: 33%;;
     height: 100%;
@@ -85,25 +86,25 @@ const SmallCircle = styled.div`
 
 const MenuBar = () => {
     const location = useLocation();
+    const [cookies] = useCookies(["userId"]);
     return (
         <MenuBarBox>
-          <NavBtn isOn={location.pathname === "/"}>
+          <NavBtn ison={location.pathname === "/" ? "true" : "false"}>
             <Link to={"/"}>
               <img src={"/image/home.svg"} alt="" />
             </Link>
           </NavBtn>
-          <NavBtn isOn={true}>
+          <NavBtn ison={"true"}>
             <Link to={"/write"}>
               <BigCircle>
                 <SmallCircle>
                   <img src="/image/write.svg" alt="" />
                 </SmallCircle>
               </BigCircle>
-              
             </Link>
           </NavBtn>
-          <NavBtn isOn={location.pathname === "/user"}>
-            <Link to={"/user"}>
+          <NavBtn ison={location.pathname.startsWith('/user')? "true" : "false"}>
+            <Link to={"/user/"+cookies.userId}>
               <img src={"/image/user.svg"} alt="" />
             </Link>
           </NavBtn>
