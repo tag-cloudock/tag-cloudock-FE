@@ -9,12 +9,13 @@ import Footer from "../layout/Footer";
 const LoginBox = styled.div`
     margin: 100px auto;
     padding: 70px 0px;
-    @media screen and (max-width: 1000px) {
+    width: 90%;
+    /* @media screen and (max-width: 1000px) {
       width: 90%;
-    }
-    @media screen and (min-width: 1001px) {
+    } */
+    /* @media screen and (min-width: 1001px) {
       width: 50%;
-    }
+    } */
     background : #ffffff;
     border-radius: 20px;
     /* box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 15px 0px; */
@@ -32,8 +33,6 @@ const Title = styled.div`
 
 const SubTitle = styled.div`
     text-align: center;
-    /* height: 30px;
-    line-height: 30px; */
     font-size: 18px;
     font-weight: 600;
     color : #adb5c2;
@@ -61,14 +60,12 @@ const InputBox = styled.input`
     border: 1px solid #dddddd;
     border-radius: 10px;
     color:#333333;
-    /* padding: 0px 20px; */
     font-size: 18px; 
     outline: none;
-    padding-left: 20px;
-    width: 300px;
+    padding: 0px 3%;
+    width: 60%;
     &::placeholder {
         color: #aaaaaa; 
-    /* font-style: italic;  */
         font-size: 18px;
     }
     &:focus {
@@ -88,10 +85,9 @@ const SubmitBtn = styled.button`
     color:#ffffff;
     font-size: 18px; 
     outline: none;
-    width: 320px;
+    width: 66%;
     &::placeholder {
         color: #aaaaaa; 
-    /* font-style: italic;  */
         font-size: 18px;
     }
 `;
@@ -104,7 +100,7 @@ const SignIn = () => {
 
   const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
-  const [cookies, setCookie] = useCookies();
+  const [, setCookie] = useCookies();
 
   const handleLogin = async (e) => {
     e.preventDefault();
