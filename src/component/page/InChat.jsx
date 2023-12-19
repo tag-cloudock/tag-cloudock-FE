@@ -1,3 +1,9 @@
+/*
+용도: 채팅 내부 페이지
+담당자: 양태석
+사용법: Chat.jsx에서 사용
+기타: 
+*/
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -6,14 +12,7 @@ import axios from "axios";
 import Header from "../layout/Header";
 import Loading from "../layout/Loading";
 
-const DurationText = styled.span`
-  color:#aaaaaa;
-`;
-
-const DurationDate = styled.span`
-  color:#559BFF;
-`;
-
+// 날이 변경될때 표시 문구
 const DateChange = styled.div`
   margin: 20px auto;
   width: 70%;
@@ -25,7 +24,7 @@ const DateChange = styled.div`
   color:#aaaaaa;
 `;
 
-
+// 포스트 이미지
 const PostImg = styled.div`
   margin: 10px 10px;
   width:40px;
@@ -34,6 +33,8 @@ const PostImg = styled.div`
   border: 1px solid #dddddd;
   float:left;
 `;
+
+// 게시물 상태 표시
 const State = styled.div`
   position: fixed;
   width: 100%;
@@ -43,37 +44,40 @@ const State = styled.div`
     width: 701px;
   }
 `;
-const Done = styled.div`
-  display: inline-block;
-  margin: 10px 10px;
-  border-radius: 40px;
-  border: 1px solid #50e15a;
-  background: #ffffff7a;
-  padding: 0px 18px;
-  height: 40px;
-  float: right;
-  text-align: center;
-  line-height: 40px;
-  color:#50e15a;
-  font-weight: 600;
-  font-size: 18px;
-`;
 
-const TurnToDone = styled.div`
-  display: inline-block;
-  margin: 10px 10px;
-  border-radius: 40px;
-  border: 1px solid #5A8CEF;
-  background: #ffffff7a;
-  padding: 0px 18px;
-  height: 40px;
-  float: right;
-  text-align: center;
-  line-height: 40px;
-  color:#5A8CEF;
-  font-weight: 600;
-  font-size: 18px;
-`;
+// 게시물 상태
+
+// const Done = styled.div`
+//   display: inline-block;
+//   margin: 10px 10px;
+//   border-radius: 40px;
+//   border: 1px solid #50e15a;
+//   background: #ffffff7a;
+//   padding: 0px 18px;
+//   height: 40px;
+//   float: right;
+//   text-align: center;
+//   line-height: 40px;
+//   color:#50e15a;
+//   font-weight: 600;
+//   font-size: 18px;
+// `;
+
+// const TurnToDone = styled.div`
+//   display: inline-block;
+//   margin: 10px 10px;
+//   border-radius: 40px;
+//   border: 1px solid #5A8CEF;
+//   background: #ffffff7a;
+//   padding: 0px 18px;
+//   height: 40px;
+//   float: right;
+//   text-align: center;
+//   line-height: 40px;
+//   color:#5A8CEF;
+//   font-weight: 600;
+//   font-size: 18px;
+// `;
 
 const TurnToOn = styled.div`
   display: inline-block;
@@ -89,14 +93,15 @@ const TurnToOn = styled.div`
   font-weight: 600;
   font-size: 18px;
 `;
+
+// 게시물 제목
 const PostTitle = styled.div`
   font-size: 20px;
   color:#222222;
   margin-top: 8px;
 `;
-const PostDuration = styled.div`
-  color:#555555;
-`;
+
+// 게시물 정보 박스
 const PostInfo = styled.div`
   z-index: 1;
   position: fixed;
@@ -112,22 +117,36 @@ const PostInfo = styled.div`
   }
 `;
 
+// 게시물 기한
+const PostDuration = styled.div`
+`;
+
+// 기한 글자
+const DurationText = styled.span`
+  color:#aaaaaa;
+`;
+
+// 기한 숫자
+const DurationDate = styled.span`
+  color:#559BFF;
+`;
+
+// 메세지들
 const MessagesBox = styled.ul`
-  /* @media screen and (min-width: 1001px) {
-    margin: 0px auto;
-    max-width: 1001px;
-  } */
   background: #ffffff;
   width: 100%;
 `;
-const MessageBlock= styled.div`
+
+// 메세지 라인 박스
+const MessageBlock = styled.div`
   text-align:  ${({ isMe }) => (isMe ? 'right' : 'left')};
   width: 100%;
   display: flex;
   justify-content: ${({ isMe }) => (isMe ? 'flex-end' : 'flex-start')};
 `;
 
-const MessageTime= styled.span`
+// 메세지 전송 시각
+const MessageTime = styled.span`
   font-size: 12px;
   color: #aaaaaa;
   order:  ${({ isMe }) => (isMe ? 1 : 2)};
@@ -135,7 +154,10 @@ const MessageTime= styled.span`
   top: 12px;
   right: ${({ isMe }) => (isMe ? '-5px' : '5px')};
 `;
+
+// 메세지
 const Message = styled.li`
+  font-family: 'Noto Sans KR', sans-serif;
   order:  ${({ isMe }) => (isMe ? 2 : 1)};
   word-break: break-all;
   margin: 10px;
@@ -150,25 +172,26 @@ const Message = styled.li`
   list-style: none;
   border:${({ isMe }) => (isMe ? 'none' : '1px solid #dddddd')};
   border-radius: 20px;
-  font-weight: 500;
+  font-weight: 400;
 `;
+
+// 메세지 입력 박스
 const MessageInputBox = styled.div`
   display: flex;
-
-    justify-content: space-between;
-    position: fixed;
-    bottom: 0;
-    left: 0; 
-    right: 0;
-    height: 75px;
-    background: #ffffff;
-    /* box-shadow: rgba(149, 157, 165, 0.3) 0px 0px 24px; */
-    @media screen and (min-width: 701px) {
-      margin: 0px auto;
-      max-width: 701px;
-    }
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0; 
+  right: 0;
+  height: 75px;
+  background: #ffffff;
+  @media screen and (min-width: 701px) {
+    margin: 0px auto;
+    max-width: 701px;
+  }
 `;
 
+// 메세지 입력
 const InputBox = styled.input`
     margin: 10px;
     width: 85%;
@@ -182,14 +205,16 @@ const InputBox = styled.input`
     outline: none;
     &::placeholder {
         color: #aaaaaa; 
-    /* font-style: italic;  */
         font-size: 18px;
     }
 `;
+
+// 헤더에 안가려지게 하는 더미 박스
 const EmptyBox = styled.div`
   height: 60px;
 `;
 
+// 전송 버튼
 const SendBtn = styled.button`
    margin: 10px 10px 0px 0px;
    height: 40px;
@@ -197,92 +222,95 @@ const SendBtn = styled.button`
    border: none;
    width: 15%;
    border-radius: 13px;
-   /* border: ${({ isNoText }) => (isNoText ? '1px solid #cccccc' : 'none')}; */
-   background: ${({ isNoText }) => (isNoText ? '#eeeeee' : '#559BFF')};
    color: ${({ isNoText }) => (isNoText ? '#aaaaaa' : '#ffffff')};
-
    font-weight: 600;
-   /* & img{
-     width: 20px;
-   } */
+   & img{
+     opacity: ${({ isNoText }) => (isNoText ? '30%' : '100%')};
+     width: 35px;
+   }
 `;
 
+// 최하단 메세지 앵커
 const BottomPoint = styled.div`
-   /* height: 100px; */
    margin-bottom: 70px;
    background: #ffffff;
 `;
+
+// 까꿍 이스터에그 박스
 const HiddenTextBox = styled.div`
-   /* height: 100px; */
-   /* margin-bottom: 70px; */
-   /* background: #ffffff; */
    position: absolute;
    width: 100%;
-   /* text-align: center; */
+   left: 0;
 `;
+
+// 까꿍 이스터에그 텍스트
 const HiddenText = styled.div`
    text-align: center;
    margin: 10px;
    font-size: 30px;
-   font-weight: 700;
+   font-weight: 800;
    color : #ccd3d8;
 `;
 
-
 const InChat = () => {
-  const location = useLocation();
-  console.log(location)
-  const postId = location.state.postId;
-  const inputMessageRef = useRef();
-  const messagesEndRef = useRef(null);
+  const location = useLocation(); // 상태 전달 받기 위해
+  const [cookies] = useCookies(); // 쿠키 사용을 위해
+  const { metype, id, other } = useParams(); // 주소의 파라미터 값 가져오기
+  const navigate = useNavigate(); // 페이지 이동을 위해
+
+  const postId = location.state.postId; // 채팅방 리스트에서 상태 전달 받기
+
+  const inputMessageRef = useRef(); // 입력 박스 포커스용
+  const messagesEndRef = useRef(null); // 메세지 최하단 이동용
+  const ws = useRef(null); // 웹소켓
+
+  // 상태
   const [messageList, setMessageList] = useState([]);
-  const [cookies] = useCookies(["token","userId"]);
-  const { metype,id, other } = useParams();
-  const navigate = useNavigate();
-  const ws = useRef(null);
   const [inputMessage, setInputMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [postInfo, setPostInfo] = useState({ needAt: [], returnAt: [] });
 
-
-  const [postInfo, setPostInfo] = useState({needAt: [], returnAt:[]});
-
+  // 최하단 이동용
   useEffect(() => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, );
-  
+  },);
+
   useEffect(() => {
+    // 로딩 시작
     setLoading(true);
+    // 모든 메세지 가져오기
     const fetchMessages = async () => {
       try {
+        // 토큰 쿠키가 없다면 로그인 페이지로 이동
         if (!cookies.token) {
           navigate("/signin");
           return;
         }
-        const response = await axios.get("http://127.0.0.1:8080/chat/message/"+id, {
+        // 메세지 가져오기 api요청
+        const response = await axios.get("http://127.0.0.1:8080/chat/message/" + id, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
         });
         console.log(response.data);
-
+        // 메세지 상태 저장
         setMessageList(response.data);
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          navigate("/signin");
-        } else {
-          console.error("오류 발생:", error);
-        }
+        console.error("오류 발생:", error);
       }
     };
+
+    // 게시물 정보 가져오기
     const fetchPostInfo = async () => {
       try {
+        // 토큰 쿠키가 없다면 로그인 페이지로 이동
         if (!cookies.token) {
           navigate("/signin");
           return;
         }
 
-        // API 요청 시 Authorization 헤더에 토큰을 추가
-        const response = await axios.get("http://127.0.0.1:8080/post/"+postId, {
+        // 게시물 정보 가져오기 api 요청
+        const response = await axios.get("http://127.0.0.1:8080/post/" + postId, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -290,8 +318,10 @@ const InChat = () => {
 
         setPostInfo(response.data);
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          navigate("/signin");
+        // 없는 게시물 이라면
+        if (error.response && error.response.status === 404) {
+          console.error("존재하지 않는 게시물", error);
+          navigate("/");
         } else {
           console.error("오류 발생:", error);
         }
@@ -299,17 +329,20 @@ const InChat = () => {
     };
     fetchMessages();
     fetchPostInfo();
+
+    // 0.3초 동안 로딩후 로딩 종료
     setTimeout(() => {
-      setLoading(false); 
-    },300)
-  }, []); 
+      setLoading(false);
+    }, 300)
+
+  }, [cookies.token, id, navigate, postId]);
 
 
   useEffect(() => {
-    
     // 컴포넌트가 마운트되면 웹 소켓 연결
     ws.current = new WebSocket('ws://localhost:8080/ws/chat');
-    
+
+    // 세션 등록
     ws.current.onopen = () => {
       const message = {
         type: 'ENTER',
@@ -321,16 +354,19 @@ const InChat = () => {
       // JSON 형식으로 문자열 변환 후 웹 소켓으로 전송
       ws.current.send(JSON.stringify(message));
     };
+
+    // 메시지를 받으면 실행될 코드
     ws.current.onmessage = (event) => {
-      // 메시지를 받으면 실행될 코드
       const receivedMessage = JSON.parse(event.data);
       console.log(receivedMessage);
       const currentDate = new Date();
+
+      // 받은 메세지 메세지 리스트 상태에 넣기위해 딕셔너리화
       const newMessage = {
         chatId: new Date(),
-        sentAt:  [
+        sentAt: [
           currentDate.getFullYear(),
-          currentDate.getMonth() + 1, 
+          currentDate.getMonth() + 1,
           currentDate.getDate(),
           currentDate.getHours(),
           currentDate.getMinutes(),
@@ -341,22 +377,23 @@ const InChat = () => {
         userType: receivedMessage.userType,
       };
       console.log(newMessage);
-    
-      // const newMessageList = [...messageList, message];
       setMessageList(prevMessageList => [...prevMessageList, newMessage]);
     };
     // 컴포넌트가 언마운트될 때 웹 소켓 연결 해제
     return () => {
       ws.current.close();
     };
-  }, []);
+  }, [cookies.userId, id, metype]);
 
-
+  // 메세지 보내기
   const sendMessage = () => {
+
+    // 아무 입력도 안했다면
     if (inputMessage < 1) {
       inputMessageRef.current.focus();
       return;
     }
+    // 메세지 형식으로 변환후 전송
     const message = {
       type: 'TALK',
       userType: metype === "b" ? "BORROWER" : "LENDER",
@@ -369,84 +406,91 @@ const InChat = () => {
     inputMessageRef.current.focus();
   };
 
+  // 엔터 입력하면 전송하도록
   const activeEnter = (event) => {
     if (event.code === 'Enter') {
       sendMessage();
     }
   };
   return (
-      <div>
-        <Header headerType={"inChat"} headerText={"<"} otherUserNickname={other}></Header>
-        {loading ? null :
-        <Link to={'/post/'+postInfo.postId}>
-          <PostInfo>
-              <PostImg></PostImg>
-              <PostTitle>{postInfo.title}</PostTitle>
-              <PostDuration>  
-                <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText>
-              </PostDuration>
-          </PostInfo>
-        </Link> 
-        }
-        <EmptyBox>
-          {loading ? null : 
-            <HiddenTextBox>
-              <HiddenText>까꿍</HiddenText>
-            </HiddenTextBox>}
-        </EmptyBox>
+    <div>
+      <Header headerType={"inChat"} headerText={"<"} otherUserNickname={other}></Header>
 
-        {/* {loading ? null : 
+      {/* 게시물 정보 */}
+      {loading ? null :
+        <Link to={'/post/' + postInfo.postId}>
+          <PostInfo>
+            <PostImg></PostImg>
+            <PostTitle>{postInfo.title}</PostTitle>
+            <PostDuration>
+              <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText>
+            </PostDuration>
+          </PostInfo>
+        </Link>
+      }
+      <EmptyBox>
+        {loading ? null :
+          <HiddenTextBox>
+            <HiddenText>까꿍</HiddenText>
+          </HiddenTextBox>}
+      </EmptyBox>
+
+      {/* 게시물 상태 */}
+      {/* {loading ? null : 
         <Done>대여완료</Done>
         } */}
 
-        {/* {loading ? null : 
+      {/* {loading ? null : 
         <TurnToDone>대여완료 하기</TurnToDone>
         } */}
 
-        {loading ? null : 
+      {loading ? null :
         <State><TurnToOn>대여중으로 전환하기</TurnToOn></State>
-        }
+      }
 
-        {loading ? <Loading /> : null}
-        <MessagesBox>
-          {loading ? null : messageList.map((message, index) => {
-            const isMe = (message.userType === "BORROWER" && metype === "b") ||
+      {/* 메세지 */}
+      {loading ? <Loading /> : null}
+      <MessagesBox>
+        {loading ? null : messageList.map((message, index) => {
+          const isMe = (message.userType === "BORROWER" && metype === "b") ||
             (message.userType === "LENDER" && metype === "l");
-            return (
+          return (
             <div>
-              {index != 0 && messageList[index-1].sentAt[2] !=  message.sentAt[2] ? <DateChange>{message.sentAt[0]}년 {message.sentAt[1]}월 {message.sentAt[2]}일</DateChange> : null }
+              {index !== 0 && messageList[index - 1].sentAt[2] !== message.sentAt[2] ? <DateChange>{message.sentAt[0]}년 {message.sentAt[1]}월 {message.sentAt[2]}일</DateChange> : null}
               <MessageBlock isMe={isMe}>
                 <MessageTime isMe={isMe}>{message.sentAt[3]}:{message.sentAt[4]}</MessageTime>
                 <Message key={message.chatId} isMe={isMe}>
-                    {message.message}
+                  {message.message}
                 </Message>
               </MessageBlock>
             </div>
-            );
-            
-            })}
-          <BottomPoint ref={messagesEndRef}>
-            {loading ? null : 
+          );
+
+        })}
+        {/* 최하단 포인트 */}
+        <BottomPoint ref={messagesEndRef}>
+          {loading ? null :
             <HiddenTextBox>
               <HiddenText>까꿍</HiddenText>
             </HiddenTextBox>}
-          </BottomPoint>
-        </MessagesBox>
-        <MessageInputBox>
-            <InputBox placeholder="메세지 보내기" 
-            value={inputMessage}
-            onChange={(e) => {
-              setInputMessage(e.target.value);
+        </BottomPoint>
+      </MessagesBox>
+
+      {/* 메세지 입력 박스 */}
+      <MessageInputBox>
+        <InputBox placeholder="메세지 보내기"
+          value={inputMessage}
+          onChange={(e) => {
+            setInputMessage(e.target.value);
           }}
-          onKeyPress={(e) => {activeEnter(e)}}
+          onKeyPress={(e) => { activeEnter(e) }}
           ref={inputMessageRef}
-          ></InputBox>
-            <SendBtn onClick={sendMessage} isNoText={inputMessage < 1}>
-                SEND
-                {/* <img src="/image/send.png" alt="" />     */}
-            </SendBtn>
-        </MessageInputBox>
-      </div>
+        ></InputBox>
+        <SendBtn onClick={sendMessage} isNoText={inputMessage < 1}>
+          <img src="/image/paperplane.svg" alt="" />
+        </SendBtn>
+      </MessageInputBox>
+    </div>
   );
 };
 
