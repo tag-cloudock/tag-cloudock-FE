@@ -1,108 +1,81 @@
+/*
+용도: 메뉴바
+담당자: 양태석
+사용법: 메뉴바가 필요한 곳에서 사용
+기타:
+*/
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useCookies } from "react-cookie";
 
+// 메뉴바 박스
 const MenuBarBox = styled.div`
   display: flex;
   background: #ffffff;
-  @media screen and (max-width: 700px) {
-    justify-content: space-between;
-    position: fixed;
-    margin: 0 auto;
-    bottom: 20px;
-    width: 80%;
-    left: 0; 
-    right: 0;
-    border-radius: 30px 30px 30px 30px;
-    height: 45px;
-    box-shadow: rgba(149, 157, 165, 0.3) 0px 0px 20px;
-    & img{
-      width: 30px;
-    }
+  justify-content: space-between;
+  position: fixed;
+  margin: 0 auto;
+  bottom: 0px;
+  width: 100%;
+  max-width: 700px;
+  left: 0; 
+  right: 0;
+  border-radius: 40px 40px 0px 0px;
+  height: 45px;
+  box-shadow: rgba(167, 174, 180, 0.4) 0px 0px 15px;
+  & img{
+    width: 30px;
   }
-  @media screen and (min-width: 701px) {
-    flex-direction: column;
-    position: fixed;
-    top:50px;
-    float:left;
-    margin-left: -100px;
-    margin-top: 50px;
-    width: 65px;
-    height: 500px;
-    border-radius: 20px 20px 20px 20px;
-    background: #ffffff;
-    box-shadow: rgba(149, 157, 165, 0.3) 0px 0px 24px;
-  }
-
 `;
 
+// 버튼
 const NavBtn = styled.div`
   display: flex;
   opacity: ${({ ison }) => (ison === 'true' ? '100%' : '40%')};
-  @media screen and (max-width: 700px) {
-    width: 33%;;
-    height: 100%;
-    background: none;
-    border: none;
-  }
-  @media screen and (min-width: 701px) {
-    height: 33%;;
-    background: none;
-    border: none;
-  }
+  width: 33%;
+  height: 100%;
+  background: none;
+  border: none;
   & a{
     display: inline-block;
     margin: auto auto;
   }
 `;
 
-const BigCircle = styled.div`
-  opacity: 100%;
-  width: 59px;
-  height: 59px;
-  margin-top: -7px;
+// 장식 원
+const Circle = styled.div`
+  width: 85px;
+  height: 35px;
   border-radius: 100px;
-  background: #ffffff;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 0px 20px;
+  background: #e6e6e6;
   position: relative;
-`;
-
-const SmallCircle = styled.div`
-  margin: 0 auto;
-  opacity: 100%;
-  width: 49px;
-  height: 49px;
-  position: absolute;
-  left: 5px;
-  top: 5px;
-  border-radius: 100px;
-  background: #559BFF;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 0px 20px;
+  text-align: center;
   & img{
-    width: 49px;
+    width: 45px;
+    margin-top: -5px;
   }
 `;
 
-
 const MenuBar = () => {
-    const location = useLocation();
-    const [cookies] = useCookies(["userId"]);
+    const location = useLocation(); // 주소 확인
+    const [cookies] = useCookies(); // 쿠기 가져오기
     return (
         <MenuBarBox>
+          {/* 홈 버튼 */}
           <NavBtn ison={location.pathname === "/" ? "true" : "false"}>
             <Link to={"/"}>
               <img src={"/image/home.svg"} alt="" />
             </Link>
           </NavBtn>
+          {/* 글쓰기 버튼 */}
           <NavBtn ison={"true"}>
             <Link to={"/write"}>
-              <BigCircle>
-                <SmallCircle>
+                <Circle>
                   <img src="/image/write.svg" alt="" />
-                </SmallCircle>
-              </BigCircle>
+                </Circle>
             </Link>
           </NavBtn>
+          {/* 유저 버튼 */}
           <NavBtn ison={location.pathname.startsWith('/user')? "true" : "false"}>
             <Link to={"/user/"+cookies.userId}>
               <img src={"/image/user.svg"} alt="" />

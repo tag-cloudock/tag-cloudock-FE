@@ -1,11 +1,17 @@
+/*
+용도: 로딩 표시
+담당자: 양태석
+사용법: 로딩이 필요한곳에서 사용
+기타: 
+*/
 import styled from "styled-components";
+
+// 로딩
 const Loding = styled.div`
   position: fixed;
   z-index: 1;
   top: 50%;
   width: 100%;
-  /* height: 100%; */
-  /* background-color: #ffffff; */
   @media screen and (min-width: 701px) {
     top: 40%;
     margin: 0px auto;
@@ -18,6 +24,7 @@ const Loding = styled.div`
     opacity: 50%;
   }
 `;
+
 const Loading = () => {
     return (
         <Loding>
