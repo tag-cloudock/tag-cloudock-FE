@@ -15,7 +15,7 @@ const HeaderBox = styled.div`
   left: 0;
   right: 0;
   height: 50px;
-  border-bottom: ${({ nobg }) => (nobg ? 'none' : '1px solid #eeeeee')};
+  border-bottom: ${({ nobg }) => (nobg ? 'none' : '3px solid #f0f0f0')};
   @media screen and (min-width: 701px) {
     margin: 0px auto;
     max-width: 701px;
