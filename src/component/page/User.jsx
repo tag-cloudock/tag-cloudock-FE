@@ -43,7 +43,7 @@ const User = () => {
           return;
         }
         // 회원 조회 api 요청
-        const response = await axios.get("http://127.0.0.1:8080/account?id=" + userid, {
+        const response = await axios.get("http://43.202.228.198:8080/account?id=" + userid, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
