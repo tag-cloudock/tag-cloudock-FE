@@ -131,7 +131,7 @@ const SignIn = () => {
 
     try {
       // 로그인 api 요청
-      const loginResponse = await axios.post("http://127.0.0.1:8080/login",
+      const loginResponse = await axios.post("http://43.202.228.198:8080/login",
         {
           userid,
           password

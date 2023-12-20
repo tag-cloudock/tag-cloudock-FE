@@ -108,7 +108,7 @@ const Chat = () => {
         }
 
         // 유저의 채팅방 모두 가져오기 api 요청
-        const response = await axios.get("http://127.0.0.1:8080/chat/user", {
+        const response = await axios.get("http://43.202.228.198:8080/chat/user", {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -122,7 +122,7 @@ const Chat = () => {
     };
 
     fetchChatRooms();
-  }, [cookies.token, navigate]);
+  }, [cookies.token, navigate]); // [] 와 같이 비워도 됨.
 
   return (
     <div>
@@ -156,3 +156,6 @@ const Chat = () => {
 };
 
 export default Chat;
+
+
+
