@@ -258,7 +258,8 @@ const InChat = () => {
   const { metype, id, other } = useParams(); // 주소의 파라미터 값 가져오기
   const navigate = useNavigate(); // 페이지 이동을 위해
 
-  const postId = location.state.postId; // 채팅방 리스트에서 상태 전달 받기
+  const postId = location.state.postId;
+  // 오랜 시간이 지나고 채팅 안에서 채팅룸으로 나가면 오류나는 이슈 있음.
 
   const inputMessageRef = useRef(); // 입력 박스 포커스용
   const messagesEndRef = useRef(null); // 메세지 최하단 이동용
@@ -287,7 +288,7 @@ const InChat = () => {
           return;
         }
         // 메세지 가져오기 api요청
-        const response = await axios.get("http://127.0.0.1:8080/chat/message/" + id, {
+        const response = await axios.get("http://43.202.228.198:8080/chat/message/" + id, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -299,7 +300,7 @@ const InChat = () => {
         console.error("오류 발생:", error);
       }
     };
-
+    
     // 게시물 정보 가져오기
     const fetchPostInfo = async () => {
       try {
