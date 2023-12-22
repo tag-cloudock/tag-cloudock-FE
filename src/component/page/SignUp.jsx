@@ -172,7 +172,7 @@ const SignUp = () => {
 
     try {
       // 회원가입 api 요청
-      const signUpResponse = await axios.post("http://43.202.228.198:8080/register",
+      const signUpResponse = await axios.post("http://"+process.env.REACT_APP_BACK_URL+"/register",
         {
           userid,
           nickname,
