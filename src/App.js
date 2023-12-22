@@ -12,6 +12,8 @@ import Chat from "./component/page/Chat";
 import InChat from "./component/page/InChat";
 import Admin from "./component/page/Admin";
 import Write from "./component/page/Write";
+import CiManage from "./component/page/CiManage";
+import CiCreate from "./component/page/CiCreate";
 
 const MainLayout = styled.div`
 `;
@@ -23,6 +25,8 @@ function App() {
         <Routes>
           <Route path="/" Component={Home} />
           <Route path="/admin" Component={Admin} />
+          <Route path="/admin/cimanage" Component={CiManage} />
+          <Route path="/admin/cimanage/create" Component={CiCreate} />
           <Route path="/user/:userid" Component={User} />
           <Route path="/write" Component={Write} />
           <Route path="/post" Component={Post} />

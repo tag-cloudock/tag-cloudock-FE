@@ -288,7 +288,7 @@ const InChat = () => {
           return;
         }
         // 메세지 가져오기 api요청
-        const response = await axios.get("http://43.202.228.198:8080/chat/message/" + id, {
+        const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/chat/message/" + id, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -311,7 +311,7 @@ const InChat = () => {
         }
 
         // 게시물 정보 가져오기 api 요청
-        const response = await axios.get("http://127.0.0.1:8080/post/" + postId, {
+        const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/post/" + postId, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -341,7 +341,7 @@ const InChat = () => {
 
   useEffect(() => {
     // 컴포넌트가 마운트되면 웹 소켓 연결
-    ws.current = new WebSocket('ws://localhost:8080/ws/chat');
+    ws.current = new WebSocket('ws://'+process.env.REACT_APP_BACK_URL+'/ws/chat');
 
     // 세션 등록
     ws.current.onopen = () => {
@@ -415,7 +415,7 @@ const InChat = () => {
   };
   return (
     <div>
-      <Header headerType={"inChat"} headerText={"<"} otherUserNickname={other}></Header>
+      <Header headerType={"inChat"} headerText={other}></Header>
 
       {/* 게시물 정보 */}
       {loading ? null :

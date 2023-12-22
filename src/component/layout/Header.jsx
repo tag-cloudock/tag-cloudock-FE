@@ -131,7 +131,7 @@ const ChatBtn = styled.div`
   }
 `;
 
-const Header = ({headerType, headerText, otherUserNickname}) => {
+const Header = ({headerType, headerText}) => {
     const navigate = useNavigate(); // 페이지 이동을 위해
 
     // 이전 페이지로 이동
@@ -208,7 +208,19 @@ const Header = ({headerType, headerText, otherUserNickname}) => {
             <HeaderBox>
             <HeaderBackBtn onClick={handleGoBack}><img src="/image/back.svg" alt="" /></HeaderBackBtn>
             <HeaderCenterText>
-              {otherUserNickname}
+              {headerText}
+            </HeaderCenterText>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+          </div>
+        );
+      case "admin": // 어드민 페이지 내부
+        return (
+          <div>
+            <HeaderBox>
+            <HeaderBackBtn onClick={handleGoBack}><img src="/image/back.svg" alt="" /></HeaderBackBtn>
+            <HeaderCenterText>
+              {headerText}
             </HeaderCenterText>
           </HeaderBox>
           <EmptyBox></EmptyBox>
