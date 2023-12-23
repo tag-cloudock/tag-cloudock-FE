@@ -166,12 +166,12 @@ const CiManage = () => {
             <div>
             {groupedCouncilList.map((college, index) => (
                 <div key={index}>
-                    <CollegeName>{college[0] != null ? college[0].college : null}</CollegeName>
+                    <CollegeName>{college[0] != null ? college[0].college.slice(1) : null}</CollegeName>
                     <CollegeBox>
                         {college.map((council) => (
                             <Council key={council.councilId}>
                                 <CouncilImg></CouncilImg>
-                                <Link to={"/"} >
+                                <Link to={"/admin/cimanage/add/"+council.councilId} >
                                 <CouncilContent>
                                     <CouncilName>{council.name}</CouncilName>
                                     <ItemInfo>제공 물품 {council.providedItemCount} 대여 물품 {council.rentalItemCount}</ItemInfo>
