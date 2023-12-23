@@ -14,6 +14,7 @@ import Admin from "./component/page/Admin";
 import Write from "./component/page/Write";
 import CiManage from "./component/page/CiManage";
 import CiCreate from "./component/page/CiCreate";
+import CiAdd from "./component/page/CiAdd";
 
 const MainLayout = styled.div`
 `;
@@ -27,6 +28,7 @@ function App() {
           <Route path="/admin" Component={Admin} />
           <Route path="/admin/cimanage" Component={CiManage} />
           <Route path="/admin/cimanage/create" Component={CiCreate} />
+          <Route path="/admin/cimanage/add/:id" Component={CiAdd} />
           <Route path="/user/:userid" Component={User} />
           <Route path="/write" Component={Write} />
           <Route path="/post" Component={Post} />
