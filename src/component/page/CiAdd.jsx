@@ -128,7 +128,7 @@ const CouncilName = styled.div`
 const Items = styled.ul`
     background: #ffffff;
     border-radius: 15px;
-    box-shadow: rgba(215, 218, 220, 0.2) 0px 0px 15px;
+    box-shadow: rgba(205, 207, 208, 0.5) 0px 0px 15px;
 
     & li:not(:last-child){
         border-bottom: 1px solid #dddddd;
@@ -139,6 +139,8 @@ const Items = styled.ul`
 const Item = styled.li`
     list-style: none;
     padding: 10px 10px;
+    font-weight: 700;
+    color:#777777;
     font-size: 15px;
     height: 30px;
     line-height: 30px;

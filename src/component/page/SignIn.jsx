@@ -14,11 +14,12 @@ import Footer from "../layout/Footer";
 
 // 로그인 form 박스
 const LoginBox = styled.div`
-    margin: 100px auto;
+    margin: 20px auto;
     padding: 70px 0px;
     width: 90%;
     background : #ffffff;
     border-radius: 20px;
+    /* box-shadow: rgba(167, 174, 180, 0.4) 0px 0px 10px; */
 `;
 
 // 타이틀
@@ -26,10 +27,10 @@ const Title = styled.div`
     text-align: center;
     height: 45px;
     line-height: 45px;
-    margin-bottom: 100px;
-    font-size: 50px;
+    margin-bottom: 150px;
+    font-size: 60px;
     font-weight: 850;
-    color : #559BFF;
+    color : #379DFF;
 `;
 
 // 서브 타이틀
@@ -46,7 +47,7 @@ const ForgotPassword = styled.span`
     margin-top: -15px;
     display: block;
     text-align: center;
-    color : #559BFF;
+    color : #379DFF;
 `;
 
 // 회원가입 하러 가기
@@ -75,7 +76,7 @@ const InputBox = styled.input`
         font-size: 18px;
     }
     &:focus {
-      border-color: #559BFF;
+      border-color: #379DFF;
     }
 `;
 
@@ -87,7 +88,7 @@ const SubmitBtn = styled.button`
     background: #efefef;
     border: none;
     border-radius: 10px;
-    background: #559BFF;
+    background: #379DFF;
     font-weight: bold;
     color:#ffffff;
     font-size: 18px; 

@@ -67,14 +67,14 @@ const State = styled.div`
 //   display: inline-block;
 //   margin: 10px 10px;
 //   border-radius: 40px;
-//   border: 1px solid #5A8CEF;
+//   border: 1px solid #379DFF;
 //   background: #ffffff7a;
 //   padding: 0px 18px;
 //   height: 40px;
 //   float: right;
 //   text-align: center;
 //   line-height: 40px;
-//   color:#5A8CEF;
+//   color:#379DFF;
 //   font-weight: 600;
 //   font-size: 18px;
 // `;
@@ -124,17 +124,30 @@ const PostDuration = styled.div`
 // 기한 글자
 const DurationText = styled.span`
   color:#aaaaaa;
+  font-size: 13px;
 `;
 
 // 기한 숫자
 const DurationDate = styled.span`
-  color:#559BFF;
+  background: #EEF6FF;
+  border-radius: 20px;
+  border: 1px solid #379DFF;
+  font-size: 11px;
+  padding: 3px;
+  font-weight: 700;
+  color:#379DFF;
 `;
 
 // 메세지들
 const MessagesBox = styled.ul`
+  /* position: fixed; */
+  /* bottom:0; */
   background: #ffffff;
   width: 100%;
+`;
+
+const TestBox = styled.div`
+  height: 1000px;
 `;
 
 // 메세지 라인 박스
@@ -165,7 +178,7 @@ const Message = styled.li`
   vertical-align: left;
   text-align: left;
   max-width: 250px;
-  background: ${({ isMe }) => (isMe ? '#559BFF' : 'none')};
+  background: ${({ isMe }) => (isMe ? '#379DFF' : 'none')};
   color: ${({ isMe }) => (isMe ? '#ffffff' : '000000')};
   padding: 12px;
   line-height: 20px;
@@ -445,13 +458,14 @@ const InChat = () => {
         <TurnToDone>대여완료 하기</TurnToDone>
         } */}
 
-      {loading ? null :
+      {/* {loading ? null :
         <State><TurnToOn>대여중으로 전환하기</TurnToOn></State>
-      }
+      } */}
 
       {/* 메세지 */}
       {loading ? <Loading /> : null}
       <MessagesBox>
+        <TestBox></TestBox>
         {loading ? null : messageList.map((message, index) => {
           const isMe = (message.userType === "BORROWER" && metype === "b") ||
             (message.userType === "LENDER" && metype === "l");

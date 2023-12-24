@@ -21,7 +21,7 @@ const FooterText = styled.div`
     color:#cccccc;
     font-size: 15px;
     & a{
-        color:#559BFF;
+        color:#379DFF;
     }
 `;
 
