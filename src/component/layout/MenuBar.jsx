@@ -15,14 +15,14 @@ const MenuBarBox = styled.div`
   justify-content: space-between;
   position: fixed;
   margin: 0 auto;
-  bottom: 0px;
-  width: 100%;
+  bottom: 20px;
+  width: 70%;
   max-width: 700px;
   left: 0; 
   right: 0;
-  border-radius: 40px 40px 0px 0px;
-  height: 45px;
-  box-shadow: rgba(167, 174, 180, 0.4) 0px 0px 15px;
+  border-radius: 40px 40px 40px 40px;
+  height: 50px;
+  box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px;
   & img{
     width: 30px;
   }
@@ -33,7 +33,7 @@ const NavBtn = styled.div`
   display: flex;
   opacity: ${({ ison }) => (ison === 'true' ? '100%' : '40%')};
   width: 33%;
-  height: 100%;
+  /* height: 100%; */
   background: none;
   border: none;
   & a{
@@ -44,15 +44,18 @@ const NavBtn = styled.div`
 
 // 장식 원
 const Circle = styled.div`
-  width: 85px;
-  height: 35px;
+  width:60px;
+  height:60px;
   border-radius: 100px;
-  background: #e6e6e6;
+  /* border: 1px solid #379DFF; */
+  box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px;
+  background: #379DFF;
   position: relative;
+  top:-30px;
   text-align: center;
   & img{
-    width: 45px;
-    margin-top: -5px;
+    width: 50px;
+    margin-top: 5px;
   }
 `;
 

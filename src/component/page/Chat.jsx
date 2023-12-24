@@ -90,7 +90,7 @@ const NoChatText = styled.div`
   font-size: 50px;
   font-weight: 800;
   display: block;
-  color : #d9dde3;
+  color : #CAE5FF;
   max-width: 700px;
 `;
 

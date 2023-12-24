@@ -20,7 +20,7 @@ const CollegeBox = styled.ul`
     background: #ffffff;
     margin-bottom: 20px;
     border-radius: 15px;
-    box-shadow: rgba(215, 218, 220, 0.2) 0px 0px 15px;
+    box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px;
     overflow: hidden;
     & a:not(:last-child) li{
         border-bottom: 1px solid #dddddd;
@@ -90,7 +90,7 @@ const CreateCouncil = styled.div`
   /* padding: 10px; */
   border-radius: 10px;
   background: #ffffff;
-  box-shadow: rgba(215, 218, 220, 0.2) 0px 0px 15px;
+  box-shadow: rgba(210, 210, 210, 0.5) 0px 0px 15px;
   & img{
     opacity: 30%;
   }

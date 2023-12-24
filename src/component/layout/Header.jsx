@@ -15,7 +15,14 @@ const HeaderBox = styled.div`
   left: 0;
   right: 0;
   height: 50px;
-  border-bottom: ${({ nobg }) => (nobg ? 'none' : '3px solid #f0f0f0')};
+  border-bottom: ${({ nobg }) => (nobg ? 'none' : '1px solid #f0f0f0')};
+  @media screen and (min-width: 701px) {
+    /* margin: 0px auto; */
+    /* max-width: 701px; */
+  }
+`;
+
+const HeaderContent = styled.div`
   @media screen and (min-width: 701px) {
     margin: 0px auto;
     max-width: 701px;
@@ -33,7 +40,7 @@ const HeaderText = styled.span`
   padding-left: 20px;
   height: 50px;
   line-height: 50px;
-  color: rgb(112, 112, 112);
+  color: rgb(194, 194, 194);
   font-weight: 700;
   font-size: 20px;
 `;
@@ -41,46 +48,79 @@ const HeaderText = styled.span`
 // 홈 헤더의 타이틀
 const HomeTitle = styled.div`
   width: 30%;
+  padding-left:20px;
   height: 50px;
-  text-align: center;
+  text-align: left;
   line-height: 50px;
   font-weight: 800;
-  font-size: 23px;
-  color:#C3C9D2;
+  font-size: 25px;
+  color:#D1D1D1;
   float: left ; 
 `;
 
 // 공지사항 박스
 const AnnoBox = styled.div`
   height: 50px;
-  width: 70%;
+  width: calc(70% - 30px);
   float: left;
 `;
 
-// 공지사항 배경
-const AnnoBack = styled.div`
+const Anno = styled.div`
+  width: 30px;
   height: 30px;
-  margin: 10px 10px 10px 0px;
-  border-radius: 10px;
-  background:#dce0e7;
+  margin-top: 10px;
+  float: right;
+  margin-left: 10px;
+  & img{
+    width: 30px;
+  }
 `;
 
-// 공지사항 이미지
-const AnnoImg = styled.img`
-  float: left;
-  margin: 5px;
-  height: 20px;
+const Help = styled.div`
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  background: #EEF6FF;
+  float: right;
+  margin-top: 10px;
+  margin-left: 5px;
+  text-align: center;
+  line-height: 30px;
+  font-weight: 800;
+  font-size: 20px;
+  position: relative;
+  & img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+  }
 `;
 
-// 공지사항 텍스트
-const AnnoText = styled.span`
-  display: inline-block;
-  margin: 5px;
-  height: 20px;
-  color: #ffffff;
-  line-height: 20px;
-  font-size: 13px;
-  font-weight: 600;
+const HelpIntro = styled.div`
+  float: right;
+  width: 130px;
+  margin-top: 15px;
+  position: relative;
+  & img{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 20px;
+  }
+  & span{
+    position: absolute;
+    left: 5px;
+    line-height: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #ffffff;
+    /* position: absolute; */
+    top: 0;
+    /* height: 20px; */
+    width: 200px;
+  }
 `;
 
 // 헤더 가운데 텍스트
@@ -100,18 +140,28 @@ const HeaderCenterText = styled.span`
 const HeaderBackBtn = styled.button`
   z-index: 1;
   position: absolute;
-  left: 0;
-  height: 50px;
+  /* left: 0; */
+  margin-top: 5px;
+  height: 40px;
+  width: 40px;
   line-height: 50px;
   color: #707070;
   font-weight: 700;
   font-size: 20px;
+  border-radius:10px;
   background: none;
   border: none;
   float: left;
   & img{
+    position: absolute;
+    top:0;
+    left: 0;
     height: 40px;
-    margin: 5px 5px;
+    /* margin: 5px 5px; */
+  }
+  &:hover{
+    
+    background: #f5f5f5;
   }
 `;
 
@@ -144,13 +194,21 @@ const Header = ({headerType, headerText}) => {
         return (
           <div>
             <HeaderBox nobg={"true"}>
+              <HeaderContent>
                 <HomeTitle>대학빌림</HomeTitle>
                 <AnnoBox>
-                  <AnnoBack>
-                    <AnnoImg src={"/image/megaphone.svg"} alt="" />
-                    <AnnoText>서버 점검 예정</AnnoText>
-                  </AnnoBack>
+                  <Anno>
+                    <img src={"/image/megaphone.svg"}></img>
+                  </Anno>
+                  <Help>
+                    <img src={"/image/help.svg"}></img>
+                  </Help>
+                  <HelpIntro>
+                    <img src={"/image/help_intro.svg"}></img>
+                    <span>도움말을 확인해보세요!</span>
+                  </HelpIntro>
                 </AnnoBox>
+              </HeaderContent>
             </HeaderBox>
             <EmptyBox></EmptyBox>
           </div>
@@ -159,12 +217,15 @@ const Header = ({headerType, headerText}) => {
         return (
           <div>
             <HeaderBox nobg={"true"}>
-            <HeaderText>{headerText}</HeaderText>
+              <HeaderContent>
+                <HeaderText>{headerText}</HeaderText>
             <ChatBtn>
               <Link to={"/chat"}>
                 <img src="/image/chat.svg" alt="" />
               </Link>
             </ChatBtn>
+              </HeaderContent>
+            
           </HeaderBox>
           <EmptyBox></EmptyBox>
           </div>
@@ -187,8 +248,10 @@ const Header = ({headerType, headerText}) => {
         return (
           <div>
             <HeaderBox>
+            <HeaderContent>
             <HeaderBackBtn onClick={handleGoBack}><img src="/image/close.svg" alt="" /></HeaderBackBtn>
             <HeaderCenterText>{headerText}</HeaderCenterText>
+            </HeaderContent>
           </HeaderBox>
           <EmptyBox></EmptyBox>
           </div>
@@ -197,7 +260,12 @@ const Header = ({headerType, headerText}) => {
         return (
           <div>
             <HeaderBox>
-              <HeaderText>{headerText}</HeaderText>
+              <HeaderContent>
+                <HeaderText>
+                  {headerText}
+                </HeaderText>
+              </HeaderContent>
+                
             </HeaderBox>
             <EmptyBox></EmptyBox>
           </div>
@@ -206,10 +274,12 @@ const Header = ({headerType, headerText}) => {
         return (
           <div>
             <HeaderBox>
+            <HeaderContent>
             <HeaderBackBtn onClick={handleGoBack}><img src="/image/back.svg" alt="" /></HeaderBackBtn>
             <HeaderCenterText>
               {headerText}
             </HeaderCenterText>
+           </HeaderContent>
           </HeaderBox>
           <EmptyBox></EmptyBox>
           </div>
@@ -218,10 +288,12 @@ const Header = ({headerType, headerText}) => {
         return (
           <div>
             <HeaderBox>
+            <HeaderContent>
             <HeaderBackBtn onClick={handleGoBack}><img src="/image/back.svg" alt="" /></HeaderBackBtn>
             <HeaderCenterText>
               {headerText}
             </HeaderCenterText>
+            </HeaderContent>
           </HeaderBox>
           <EmptyBox></EmptyBox>
           </div>

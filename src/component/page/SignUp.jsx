@@ -12,7 +12,7 @@ import Footer from "../layout/Footer";
 
 // 회원가입 form 박스
 const SignUpBox = styled.div`
-    margin: 100px auto;
+    margin: 20px auto 0 20px;
     padding: 70px 0px;
     width: 90%;
     background : #ffffff;
@@ -25,10 +25,10 @@ const Title = styled.div`
     text-align: center;
     height: 45px;
     line-height: 45px;
-    margin-bottom: 100px;
-    font-size: 50px;
+    margin-bottom: 120px;
+    font-size: 60px;
     font-weight: 850;
-    color : #559BFF;
+    color : #379DFF;
 `;
 
 // 서브 타이틀
@@ -73,7 +73,7 @@ const InputBox = styled.input`
         font-size: 18px;
     }
     &:focus {
-      border-color: #559BFF;
+      border-color: #379DFF;
     }
 `;
 
@@ -85,7 +85,7 @@ const SubmitBtn = styled.button`
     background: #efefef;
     border: none;
     border-radius: 10px;
-    background: #559BFF;
+    background: #379DFF;
     font-weight: bold;
     color:#ffffff;
     font-size: 18px; 
@@ -97,6 +97,32 @@ const SubmitBtn = styled.button`
     }
 `;
 
+// 제출 버튼
+const FileInputBtn = styled.label`
+    display: block;
+    margin: 0 auto;
+    width: 66%;
+    text-align: left;
+    & div{
+      margin-top: 10px;
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color:#777777;
+      border: 1px solid #379DFF;
+      border-radius: 5px;
+      padding: 5px;
+    }
+`;
+const FileInputBox = styled.input`
+    width: 66%;
+    border: none;
+    background: none;
+    &::file-selector-button{
+      display: none;
+    }
+`;
+
 const SignUp = () => {
   const navigate = useNavigate(); // 페이지 이동
 
@@ -104,11 +130,14 @@ const SignUp = () => {
   const nicknameRef = useRef();
   const useridRef = useRef();
   const passwordRef = useRef();
+  const password2Ref = useRef();
 
   // 각 입력 박스 상태
   const [nickname, setNickname] = useState("");
   const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [file, setFile] = useState(null);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -132,14 +161,20 @@ const SignUp = () => {
       return;
     }
     if (password.length < 1) {
-      window.alert("패스워드를 입력해주세요.");
+      window.alert("비밀번호를 입력해주세요.");
       passwordRef.current.focus();
       setPassword('');
       return;
     }
+    if (password2.length < 1) {
+      window.alert("비밀번호 확인을 입력해주세요.");
+      password2Ref.current.focus();
+      setPassword2('');
+      return;
+    }
     // 최대 글자를 넘었는지 검사
-    if (nickname.length > 5) {
-      window.alert("별명을 5글자 이내로 입력해주세요.");
+    if (nickname.length > 10) {
+      window.alert("별명을 10글자 이내로 입력해주세요.");
       nicknameRef.current.focus();
       setNickname('');
       return;
@@ -163,6 +198,13 @@ const SignUp = () => {
       setUserid('');
       return;
     }
+    if (password != password2) {
+      window.alert("비밀번호 확인이 틀립니다.");
+      passwordRef.current.focus();
+      setPassword('');
+      setPassword2('');
+      return;
+    }
     if (!passwordRegex.test(password)) {
       window.alert("올바른 비밀번호 형식이 아닙니다.");
       passwordRef.current.focus();
@@ -172,11 +214,24 @@ const SignUp = () => {
 
     try {
       // 회원가입 api 요청
+
+      const formData = new FormData();
+      formData.append('request', new Blob([JSON.stringify({
+        userid,
+        nickname,
+        password
+      })],
+      {
+        type : "application/json"
+      }));
+      formData.append('pic', file); // 'file'은 사용자가 선택한 파일 객체
+
       const signUpResponse = await axios.post("http://"+process.env.REACT_APP_BACK_URL+"/register",
+        formData,
         {
-          userid,
-          nickname,
-          password
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         }
       );
       // 성공시
@@ -192,6 +247,11 @@ const SignUp = () => {
         console.error("오류 발생:", error);
       }
     }
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFile(file);
   };
   // 엔터 누르면 제출하도록
   const activeEnter = (event) => {
@@ -258,8 +318,25 @@ const SignUp = () => {
             setPassword(e.target.value);
           }}
           onKeyDown={(e) => { activeEnter(e) }} />
+
+        {/* 비밀번호 확인*/}
+        <InputBox
+          type="password"
+          ref={password2Ref}
+          name="password2"
+          value={password2}
+          placeholder="비밀번호 확인"
+          onChange={(e) => {
+            setPassword2(e.target.value);
+          }}
+          onKeyDown={(e) => { activeEnter(e) }} />
         <Requirements>대소문자, 숫자, @!? 조합 5~15자리</Requirements>
 
+        {/* 이미지 형식 제한해야함 */}
+        <FileInputBtn for="file">
+          <div>프로필 사진 추가</div>
+        </FileInputBtn>
+        <FileInputBox type="file" name="file" id="file" onChange={handleFileChange} />
         {/* 제출 버튼 */}
         <SubmitBtn onClick={handleSignUp}>회원가입</SubmitBtn>
         <Link to={"/signin"}>

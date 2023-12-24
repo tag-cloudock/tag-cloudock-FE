@@ -19,15 +19,17 @@ const Subtitle = styled.div`
   margin-bottom: 10px;
   font-size: 20px;
   font-weight: bold;
-  color: #777777;
+  color: #333333;
 `;
 
 const DashBoardBox = styled.div`
   background: #ffffff;
-  /* border: 1px solid #dddddd; */
+  border: 1px solid #38d9a9;
   border-radius: 10px;
   padding: 10px 20px;
+  /* box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px; */
 `;
+
 const DashBoardDataLine = styled.li`
   list-style: none;
   display: flex;
@@ -47,17 +49,18 @@ const ManageBtn = styled.div`
   margin-bottom: 10px;
   height: 50px;
   width: 100%;
-  /* border: 1px solid #dddddd; */
+  border: 1px solid #38d9a9;
   border-radius: 10px;
-  background: #ffffff;
+  /* background: #e6fcf5; */
   text-align: center;
   line-height: 50px;
   font-size: 20px;
   font-weight: 600;
-  color: #777777;
+  color: #38d9a9;
 
   &:hover{
-    color: #5A8CEF;
+    color: #ffffff;
+    background: #38d9a9;
   }
 
 `;
