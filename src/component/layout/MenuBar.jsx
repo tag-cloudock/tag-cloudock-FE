@@ -18,12 +18,12 @@ const MenuBarBox = styled.div`
   bottom: 20px;
   width: 70%;
   max-width: 700px;
-  left: 0; 
+  left: 0;
   right: 0;
   border-radius: 40px 40px 40px 40px;
   height: 50px;
   box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px;
-  & img{
+  & img {
     width: 30px;
   }
 `;
@@ -31,12 +31,12 @@ const MenuBarBox = styled.div`
 // 버튼
 const NavBtn = styled.div`
   display: flex;
-  opacity: ${({ ison }) => (ison === 'true' ? '100%' : '40%')};
+  opacity: ${({ ison }) => (ison === "true" ? "100%" : "40%")};
   width: 33%;
   /* height: 100%; */
   background: none;
   border: none;
-  & a{
+  & a {
     display: inline-block;
     margin: auto auto;
   }
@@ -44,48 +44,48 @@ const NavBtn = styled.div`
 
 // 장식 원
 const Circle = styled.div`
-  width:60px;
-  height:60px;
+  width: 60px;
+  height: 60px;
   border-radius: 100px;
   /* border: 1px solid #379DFF; */
   box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px;
-  background: #379DFF;
+  background: #379dff;
   position: relative;
-  top:-30px;
+  top: -30px;
   text-align: center;
-  & img{
+  & img {
     width: 50px;
     margin-top: 5px;
   }
 `;
 
 const MenuBar = () => {
-    const location = useLocation(); // 주소 확인
-    const [cookies] = useCookies(); // 쿠기 가져오기
-    return (
-        <MenuBarBox>
-          {/* 홈 버튼 */}
-          <NavBtn ison={location.pathname === "/" ? "true" : "false"}>
-            <Link to={"/"}>
-              <img src={"/image/home.svg"} alt="" />
-            </Link>
-          </NavBtn>
-          {/* 글쓰기 버튼 */}
-          <NavBtn ison={"true"}>
-            <Link to={"/write"}>
-                <Circle>
-                  <img src="/image/write.svg" alt="" />
-                </Circle>
-            </Link>
-          </NavBtn>
-          {/* 유저 버튼 */}
-          <NavBtn ison={location.pathname.startsWith('/user')? "true" : "false"}>
-            <Link to={"/user/"+cookies.userId}>
-              <img src={"/image/user.svg"} alt="" />
-            </Link>
-          </NavBtn>
-        </MenuBarBox>
-    );
-  };
+  const location = useLocation(); // 주소 확인
+  const [cookies] = useCookies(); // 쿠기 가져오기
+  return (
+    <MenuBarBox>
+      {/* 홈 버튼 */}
+      <NavBtn ison={location.pathname === "/" ? "true" : "false"}>
+        <Link to={"/"}>
+          <img src={"/image/home.svg"} alt="" />
+        </Link>
+      </NavBtn>
+      {/* 글쓰기 버튼 */}
+      <NavBtn ison={"true"}>
+        <Link to={"/write"}>
+          <Circle>
+            <img src="/image/write.svg" alt="" />
+          </Circle>
+        </Link>
+      </NavBtn>
+      {/* 유저 버튼 */}
+      <NavBtn ison={location.pathname.startsWith("/user") ? "true" : "false"}>
+        <Link to={"/user/" + cookies.userId}>
+          <img src={"/image/user.svg"} alt="" />
+        </Link>
+      </NavBtn>
+    </MenuBarBox>
+  );
+};
 
 export default MenuBar;
