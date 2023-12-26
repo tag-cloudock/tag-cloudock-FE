@@ -4,7 +4,7 @@
 사용법: App.js에서 라우팅됨.
 기타: 주소의 파라미터로 유저 페이지 구분
 */
-import { useParams, useNavigate } from "react-router-dom";
+import { Link,useParams, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
@@ -15,7 +15,7 @@ import MenuBar from "../layout/MenuBar";
 // 로그아웃 버튼
 const Logout = styled.button`
    display: block;
-   margin: 30px auto;
+   margin: 30px auto 0px auto;
    border: none;
    border-radius: 10px;
    background: none;
@@ -57,7 +57,7 @@ const ProfilImg = styled.div`
    height: 80px;
    overflow: hidden;
    border-radius: 100px;
-   border: 1px solid #cccccc;
+   border: 2px solid #379DFF;
    position: relative;
    & img{
     position: absolute;
@@ -77,6 +77,29 @@ const UserInfoBox = styled.div`
   padding: 20px;
   border-radius: 15px;
   box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
+`;
+
+const Certifi = styled.div`
+   display: block;
+   margin: 10px auto;
+   background: none;
+   color:#a9a9a9;
+   text-align: center;
+   font-size: 15px;
+   font-weight: 400;
+
+   & span:hover{
+    font-size: 16px;
+   }
+   & span{
+    color: #9d9d9d;
+    border-bottom: 1px solid #9d9d9d;
+    text-align: center;
+   }
+   & span span{
+    color: #379DFF;
+    text-align: center;
+   }
 `;
 
 const User = () => {
@@ -169,6 +192,9 @@ const User = () => {
 
         </UserInfoBox>
         <Logout onClick={removeCookies}>로그아웃</Logout>
+        
+        <Certifi><Link to={"/certification"}><span>대여글을 작성하고 싶나요? <span>학생증 인증하기</span></span></Link></Certifi>
+        
       </UserBox>
       <MenuBar></MenuBar>
     </div>

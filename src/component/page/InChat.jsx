@@ -96,7 +96,8 @@ const TurnToOn = styled.div`
 
 // 게시물 제목
 const PostTitle = styled.div`
-  font-size: 20px;
+  font-size: 15px;
+  line-height: 23px;
   color:#222222;
   margin-top: 8px;
 `;
@@ -147,7 +148,7 @@ const MessagesBox = styled.ul`
 `;
 
 const TestBox = styled.div`
-  height: 1000px;
+  /* height: 1000px; */
 `;
 
 // 메세지 라인 박스
@@ -173,7 +174,7 @@ const Message = styled.li`
   font-family: 'Noto Sans KR', sans-serif;
   order:  ${({ isMe }) => (isMe ? 2 : 1)};
   word-break: break-all;
-  margin: 10px;
+  margin: 7px 10px;
   display:inline-block ;
   vertical-align: left;
   text-align: left;

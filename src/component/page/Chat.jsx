@@ -81,17 +81,37 @@ const LastMessage = styled.span`
   color : #000000;
 `;
 
-// 채팅 내역이 없을 때 문구
-const NoChatText = styled.div`
+
+const NoChatBox = styled.div`
   width: 100%;
   text-align: center;
   position: absolute;
   top:40%;
+  display: block;
+  max-width: 700px;
+  color : #cacaca;
+  & a{
+    color : #cacaca;
+  }
+`;
+// 채팅 내역이 없을 때 문구
+const NoChatText = styled.div`
   font-size: 50px;
   font-weight: 800;
-  display: block;
-  color : #CAE5FF;
-  max-width: 700px;
+`;
+
+const MoveToPost = styled.div`
+  display: inline-block;
+  margin-top: 15px;
+  font-size: 17px;
+  line-height: 20px;
+  font-weight: 400;
+  border-bottom: 1px solid #cacaca;
+  &:hover{
+    /* font-weight: 700; */
+    color : #79BDFF;
+    border-bottom: 1px solid #79BDFF;
+  }
 `;
 
 const Chat = () => {
@@ -131,7 +151,10 @@ const Chat = () => {
 
       {chatRoomList.length == 0 ?
         // 채팅방이 하나도 없다면
+        <NoChatBox>
         <NoChatText>썰렁~</NoChatText>
+        <Link to={"/"}><MoveToPost>빌려줄수있는 물건 보러 가기!</MoveToPost></Link>
+        </NoChatBox>
         :
         // 채팅방 리스트
         <ul>
