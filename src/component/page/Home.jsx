@@ -82,7 +82,7 @@ const Home = () => {
         <Link to={"/"}>
           <ContainerBox>
             <CampusText>
-              <a style={{ color: "#379DFF" }}>글로벌</a> 캠퍼스
+              <span style={{ color: "#379DFF" }}>글로벌</span> 캠퍼스
             </CampusText>
           </ContainerBox>
         </Link>
@@ -90,7 +90,7 @@ const Home = () => {
         <Link to={"/"}>
           <ContainerBox>
             <CampusText>
-              <a style={{ color: "#379DFF" }}>메디컬</a> 캠퍼스
+              <span style={{ color: "#379DFF" }}>메디컬</span> 캠퍼스
             </CampusText>
           </ContainerBox>
         </Link>
