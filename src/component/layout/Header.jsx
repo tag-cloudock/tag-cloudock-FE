@@ -10,12 +10,12 @@ import styled from "styled-components";
 // 헤더 박스
 const HeaderBox = styled.div`
   z-index: 2;
-  background: ${({ nobg }) => (nobg ? 'none' : '#ffffff')};
+  background: ${({ nobg }) => (nobg ? '#ffffff' : '#ffffff')};
   position: fixed;
   left: 0;
   right: 0;
   height: 50px;
-  border-bottom: ${({ nobg }) => (nobg ? 'none' : '1px solid #f0f0f0')};
+  /* border-bottom: ${({ nobg }) => (nobg ? 'none' : '1px solid #f0f0f0')}; */
   @media screen and (min-width: 701px) {
     /* margin: 0px auto; */
     /* max-width: 701px; */
@@ -40,8 +40,8 @@ const HeaderText = styled.span`
   padding-left: 20px;
   height: 50px;
   line-height: 50px;
-  color: rgb(194, 194, 194);
-  font-weight: 700;
+  color: #555555;
+  font-weight: 800;
   font-size: 20px;
 `;
 
@@ -71,6 +71,11 @@ const Anno = styled.div`
   margin-top: 10px;
   float: right;
   margin-left: 10px;
+  border-radius: 5px;
+  /* background: #EEF6FF; */
+  &:hover{
+    background: #f3f3f3;
+  }
   & img{
     width: 30px;
   }
@@ -79,11 +84,10 @@ const Anno = styled.div`
 const Help = styled.div`
   width: 30px;
   height: 30px;
-  border-radius: 30px;
-  background: #EEF6FF;
+  border-radius: 5px;
   float: right;
   margin-top: 10px;
-  margin-left: 5px;
+  margin-left: 10px;
   text-align: center;
   line-height: 30px;
   font-weight: 800;
@@ -94,32 +98,34 @@ const Help = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 10px;
+    width: 13px;
+  }
+  &:hover{
+    background: #f3f3f3;
   }
 `;
 
 const HelpIntro = styled.div`
   float: right;
-  width: 130px;
-  margin-top: 15px;
+  margin-top: 12px;
   position: relative;
+  width: 150px;
   & img{
     position: absolute;
     left: 0;
     top: 0;
-    height: 20px;
+    height: 24px;
   }
   & span{
     position: absolute;
-    left: 5px;
-    line-height: 20px;
-    font-size: 11px;
+    left: 7px;
+    line-height: 24px;
+    font-size: 13px;
     font-weight: 800;
     color: #ffffff;
-    /* position: absolute; */
     top: 0;
-    /* height: 20px; */
-    width: 200px;
+    /* width: 200px; */
+    display: inline-block;
   }
 `;
 

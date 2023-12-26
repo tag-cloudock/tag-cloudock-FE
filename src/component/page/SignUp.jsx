@@ -41,7 +41,6 @@ const SubTitle = styled.div`
 
 // 아이디 패스워드 조건 사항
 const Requirements = styled.span`
-    text-align: center;
     font-size: 15px;
     font-weight: 400;
     color : #989fac;
@@ -280,6 +279,7 @@ const SignUp = () => {
             setNickname(e.target.value);
           }}
           onKeyDown={(e) => { activeEnter(e) }} />
+        <Requirements>최대 10글자</Requirements>
 
         {/* 이메일(제작중) */}
         {/* <InputBox
