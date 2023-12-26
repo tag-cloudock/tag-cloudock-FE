@@ -26,6 +26,7 @@ const ImageIcon = styled.img`
   width: 22px;
   height: 22px;
   vertical-align: middle;
+  margin-left: 5px;
 `;
 
 // 학생회 캠퍼스 선택 박스 Parent
@@ -104,7 +105,7 @@ const Home = () => {
       </CenterContainer>
       {/* 장소 선택 목록 */}
       <BoxTitle>
-        어딘가요? 내 물건이 필요한 곳!{" "}
+        어딘가요? 내 물건이 필요한 곳!
         <ImageIcon src={"/image/face.svg"} alt="" />
       </BoxTitle>
       <CenterContainer>
