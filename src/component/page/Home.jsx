@@ -2,12 +2,13 @@
 용도: 메인 홈 페이지
 담당자: 김윤수
 사용법: App.js 라우팅
-기타: BE와 목록 연동하는 
+기타: 
 */
 import MenuBar from "../layout/MenuBar";
 import Header from "../layout/Header";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import PostList from "./Home/PostList";
 
 // 홈 각 박스 제목
 const BoxTitle = styled.div`
@@ -73,7 +74,7 @@ const CenterContainer = styled.div`
 const CenterBox = styled.div`
   background: #ffffff;
   border-radius: 10px 10px 10px 10px;
-  height: 400px;
+  height: 350px;
   box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px;
   align-items: center;
   justify-content: center;
@@ -94,6 +95,7 @@ const CampusText = styled.div`
 
 //물건이 필요한 곳 박스
 const CampusBox = styled.div`
+  padding: 10px;
   margin-bottom: 10%;
   background: #ffffff;
   border-radius: 10px 10px 10px 10px;
@@ -103,6 +105,37 @@ const CampusBox = styled.div`
   justify-content: center;
   @media screen and (max-width: 700px) {
     height: 150px;
+  }
+`;
+
+//위치 상위 박스
+const Location = styled.div`
+  display: flex;
+  padding: 15px;
+  padding-top: 25px;
+  justify-content: center;
+  @media screen and (max-width: 700px) {
+    padding: 13px;
+  }
+`;
+
+//위치 박스
+const LocationBox = styled.span`
+  margin: 0 4px;
+  padding: 13px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background: #ffffff;
+  border: 1px solid #379dff;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 17px;
+  color: #379dff;
+  @media screen and (max-width: 700px) {
+    margin: 0 3px;
+    padding: 10px;
+    font-weight: 700;
+    font-size: 13px;
   }
 `;
 
@@ -137,7 +170,9 @@ const Home = () => {
         대여를 원하고 있어요 <ImageIcon src={"/image/hand.svg"} alt="" />
       </BoxTitle>
       <CenterContainer>
-        <CenterBox></CenterBox>
+        <CenterBox>
+          <PostList></PostList>
+        </CenterBox>
       </CenterContainer>
       {/* 장소 선택 목록 */}
       <BoxTitle>
@@ -145,7 +180,44 @@ const Home = () => {
         <ImageIcon src={"/image/sad.svg"} alt="" />
       </BoxTitle>
       <CenterContainer>
-        <CampusBox></CampusBox>
+        <CampusBox>
+          <Location>
+            <Link to={"/"}>
+              <LocationBox>바나대</LocationBox>
+            </Link>
+            <Link to={"/"}>
+              <LocationBox>AI공학관</LocationBox>
+            </Link>
+            <Link to={"/"}>
+              <LocationBox>중앙도서관</LocationBox>
+            </Link>
+          </Location>
+          <Location>
+            <Link to={"/"}>
+              <LocationBox>가천관</LocationBox>
+            </Link>
+            <Link to={"/"}>
+              <LocationBox>공대2</LocationBox>
+            </Link>
+            <Link to={"/"}>
+              <LocationBox>공대1</LocationBox>
+            </Link>
+            <Link to={"/"}>
+              <LocationBox>글로벌센터</LocationBox>
+            </Link>
+          </Location>
+          <Location>
+            <Link to={"/"}>
+              <LocationBox>반도체대학</LocationBox>
+            </Link>
+            <Link to={"/"}>
+              <LocationBox>비전타워</LocationBox>
+            </Link>
+            <Link to={"/"}>
+              <LocationBox>교육대학</LocationBox>
+            </Link>
+          </Location>
+        </CampusBox>
       </CenterContainer>
       <MenuBar></MenuBar>
     </div>
