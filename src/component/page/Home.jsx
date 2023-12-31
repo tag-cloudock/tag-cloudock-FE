@@ -73,13 +73,12 @@ const CenterContainer = styled.div`
 // 대여 박스 Child
 const CenterBox = styled.div`
   background: #ffffff;
-  border-radius: 10px 10px 10px 10px;
-  height: 350px;
+  border-radius: 10px;
+  padding: 10px 0px;
   box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px;
   align-items: center;
   justify-content: center;
   @media screen and (max-width: 700px) {
-    height: 200px;
   }
 `;
 
@@ -95,45 +94,43 @@ const CampusText = styled.div`
 
 //물건이 필요한 곳 박스
 const CampusBox = styled.div`
-  padding: 10px;
+  padding: 20px 10px;
   margin-bottom: 10%;
   background: #ffffff;
-  border-radius: 10px 10px 10px 10px;
-  height: 200px;
+  border-radius: 10px;
   box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
   @media screen and (max-width: 700px) {
-    height: 150px;
   }
 `;
 
 //위치 상위 박스
-const Location = styled.div`
-  display: flex;
-  padding: 15px;
-  padding-top: 25px;
-  justify-content: center;
-  @media screen and (max-width: 700px) {
-    padding: 13px;
-  }
-`;
+// const Location = styled.div`
+//   display: flex;
+//   padding: 15px;
+//   padding-top: 25px;
+//   justify-content: center;
+//   @media screen and (max-width: 700px) {
+//     padding: 13px;
+//   }
+// `;
 
 //위치 박스
 const LocationBox = styled.span`
-  margin: 0 4px;
-  padding: 13px;
-  padding-left: 30px;
-  padding-right: 30px;
+  display: inline-block;
+  margin: 3px 3px;
+  padding: 15px;
   background: #ffffff;
   border: 1px solid #379dff;
   border-radius: 30px;
   font-weight: 800;
   font-size: 17px;
   color: #379dff;
+  &:hover{
+    background: #379dff;
+    color: #ffffff;
+  }
   @media screen and (max-width: 700px) {
-    margin: 0 3px;
-    padding: 10px;
     font-weight: 700;
     font-size: 13px;
   }
@@ -181,7 +178,6 @@ const Home = () => {
       </BoxTitle>
       <CenterContainer>
         <CampusBox>
-          <Location>
             <Link to={"/"}>
               <LocationBox>바나대</LocationBox>
             </Link>
@@ -191,8 +187,6 @@ const Home = () => {
             <Link to={"/"}>
               <LocationBox>중앙도서관</LocationBox>
             </Link>
-          </Location>
-          <Location>
             <Link to={"/"}>
               <LocationBox>가천관</LocationBox>
             </Link>
@@ -205,8 +199,6 @@ const Home = () => {
             <Link to={"/"}>
               <LocationBox>글로벌센터</LocationBox>
             </Link>
-          </Location>
-          <Location>
             <Link to={"/"}>
               <LocationBox>반도체대학</LocationBox>
             </Link>
@@ -216,7 +208,6 @@ const Home = () => {
             <Link to={"/"}>
               <LocationBox>교육대학</LocationBox>
             </Link>
-          </Location>
         </CampusBox>
       </CenterContainer>
       <MenuBar></MenuBar>

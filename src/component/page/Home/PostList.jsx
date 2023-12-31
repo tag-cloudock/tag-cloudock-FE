@@ -12,43 +12,39 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
 const Wrapped = styled.div`
-  padding: 18px;
-  padding-left: 8%;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 10px 20px;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 20px;
   color: #505050;
+  line-height: 25px;
+  height: 25px;
   @media screen and (max-width: 700px) {
-    padding: 10px;
-    padding-left: 18px;
-    padding-top: 8px;
-    font-size: 13px;
+    padding: 5px 15px;
+    font-size: 15px;
   }
 `;
 
 // 최신글 location
 const Title = styled.span`
-  padding-left: 15%;
-  font-weight: 500;
-  font-size: 18px;
+  padding-left: 15px;
+  font-weight: 400;
+  font-size: 20px;
+  display: inline-block;
+  line-height: 25px;
+  height: 25px;
   color: #505050;
   @media screen and (max-width: 700px) {
-    padding-top: 3px;
-    font-size: 13px;
+    font-size: 15px;
   }
 `;
 
 // 최신 글 상위 3개에 뜨는 이모지
 const ImageIcon = styled.img`
-  width: 23px;
+  width: 25px;
+  float: right;
   vertical-align: middle;
-  margin-left: 280px;
-  margin-bottom: 5px;
   @media screen and (max-width: 700px) {
-    margin-left: 150px;
-    width: 15px;
-    margin-bottom: 0px;
+    width: 20px;
   }
 `;
 
