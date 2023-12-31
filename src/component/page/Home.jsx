@@ -125,7 +125,7 @@ const CampusBox = styled.div`
 const LocationBox = styled.span`
   display: inline-block;
   margin: 3px 3px;
-  padding: 15px;
+  padding: 10px 15px;
   background: #ffffff;
   border: 1px solid #379dff;
   border-radius: 30px;
