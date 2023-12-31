@@ -12,14 +12,20 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
 const Wrapped = styled.div`
-  padding: 10px 20px;
+  padding: 10px 2%;
   font-weight: 700;
   font-size: 20px;
   color: #505050;
   line-height: 25px;
   height: 25px;
+  width: 94%;
+  margin: 0px auto;
+  &:hover{
+    border-radius: 10px;
+    background: #f7f7f7;
+  }
   @media screen and (max-width: 700px) {
-    padding: 5px 15px;
+    padding: 5px 2%;
     font-size: 15px;
   }
 `;
@@ -76,7 +82,7 @@ const PostList = () => {
           <Link to={"/"}>
             <Wrapped>
               {post.location}
-              <Title> {post.title}</Title>
+              <Title>{post.title}</Title>
               {index < 3 && <ImageIcon src="image/thunder.svg" alt="" />}
             </Wrapped>
           </Link>
