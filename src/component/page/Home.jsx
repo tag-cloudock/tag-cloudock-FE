@@ -95,7 +95,7 @@ const CampusText = styled.div`
 //물건이 필요한 곳 박스
 const CampusBox = styled.div`
   padding: 20px 10px;
-  margin-bottom: 10%;
+  margin-bottom: 100px;
   background: #ffffff;
   border-radius: 10px;
   box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px;
