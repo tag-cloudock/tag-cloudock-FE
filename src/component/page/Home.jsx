@@ -57,7 +57,13 @@ const ContainerBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  &:hover div{
+    font-size: 40px;
+  }
   @media screen and (max-width: 700px) {
+    &:hover div{
+    font-size: 25px;
+    }
     height: 100px;
   }
 `;

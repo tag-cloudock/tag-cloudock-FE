@@ -50,7 +50,7 @@ const ImageIcon = styled.img`
   float: right;
   vertical-align: middle;
   @media screen and (max-width: 700px) {
-    width: 20px;
+    width: 23px;
   }
 `;
 

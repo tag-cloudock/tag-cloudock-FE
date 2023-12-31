@@ -10,7 +10,7 @@ import styled from "styled-components";
 // 헤더 박스
 const HeaderBox = styled.div`
   z-index: 2;
-  background: ${({ nobg }) => (nobg ? '#ffffff' : '#ffffff')};
+  background: ${({ nobg }) => (nobg ? '#FBFBFB' : '#FBFBFB')};
   position: fixed;
   left: 0;
   right: 0;
