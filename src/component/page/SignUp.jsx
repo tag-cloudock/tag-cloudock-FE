@@ -15,7 +15,7 @@ const SignUpBox = styled.div`
     margin: 20px auto 0 20px;
     padding: 70px 0px;
     width: 90%;
-    background : #ffffff;
+    /* background : #ffffff; */
     border-radius: 20px;
     text-align: center;
 `;

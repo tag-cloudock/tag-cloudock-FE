@@ -159,7 +159,7 @@ const Chat = () => {
         // 채팅방 리스트
         <ul>
           {chatRoomList.map((chatRoom) => (
-            <Link to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)} state={{ postId: chatRoom.postId }}>
+            <Link key={chatRoom.id} to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)} state={{ postId: chatRoom.postId }}>
               <ChatRoom key={chatRoom.id}>
                 <Link to={"/"}><UserImg>빌림</UserImg></Link>
                 <ChatRoomContent>

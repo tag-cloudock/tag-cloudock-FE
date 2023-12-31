@@ -53,6 +53,9 @@ const Circle = styled.div`
   position: relative;
   top: -30px;
   text-align: center;
+  &:hover{
+    background: #79BDFF;
+  }
   & img {
     width: 50px;
     margin-top: 5px;
