@@ -58,42 +58,14 @@ const PostList = () => {
     const fetchPosts = async () => {
       try {
         const response1 = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/post/all",
-          {
-            headers: {
-              Authorization: `Bearer ${cookies.token}`,
-            },
-          }
+          "http://" + process.env.REACT_APP_BACK_URL + "/post/news"
         );
         setPosts(response1.data);
       } catch (error) {
         console.log("포스트 오류 발생: ", error);
       }
     };
-
-    // 로그인 여부 체크
-    const fetchChatRooms = async () => {
-      try {
-        if (!cookies.token) {
-          navigate("/signin");
-          return;
-        }
-
-        const response2 = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/chat/user",
-          {
-            headers: {
-              Authorization: `Bearer ${cookies.token}`,
-            },
-          }
-        );
-      } catch (error) {
-        console.error("쿠키 오류 발생:", error);
-      }
-    };
-
     fetchPosts();
-    fetchChatRooms();
   }, [cookies.token, navigate]); // 두 요청에 필요한 의존성을 배열로 전달
 
   return (
