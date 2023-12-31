@@ -20,7 +20,7 @@ const Wrapped = styled.div`
   height: 25px;
   width: 94%;
   margin: 0px auto;
-  &:hover{
+  &:hover {
     border-radius: 10px;
     background: #f7f7f7;
   }
@@ -36,8 +36,8 @@ const Title = styled.span`
   font-weight: 400;
   font-size: 20px;
   display: inline-block;
-  line-height: 25px;
-  height: 25px;
+  // line-height: 25px;
+  // height: 25px;
   color: #505050;
   @media screen and (max-width: 700px) {
     font-size: 15px;
@@ -46,11 +46,11 @@ const Title = styled.span`
 
 // 최신 글 상위 3개에 뜨는 이모지
 const ImageIcon = styled.img`
-  width: 25px;
+  width: 23px;
   float: right;
   vertical-align: middle;
   @media screen and (max-width: 700px) {
-    width: 23px;
+    width: 17px;
   }
 `;
 
@@ -76,14 +76,15 @@ const PostList = () => {
 
   return (
     <div>
-      {/* 처음 6개의 포스트만 렌더링 */}
-      {posts.slice(0, 6).map((post, index) => (
+      {/* post 데이터 렌더링 */}
+      {posts.map((post, index) => (
         <div key={post.postId}>
           <Link to={"/"}>
             <Wrapped>
               {post.location}
-              <Title>{post.title}</Title>
-              {index < 3 && <ImageIcon src="image/thunder.svg" alt="" />}
+              <Title> {post.title}</Title>
+              {/* 처음 3개의 포스트에만 img 추가 */}
+              {index < 3 && <ImageIcon src="image/new.svg" alt="" />}
             </Wrapped>
           </Link>
         </div>
@@ -93,20 +94,3 @@ const PostList = () => {
 };
 
 export default PostList;
-
-// <div>
-//   {/* post 데이터 렌더링 */}
-//   {posts.map((post, index) => (
-//     <div key={post.postId}>
-//       <Wrapped>
-//         {post.location}
-//         <Title> {post.title}</Title>
-//       </Wrapped>
-
-//       {/* 처음 3개의 포스트에만 img 추가 */}
-//       {index < 3 && (
-//         <ImageIcon src="image/thunder.svg" alt="Your Image Alt Text" />
-//       )}
-//     </div>
-//   ))}
-// </div>;

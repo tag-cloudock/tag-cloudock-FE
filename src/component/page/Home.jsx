@@ -57,12 +57,12 @@ const ContainerBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  &:hover div{
+  &:hover div {
     font-size: 40px;
   }
   @media screen and (max-width: 700px) {
-    &:hover div{
-    font-size: 25px;
+    &:hover div {
+      font-size: 25px;
     }
     height: 100px;
   }
@@ -110,17 +110,6 @@ const CampusBox = styled.div`
   }
 `;
 
-//위치 상위 박스
-// const Location = styled.div`
-//   display: flex;
-//   padding: 15px;
-//   padding-top: 25px;
-//   justify-content: center;
-//   @media screen and (max-width: 700px) {
-//     padding: 13px;
-//   }
-// `;
-
 //위치 박스
 const LocationBox = styled.span`
   display: inline-block;
@@ -132,7 +121,7 @@ const LocationBox = styled.span`
   font-weight: 800;
   font-size: 17px;
   color: #379dff;
-  &:hover{
+  &:hover {
     background: #379dff;
     color: #ffffff;
   }
@@ -184,36 +173,36 @@ const Home = () => {
       </BoxTitle>
       <CenterContainer>
         <CampusBox>
-            <Link to={"/"}>
-              <LocationBox>바나대</LocationBox>
-            </Link>
-            <Link to={"/"}>
-              <LocationBox>AI공학관</LocationBox>
-            </Link>
-            <Link to={"/"}>
-              <LocationBox>중앙도서관</LocationBox>
-            </Link>
-            <Link to={"/"}>
-              <LocationBox>가천관</LocationBox>
-            </Link>
-            <Link to={"/"}>
-              <LocationBox>공대2</LocationBox>
-            </Link>
-            <Link to={"/"}>
-              <LocationBox>공대1</LocationBox>
-            </Link>
-            <Link to={"/"}>
-              <LocationBox>글로벌센터</LocationBox>
-            </Link>
-            <Link to={"/"}>
-              <LocationBox>반도체대학</LocationBox>
-            </Link>
-            <Link to={"/"}>
-              <LocationBox>비전타워</LocationBox>
-            </Link>
-            <Link to={"/"}>
-              <LocationBox>교육대학</LocationBox>
-            </Link>
+          <Link to={"/"}>
+            <LocationBox>바나대</LocationBox>
+          </Link>
+          <Link to={"/"}>
+            <LocationBox>AI공학관</LocationBox>
+          </Link>
+          <Link to={"/"}>
+            <LocationBox>중앙도서관</LocationBox>
+          </Link>
+          <Link to={"/"}>
+            <LocationBox>가천관</LocationBox>
+          </Link>
+          <Link to={"/"}>
+            <LocationBox>공대2</LocationBox>
+          </Link>
+          <Link to={"/"}>
+            <LocationBox>공대1</LocationBox>
+          </Link>
+          <Link to={"/"}>
+            <LocationBox>글로벌센터</LocationBox>
+          </Link>
+          <Link to={"/"}>
+            <LocationBox>반도체대학</LocationBox>
+          </Link>
+          <Link to={"/"}>
+            <LocationBox>비전타워</LocationBox>
+          </Link>
+          <Link to={"/"}>
+            <LocationBox>교육대학</LocationBox>
+          </Link>
         </CampusBox>
       </CenterContainer>
       <MenuBar></MenuBar>
