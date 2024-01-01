@@ -53,6 +53,7 @@ const Circle = styled.div`
   position: relative;
   top: -30px;
   text-align: center;
+
   & img {
     width: 50px;
     margin-top: 5px;

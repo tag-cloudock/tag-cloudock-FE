@@ -155,44 +155,15 @@ const ItemRemoveBtn = styled.button`
 `;
 
 
-const CiAdd = () => {
-    const [councilData, setCouncilData] = useState({
-        college : '',
-        items : []
-    }); // 채팅방 리스트 상태
+const CouncillItemCreate = () => {
     const [name, setName] = useState("");
     const [type, setType] = useState("물품 유형"); 
     const [key, setKey] = useState(0); 
-    const { id } = useParams();
+    // const { id } = useParams();
     
 
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
-  
-    useEffect(() => {
-      const fetchCouncils = async () => {
-        try {
-          // 토큰 쿠키가 없다면 로그인 페이지로 이동
-          if (!cookies.token) {
-            navigate("/signin");
-            return;
-          }
-          const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/council/"+id, {
-            headers: {
-              Authorization: `Bearer ${cookies.token}`,
-            },
-          });
-
-          setCouncilData(response.data);
-          console.log(response.data);
-
-        } catch (error) {
-          console.error("오류 발생:", error);
-        }
-      };
-
-      fetchCouncils();
-    }, [cookies.token, navigate, key]); // [] 와 같이 비워도 됨.
 
 
     const handleAddCouncil = async (e) => {
@@ -211,40 +182,29 @@ const CiAdd = () => {
 
         try {
           // 회원가입 api 요청
-          const councilId = id;
-          const signUpResponse = await axios.post("http://"+process.env.REACT_APP_BACK_URL+"/council-item",
+        //   const councilId = id;
+          const signUpResponse = await axios.post("http://"+process.env.REACT_APP_BACK_URL+"/manage/council-item",
             {
-                councilId,
                 name,
                 type,
+            },
+            {
+                headers: {
+                Authorization: `Bearer ${cookies.token}`,
+                },
             }
           );
           // 성공시
           if (signUpResponse.status === 200) {
             window.alert("생성 성공");
             setKey(key+1);
-            // navigate("/");
+            navigate("/council/manage");
           }
         } catch (error) {
             console.error("오류 발생:", error);
           
         }
       };
-    const removeItem = async (id) => {
-        try {
-            console.log(id);
-            const response = await axios.delete("http://"+process.env.REACT_APP_BACK_URL+"/council-item/"+id, {
-            headers: {
-                Authorization: `Bearer ${cookies.token}`,
-            },
-            });
-            window.alert("삭제되었습니다.");
-            setKey(key+1);
-            console.log(response);
-        } catch (error) {
-            console.error("오류 발생:", error);
-        }
-    };
     return (
         <AdminBox>
             <Header headerType={"admin"} headerText={"물품 추가"}></Header>
@@ -276,22 +236,8 @@ const CiAdd = () => {
                 {/* 제출 버튼 */}
                 <SummitBtn onClick={handleAddCouncil}>추가</SummitBtn>
             </div>
-            <div>
-                <CouncilName>{councilData.name}</CouncilName>
-                <Items>
-                    {councilData.items.map((item) => (
-                        <Item key={item.itemId}>
-                            {item.type} - {item.name}
-                            <ItemRemoveBtn onClick={() => removeItem(item.itemId)}>
-                                <img src={"/image/remove.svg"}></img>
-                            </ItemRemoveBtn>
-                        </Item>
-                    ))}
-                </Items>
-                
-            </div>
         </AdminBox>
     );
   };
 
-export default CiAdd;
+export default CouncillItemCreate;
