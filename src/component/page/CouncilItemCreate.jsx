@@ -33,7 +33,7 @@ const InputBox = styled.input`
         color: #aaaaaa; 
     }
     &:focus {
-      border-color: #559BFF;
+      border-color: #38d9a9;
     }
 `;
 
@@ -46,7 +46,7 @@ const SummitBtn = styled.button`
     color: #ffffff;
     margin-top: 20px;
     border-radius: 10px;
-    background: #559BFF;
+    background: #38d9a9;
 `;
 
 const Details = styled.details`
@@ -81,7 +81,7 @@ const List = styled.li`
     list-style: none;
     padding: 10px 20px;
     &:hover{
-        background: #559cff1e;
+        background: #e9fff8;
     }
     &:last-child {
     border-bottom: none;
@@ -117,41 +117,6 @@ const Button = styled.button`
     width: 100%;
     text-align: center;
     display: block;
-`;
-
-
-const CouncilName = styled.div`
-    margin: 20px 0px 10px 0px;
-    font-weight: 700;
-
-`;
-const Items = styled.ul`
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: rgba(205, 207, 208, 0.5) 0px 0px 15px;
-
-    & li:not(:last-child){
-        border-bottom: 1px solid #dddddd;
-    }
-
-`;
-
-const Item = styled.li`
-    list-style: none;
-    padding: 10px 10px;
-    font-weight: 700;
-    color:#777777;
-    font-size: 15px;
-    height: 30px;
-    line-height: 30px;
-
-`;
-
-const ItemRemoveBtn = styled.button`
-    float: right;
-    border: none;
-    background: none;
-    margin-top: 5px;
 `;
 
 

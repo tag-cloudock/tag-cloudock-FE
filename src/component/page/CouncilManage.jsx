@@ -16,72 +16,7 @@ const AdminBox = styled.div`
     padding: 0 20px;
 `;
 
-const CollegeBox = styled.ul`
-    background: #ffffff;
-    margin-bottom: 20px;
-    border-radius: 15px;
-    box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px;
-    overflow: hidden;
-    & a:not(:last-child) li{
-        border-bottom: 1px solid #dddddd;
-    }
-`;
-
-const CouncilImg = styled.div`
-    width: 50px;
-    height: 50px;
-    border: 1px solid #eeeeee;
-    border-radius: 50px;
-    float: left;
-    margin-right: 10px;
-`;
-
-const CouncilContent = styled.div`
-    /* float: left; */
-    display: inline-block;
-
-`;
-
-const RemoveBtn = styled.button`
-    width: 20px;
-    float: right;
-    margin-right: 10px;
-    background: none;
-    border: none;
-    & img{
-        margin-top: 13px;
-        width: 25px;
-    }
-`;
-
-
-const Council = styled.li`
-    list-style: none;
-    padding: 15px 10px; 
-    line-height: 25px;
-`;
-const CollegeName = styled.div`
-    font-size: 15px;
-    font-weight: 800;
-    color: #505050;
-    margin-bottom: 10px;
-`;
-
-const CouncilName = styled.div`
-    font-weight: 800;
-    color: #555555;
-`;
-
-const ItemInfo = styled.div`
-    font-size: 15px;
-    font-weight: 400;
-    color: #aaaaaa;
-`;
-
-
-
 const InfoBox = styled.div`
-  margin-top: 20px;
   margin-bottom: 20px;
   font-size: 18px;
   line-height: 30px;
@@ -111,7 +46,7 @@ const CreateCouncil = styled.div`
 
 const Items = styled.ul`
     background: #ffffff;
-    border-radius: 15px;
+    border-radius: 10px;
     box-shadow: rgba(205, 207, 208, 0.5) 0px 0px 15px;
 
     & li:not(:last-child){
@@ -146,37 +81,23 @@ const CountBox = styled.div`
     height: 30px;
     line-height: 10px;
     height: 30px;
-    /* & div{
-        display: inline-block;
-        margin: 2px 0px;
-        font-size: 20px;
-        line-height: 20px;
-        border-radius: 30px;
-        padding: 2px 15px;
-        border: 1px solid #cccccc;
-    } */
 `;
 
-const CountChangeBtn = styled.div`
-    display: inline-block;
-    margin: 2px 5px;
-    font-size: 20px;
-    line-height: 20px;
-    height: 20px;
-    border-radius: 30px;
-    width: 20px;
-    height: 20px;
-    background: #dddddd;
-    color:#dddddd00;
+const CountChangeBtn = styled.button`
+    float: right;
+    margin: 5px;
+    background: none;
+    border: none;
+    & img{
+        width: 20px;
+    }
 `;
-
 const Count = styled.div`
-    display: inline-block;
-    margin: 2px 0px;
-    font-size: 20px;
-    line-height: 20px;
+    float: right;
+    margin: 5px;
+    font-size: 15px;
     border-radius: 30px;
-    padding: 2px 15px;
+    padding: 5px 15px;
     border: 1px solid #cccccc;
 `;
 
@@ -187,6 +108,14 @@ const Subtitle = styled.div`
   font-size: 20px;
   font-weight: bold;
   color: #333333;
+  & span{
+    float: right;
+    border-radius: 15px;
+    padding: 5px;
+    background: #38d9a9;
+    font-size: 11px;
+    color: #ffffff;
+  }
 `;
 
 const Tag = styled.span`
@@ -195,7 +124,7 @@ const Tag = styled.span`
   border: 1px solid #38d9a9;
   color:#38d9a9;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 700;
   background: #e7fff8;
   margin-right: 10px;
 `;
@@ -249,12 +178,39 @@ const CouncilManage = () => {
             console.error("오류 발생:", error);
         }
     };
+
+    const ItemQuantityChange = async (id, quantity) => {
+        try {
+            console.log(id);
+            if (quantity < 0){
+                return;
+            }
+            const response = await axios.put("http://"+process.env.REACT_APP_BACK_URL+"/council-item/"+id, 
+            {
+                quantity
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${cookies.token}`,
+                },
+            });
+            setKey(key+1);
+            console.log(response);
+        } catch (error) {
+            console.error("오류 발생:", error);
+        }
+    };
     return (
         <AdminBox>
-            <Header headerType={"admin"} headerText={councilData.name}></Header>
+            <Header headerType={"manage"} headerText={councilData.name+" 학생회"}></Header>
             
-                <Subtitle>정보 수정하기</Subtitle>
+                <Subtitle>이용 정보
+                    <Link to={"/council/manage/info"}>
+                        <span>수정하기</span>
+                    </Link>
+                </Subtitle>
                 <InfoBox>
+                    위치 : {councilData.location}<br/>
                     운영시간 : {councilData.operatingHours}<br/>
                     이용수칙 : {councilData.usageGuidelines}
                 </InfoBox>
@@ -269,7 +225,11 @@ const CouncilManage = () => {
                             </ItemRemoveBtn>
 
                             <CountBox>
-                                <CountChangeBtn>.</CountChangeBtn><Count>1</Count><CountChangeBtn>.</CountChangeBtn>
+                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity+1)}><img src={"/image/up.svg"}></img></CountChangeBtn>
+                                <Count>{item.quantity}</Count>
+                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity-1)}><img src={"/image/down.svg"}></img></CountChangeBtn>
+                                
+                                
                             </CountBox>
                         </Item>
                     ))}
