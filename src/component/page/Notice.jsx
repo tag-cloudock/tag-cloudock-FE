@@ -46,11 +46,63 @@ const NoticeDate = styled.div`
   color: #636363;
   font-size: 12px;
   font-weight: 500;
+
+const BoardBox = styled.div`
+  border-radius: 10px;
+  border: 1px solid #eaeaea;
+  background: #fff;
+  padding: 10px 20px;
+  width: auto;
+  height: auto;
+  flex-shrink: 0;
+  margin: 0 auto;
+  @media screen and (max-width: 700px) positon :relative;
+`;
+
+const Listbox = styled.div`
+  border-bottom: 1px solid #d5d5d5;
+  background: #fff;
+  width: auto;
+  height: 56px;
+  flex-shrink: 0;
+  display: opacity;
+  padding: 5px;
+`;
+
+const NoticeTitle = styled.div`
+  display: flex;
+  width: 237px;
+  height: 40px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #636363;
+  font-family: Lexend;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
+
+const NoticeDate = styled.div`
+  display: flex;
+  width: auto;
+  height: 13px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #636363;
+  font-family: Lexend;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
   padding-bottom: 2px;
 `;
 
 const ImageIcon = styled.img`
   width: 25px;
+
   height: 35px;
   float: right;
   vertical-align: middle;
@@ -93,10 +145,5 @@ const Notice = () => {
           ))}
       </BoardBox>
       </NoticeBox>
-     
-      <MenuBar></MenuBar>
-    </div>
-  );
-};
 
 export default Notice;
