@@ -31,7 +31,7 @@ const Title = styled.div`
     font-size: 60px;
     font-weight: 850;
     & a{
-      color : #379DFF;
+      color : #38d9a9;
     }
 `;
 
@@ -49,7 +49,7 @@ const ForgotPassword = styled.span`
     margin-top: -15px;
     display: block;
     text-align: center;
-    color : #379DFF;
+    color : #38d9a9;
 `;
 
 // 회원가입 하러 가기
@@ -78,7 +78,7 @@ const InputBox = styled.input`
         font-size: 18px;
     }
     &:focus {
-      border-color: #379DFF;
+      border-color: #38d9a9;
     }
 `;
 
@@ -90,7 +90,7 @@ const SubmitBtn = styled.button`
     background: #efefef;
     border: none;
     border-radius: 10px;
-    background: #379DFF;
+    background: #38d9a9;
     font-weight: bold;
     color:#ffffff;
     font-size: 18px; 
@@ -102,7 +102,7 @@ const SubmitBtn = styled.button`
     }
 `;
 
-const SignIn = () => {
+const ManagerSignIn = () => {
   const navigate = useNavigate(); // 페이지 이동을 위해
   const [, setCookie] = useCookies(); // 쿠키 생성을 위해
 
@@ -165,7 +165,7 @@ const SignIn = () => {
           path: "/",
           expires: expires,
         });
-        navigate("/");
+        navigate("/council/manage");
       }
     } catch (error) {
       if (error.response && error.response.status === 404) { // 아이디가 틀리다면
@@ -191,7 +191,7 @@ const SignIn = () => {
         {/* 타이틀 */}
         <Title>
           <SubTitle>
-            당장 필요할때 바로 빌리자
+            학생회 전용
           </SubTitle>
           <Link to={"/"}>대학빌림</Link>
         </Title>
@@ -222,16 +222,12 @@ const SignIn = () => {
           onKeyDown={(e) => { activeEnter(e) }} />
 
         {/* 제출 버튼 */}
-        <SubmitBtn onClick={handleLogin}>로그인</SubmitBtn>
-        
+        <SubmitBtn onClick={handleLogin}>로그인</SubmitBtn>      
         <ForgotPassword>비밀 번호를 잊으셨나요?</ForgotPassword>
-        <Link to={"/signup"}>
-          <GoToSignUp>회원가입 하러가기</GoToSignUp>
-        </Link>
       </LoginBox>
       <Footer></Footer>
     </div>
   );
 };
 
-export default SignIn;
+export default ManagerSignIn;

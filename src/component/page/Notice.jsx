@@ -7,109 +7,93 @@
 import Header from "../layout/Header";
 import styled from "styled-components";
 import MenuBar from "../layout/MenuBar";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+
+
+const NoticeBox = styled.div`
+  /* width: 100%; */
+  padding: 20px;
+`;
 const BoardBox = styled.div`
-  border-radius: 10px;
+  border-radius: 20px;
   border: 1px solid #eaeaea;
   background: #fff;
-  padding: 10px 20px;
-  width: auto;
-  height: auto;
-  flex-shrink: 0;
-  margin: 0 auto;
-  @media screen and (max-width: 700px) positon :relative;
+  padding: 5px 0px;
+  & a:last-child div{
+    border-bottom: none;
+  }
 `;
 
 const Listbox = styled.div`
-  border-bottom: 1px solid #d5d5d5;
-  background: #fff;
-  width: auto;
-  height: 56px;
+  border-bottom: 1px solid #eaeaea;
+  margin: 0px;
   flex-shrink: 0;
   display: opacity;
-  padding: 5px;
+  padding: 20px 20px;
 `;
 
 const NoticeTitle = styled.div`
-  display: flex;
-  width: 237px;
-  height: 40px;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
   color: #636363;
-  font-family: Lexend;
   font-size: 15px;
-  font-style: normal;
   font-weight: 700;
-  line-height: normal;
 `;
 
 const NoticeDate = styled.div`
-  display: flex;
   width: auto;
-  height: 13px;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
+  padding: 5px 0px;
   color: #636363;
-  font-family: Lexend;
   font-size: 12px;
-  font-style: normal;
   font-weight: 500;
-  line-height: normal;
   padding-bottom: 2px;
 `;
 
 const ImageIcon = styled.img`
   width: 25px;
-  height: 30px;
-  flex-shrink: 0;
-  background: url(<path-to-image>) / contain no-repeat;
+  height: 35px;
   float: right;
-  display: inline-block;
   vertical-align: middle;
   margin-left: auto;
-  margin-bottom: 5px;
 `;
 
 const Notice = () => {
+  const [notices, setNotices] = useState([
+    {
+      title : "말걸지마",
+      date : "2023-12-07"
+    },
+    {
+      title : "말걸지마",
+      date : "2023-12-07"
+    },
+    {
+      title : "말걸지마",
+      date : "2023-12-07"
+    }
+  ]); 
+
   return (
     <div>
-      <Header headerType={"home"}></Header>
       <Link to={"/"}>
         <Header headerType={"admin"} headerText={"공지사항"}></Header>
       </Link>
-      <BoardBox>
-        <Link to={"/"}>
-          <Listbox>
-            <NoticeTitle>
-              [공지] 말걸지마 ㅇㅋ
-              <ImageIcon src={"/image/arrow.svg"} alt="" />
-            </NoticeTitle>
-            <NoticeDate>2023-12-07</NoticeDate>
-          </Listbox>
-        </Link>
-        <Link to={"/"}>
-          <Listbox>
-            <NoticeTitle>말걸지마 ㅇㅋ</NoticeTitle>
-            <NoticeDate>2023-12-07</NoticeDate>
-          </Listbox>
-        </Link>
-        <Link to={"/"}>
-          <Listbox>
-            <NoticeTitle>말걸지마 ㅇㅋ</NoticeTitle>
-            <NoticeDate>2023-12-07</NoticeDate>
-          </Listbox>
-        </Link>
-        <Link to={"/"}>
-          <Listbox>
-            <NoticeTitle>말걸지마 ㅇㅋ</NoticeTitle>
-            <NoticeDate>2023-12-07</NoticeDate>
-          </Listbox>
-        </Link>
+      <NoticeBox>
+        <BoardBox>
+          {notices.map((notice, index) => (
+              <Link to={"/"} key={index}>
+                <Listbox>
+                  <NoticeTitle>
+                    [공지] {notice.title}
+                    <ImageIcon src={"/image/arrow.svg"} alt="" />
+                  </NoticeTitle>
+                  <NoticeDate>{notice.date}</NoticeDate>
+                </Listbox>
+              </Link>
+          ))}
       </BoardBox>
+      </NoticeBox>
+     
       <MenuBar></MenuBar>
     </div>
   );
