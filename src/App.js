@@ -21,6 +21,7 @@ import Notice from "./component/page/Notice";
 const MainLayout = styled.div`
 `;
 
+
 function App() {
   return ( 
     <MainLayout>
