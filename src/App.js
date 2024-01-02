@@ -16,6 +16,7 @@ import CiManage from "./component/page/CiManage";
 import CiCreate from "./component/page/CiCreate";
 import CiAdd from "./component/page/CiAdd";
 import Certifi from "./component/page/Certifi";
+import Notice from "./component/page/Notice";
 
 const MainLayout = styled.div`
 `;
@@ -41,6 +42,7 @@ function App() {
           <Route path="/signup" Component={SignUp} />
           <Route path="/chat" Component={Chat} />
           <Route path="/chat/:metype/:id/:other" Component={InChat} />
+          <Route path="/notice" Component={Notice} />
         </Routes>
       </BrowserRouter>
     </MainLayout>
