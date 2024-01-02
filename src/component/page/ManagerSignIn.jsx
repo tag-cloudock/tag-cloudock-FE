@@ -30,7 +30,9 @@ const Title = styled.div`
     margin-bottom: 150px;
     font-size: 60px;
     font-weight: 850;
-    color : #38d9a9;
+    & a{
+      color : #38d9a9;
+    }
 `;
 
 // 서브 타이틀
@@ -191,7 +193,7 @@ const ManagerSignIn = () => {
           <SubTitle>
             학생회 전용
           </SubTitle>
-          대학빌림
+          <Link to={"/"}>대학빌림</Link>
         </Title>
 
         {/* 아이디 */}

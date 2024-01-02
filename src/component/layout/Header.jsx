@@ -10,7 +10,7 @@ import styled from "styled-components";
 // 헤더 박스
 const HeaderBox = styled.div`
   z-index: 2;
-  background: ${({ nobg }) => (nobg ? '#FBFBFB' : '#FBFBFB')};
+  background: ${({ nobg }) => (nobg ? '#FBFBFB' : '#ffffff')};
   position: fixed;
   left: 0;
   right: 0;
@@ -84,7 +84,7 @@ const Anno = styled.div`
 const Help = styled.div`
   width: 30px;
   height: 30px;
-  border-radius: 5px;
+  border-radius:50px;
   float: right;
   margin-top: 10px;
   margin-left: 10px;
@@ -100,7 +100,9 @@ const Help = styled.div`
     transform: translate(-50%, -50%);
     width: 13px;
   }
+  /* background: #EEF6FF; */
   &:hover{
+    /* background: #EEF6FF; */
     background: #f3f3f3;
   }
 `;
@@ -203,9 +205,12 @@ const Header = ({headerType, headerText}) => {
               <HeaderContent>
                 <HomeTitle>대학빌림</HomeTitle>
                 <AnnoBox>
-                  <Anno>
-                    <img src={"/image/megaphone.svg"}></img>
-                  </Anno>
+                  <Link to={"/notice"}>
+                    <Anno>
+                      <img src={"/image/megaphone.svg"}></img>
+                    </Anno>
+                  </Link>
+                  
                   <Help>
                     <img src={"/image/help.svg"}></img>
                   </Help>

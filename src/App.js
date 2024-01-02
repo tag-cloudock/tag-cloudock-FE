@@ -21,9 +21,11 @@ import CouncilManage from "./component/page/CouncilManage"
 import ManagerSignIn from "./component/page/ManagerSignIn";
 import CouncilItemCreate from "./component/page/CouncilItemCreate";
 import CouncilInfoUpdate from "./component/page/CouncilInfoUpdate";
+import Notice from "./component/page/Notice";
 
 const MainLayout = styled.div`
 `;
+
 
 function App() {
   return ( 
@@ -51,6 +53,7 @@ function App() {
           <Route path="/signup" Component={SignUp} />
           <Route path="/chat" Component={Chat} />
           <Route path="/chat/:metype/:id/:other" Component={InChat} />
+          <Route path="/notice" Component={Notice} />
         </Routes>
       </BrowserRouter>
     </MainLayout>
