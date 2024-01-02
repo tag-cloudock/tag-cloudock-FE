@@ -17,7 +17,7 @@ const LoginBox = styled.div`
     margin: 20px auto;
     padding: 70px 0px;
     width: 90%;
-    background : #ffffff;
+    background : none;
     border-radius: 20px;
     /* box-shadow: rgba(167, 174, 180, 0.4) 0px 0px 10px; */
 `;
