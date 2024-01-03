@@ -22,6 +22,7 @@ import ManagerSignIn from "./component/page/ManagerSignIn";
 import CouncilItemCreate from "./component/page/CouncilItemCreate";
 import CouncilInfoUpdate from "./component/page/CouncilInfoUpdate";
 import Notice from "./component/page/Notice";
+import NoticeDetail from "./component/page/NoticeDetail";
 
 const MainLayout = styled.div`
 `;
@@ -54,6 +55,7 @@ function App() {
           <Route path="/chat" Component={Chat} />
           <Route path="/chat/:metype/:id/:other" Component={InChat} />
           <Route path="/notice" Component={Notice} />
+          <Route path="/notice/:id" Component={NoticeDetail} />
         </Routes>
       </BrowserRouter>
     </MainLayout>
