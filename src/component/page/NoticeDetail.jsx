@@ -60,9 +60,7 @@ const NoticeContent = styled.div`
 const NoticeDetail = () => {
   return (
     <div>
-      <Link to={"/"}>
-        <Header headerType={"admin"} headerText={"공지사항"}></Header>
-      </Link>
+      <Header headerType={"admin"} headerText={"공지사항"}></Header>
       <NoticeBox>
         <BoardBox>
           <Titlebox>
