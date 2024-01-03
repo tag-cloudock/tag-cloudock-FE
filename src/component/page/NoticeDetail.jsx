@@ -78,7 +78,7 @@ const NoticeDetail = () => {
           </Contentbox>
         </BoardBox>
       </NoticeBox>
-      <MenuBar></MenuBar>
+      <MenuBar></MenuBar> 
     </div>
   );
 };
