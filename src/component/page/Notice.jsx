@@ -10,8 +10,6 @@ import MenuBar from "../layout/MenuBar";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
-
 const NoticeBox = styled.div`
   /* width: 100%; */
   padding: 20px;
@@ -21,7 +19,7 @@ const BoardBox = styled.div`
   border: 1px solid #eaeaea;
   background: #fff;
   padding: 5px 0px;
-  & a:last-child div{
+  & a:last-child div {
     border-bottom: none;
   }
 `;
@@ -29,9 +27,7 @@ const BoardBox = styled.div`
 const Listbox = styled.div`
   border-bottom: 1px solid #eaeaea;
   margin: 0px;
-  flex-shrink: 0;
-  display: opacity;
-  padding: 20px 20px;
+  padding: 20px 20px 15px;
 `;
 
 const NoticeTitle = styled.div`
@@ -60,18 +56,21 @@ const ImageIcon = styled.img`
 const Notice = () => {
   const [notices, setNotices] = useState([
     {
-      title : "말걸지마",
-      date : "2023-12-07"
+      id: 1,
+      title: "말걸지마",
+      date: "2023-12-07",
     },
     {
-      title : "말걸지마",
-      date : "2023-12-07"
+      if: 2,
+      title: "말걸지마",
+      date: "2023-12-07",
     },
     {
-      title : "말걸지마",
-      date : "2023-12-07"
-    }
-  ]); 
+      id: 3,
+      title: "말걸지마",
+      date: "2023-12-07",
+    },
+  ]);
 
   return (
     <div>
@@ -81,19 +80,18 @@ const Notice = () => {
       <NoticeBox>
         <BoardBox>
           {notices.map((notice, index) => (
-              <Link to={"/"} key={index}>
-                <Listbox>
-                  <NoticeTitle>
-                    [공지] {notice.title}
-                    <ImageIcon src={"/image/arrow.svg"} alt="" />
-                  </NoticeTitle>
-                  <NoticeDate>{notice.date}</NoticeDate>
-                </Listbox>
-              </Link>
+            <Link to={"/notice/"+notice.id} key={index}>
+              <Listbox>
+                <NoticeTitle>
+                  [공지] {notice.title}
+                  <ImageIcon src={"/image/arrow.svg"} alt="" />
+                </NoticeTitle>
+                <NoticeDate>{notice.date}</NoticeDate>
+              </Listbox>
+            </Link>
           ))}
-      </BoardBox>
+        </BoardBox>
       </NoticeBox>
-     
       <MenuBar></MenuBar>
     </div>
   );
