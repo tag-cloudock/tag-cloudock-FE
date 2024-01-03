@@ -8,13 +8,27 @@ import Header from "../layout/Header";
 import { useState } from "react";
 import styled from "styled-components";
 
+
+const Container = styled.div`
+  position: absolute;
+  /* padding: 0px 20px; */
+  /* border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee; */
+  /* margin-left: -1px; */
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
+`;
+
 const Announcement = styled.div`
     margin: 30px auto;
     width: 80%;
     padding: 20px;
     /* height: 300px; */
     border-radius: 20px;
-    background: #f5f5f5;
+    background: #fbfbfb;
+    border: 1px solid #eeeeee;
     font-size: 15px;
     line-height: 25px;
     color: #777777;
@@ -113,7 +127,7 @@ const Certifi = () => {
         setFile(file);
       };
     return (
-        <div>
+        <Container>
             <Header headerType={"write"} headerText={"학생증 인증하기"}></Header>
                     {/* 이미지 형식 제한해야함 */}
             <Announcement>
@@ -160,7 +174,7 @@ const Certifi = () => {
                 </FileInputBtn>
                 <SubmitBtn onClick={" "}>인증 요청하기</SubmitBtn>
             </CertifiBox>
-        </div>
+        </Container>
     );
   };
 

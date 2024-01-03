@@ -10,6 +10,18 @@ import MenuBar from "../layout/MenuBar";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+const Container = styled.div`
+  position: absolute;
+  /* padding: 0px 20px; */
+  /* border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee; */
+  /* margin-left: -1px; */
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
+`;
+
 const NoticeBox = styled.div`
   /* width: 100%; */
   padding: 20px;
@@ -73,7 +85,7 @@ const Notice = () => {
   ]);
 
   return (
-    <div>
+    <Container>
       <Header headerType={"admin"} headerText={"공지사항"}></Header>
       <NoticeBox>
         <BoardBox>
@@ -91,7 +103,7 @@ const Notice = () => {
         </BoardBox>
       </NoticeBox>
       <MenuBar></MenuBar>
-    </div>
+    </Container>
   );
 };
 

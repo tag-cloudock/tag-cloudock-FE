@@ -12,6 +12,17 @@ import axios from "axios";
 import Header from "../layout/Header";
 import MenuBar from "../layout/MenuBar";
 
+const ChatBox = styled.div`
+  position: absolute;
+  /* padding: 0px 20px; */
+  /* border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee; */
+  /* margin-left: -1px; */
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
+`;
 // 채팅방 개별 라인
 const ChatRoom = styled.li`
   background: #ffffff;
@@ -146,7 +157,7 @@ const Chat = () => {
   }, [cookies.token, navigate]); // [] 와 같이 비워도 됨.
 
   return (
-    <div>
+    <ChatBox>
       <Header headerType={"chat"} headerText={"채팅"}></Header>
 
       {chatRoomList.length == 0 ?
@@ -161,7 +172,7 @@ const Chat = () => {
           {chatRoomList.map((chatRoom) => (
             <Link key={chatRoom.id} to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)} state={{ postId: chatRoom.postId }}>
               <ChatRoom key={chatRoom.id}>
-                <Link to={"/"}><UserImg>빌림</UserImg></Link>
+                <Link to={"/"}><UserImg></UserImg></Link>
                 <ChatRoomContent>
                   <NickName>{chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname}</NickName>
                   <LastMessageTime>{chatRoom.lastMessage !== "no message" ? " " + chatRoom.lastMessageTime[3] + "시 " + chatRoom.lastMessageTime[4] + "분" : ""}</LastMessageTime><br></br>
@@ -175,7 +186,7 @@ const Chat = () => {
       }
 
       <MenuBar></MenuBar>
-    </div>
+    </ChatBox>
   );
 };
 
