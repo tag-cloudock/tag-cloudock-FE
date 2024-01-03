@@ -171,7 +171,7 @@ const MessageTime = styled.span`
 
 // 메세지
 const Message = styled.li`
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Noto Sans KR';
   order:  ${({ isMe }) => (isMe ? 2 : 1)};
   word-break: break-all;
   margin: 7px 10px;

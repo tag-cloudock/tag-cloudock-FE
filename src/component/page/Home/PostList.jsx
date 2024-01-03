@@ -20,6 +20,7 @@ const Wrapped = styled.div`
   height: 25px;
   width: 94%;
   margin: 0px auto;
+  font-family: 'Noto Sans KR', sans-serif;
   &:hover {
     border-radius: 10px;
     background: #f7f7f7;
@@ -32,6 +33,7 @@ const Wrapped = styled.div`
 
 // 최신글 location
 const Title = styled.span`
+  font-family: 'Noto Sans KR', sans-serif;
   padding-left: 15px;
   font-weight: 400;
   font-size: 17px;
