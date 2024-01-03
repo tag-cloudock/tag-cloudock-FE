@@ -27,8 +27,6 @@ const BoardBox = styled.div`
 const Listbox = styled.div`
   border-bottom: 1px solid #eaeaea;
   margin: 0px;
-  flex-shrink: 0;
-  display: opacity;
   padding: 20px 20px 15px;
 `;
 

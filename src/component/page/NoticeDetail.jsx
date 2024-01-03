@@ -25,16 +25,12 @@ const BoardBox = styled.div`
 const Titlebox = styled.div`
   border-bottom: 1px solid #eaeaea;
   margin: 0px;
-  flex-shrink: 0;
-  display: opacity;
   padding : 20px 20px 15px;
 
 `;
 
 const Contentbox = styled.div`
   margin: 0px;
-  flex-shrink: 0;
-  display: opacity;
   padding: 20px 20px 80px;
 `;
 
