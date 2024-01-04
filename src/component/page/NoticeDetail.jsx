@@ -10,7 +10,6 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MenuBar from "../layout/MenuBar";
 
-
 const Container = styled.div`
   position: absolute;
   /* padding: 0px 20px; */
@@ -38,8 +37,7 @@ const BoardBox = styled.div`
 const Titlebox = styled.div`
   border-bottom: 1px solid #eaeaea;
   margin: 0px;
-  padding : 20px 20px 15px;
-
+  padding: 20px 20px 15px;
 `;
 
 const Contentbox = styled.div`
@@ -89,7 +87,7 @@ const NoticeDetail = () => {
           </Contentbox>
         </BoardBox>
       </NoticeBox>
-      <MenuBar></MenuBar> 
+      <MenuBar></MenuBar>
     </Container>
   );
 };
