@@ -13,10 +13,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   position: absolute;
-  /* padding: 0px 20px; */
-  /* border-left: 1px solid #eeeeee;
-  border-right: 1px solid #eeeeee; */
-  /* margin-left: -1px; */
   width: 100%;
   height: 100%;
   max-width: 700px;
