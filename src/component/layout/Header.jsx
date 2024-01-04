@@ -10,12 +10,12 @@ import styled from "styled-components";
 // 헤더 박스
 const HeaderBox = styled.div`
   z-index: 2;
-  background: ${({ nobg }) => (nobg ? '#FBFBFB' : '#ffffff')};
+  background: ${({ nobg }) => (nobg ? "#FBFBFB" : "#ffffff")};
   position: fixed;
   left: 0;
   right: 0;
   height: 50px;
-  border-bottom: ${({ nobg }) => (nobg ? 'none' : '1px solid #eeeeee')};
+  border-bottom: ${({ nobg }) => (nobg ? "none" : "1px solid #eeeeee")};
   @media screen and (min-width: 701px) {
     /* margin: 0px auto; */
     /* max-width: 701px; */
@@ -48,14 +48,14 @@ const HeaderText = styled.span`
 // 홈 헤더의 타이틀
 const HomeTitle = styled.div`
   width: 30%;
-  padding-left:20px;
+  padding-left: 20px;
   height: 50px;
   text-align: left;
   line-height: 50px;
   font-weight: 800;
   font-size: 25px;
-  color:#D1D1D1;
-  float: left ; 
+  color: #d1d1d1;
+  float: left;
 `;
 
 // 공지사항 박스
@@ -73,10 +73,10 @@ const Anno = styled.div`
   margin-left: 10px;
   border-radius: 5px;
   /* background: #EEF6FF; */
-  &:hover{
+  &:hover {
     background: #f3f3f3;
   }
-  & img{
+  & img {
     width: 30px;
   }
 `;
@@ -84,7 +84,7 @@ const Anno = styled.div`
 const Help = styled.div`
   width: 30px;
   height: 30px;
-  border-radius:50px;
+  border-radius: 50px;
   float: right;
   margin-top: 10px;
   margin-left: 10px;
@@ -93,7 +93,7 @@ const Help = styled.div`
   font-weight: 800;
   font-size: 20px;
   position: relative;
-  & img{
+  & img {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -101,7 +101,7 @@ const Help = styled.div`
     width: 13px;
   }
   /* background: #EEF6FF; */
-  &:hover{
+  &:hover {
     /* background: #EEF6FF; */
     background: #f3f3f3;
   }
@@ -112,13 +112,13 @@ const HelpIntro = styled.div`
   margin-top: 12px;
   position: relative;
   width: 150px;
-  & img{
+  & img {
     position: absolute;
     left: 0;
     top: 0;
     height: 24px;
   }
-  & span{
+  & span {
     position: absolute;
     left: 7px;
     line-height: 24px;
@@ -156,19 +156,18 @@ const HeaderBackBtn = styled.button`
   color: #707070;
   font-weight: 700;
   font-size: 20px;
-  border-radius:10px;
+  border-radius: 10px;
   background: none;
   border: none;
   float: left;
-  & img{
+  & img {
     position: absolute;
-    top:0;
+    top: 0;
     left: 0;
     height: 40px;
     /* margin: 5px 5px; */
   }
-  &:hover{
-    
+  &:hover {
     background: #f5f5f5;
   }
 `;
@@ -181,156 +180,157 @@ const ChatBtn = styled.div`
   margin-right: 20px;
   background: none;
   border: none;
-  & a{
+  & a {
     display: inline-block;
   }
-  & img{
+  & img {
     width: 27px;
   }
 `;
 
-const Header = ({headerType, headerText}) => {
-    const navigate = useNavigate(); // 페이지 이동을 위해
+const Header = ({ headerType, headerText }) => {
+  const navigate = useNavigate(); // 페이지 이동을 위해
 
-    // 이전 페이지로 이동
-    const handleGoBack = () => {
-      navigate(-1); 
-    };
-
-    switch (headerType) {
-      case "home": // 홈
-        return (
-          <div>
-            <HeaderBox nobg={"true"}>
-              <HeaderContent>
-                <HomeTitle>대학빌림</HomeTitle>
-                <AnnoBox>
-                  <Link to={"/notice"}>
-                    <Anno>
-                      <img src={"/image/megaphone.svg"}></img>
-                    </Anno>
-                  </Link>
-                  
-                  <Help>
-                    <img src={"/image/help.svg"}></img>
-                  </Help>
-                  <HelpIntro>
-                    <img src={"/image/help_intro.svg"}></img>
-                    <span>도움말을 확인해보세요!</span>
-                  </HelpIntro>
-                </AnnoBox>
-              </HeaderContent>
-            </HeaderBox>
-            <EmptyBox></EmptyBox>
-          </div>
-        );
-      case "user": // 유저
-        return (
-          <div>
-            <HeaderBox nobg={"true"}>
-              <HeaderContent>
-                <HeaderText>{headerText}</HeaderText>
-            <ChatBtn>
-              <Link to={"/chat"}>
-                <img src="/image/chat.svg" alt="" />
-              </Link>
-            </ChatBtn>
-              </HeaderContent>
-            
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-          </div>
-        );
-      case "detail": // 글 내부
-        return (
-          <div>
-            <HeaderBox>
-            <HeaderText>{headerText}</HeaderText>
-            <ChatBtn>
-              <Link to={"/chat"}>
-                <img src="/image/chat.svg" alt="" />
-              </Link>
-            </ChatBtn>
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-          </div>
-        );
-      case "write": // 작성하기
-        return (
-          <div>
-            <HeaderBox>
-            <HeaderContent>
-            <HeaderBackBtn onClick={handleGoBack}><img src="/image/close.svg" alt="" /></HeaderBackBtn>
-            <HeaderCenterText>{headerText}</HeaderCenterText>
-            </HeaderContent>
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-          </div>
-        );
-      case "chat": // 채팅방
-        return (
-          <div>
-            <HeaderBox>
-              <HeaderContent>
-                <HeaderText>
-                  {headerText}
-                </HeaderText>
-              </HeaderContent>
-                
-            </HeaderBox>
-            <EmptyBox></EmptyBox>
-          </div>
-        );
-      case "inChat": // 채팅 내부
-        return (
-          <div>
-            <HeaderBox>
-            <HeaderContent>
-            <HeaderBackBtn onClick={handleGoBack}><img src="/image/back.svg" alt="" /></HeaderBackBtn>
-            <HeaderCenterText>
-              {headerText}
-            </HeaderCenterText>
-           </HeaderContent>
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-          </div>
-        );
-      case "admin": // 어드민 페이지 내부
-        return (
-          <div>
-            <HeaderBox>
-            <HeaderContent>
-            <HeaderBackBtn onClick={handleGoBack}><img src="/image/back.svg" alt="" /></HeaderBackBtn>
-            <HeaderCenterText>
-              {headerText}
-            </HeaderCenterText>
-            </HeaderContent>
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-          </div>
-        );
-      case "manage": // 어드민 페이지 내부
-        return (
-          <div>
-            <HeaderBox nobg={false}>
-            <HeaderContent>
-            <HeaderCenterText>
-              {headerText}
-            </HeaderCenterText>
-            </HeaderContent>
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-          </div>
-        );
-      default:
-        return (
-          <div>
-            <HeaderBox></HeaderBox>
-            <EmptyBox></EmptyBox>
-          </div>
-        );
-    }
-    
+  // 이전 페이지로 이동
+  const handleGoBack = () => {
+    navigate(-1);
   };
+
+  switch (headerType) {
+    case "home": // 홈
+      return (
+        <div>
+          <HeaderBox nobg={"true"}>
+            <HeaderContent>
+              <HomeTitle>대학빌림</HomeTitle>
+              <AnnoBox>
+                <Link to={"/notice"}>
+                  <Anno>
+                    <img src={"/image/megaphone.svg"}></img>
+                  </Anno>
+                </Link>
+
+                <Help>
+                  <img src={"/image/help.svg"}></img>
+                </Help>
+                <HelpIntro>
+                  <img src={"/image/help_intro.svg"}></img>
+                  <span>도움말을 확인해보세요!</span>
+                </HelpIntro>
+              </AnnoBox>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    case "user": // 유저
+      return (
+        <div>
+          <HeaderBox nobg={"true"}>
+            <HeaderContent>
+              <HeaderText>{headerText}</HeaderText>
+              <ChatBtn>
+                <Link to={"/chat"}>
+                  <img src="/image/chat.svg" alt="" />
+                </Link>
+              </ChatBtn>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    case "detail": // 글 내부
+      return (
+        <div>
+          <HeaderBox>
+            <HeaderContent>
+              <HeaderBackBtn onClick={handleGoBack}>
+                <img src="/image/back.svg" alt="" />
+              </HeaderBackBtn>
+              <HeaderCenterText>{headerText}</HeaderCenterText>
+              <ChatBtn>
+                <Link to={"/chat"}>
+                  <img src="/image/chat.svg" alt="" />
+                </Link>
+              </ChatBtn>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    case "write": // 작성하기
+      return (
+        <div>
+          <HeaderBox>
+            <HeaderContent>
+              <HeaderBackBtn onClick={handleGoBack}>
+                <img src="/image/close.svg" alt="" />
+              </HeaderBackBtn>
+              <HeaderCenterText>{headerText}</HeaderCenterText>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+
+    case "chat": // 채팅방
+      return (
+        <div>
+          <HeaderBox>
+            <HeaderContent>
+              <HeaderText>{headerText}</HeaderText>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    case "inChat": // 채팅 내부
+      return (
+        <div>
+          <HeaderBox>
+            <HeaderContent>
+              <HeaderBackBtn onClick={handleGoBack}>
+                <img src="/image/back.svg" alt="" />
+              </HeaderBackBtn>
+              <HeaderCenterText>{headerText}</HeaderCenterText>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    case "admin": // 어드민 페이지 내부
+      return (
+        <div>
+          <HeaderBox>
+            <HeaderContent>
+              <HeaderBackBtn onClick={handleGoBack}>
+                <img src="/image/back.svg" alt="" />
+              </HeaderBackBtn>
+              <HeaderCenterText>{headerText}</HeaderCenterText>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    case "manage": // 어드민 페이지 내부
+      return (
+        <div>
+          <HeaderBox nobg={false}>
+            <HeaderContent>
+              <HeaderCenterText>{headerText}</HeaderCenterText>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    default:
+      return (
+        <div>
+          <HeaderBox></HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+  }
+};
 
 export default Header;
