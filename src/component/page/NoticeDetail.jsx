@@ -10,6 +10,18 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MenuBar from "../layout/MenuBar";
 
+const Container = styled.div`
+  position: absolute;
+  /* padding: 0px 20px; */
+  /* border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee; */
+  /* margin-left: -1px; */
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
+`;
+
 const NoticeBox = styled.div`
   /* width: 100%; */
   padding: 20px;
@@ -25,8 +37,7 @@ const BoardBox = styled.div`
 const Titlebox = styled.div`
   border-bottom: 1px solid #eaeaea;
   margin: 0px;
-  padding : 20px 20px 15px;
-
+  padding: 20px 20px 15px;
 `;
 
 const Contentbox = styled.div`
@@ -59,7 +70,7 @@ const NoticeContent = styled.div`
 
 const NoticeDetail = () => {
   return (
-    <div>
+    <Container>
       <Header headerType={"admin"} headerText={"공지사항"}></Header>
       <NoticeBox>
         <BoardBox>
@@ -76,8 +87,8 @@ const NoticeDetail = () => {
           </Contentbox>
         </BoardBox>
       </NoticeBox>
-      <MenuBar></MenuBar> 
-    </div>
+      <MenuBar></MenuBar>
+    </Container>
   );
 };
 

@@ -10,15 +10,15 @@ import styled from "styled-components";
 // 헤더 박스
 const HeaderBox = styled.div`
   z-index: 2;
-  background: ${({ nobg }) => (nobg ? "#FBFBFB" : "#ffffff")};
+  background: ${({ nobg }) => (nobg ? '#FBFBFB' : '#ffffff')};
   position: fixed;
   left: 0;
   right: 0;
   height: 50px;
-  border-bottom: ${({ nobg }) => (nobg ? "none" : "1px solid #eeeeee")};
+  border-bottom: ${({ nobg }) => (nobg ? 'none' : '1px solid #eeeeee')};
   @media screen and (min-width: 701px) {
-    /* margin: 0px auto; */
-    /* max-width: 701px; */
+    margin: 0px auto;
+    max-width: 701px;
   }
 `;
 
@@ -40,7 +40,7 @@ const HeaderText = styled.span`
   padding-left: 20px;
   height: 50px;
   line-height: 50px;
-  color: #555555;
+  color: #999999;
   font-weight: 800;
   font-size: 20px;
 `;
@@ -134,13 +134,14 @@ const HelpIntro = styled.div`
 // 헤더 가운데 텍스트
 const HeaderCenterText = styled.span`
   text-align: center;
+  font-family: 'Noto Sans KR';
   position: absolute;
   left: 0;
   width: 100%;
   height: 50px;
   line-height: 50px;
-  color: #555555;
-  font-weight: 700;
+  color: #C0C0C0;
+  font-weight: 800;
   font-size: 23px;
 `;
 
@@ -150,6 +151,7 @@ const HeaderBackBtn = styled.button`
   position: absolute;
   /* left: 0; */
   margin-top: 5px;
+  margin-left: 5px;
   height: 40px;
   width: 40px;
   line-height: 50px;
@@ -270,24 +272,26 @@ const Header = ({ headerType, headerText }) => {
             </HeaderContent>
           </HeaderBox>
           <EmptyBox></EmptyBox>
-        </div>
-      );
-
-    case "chat": // 채팅방
-      return (
-        <div>
-          <HeaderBox>
-            <HeaderContent>
-              <HeaderText>{headerText}</HeaderText>
-            </HeaderContent>
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-        </div>
-      );
-    case "inChat": // 채팅 내부
-      return (
-        <div>
-          <HeaderBox>
+          </div>
+        );
+      case "chat": // 채팅방
+        return (
+          <div>
+            <HeaderBox>
+              <HeaderContent>
+                <HeaderText>
+                  {headerText}
+                </HeaderText>
+              </HeaderContent>
+                
+            </HeaderBox>
+            <EmptyBox></EmptyBox>
+          </div>
+        );
+      case "inChat": // 채팅 내부
+        return (
+          <div>
+            <HeaderBox>
             <HeaderContent>
               <HeaderBackBtn onClick={handleGoBack}>
                 <img src="/image/back.svg" alt="" />

@@ -12,6 +12,18 @@ import axios from "axios";
 import Header from "../layout/Header";
 import Loading from "../layout/Loading";
 
+
+const InChatBox = styled.div`
+  position: absolute;
+  /* padding: 0px 20px; */
+  /* border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee; */
+  /* margin-left: -1px; */
+  width: 100%;
+  /* height: 100%; */
+  max-width: 700px;
+  background: #ffffff;
+`;
 // 날이 변경될때 표시 문구
 const DateChange = styled.div`
   margin: 20px auto;
@@ -100,6 +112,7 @@ const PostTitle = styled.div`
   line-height: 23px;
   color:#222222;
   margin-top: 8px;
+  font-family: 'Noto Sans KR';
 `;
 
 // 게시물 정보 박스
@@ -110,7 +123,10 @@ const PostInfo = styled.div`
   right: 0;
   height: 60px;
   background-color: #ffffff;
-  border-bottom: 1px solid #eeeeee;
+  /* border-radius: 0px 0px 20px 20px; */
+  /* border-bottom: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee;
+  border-left: 1px solid #eeeeee; */
 
   @media screen and (min-width: 701px) {
     margin: 0 auto;
@@ -210,7 +226,7 @@ const InputBox = styled.input`
     margin: 10px;
     width: 85%;
     height: 40px;
-    background: #eeeeee;
+    background: #f5f5f5;
     border: none;
     border-radius: 20px;
     color:#333333;
@@ -239,7 +255,9 @@ const SendBtn = styled.button`
    color: ${({ isNoText }) => (isNoText ? '#aaaaaa' : '#ffffff')};
    font-weight: 600;
    & img{
+     border-radius: 10px;
      opacity: ${({ isNoText }) => (isNoText ? '30%' : '100%')};
+     background: ${({ isNoText }) => (isNoText ? 'none' : '#EEF6FF')};
      width: 35px;
    }
 `;
@@ -287,7 +305,7 @@ const InChat = () => {
 
   // 최하단 이동용
   useEffect(() => {
-    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current.scrollIntoView();
   },);
 
   useEffect(() => {
@@ -428,7 +446,7 @@ const InChat = () => {
     }
   };
   return (
-    <div>
+    <InChatBox>
       <Header headerType={"inChat"} headerText={other}></Header>
 
       {/* 게시물 정보 */}
@@ -506,7 +524,7 @@ const InChat = () => {
           <img src="/image/paperplane.svg" alt="" />
         </SendBtn>
       </MessageInputBox>
-    </div>
+    </InChatBox>
   );
 };
 
