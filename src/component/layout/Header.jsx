@@ -10,11 +10,15 @@ import styled from "styled-components";
 // 헤더 박스
 const HeaderBox = styled.div`
   z-index: 2;
+  /* background: "#F2F6F9"; */
   background: ${({ nobg }) => (nobg ? '#FBFBFB' : '#ffffff')};
   position: fixed;
   left: 0;
   right: 0;
   height: 50px;
+  
+  /* border-right: ${({ nobg }) => (nobg ? 'none' : '1px solid #eeeeee')};
+  border-left: ${({ nobg }) => (nobg ? 'none' : '1px solid #eeeeee')}; */
   border-bottom: ${({ nobg }) => (nobg ? 'none' : '1px solid #eeeeee')};
   @media screen and (min-width: 701px) {
     margin: 0px auto;
@@ -279,9 +283,10 @@ const Header = ({ headerType, headerText }) => {
           <div>
             <HeaderBox>
               <HeaderContent>
-                <HeaderText>
+              <HeaderBackBtn onClick={handleGoBack}><img src="/image/back.svg" alt="" /></HeaderBackBtn>
+                <HeaderCenterText>
                   {headerText}
-                </HeaderText>
+                </HeaderCenterText>
               </HeaderContent>
                 
             </HeaderBox>
