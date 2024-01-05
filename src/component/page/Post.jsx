@@ -11,6 +11,7 @@ import MenuBar from "../layout/MenuBar";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+//전체 배경
 const Container = styled.div`
   position: absolute;
   width: 100%;
@@ -19,10 +20,12 @@ const Container = styled.div`
   background: #ffffff;
 `;
 
+//박스 양옆 여백
 const PostBox = styled.div`
-  /* width: 100%; */
   padding: 20px;
 `;
+
+//list 박스
 const BoardBox = styled.div`
   //border-radius: 20px;
   //border: 1px solid #eaeaea;
@@ -33,13 +36,14 @@ const BoardBox = styled.div`
   }
 `;
 
-
-
+//list 박스 사이 구분선
 const Listbox = styled.div`
   border-bottom: 1px solid #eaeaea;
   margin: 0px;
   padding: 10px 10px 10px;
 `;
+
+//게시물 이미지
 const MainImage = styled.div`
   //border-bottom: 1px solid #eaeaea;
   margin: 15px;
@@ -50,6 +54,7 @@ const MainImage = styled.div`
   border-radius: 10px;
 `;
 
+//게시물 제목
 const NoticeTitle = styled.div`
 color: #1F1F1F;
 font-size: 15px;
@@ -57,19 +62,22 @@ font-weight: 500;
 margin-bottom :10px;
 `;
 
+//게시물 상세설명(건물 위치등)
 const PostDetail = styled.div`
 color: #606060;
 font-size: 10px;
 font-weight: 400;
 margin-bottom :5px;
-
 `;
+
+//게시물 가격
 const PostPrice = styled.div`
 color: #000;
 font-size: 13px;
 font-weight: 400;
 `;
 
+//게시물 옆에 채팅? 댓글 아이콘
 const ImageIcon = styled.img`
   width: 17px;
   height: 17px;
@@ -79,7 +87,7 @@ const ImageIcon = styled.img`
 `;
 
 const Post = () => {
-  const [notices, setNotices] = useState([
+  const [post, setPost] = useState([
     {
       id: 1,
       title: "과학사의 이해",
@@ -120,18 +128,17 @@ const Post = () => {
 
   return (
     <Container>
-      <Header headerType={"admin"} headerText={"비전타워"}></Header>
+      <Header headerType={"admin"} headerText={"비전타워"}>         
+      </Header>
       <PostBox>
         <BoardBox>
-          {notices.map((notice, index) => (
+          {notices.map((post, index) => (
             <Link to={"/post/"+index} key={index}>
               <MainImage></MainImage>
               <Listbox>
-                <NoticeTitle>
-                  {notice.title}</NoticeTitle>
-
-                <PostDetail>{notice.detail}</PostDetail>
-                <PostPrice>{notice.price}
+                <NoticeTitle>{post.title}</NoticeTitle>
+                <PostDetail>{post.detail}</PostDetail>
+                <PostPrice>{post.price}
                 <ImageIcon src={"/image/chatt.svg"} alt="" />
          
                 </PostPrice>
