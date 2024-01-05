@@ -132,7 +132,7 @@ const Post = () => {
       </Header>
       <PostBox>
         <BoardBox>
-          {notices.map((post, index) => (
+          {post.map((post, index) => (
             <Link to={"/post/"+index} key={index}>
               <MainImage></MainImage>
               <Listbox>
