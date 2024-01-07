@@ -134,6 +134,9 @@ const BoxTitle = styled.div`
     padding-bottom: 3px;
     font-size: 18px;
   }
+  & a {
+    float: right;
+  }
 `;
 // 아이콘 이미지 조정
 const ImageIcon = styled.img`
@@ -295,11 +298,7 @@ const User = () => {
           빌려준 후기
           <ImageIcon src={"/image/text.svg"} alt="" />
           <Link to={"/"}>
-            <ImageIcon
-              style={{ float: "right" }}
-              src={"/image/moreinfo.svg"}
-              alt=""
-            />
+            <ImageIcon src={"/image/moreinfo.svg"} alt="" />
           </Link>
         </BoxTitle>
         <PostInfoBox></PostInfoBox>
@@ -309,11 +308,7 @@ const User = () => {
           빌린 후기
           <ImageIcon src={"/image/heart.svg"} alt="" />
           <Link to={"/"}>
-            <ImageIcon
-              style={{ float: "right" }}
-              src={"/image/moreinfo.svg"}
-              alt=""
-            />
+            <ImageIcon src={"/image/moreinfo.svg"} alt="" />
           </Link>
         </BoxTitle>
         <PostInfoBox></PostInfoBox>
@@ -322,11 +317,7 @@ const User = () => {
         <BoxTitle>
           {userInfo.nickname}님이 작성한 글이에요
           <Link to={"/"}>
-            <ImageIcon
-              style={{ float: "right" }}
-              src={"/image/moreinfo.svg"}
-              alt=""
-            />
+            <ImageIcon src={"/image/moreinfo.svg"} alt="" />
           </Link>
         </BoxTitle>
         <PostInfoBox></PostInfoBox>
