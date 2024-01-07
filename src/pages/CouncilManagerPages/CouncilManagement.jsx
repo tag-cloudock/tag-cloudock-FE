@@ -7,7 +7,15 @@ import Header from "../../components/layout/Header";
 
 
 const AdminBox = styled.div`
-    padding: 0 20px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    max-width: 700px;
+    background: #ffffff;
+`;
+
+const ContentBox = styled.div`
+    padding: 0px 20px;
 `;
 
 const InfoBox = styled.div`
@@ -196,44 +204,43 @@ const CouncilManagement = () => {
     return (
         <AdminBox>
             <Header headerType={"onlyText"} headerText={councilData.name + " 학생회"}></Header>
+            <ContentBox>
+                    <Subtitle>이용 정보
+                    <Link to={"/council/manage/info"}>
+                        <span>수정하기</span>
+                    </Link>
+                </Subtitle>
+                <InfoBox>
+                    위치 : {councilData.location}<br />
+                    운영시간 : {councilData.operatingHours}<br />
+                    이용수칙 : {councilData.usageGuidelines}
+                </InfoBox>
+                <Subtitle>물품 리스트</Subtitle>
+                <Items>
+                    {councilData.items.map((item) => (
+                        <Item key={item.itemId}>
+                            <Tag>{item.type === "RENTAL" ? "대여" : "제공"}</Tag>{item.name}
 
-            <Subtitle>이용 정보
-                <Link to={"/council/manage/info"}>
-                    <span>수정하기</span>
+                            <ItemRemoveBtn onClick={() => removeItem(item.itemId)}>
+                                <img src={"/image/remove.svg"}></img>
+                            </ItemRemoveBtn>
+
+                            <CountBox>
+                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity + 1)}><img src={"/image/up.svg"}></img></CountChangeBtn>
+                                <Count>{item.quantity}</Count>
+                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity - 1)}><img src={"/image/down.svg"}></img></CountChangeBtn>
+
+
+                            </CountBox>
+                        </Item>
+                    ))}
+                </Items>
+                <Link to={"/council/manage/item"}>
+                    <CreateCouncil>
+                        <img src={"/image/write_black.svg"}></img>
+                    </CreateCouncil>
                 </Link>
-            </Subtitle>
-            <InfoBox>
-                위치 : {councilData.location}<br />
-                운영시간 : {councilData.operatingHours}<br />
-                이용수칙 : {councilData.usageGuidelines}
-            </InfoBox>
-            <Subtitle>물품 리스트</Subtitle>
-            <Items>
-                {councilData.items.map((item) => (
-                    <Item key={item.itemId}>
-                        <Tag>{item.type === "RENTAL" ? "대여" : "제공"}</Tag>{item.name}
-
-                        <ItemRemoveBtn onClick={() => removeItem(item.itemId)}>
-                            <img src={"/image/remove.svg"}></img>
-                        </ItemRemoveBtn>
-
-                        <CountBox>
-                            <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity + 1)}><img src={"/image/up.svg"}></img></CountChangeBtn>
-                            <Count>{item.quantity}</Count>
-                            <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity - 1)}><img src={"/image/down.svg"}></img></CountChangeBtn>
-
-
-                        </CountBox>
-                    </Item>
-                ))}
-            </Items>
-            <Link to={"/council/manage/item"}>
-                <CreateCouncil>
-                    <img src={"/image/write_black.svg"}></img>
-                </CreateCouncil>
-            </Link>
-
-
+            </ContentBox>
         </AdminBox>
     );
 };

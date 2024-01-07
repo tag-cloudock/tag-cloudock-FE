@@ -7,7 +7,16 @@ import Header from "../../components/layout/Header";
 
 
 const Container = styled.div`
-    padding: 0 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
+
+`;
+
+const ContentBox = styled.div`
+  padding: 0 20px;
 `;
 
 const InputBox = styled.input`
@@ -161,8 +170,8 @@ const CreationCouncilItem = () => {
     };
     return (
         <Container>
-            <Header headerText={"물품 추가"}></Header>
-            <div>
+            <Header headerType={"noChatIcon"} headerText={"물품 추가"}></Header>
+            <ContentBox>
                 <InputBox type="text" name="name" placeholder="물품명"
                     value={name}
                     onChange={(e) => {
@@ -188,7 +197,7 @@ const CreationCouncilItem = () => {
                 </Details>
                 {/* 제출 버튼 */}
                 <SummitBtn onClick={handleAddCouncil}>추가</SummitBtn>
-            </div>
+            </ContentBox>
         </Container>
     );
 };

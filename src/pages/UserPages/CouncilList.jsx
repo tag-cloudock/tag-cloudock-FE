@@ -26,19 +26,36 @@ const CampusAnnoBox = styled.div`
   border-radius: 15px;
   box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px;
   padding: 20px 10px;
-  font-size: 18px;
+`;
+
+const BigText = styled.div`
   font-weight: 800;
-  color : #BCC4D1;
-  & div{
-    font-size: 28px;
-    color : #9e9e9e;
-    margin-bottom: 5px;
-  }
-  & div span{ 
+  font-size: 28px;
+  color : #9e9e9e;
+  margin-bottom: 10px;
+  & span{ 
     font-size: 28px;
     color : #379DFF;
   }
 `;
+
+const SmallText = styled.div`
+  font-size: 18px;
+  font-weight: 800;
+  color : #9e9e9e;
+`;
+
+const RealTime = styled.span`
+  /* float: left;
+  padding: 5px;
+  font-size: 14px;
+  margin-top: -5px;
+  background: #ffdddd;
+  color: #ff7979;
+  border: 1px solid #ff7979;
+  border-radius: 15px; */
+`;
+
 
 const ContentBox = styled.div`
   padding: 20px;
@@ -144,8 +161,8 @@ const CouncilList = () => {
       <ContentBox>
         <SubTitle>총 35개의 학생회에서 물품대여중🫶</SubTitle>
         <CampusAnnoBox>
-          <div><span>{campus == 'g' ? "글로벌" : "메디컬"}</span> 캠퍼스입니다🙂</div>
-          <span>실시간</span>으로 물건 개수를 확인하세요!
+          <BigText><span>{campus == 'g' ? "글로벌" : "메디컬"}</span> 캠퍼스입니다🙂</BigText>
+          <SmallText><RealTime>실시간</RealTime>으로 물건 개수를 확인하세요!</SmallText>
         </CampusAnnoBox>
         {groupedCouncilList.map((college, index) => (
           <div key={index}>

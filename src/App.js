@@ -34,30 +34,32 @@ function App() {
         <Routes>
           {/* 유저 */}
           <Route path="/" Component={Home} />
-          <Route path="/certification" Component={Certification} />
+          <Route path="/certification" Component={Certification} /> 
           <Route path="/user/:userid" Component={User} />
-          <Route path="/write" Component={PostEdit} />
-          <Route path="/post/:location" Component={PostList} />
-          <Route path="/post/:location/:id" component={PostDetail} />
-          <Route path="/council/:campus" Component={CouncilList} />
-          <Route path="/council/:campus/:id" Component={CouncilDetail} />
+          <Route path="/write" Component={PostEdit} />{/* post/edit */}
+          <Route path="/post/:location" Component={PostList} />{/* post/location/:location */}
+          <Route path="/post/:location/:id" component={PostDetail} /> {/* post/:id */}
+          <Route path="/council/:campus" Component={CouncilList} />{/* council/campus/:campus */}
+          <Route path="/council/:campus/:id" Component={CouncilDetail} /> {/* council/:id */}
           <Route path="/signin" Component={SignIn} />
           <Route path="/signup" Component={SignUp} />
           <Route path="/chat" Component={ChatRoomList} />
           <Route path="/chat/:metype/:id/:other" Component={Chat} />
           <Route path="/notice" Component={NoticeList} />
           <Route path="/notice/:id" Component={NoticeDetail} />
+
           {/* 어드민 */}
           <Route path="/admin" Component={AdminManagement} />
-          <Route path="/admin/cimanage" Component={AdminCouncilManagement} />
-          <Route path="/admin/cimanage/create" Component={AdminCouncilCreation} />
-          <Route path="/admin/certimanage" Component={AdminCertificationManagement} />
-          <Route path="/admin/cimanage/add/:id" Component={AdminCouncilItemCreation} />
+          <Route path="/admin/cimanage" Component={AdminCouncilManagement} />{/* admin/manage/council */}
+          <Route path="/admin/cimanage/create" Component={AdminCouncilCreation} />{/* admin/manage/council/create */}
+          <Route path="/admin/cimanage/add/:id" Component={AdminCouncilItemCreation} /> {/* admin/manage/council/item-add */}
+          <Route path="/admin/certimanage" Component={AdminCertificationManagement} /> {/* admin/manage/certification */}
+          
           {/* 학생회 */}
           <Route path="/council/signin" Component={CouncilSignIn} />
           <Route path="/council/manage" Component={CouncilManagement} />
-          <Route path="/council/manage/info" Component={EditCouncilInfo} />
-          <Route path="/council/manage/item" Component={CreationCouncilItem} />
+          <Route path="/council/manage/info" Component={EditCouncilInfo} />{/* /council/manage/edit */}
+          <Route path="/council/manage/item" Component={CreationCouncilItem} />{/* /council/manage/add */}
         </Routes>
       </BrowserRouter>
     </MainLayout>

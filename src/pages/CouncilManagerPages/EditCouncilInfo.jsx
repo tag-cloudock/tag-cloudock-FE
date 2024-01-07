@@ -7,7 +7,16 @@ import Header from "../../components/layout/Header";
 
 
 const Container = styled.div`
-    padding: 0 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
+
+`;
+
+const ContentBox = styled.div`
+  padding: 0 20px;
 `;
 
 const InputBox = styled.input`
@@ -119,8 +128,8 @@ const EditCouncilInfo = () => {
   };
   return (
     <Container>
-      <Header headerText={"운영 정보 수정"}></Header>
-      <div>
+      <Header headerType={"noChatIcon"} headerText={"운영 정보 수정"}></Header>
+      <ContentBox>
         <InputTitle>위치</InputTitle>
         <InputBox type="text" name="location" placeholder="위치 (ex AI공학관 505호)"
           value={location}
@@ -145,7 +154,7 @@ const EditCouncilInfo = () => {
 
         {/* 제출 버튼 */}
         <SummitBtn onClick={handleAddCouncil}>수정</SummitBtn>
-      </div>
+      </ContentBox>
     </Container>
   );
 };
