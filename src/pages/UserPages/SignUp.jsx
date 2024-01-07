@@ -1,26 +1,17 @@
-/*
-용도: 회원가입 페이지
-담당자: 양태석
-사용법: App.js에서 라우팅
-기타: 
-*/
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import Footer from "../../components/layout/Footer";
 
-// 회원가입 form 박스
 const SignUpBox = styled.div`
     margin: 20px auto 0 20px;
     padding: 70px 0px;
     width: 90%;
-    /* background : #ffffff; */
     border-radius: 20px;
     text-align: center;
 `;
 
-// 타이틀
 const Title = styled.div`
     text-align: center;
     height: 45px;
@@ -31,7 +22,6 @@ const Title = styled.div`
     color : #379DFF;
 `;
 
-// 서브 타이틀
 const SubTitle = styled.div`
     text-align: center;
     font-size: 18px;
@@ -39,14 +29,12 @@ const SubTitle = styled.div`
     color : #adb5c2;
 `;
 
-// 아이디 패스워드 조건 사항
 const Requirements = styled.span`
     font-size: 15px;
     font-weight: 400;
     color : #989fac;
 `;
 
-// 로그인 하러가기
 const GoToSignIn = styled.span`
     margin-top: 10px;
     display: block;
@@ -54,7 +42,6 @@ const GoToSignIn = styled.span`
     color : #aaaaaa;
 `;
 
-// 입력 박스
 const InputBox = styled.input`
     display: block;
     margin: 10px auto;
@@ -76,7 +63,6 @@ const InputBox = styled.input`
     }
 `;
 
-// 제출 버튼
 const SubmitBtn = styled.button`
     display: block;
     margin: 30px auto;
@@ -96,7 +82,6 @@ const SubmitBtn = styled.button`
     }
 `;
 
-// 제출 버튼
 const FileInputBtn = styled.label`
     display: block;
     margin: 0 auto;
@@ -113,6 +98,7 @@ const FileInputBtn = styled.label`
       padding: 5px;
     }
 `;
+
 const FileInputBox = styled.input`
     width: 66%;
     border: none;
@@ -123,15 +109,11 @@ const FileInputBox = styled.input`
 `;
 
 const SignUp = () => {
-  const navigate = useNavigate(); // 페이지 이동
-
-  // 입력박스 자동 포커스를 위해
+  const navigate = useNavigate();
   const nicknameRef = useRef();
   const useridRef = useRef();
   const passwordRef = useRef();
   const password2Ref = useRef();
-
-  // 각 입력 박스 상태
   const [nickname, setNickname] = useState("");
   const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
@@ -212,8 +194,6 @@ const SignUp = () => {
     }
 
     try {
-      // 회원가입 api 요청
-
       const formData = new FormData();
       formData.append('request', new Blob([JSON.stringify({
         userid,
@@ -223,7 +203,7 @@ const SignUp = () => {
       {
         type : "application/json"
       }));
-      formData.append('pic', file); // 'file'은 사용자가 선택한 파일 객체
+      formData.append('pic', file);
 
       const signUpResponse = await axios.post("http://"+process.env.REACT_APP_BACK_URL+"/register",
         formData,
@@ -233,13 +213,11 @@ const SignUp = () => {
           },
         }
       );
-      // 성공시
       if (signUpResponse.status === 200) {
         window.alert("회원가입 성공!");
         navigate("/signin");
       }
     } catch (error) {
-      // 중복된 아이디라면
       if (error.response && error.response.status === 409) {
         window.alert("중복된 아이디 입니다.");
       } else {
@@ -247,12 +225,10 @@ const SignUp = () => {
       }
     }
   };
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setFile(file);
   };
-  // 엔터 누르면 제출하도록
   const activeEnter = (event) => {
     if (event.code === 'Enter') {
       handleSignUp(event);
@@ -337,7 +313,7 @@ const SignUp = () => {
           <div>프로필 사진 추가</div>
         </FileInputBtn>
         <FileInputBox type="file" name="file" id="file" onChange={handleFileChange} />
-        {/* 제출 버튼 */}
+
         <SubmitBtn onClick={handleSignUp}>회원가입</SubmitBtn>
         <Link to={"/signin"}>
           <GoToSignIn>로그인 하러가기</GoToSignIn>

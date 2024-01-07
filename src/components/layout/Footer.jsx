@@ -1,9 +1,3 @@
-/*
-용도: 푸터
-담당자: 양태석
-사용법: 로그인, 로그아웃에서 푸터로 사용
-기타: 
-*/
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 

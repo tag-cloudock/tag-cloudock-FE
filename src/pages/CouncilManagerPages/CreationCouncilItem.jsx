@@ -1,21 +1,14 @@
-/*
-용도: 관리자 페이지
-담당자: 양태석
-사용법: App.js에서 라우팅됨.
-기타: ADMIN 권한 유저만 접근 가능
-*/
-import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import styled from "styled-components";
 import Header from "../../components/layout/Header";
 
 
-const AdminBox = styled.div`
+const Container = styled.div`
     padding: 0 20px;
 `;
-
 
 const InputBox = styled.input`
     display: block;
@@ -64,7 +57,8 @@ const Details = styled.details`
     }
 
 `;
-const ListBox = styled.ul`
+
+const OptionList = styled.ul`
     width: 100%;
     background: #ffffff;
     position: absolute;
@@ -76,7 +70,7 @@ const ListBox = styled.ul`
     overflow: hidden;
 `;
 
-const List = styled.li`
+const Option = styled.li`
     border-bottom: 1px solid #eeeeee;
     list-style: none;
     padding: 10px 20px;
@@ -88,13 +82,12 @@ const List = styled.li`
     }
 `;
 
-
 const Summary = styled.summary`
     padding: 15px 10px;
     border-radius: 5px;
     border-radius: 10px;
     list-style: none;
-    color:  ${({ isDefault }) => ( isDefault ? '#aaaaaa' : '#333333')};
+    color:  ${({ isDefault }) => (isDefault ? '#aaaaaa' : '#333333')};
     &:after {
         content: '';
         float: right;
@@ -122,10 +115,9 @@ const Button = styled.button`
 
 const CreationCouncilItem = () => {
     const [name, setName] = useState("");
-    const [type, setType] = useState("물품 유형"); 
-    const [key, setKey] = useState(0); 
-    // const { id } = useParams();
-    
+    const [type, setType] = useState("물품 유형");
+    const [key, setKey] = useState(0);
+
 
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
@@ -133,76 +125,72 @@ const CreationCouncilItem = () => {
 
     const handleAddCouncil = async (e) => {
         e.preventDefault();
-    
-        // 입력을 아에 안했는지 검사
+
         if (name.length < 1) {
-          window.alert("학과를 입력해주세요.");
-          setName('');
-          return;
+            window.alert("학과를 입력해주세요.");
+            setName('');
+            return;
         }
         if (type == "물품 유형") {
-          window.alert("물품 유형을 선택해주세요.");
-          return;
+            window.alert("물품 유형을 선택해주세요.");
+            return;
         }
 
         try {
-          // 회원가입 api 요청
-        //   const councilId = id;
-          const signUpResponse = await axios.post("http://"+process.env.REACT_APP_BACK_URL+"/manage/council-item",
-            {
-                name,
-                type,
-            },
-            {
-                headers: {
-                Authorization: `Bearer ${cookies.token}`,
+            const PostResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/manage/council-item",
+                {
+                    name,
+                    type,
                 },
+                {
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`,
+                    },
+                }
+            );
+            // 성공시
+            if (PostResponse.status === 200) {
+                window.alert("생성 성공");
+                setKey(key + 1);
+                navigate("/council/manage");
             }
-          );
-          // 성공시
-          if (signUpResponse.status === 200) {
-            window.alert("생성 성공");
-            setKey(key+1);
-            navigate("/council/manage");
-          }
         } catch (error) {
             console.error("오류 발생:", error);
-          
+
         }
-      };
+    };
     return (
-        <AdminBox>
+        <Container>
             <Header headerType={"admin"} headerText={"물품 추가"}></Header>
             <div>
                 <InputBox type="text" name="name" placeholder="물품명"
-                value={name}
-                onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                  />
-
+                    value={name}
+                    onChange={(e) => {
+                        setName(e.target.value);
+                    }}
+                />
                 <Details>
                     <Summary isDefault={type == "물품 유형"}>
                         {type}
                     </Summary>
-                    <ListBox>
-                        <List>
+                    <OptionList>
+                        <Option>
                             <Button onClick={() => setType("RENTAL")}>
                                 RENTAL
                             </Button>
-                        </List>
-                        <List>
+                        </Option>
+                        <Option>
                             <Button onClick={() => setType("PROVIDED")}>
-                         PROVIDED
+                                PROVIDED
                             </Button>
-                        </List>
-                    </ListBox>
-                    </Details>
+                        </Option>
+                    </OptionList>
+                </Details>
                 {/* 제출 버튼 */}
                 <SummitBtn onClick={handleAddCouncil}>추가</SummitBtn>
             </div>
-        </AdminBox>
+        </Container>
     );
-  };
+};
 
 export default CreationCouncilItem;

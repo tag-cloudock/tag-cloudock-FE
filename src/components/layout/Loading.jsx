@@ -1,9 +1,3 @@
-/*
-용도: 로딩 표시
-담당자: 양태석
-사용법: 로딩이 필요한곳에서 사용
-기타: 
-*/
 import styled from "styled-components";
 
 // 로딩

@@ -1,29 +1,18 @@
-/*
-용도 : 공지사항 페이지
-담당자: 박여넛
-사용법: 
-기타: 
-*/
 import Header from "../../components/layout/Header";
 import styled from "styled-components";
 import MenuBar from "../../components/layout/MenuBar";
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   position: absolute;
-  /* padding: 0px 20px; */
-  /* border-left: 1px solid #eeeeee;
-  border-right: 1px solid #eeeeee; */
-  /* margin-left: -1px; */
   width: 100%;
   height: 100%;
   max-width: 700px;
   background: #ffffff;
 `;
 
-const NoticeBox = styled.div`
-  /* width: 100%; */
+const ContentBox = styled.div`
   padding: 20px;
 `;
 const BoardBox = styled.div`
@@ -36,7 +25,7 @@ const BoardBox = styled.div`
   }
 `;
 
-const Listbox = styled.div`
+const NoticeListbox = styled.div`
   border-bottom: 1px solid #eaeaea;
   margin: 0px;
   padding: 20px 20px 15px;
@@ -87,21 +76,21 @@ const NoticeList = () => {
   return (
     <Container>
       <Header headerType={"admin"} headerText={"공지사항"}></Header>
-      <NoticeBox>
+      <ContentBox>
         <BoardBox>
           {notices.map((notice, index) => (
             <Link to={"/notice/"+notice.id} key={index}>
-              <Listbox>
+              <NoticeListbox>
                 <NoticeTitle>
                   [공지] {notice.title}
                   <ImageIcon src={"/image/arrow.svg"} alt="" />
                 </NoticeTitle>
                 <NoticeDate>{notice.date}</NoticeDate>
-              </Listbox>
+              </NoticeListbox>
             </Link>
           ))}
         </BoardBox>
-      </NoticeBox>
+      </ContentBox>
       <MenuBar></MenuBar>
     </Container>
   );

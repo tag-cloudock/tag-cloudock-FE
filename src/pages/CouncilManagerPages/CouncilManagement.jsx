@@ -1,9 +1,3 @@
-/*
-용도: 관리자 페이지
-담당자: 양태석
-사용법: App.js에서 라우팅됨.
-기타: ADMIN 권한 유저만 접근 가능
-*/
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
@@ -35,7 +29,6 @@ const CreateCouncil = styled.div`
   font-weight: bold;
   color: #777777;
   text-align: center;
-  /* padding: 10px; */
   border-radius: 10px;
   background: #ffffff;
   box-shadow: rgba(210, 210, 210, 0.5) 0px 0px 15px;
@@ -130,49 +123,49 @@ const Tag = styled.span`
 `;
 
 const CouncilManagement = () => {
-    const [councilData, setCouncilData] = useState({items:[]}); // 채팅방 리스트 상태
-    const [key, setKey] = useState(0); 
+    const [councilData, setCouncilData] = useState({ items: [] }); // 채팅방 리스트 상태
+    const [key, setKey] = useState(0);
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
-  
+
     useEffect(() => {
-      const fetchCouncils = async () => {
-        try {
-          // 토큰 쿠키가 없다면 로그인 페이지로 이동
-          if (!cookies.token) {
-            navigate("/signin");
-            return;
-          }
-  
-          // 유저의 채팅방 모두 가져오기 api 요청
-          const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/manage/council", {
-            headers: {
-              Authorization: `Bearer ${cookies.token}`,
-            },
-          });
-    
-          setCouncilData(response.data);
-          console.log(response.data);
+        const fetchCouncils = async () => {
+            try {
+                // 토큰 쿠키가 없다면 로그인 페이지로 이동
+                if (!cookies.token) {
+                    navigate("/signin");
+                    return;
+                }
 
-        } catch (error) {
-          console.error("오류 발생:", error);
-        }
-      };
+                // 유저의 채팅방 모두 가져오기 api 요청
+                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/manage/council", {
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`,
+                    },
+                });
 
-      fetchCouncils();
+                setCouncilData(response.data);
+                console.log(response.data);
+
+            } catch (error) {
+                console.error("오류 발생:", error);
+            }
+        };
+
+        fetchCouncils();
     }, [cookies.token, navigate, key]); // [] 와 같이 비워도 됨.
 
-    
+
     const removeItem = async (id) => {
         try {
             console.log(id);
-            const response = await axios.delete("http://"+process.env.REACT_APP_BACK_URL+"/council-item/"+id, {
-            headers: {
-                Authorization: `Bearer ${cookies.token}`,
-            },
+            const response = await axios.delete("http://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id, {
+                headers: {
+                    Authorization: `Bearer ${cookies.token}`,
+                },
             });
             window.alert("삭제되었습니다.");
-            setKey(key+1);
+            setKey(key + 1);
             console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
@@ -182,19 +175,19 @@ const CouncilManagement = () => {
     const ItemQuantityChange = async (id, quantity) => {
         try {
             console.log(id);
-            if (quantity < 0){
+            if (quantity < 0) {
                 return;
             }
-            const response = await axios.put("http://"+process.env.REACT_APP_BACK_URL+"/council-item/"+id, 
-            {
-                quantity
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`,
+            const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id,
+                {
+                    quantity
                 },
-            });
-            setKey(key+1);
+                {
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`,
+                    },
+                });
+            setKey(key + 1);
             console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
@@ -202,47 +195,47 @@ const CouncilManagement = () => {
     };
     return (
         <AdminBox>
-            <Header headerType={"manage"} headerText={councilData.name+" 학생회"}></Header>
-            
-                <Subtitle>이용 정보
-                    <Link to={"/council/manage/info"}>
-                        <span>수정하기</span>
-                    </Link>
-                </Subtitle>
-                <InfoBox>
-                    위치 : {councilData.location}<br/>
-                    운영시간 : {councilData.operatingHours}<br/>
-                    이용수칙 : {councilData.usageGuidelines}
-                </InfoBox>
-                <Subtitle>물품 리스트</Subtitle>
-                <Items>
-                    {councilData.items.map((item) => (
-                        <Item key={item.itemId}>
-                            <Tag>{item.type === "RENTAL" ? "대여" : "제공"}</Tag>{item.name}
-                        
-                            <ItemRemoveBtn onClick={() => removeItem(item.itemId)}>
-                                <img src={"/image/remove.svg"}></img>
-                            </ItemRemoveBtn>
+            <Header headerType={"manage"} headerText={councilData.name + " 학생회"}></Header>
 
-                            <CountBox>
-                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity+1)}><img src={"/image/up.svg"}></img></CountChangeBtn>
-                                <Count>{item.quantity}</Count>
-                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity-1)}><img src={"/image/down.svg"}></img></CountChangeBtn>
-                                
-                                
-                            </CountBox>
-                        </Item>
-                    ))}
-                </Items>
-                <Link to={"/council/manage/item"}>
+            <Subtitle>이용 정보
+                <Link to={"/council/manage/info"}>
+                    <span>수정하기</span>
+                </Link>
+            </Subtitle>
+            <InfoBox>
+                위치 : {councilData.location}<br />
+                운영시간 : {councilData.operatingHours}<br />
+                이용수칙 : {councilData.usageGuidelines}
+            </InfoBox>
+            <Subtitle>물품 리스트</Subtitle>
+            <Items>
+                {councilData.items.map((item) => (
+                    <Item key={item.itemId}>
+                        <Tag>{item.type === "RENTAL" ? "대여" : "제공"}</Tag>{item.name}
+
+                        <ItemRemoveBtn onClick={() => removeItem(item.itemId)}>
+                            <img src={"/image/remove.svg"}></img>
+                        </ItemRemoveBtn>
+
+                        <CountBox>
+                            <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity + 1)}><img src={"/image/up.svg"}></img></CountChangeBtn>
+                            <Count>{item.quantity}</Count>
+                            <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity - 1)}><img src={"/image/down.svg"}></img></CountChangeBtn>
+
+
+                        </CountBox>
+                    </Item>
+                ))}
+            </Items>
+            <Link to={"/council/manage/item"}>
                 <CreateCouncil>
                     <img src={"/image/write_black.svg"}></img>
                 </CreateCouncil>
-                </Link>
+            </Link>
 
-            
+
         </AdminBox>
     );
-  };
+};
 
 export default CouncilManagement;

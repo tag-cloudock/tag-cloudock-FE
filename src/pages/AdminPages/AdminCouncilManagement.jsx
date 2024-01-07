@@ -1,16 +1,9 @@
-/*
-용도: 관리자 페이지
-담당자: 양태석
-사용법: App.js에서 라우팅됨.
-기타: ADMIN 권한 유저만 접근 가능
-*/
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import styled from "styled-components";
 import Header from "../../components/layout/Header";
-
 
 const AdminBox = styled.div`
     padding: 0 20px;
@@ -37,9 +30,7 @@ const CouncilImg = styled.div`
 `;
 
 const CouncilContent = styled.div`
-    /* float: left; */
     display: inline-block;
-
 `;
 
 const RemoveBtn = styled.button`
@@ -53,7 +44,6 @@ const RemoveBtn = styled.button`
         width: 25px;
     }
 `;
-
 
 const Council = styled.li`
     list-style: none;
@@ -78,8 +68,6 @@ const ItemInfo = styled.div`
     color: #aaaaaa;
 `;
 
-
-
 const CreateCouncil = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
@@ -87,7 +75,6 @@ const CreateCouncil = styled.div`
   font-weight: bold;
   color: #777777;
   text-align: center;
-  /* padding: 10px; */
   border-radius: 10px;
   background: #ffffff;
   box-shadow: rgba(210, 210, 210, 0.5) 0px 0px 15px;
@@ -96,59 +83,58 @@ const CreateCouncil = styled.div`
   }
 `;
 
-
 const AdminCouncilManagement = () => {
     const [groupedCouncilList, setGroupedCouncilList] = useState([]); // 채팅방 리스트 상태
-    const [key, setKey] = useState(0); 
+    const [key, setKey] = useState(0);
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
-  
+
     useEffect(() => {
-      const fetchCouncils = async () => {
-        try {
-          // 토큰 쿠키가 없다면 로그인 페이지로 이동
-          if (!cookies.token) {
-            navigate("/signin");
-            return;
-          }
-  
-          // 유저의 채팅방 모두 가져오기 api 요청
-          const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/council/all", {
-            headers: {
-              Authorization: `Bearer ${cookies.token}`,
-            },
-          });
+        const fetchCouncils = async () => {
+            try {
+                // 토큰 쿠키가 없다면 로그인 페이지로 이동
+                if (!cookies.token) {
+                    navigate("/signin");
+                    return;
+                }
 
-          const groupedData = response.data.reduce((acc, item, index) => {
-            const key = item.college;
-            if (index !== 0 && key !== response.data[index-1].college) {
-              acc.push([]);
+                // 유저의 채팅방 모두 가져오기 api 요청
+                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/all", {
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`,
+                    },
+                });
+
+                const groupedData = response.data.reduce((acc, item, index) => {
+                    const key = item.college;
+                    if (index !== 0 && key !== response.data[index - 1].college) {
+                        acc.push([]);
+                    }
+                    acc[acc.length - 1].push(item);
+                    return acc;
+                }, [[]]);
+
+                setGroupedCouncilList(groupedData);
+                console.log(groupedData);
+
+            } catch (error) {
+                console.error("오류 발생:", error);
             }
-            acc[acc.length-1].push(item);
-            return acc;
-          }, [[]]);
-    
-          setGroupedCouncilList(groupedData);
-          console.log(groupedData);
+        };
 
-        } catch (error) {
-          console.error("오류 발생:", error);
-        }
-      };
-
-      fetchCouncils();
+        fetchCouncils();
     }, [cookies.token, navigate, key]); // [] 와 같이 비워도 됨.
 
     const removeCouncil = async (id) => {
         try {
             console.log(id);
-            const response = await axios.delete("http://"+process.env.REACT_APP_BACK_URL+"/council/"+id, {
-            headers: {
-                Authorization: `Bearer ${cookies.token}`,
-            },
+            const response = await axios.delete("http://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
+                headers: {
+                    Authorization: `Bearer ${cookies.token}`,
+                },
             });
             window.alert("삭제되었습니다.");
-            setKey(key+1);
+            setKey(key + 1);
             console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
@@ -164,30 +150,30 @@ const AdminCouncilManagement = () => {
                 </CreateCouncil>
             </Link>
             <div>
-            {groupedCouncilList.map((college, index) => (
-                <div key={index}>
-                    <CollegeName>{college[0] != null ? college[0].college.slice(1) : null}</CollegeName>
-                    <CollegeBox>
-                        {college.map((council) => (
-                            <Council key={council.councilId}>
-                                <CouncilImg></CouncilImg>
-                                <Link to={"/admin/cimanage/add/"+council.councilId} >
-                                <CouncilContent>
-                                    <CouncilName>{council.name}</CouncilName>
-                                    <ItemInfo>제공 물품 {council.providedItemCount} 대여 물품 {council.rentalItemCount}</ItemInfo>
-                                </CouncilContent>
-                                </Link>
-                                <RemoveBtn onClick={() => removeCouncil(council.councilId)}>
-                                    <img src={"/image/remove.svg"}></img>
-                                </RemoveBtn>
-                            </Council>
-                        ))}
-                    </CollegeBox>
-                </div>
-            ))}
+                {groupedCouncilList.map((college, index) => (
+                    <div key={index}>
+                        <CollegeName>{college[0] != null ? college[0].college.slice(1) : null}</CollegeName>
+                        <CollegeBox>
+                            {college.map((council) => (
+                                <Council key={council.councilId}>
+                                    <CouncilImg></CouncilImg>
+                                    <Link to={"/admin/cimanage/add/" + council.councilId} >
+                                        <CouncilContent>
+                                            <CouncilName>{council.name}</CouncilName>
+                                            <ItemInfo>제공 물품 {council.providedItemCount} 대여 물품 {council.rentalItemCount}</ItemInfo>
+                                        </CouncilContent>
+                                    </Link>
+                                    <RemoveBtn onClick={() => removeCouncil(council.councilId)}>
+                                        <img src={"/image/remove.svg"}></img>
+                                    </RemoveBtn>
+                                </Council>
+                            ))}
+                        </CollegeBox>
+                    </div>
+                ))}
             </div>
         </AdminBox>
     );
-  };
+};
 
 export default AdminCouncilManagement;

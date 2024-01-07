@@ -1,10 +1,4 @@
-/*
-용도: 유저 페이지
-담당자: 양태석
-사용법: App.js에서 라우팅됨.
-기타: 주소의 파라미터로 유저 페이지 구분
-*/
-import { Link,useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
@@ -12,7 +6,6 @@ import axios from "axios";
 import Header from "../../components/layout/Header";
 import MenuBar from "../../components/layout/MenuBar";
 
-// 로그아웃 버튼
 const Logout = styled.button`
    display: block;
    margin: 30px auto 0px auto;
@@ -35,7 +28,7 @@ const ProfilImgBox = styled.div`
    width: 80px;
 `;
 
-const UserInfoContentBox = styled.div`
+const UserInfoTextBox = styled.div`
   height: 100px;
   width: calc(100% - 100px);
   float: right;
@@ -68,7 +61,7 @@ const ProfilImg = styled.div`
    }
 `;
 
-const UserBox = styled.div`
+const ContentBox = styled.div`
   padding: 10px;
 `;
 
@@ -79,7 +72,7 @@ const UserInfoBox = styled.div`
   box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
 `;
 
-const Certifi = styled.div`
+const Certification = styled.div`
    display: block;
    margin: 10px auto;
    background: none;
@@ -103,55 +96,38 @@ const Certifi = styled.div`
 `;
 
 const User = () => {
-  const navigate = useNavigate(); // 페이지 이동을 위해
-  const [cookies, ,removeCookie] = useCookies();// 쿠키 가져오기, 쿠기 삭제를 위한 함수
-  const [userInfo, setUserInfo] = useState({}); // 유저 정보 상태
-
-  const [img, setImg] = useState({}); // 유저 정보 상태
-  const [isVertical, setIsVertical] = useState(true); // 유저 정보 상태
-  const { userid } = useParams(); // 파라미터 값 가져오기
+  const navigate = useNavigate();
+  const [cookies, , removeCookie] = useCookies();
+  const [userInfo, setUserInfo] = useState({}); 
+  const [img, setImg] = useState({});
+  const [isVertical, setIsVertical] = useState(true);
+  const { userid } = useParams();
 
   useEffect(() => {
-    // 유저 정보 가져오기
     const fetchUserInfo = async () => {
       try {
-        // 토큰 쿠키가 없다면 로그인 페이지로 이동
         if (!cookies.token) {
           navigate("/signin");
           return;
         }
-        // 회원 조회 api 요청
-        const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/account?id=" + userid, {
+        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/account?id=" + userid, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
         });
-
         var img = new Image();
-
-        // 이미지의 소스를 설정하여 로드를 시작합니다.
         img.src = "http://" + process.env.REACT_APP_BACK_URL + "/image/" + response.data.imgPath;
-
-        // 이미지가 로드되면 실행되는 콜백 함수를 정의합니다.
-        img.onload = function() {
-            // 이미지의 가로 길이
-            var width = img.width;
-            // 이미지의 세로 길이
-            var height = img.height;
-
-            // 가로 세로 길이를 출력하거나 다른 작업을 수행합니다.
-            setImg(img);
-            setIsVertical(width<=height);
-            // console.log(width<=height);
-            console.log("가로 길이:", width);
-            console.log("세로 길이:", height);
+        img.onload = function () {
+          var width = img.width;
+          var height = img.height;
+          setImg(img);
+          setIsVertical(width <= height);
+          console.log("가로 길이:", width);
+          console.log("세로 길이:", height);
         };
-
         console.log(response.data);
-        // 유저 상태 등록
         setUserInfo(response.data);
       } catch (error) {
-        // 없는 유저라면 쿠키 지우고 로그인 페이지로 이동
         if (error.response && error.response.status === 404) {
           removeCookies();
           navigate("/signin");
@@ -163,7 +139,6 @@ const User = () => {
     fetchUserInfo();
   }, [cookies.token, navigate, userid]);
 
-  // 쿠키 지우기
   const removeCookies = async (e) => {
     removeCookie('token', { path: '/' });
     removeCookie('certification', { path: '/' });
@@ -175,28 +150,31 @@ const User = () => {
 
   return (
     <div>
-      <Header headerType={"user"}></Header>
-      <UserBox>
+      <Header/>
+      <ContentBox>
         <UserInfoBox>
           <ProfilImgBox>
             <ProfilImg isVertical={isVertical}>
               <img src={img.src}></img>
             </ProfilImg>
           </ProfilImgBox>
-          <UserInfoContentBox>
+          <UserInfoTextBox>
             <Nickname>{userInfo.nickname}</Nickname>
             <CountInfoBox>
-              
             </CountInfoBox>
-          </UserInfoContentBox>
-
+          </UserInfoTextBox>
         </UserInfoBox>
+
         <Logout onClick={removeCookies}>로그아웃</Logout>
-        {cookies.certification == false  ? 
-        <Certifi><Link to={"/certification"}><span>물건을 대여하고 싶나요? <span>학생증 인증하기</span></span></Link></Certifi>
+        {cookies.certification == false ?
+          <Link to={"/certification"}>
+            <Certification>
+                <span>물건을 대여하고 싶나요? <span>학생증 인증하기</span></span>
+            </Certification>
+          </Link>
         : null}
-      </UserBox>
-      <MenuBar></MenuBar>
+      </ContentBox>
+      <MenuBar/>
     </div>
   );
 };

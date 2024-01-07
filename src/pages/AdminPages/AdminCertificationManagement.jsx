@@ -1,16 +1,9 @@
-/*
-용도: 관리자 페이지
-담당자: 양태석
-사용법: App.js에서 라우팅됨.
-기타: ADMIN 권한 유저만 접근 가능
-*/
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import styled from "styled-components";
 import Header from "../../components/layout/Header";
-
 
 const AdminBox = styled.div`
     padding: 0 20px;
@@ -81,8 +74,6 @@ const Council = styled.li`
     position: relative;
 `;
 
-
-
 const UserInfo = styled.div`
     font-size: 15px;
     font-weight: 400;
@@ -94,6 +85,7 @@ const UserInfo = styled.div`
         margin: 0px 10px;
     }
 `;
+
 const CertifiState = styled.div`
     position: absolute;
     top: 20px;
@@ -104,81 +96,44 @@ const CertifiState = styled.div`
     }
 `;
 const AdminCertificationManagement = () => {
-    const [certiRequest, setCertiRequest] = useState([]); // 채팅방 리스트 상태
-    const [key, setKey] = useState(0); 
+    const [certiRequest, setCertificationRequest] = useState([]); // 채팅방 리스트 상태
+    const [key, setKey] = useState(0);
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
-    
-  
+
+
     useEffect(() => {
-      const fetchCouncils = async () => {
-        try {
-          // 토큰 쿠키가 없다면 로그인 페이지로 이동
-        //   if (!cookies.token) {
-        //     navigate("/signin");
-        //     return;
-        //   }
-  
-          // 유저의 채팅방 모두 가져오기 api 요청
-          const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/certification/requests", {
-            headers: {
-              Authorization: `Bearer ${cookies.token}`,
-            },
-          });
+        const fetchCertificationRequests = async () => {
+            try {
+                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/certification/requests", {
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`,
+                    },
+                });
 
-          setCertiRequest(response.data);
-          console.log(response.data);
+                setCertificationRequest(response.data);
+                console.log(response.data);
 
-        } catch (error) {
-          console.error("오류 발생:", error);
-        }
-      };
+            } catch (error) {
+                console.error("오류 발생:", error);
+            }
+        };
 
-      fetchCouncils();
+        fetchCertificationRequests();
     }, [cookies.token, navigate, key]); // [] 와 같이 비워도 됨.
 
-    const update = async (id) => {
-        try {
-            console.log(id);
-            const response = await axios.delete("http://"+process.env.REACT_APP_BACK_URL+"/council/"+id, {
-            headers: {
-                Authorization: `Bearer ${cookies.token}`,
-            },
-            });
-            window.alert("삭제되었습니다.");
-            setKey(key+1);
-            console.log(response);
-        } catch (error) {
-            console.error("오류 발생:", error);
-        }
-    };
-
-    const getImage =  (path) => {
+    const getImage = (path) => {
         var img = new Image();
         var isVertical = true;
         img.src = "http://" + process.env.REACT_APP_BACK_URL + "/image/" + path;
-        
-        img.onload = function() {
+
+        img.onload = function () {
             var width = img.width;
             var height = img.height;
-            isVertical = width<=height;
-            // return { path: img.src, isVertical};
+            isVertical = width <= height;
         };
-        return { path: img.src, isVertical};
+        return { path: img.src, isVertical };
     };
-
-    // const isImageVertical =  (path) => {
-    //     var img = new Image();
-    //     img.src = "http://" + process.env.REACT_APP_BACK_URL + "/image/" + path;
-    //     img.onload = function() {
-    //         var width = img.width;
-    //         var height = img.height;
-    //         var IsVertical = width<=height;
-    //     };
-    //     return (img.src);
-    // };
-
-    
 
     return (
         <AdminBox>
@@ -197,29 +152,29 @@ const AdminCertificationManagement = () => {
                 </ul>
             </Dashboard>
             <RequestsBox>
-            {certiRequest.map((request, index) => {
-                const imgInfo = getImage(request.imgPath);
-                return (
-                    <Link to={"/admin/certimanage/"+request.certiId} key={request.certiId} >
-                    <Council key={request.certiId}>
-                        <UserImg isVertical={imgInfo.isVertical}>
-                            <img src={imgInfo.path} />
-                        </UserImg>
-                        <UserInfo>
-                            <span>아이디</span>{request.user.userId} <span>닉네임</span>{request.user.nickName}<br/>
-                            <span>이름</span>{"양태석"} <span>학번</span>{202235277}<br/>
-                            <span>요청 시각</span>{request.requestAt[1]}/{request.requestAt[2]} {request.requestAt[3]}:{request.requestAt[4]}
-                        </UserInfo>
-                        <CertifiState isCertifi={request.user.certification}>
-                            <img src={"/image/check.svg"}></img>
-                        </CertifiState>
-                    </Council>
-                    </Link>
+                {certiRequest.map((request, index) => {
+                    const imgInfo = getImage(request.imgPath);
+                    return (
+                        <Link to={"/admin/certimanage/" + request.certiId} key={request.certiId} >
+                            <Council key={request.certiId}>
+                                <UserImg isVertical={imgInfo.isVertical}>
+                                    <img src={imgInfo.path} />
+                                </UserImg>
+                                <UserInfo>
+                                    <span>아이디</span>{request.user.userId} <span>닉네임</span>{request.user.nickName}<br />
+                                    <span>이름</span>{"양태석"} <span>학번</span>{202235277}<br />
+                                    <span>요청 시각</span>{request.requestAt[1]}/{request.requestAt[2]} {request.requestAt[3]}:{request.requestAt[4]}
+                                </UserInfo>
+                                <CertifiState isCertifi={request.user.certification}>
+                                    <img src={"/image/check.svg"}></img>
+                                </CertifiState>
+                            </Council>
+                        </Link>
                     );
                 })}
             </RequestsBox>
         </AdminBox>
     );
-  };
+};
 
 export default AdminCertificationManagement;

@@ -1,14 +1,6 @@
-/*
-용도: 관리자 페이지
-담당자: 양태석
-사용법: App.js에서 라우팅됨.
-기타: ADMIN 권한 유저만 접근 가능
-*/
-
 import styled from "styled-components";
 import Header from "../../components/layout/Header";
 import { Link } from "react-router-dom";
-
 
 const AdminBox = styled.div`
     padding: 0 20px;
@@ -27,7 +19,6 @@ const DashBoardBox = styled.div`
   border: 1px solid #38d9a9;
   border-radius: 10px;
   padding: 10px 20px;
-  /* box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px; */
 `;
 
 const DashBoardDataLine = styled.li`
@@ -51,7 +42,6 @@ const ManageBtn = styled.div`
   width: 100%;
   border: 1px solid #38d9a9;
   border-radius: 10px;
-  /* background: #e6fcf5; */
   text-align: center;
   line-height: 50px;
   font-size: 20px;
@@ -64,7 +54,7 @@ const ManageBtn = styled.div`
   }
 
 `;
-const Admin = () => {
+const AdminManagement = () => {
     return (
         <AdminBox>
             <Header headerType={"admin"} headerText={"관리자"}></Header>
@@ -92,7 +82,7 @@ const Admin = () => {
                         <DashBoardData>개</DashBoardData>
                     </DashBoardDataLine>
                 </ul>
-                
+
             </DashBoardBox>
             <Subtitle>MANAGE</Subtitle>
             <ManageBox>
@@ -101,9 +91,9 @@ const Admin = () => {
                 <ManageBtn>악성 유저 관리</ManageBtn>
                 <ManageBtn>공지사항 관리</ManageBtn>
             </ManageBox>
-            
+
         </AdminBox>
     );
-  };
+};
 
-export default Admin;
+export default AdminManagement;

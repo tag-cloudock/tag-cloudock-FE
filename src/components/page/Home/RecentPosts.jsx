@@ -54,7 +54,7 @@ const ImageIcon = styled.img`
   }
 `;
 
-const PostList = () => {
+const RecentPosts = () => {
   const navigate = useNavigate(); // 로그인 전 홈 진입 막기 위해
   const [posts, setPosts] = useState([]); // 최신 글 사용 위해
   const [cookies] = useCookies(); // 쿠키 사용하기 위해
@@ -94,4 +94,4 @@ const PostList = () => {
   );
 };
 
-export default PostList;
+export default RecentPosts;

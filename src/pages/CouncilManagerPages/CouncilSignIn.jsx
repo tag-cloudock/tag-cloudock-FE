@@ -1,9 +1,3 @@
-/*
-용도: 로그인 페이지
-담당자: 양태석
-사용법: App.js에서 라우팅됨.
-기타: 
-*/
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -14,92 +8,83 @@ import Footer from "../../components/layout/Footer";
 
 // 로그인 form 박스
 const LoginBox = styled.div`
-    margin: 20px auto;
-    padding: 70px 0px;
-    width: 90%;
-    background : none;
-    border-radius: 20px;
-    /* box-shadow: rgba(167, 174, 180, 0.4) 0px 0px 10px; */
+  margin: 20px auto;
+  padding: 70px 0px;
+  width: 90%;
+  background : none;
+  border-radius: 20px;
 `;
 
 // 타이틀
 const Title = styled.div`
-    text-align: center;
-    height: 45px;
-    line-height: 45px;
-    margin-bottom: 150px;
-    font-size: 60px;
-    font-weight: 850;
-    & a{
-      color : #38d9a9;
-    }
+  text-align: center;
+  height: 45px;
+  line-height: 45px;
+  margin-bottom: 150px;
+  font-size: 60px;
+  font-weight: 850;
+  & a{
+    color : #38d9a9;
+  }
 `;
 
 // 서브 타이틀
 const SubTitle = styled.div`
-    text-align: center;
-    font-size: 18px;
-    font-weight: 600;
-    color : #adb5c2;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color : #adb5c2;
 `;
 
 
 // 비밀번호 잊어버림 문구
 const ForgotPassword = styled.span`
-    margin-top: -15px;
-    display: block;
-    text-align: center;
-    color : #38d9a9;
-`;
-
-// 회원가입 하러 가기
-const GoToSignUp = styled.span`
-    margin-top: 10px;
-    display: block;
-    text-align: center;
-    color : #aaaaaa;
+  margin-top: -15px;
+  display: block;
+  text-align: center;
+  color : #38d9a9;
 `;
 
 // 입력 박스
 const InputBox = styled.input`
-    display: block;
-    margin: 10px auto;
-    height: 40px;
-    background: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 10px;
-    color:#333333;
-    font-size: 18px; 
-    outline: none;
-    padding: 0px 3%;
-    width: 60%;
-    &::placeholder {
-        color: #aaaaaa; 
-        font-size: 18px;
-    }
-    &:focus {
-      border-color: #38d9a9;
-    }
+  display: block;
+  margin: 10px auto;
+  height: 40px;
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  color:#333333;
+  font-size: 18px; 
+  outline: none;
+  padding: 0px 3%;
+  width: 60%;
+  &::placeholder {
+      color: #aaaaaa; 
+      font-size: 18px;
+  }
+  &:focus {
+    border-color: #38d9a9;
+  }
 `;
 
 // 제출 버튼
 const SubmitBtn = styled.button`
-    display: block;
-    margin: 30px auto;
-    height: 40px;
-    background: #efefef;
-    border: none;
-    border-radius: 10px;
-    background: #38d9a9;
-    font-weight: bold;
-    color:#ffffff;
-    font-size: 18px; 
-    outline: none;
-    width: 66%;
-    &::placeholder {
-        color: #aaaaaa; 
-        font-size: 18px;
-    }
+  display: block;
+  margin: 30px auto;
+  height: 40px;
+  background: #efefef;
+  border: none;
+  border-radius: 10px;
+  background: #38d9a9;
+  font-weight: bold;
+  color:#ffffff;
+  font-size: 18px; 
+  outline: none;
+  width: 66%;
+  &::placeholder {
+      color: #aaaaaa; 
+      font-size: 18px;
+  }
 `;
 
 const CouncilSignIn = () => {
@@ -134,7 +119,7 @@ const CouncilSignIn = () => {
 
     try {
       // 로그인 api 요청
-      const loginResponse = await axios.post("http://"+process.env.REACT_APP_BACK_URL+"/login",
+      const loginResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/login",
         {
           userid,
           password
@@ -222,7 +207,7 @@ const CouncilSignIn = () => {
           onKeyDown={(e) => { activeEnter(e) }} />
 
         {/* 제출 버튼 */}
-        <SubmitBtn onClick={handleLogin}>로그인</SubmitBtn>      
+        <SubmitBtn onClick={handleLogin}>로그인</SubmitBtn>
         <ForgotPassword>비밀 번호를 잊으셨나요?</ForgotPassword>
       </LoginBox>
       <Footer></Footer>

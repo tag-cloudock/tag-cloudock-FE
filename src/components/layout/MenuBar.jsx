@@ -1,9 +1,3 @@
-/*
-용도: 메뉴바
-담당자: 양태석
-사용법: 메뉴바가 필요한 곳에서 사용
-기타:
-*/
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useCookies } from "react-cookie";
@@ -33,7 +27,6 @@ const NavBtn = styled.div`
   display: flex;
   opacity: ${({ ison }) => (ison === "true" ? "100%" : "40%")};
   width: 33%;
-  /* height: 100%; */
   background: none;
   border: none;
   & a {
@@ -47,7 +40,6 @@ const Circle = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 100px;
-  /* border: 1px solid #379DFF; */
   box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px;
   background: #379dff;
   position: relative;

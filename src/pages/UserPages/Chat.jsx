@@ -1,9 +1,3 @@
-/*
-용도: 채팅 내부 페이지
-담당자: 양태석
-사용법: Chat.jsx에서 사용
-기타: 
-*/
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -13,18 +7,13 @@ import Header from "../../components/layout/Header";
 import Loading from "../../components/layout/Loading";
 
 
-const InChatBox = styled.div`
+const ChatBox = styled.div`
   position: absolute;
-  /* padding: 0px 20px; */
-  /* border-left: 1px solid #eeeeee;
-  border-right: 1px solid #eeeeee; */
-  /* margin-left: -1px; */
   width: 100%;
-  /* height: 100%; */
   max-width: 700px;
   background: #ffffff;
 `;
-// 날이 변경될때 표시 문구
+
 const DateChange = styled.div`
   margin: 20px auto;
   width: 70%;
@@ -36,7 +25,6 @@ const DateChange = styled.div`
   color:#aaaaaa;
 `;
 
-// 포스트 이미지
 const PostImg = styled.div`
   margin: 10px 10px;
   width:40px;
@@ -44,66 +32,6 @@ const PostImg = styled.div`
   border-radius: 10px;
   border: 1px solid #dddddd;
   float:left;
-`;
-
-// 게시물 상태 표시
-const State = styled.div`
-  position: fixed;
-  width: 100%;
-  text-align: center;
-  @media screen and (min-width: 701px) {
-    margin: 0px auto;
-    width: 701px;
-  }
-`;
-
-// 게시물 상태
-
-// const Done = styled.div`
-//   display: inline-block;
-//   margin: 10px 10px;
-//   border-radius: 40px;
-//   border: 1px solid #50e15a;
-//   background: #ffffff7a;
-//   padding: 0px 18px;
-//   height: 40px;
-//   float: right;
-//   text-align: center;
-//   line-height: 40px;
-//   color:#50e15a;
-//   font-weight: 600;
-//   font-size: 18px;
-// `;
-
-// const TurnToDone = styled.div`
-//   display: inline-block;
-//   margin: 10px 10px;
-//   border-radius: 40px;
-//   border: 1px solid #379DFF;
-//   background: #ffffff7a;
-//   padding: 0px 18px;
-//   height: 40px;
-//   float: right;
-//   text-align: center;
-//   line-height: 40px;
-//   color:#379DFF;
-//   font-weight: 600;
-//   font-size: 18px;
-// `;
-
-const TurnToOn = styled.div`
-  display: inline-block;
-  margin: 10px 10px;
-  border-radius: 40px;
-  border: 1px solid #efb15a;
-  background: #ffffff7a;
-  padding: 0px 18px;
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
-  color:#efb15a;
-  font-weight: 600;
-  font-size: 18px;
 `;
 
 // 게시물 제목
@@ -123,11 +51,6 @@ const PostInfo = styled.div`
   right: 0;
   height: 60px;
   background-color: #ffffff;
-  /* border-radius: 0px 0px 20px 20px; */
-  /* border-bottom: 1px solid #eeeeee;
-  border-right: 1px solid #eeeeee;
-  border-left: 1px solid #eeeeee; */
-
   @media screen and (min-width: 701px) {
     margin: 0 auto;
     width: 700px;
@@ -157,14 +80,11 @@ const DurationDate = styled.span`
 
 // 메세지들
 const MessagesBox = styled.ul`
-  /* position: fixed; */
-  /* bottom:0; */
   background: #ffffff;
   width: 100%;
 `;
 
 const TestBox = styled.div`
-  /* height: 1000px; */
 `;
 
 // 메세지 라인 박스
@@ -223,20 +143,20 @@ const MessageInputBox = styled.div`
 
 // 메세지 입력
 const InputBox = styled.input`
-    margin: 10px;
-    width: 85%;
-    height: 40px;
-    background: #f5f5f5;
-    border: none;
-    border-radius: 20px;
-    color:#333333;
-    padding: 0px 20px;
-    font-size: 18px;
-    outline: none;
-    &::placeholder {
-        color: #aaaaaa; 
-        font-size: 18px;
-    }
+  margin: 10px;
+  width: 85%;
+  height: 40px;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 20px;
+  color:#333333;
+  padding: 0px 20px;
+  font-size: 18px;
+  outline: none;
+  &::placeholder {
+      color: #aaaaaa; 
+      font-size: 18px;
+  }
 `;
 
 // 헤더에 안가려지게 하는 더미 박스
@@ -246,42 +166,42 @@ const EmptyBox = styled.div`
 
 // 전송 버튼
 const SendBtn = styled.button`
-   margin: 10px 10px 0px 0px;
-   height: 40px;
-   background: none;
-   border: none;
-   width: 15%;
-   border-radius: 13px;
-   color: ${({ isNoText }) => (isNoText ? '#aaaaaa' : '#ffffff')};
-   font-weight: 600;
-   & img{
-     border-radius: 10px;
-     opacity: ${({ isNoText }) => (isNoText ? '30%' : '100%')};
-     background: ${({ isNoText }) => (isNoText ? 'none' : '#EEF6FF')};
-     width: 35px;
-   }
+  margin: 10px 10px 0px 0px;
+  height: 40px;
+  background: none;
+  border: none;
+  width: 15%;
+  border-radius: 13px;
+  color: ${({ isNoText }) => (isNoText ? '#aaaaaa' : '#ffffff')};
+  font-weight: 600;
+  & img{
+    border-radius: 10px;
+    opacity: ${({ isNoText }) => (isNoText ? '30%' : '100%')};
+    background: ${({ isNoText }) => (isNoText ? 'none' : '#EEF6FF')};
+    width: 35px;
+  }
 `;
 
 // 최하단 메세지 앵커
 const BottomPoint = styled.div`
-   margin-bottom: 70px;
-   background: #ffffff;
+  margin-bottom: 70px;
+  background: #ffffff;
 `;
 
 // 까꿍 이스터에그 박스
 const HiddenTextBox = styled.div`
-   position: absolute;
-   width: 100%;
-   left: 0;
+  position: absolute;
+  width: 100%;
+  left: 0;
 `;
 
 // 까꿍 이스터에그 텍스트
 const HiddenText = styled.div`
-   text-align: center;
-   margin: 10px;
-   font-size: 30px;
-   font-weight: 800;
-   color : #ccd3d8;
+  text-align: center;
+  margin: 10px;
+  font-size: 30px;
+  font-weight: 800;
+  color : #ccd3d8;
 `;
 
 const Chat = () => {
@@ -320,7 +240,7 @@ const Chat = () => {
           return;
         }
         // 메세지 가져오기 api요청
-        const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/chat/message/" + id, {
+        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/chat/message/" + id, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -332,7 +252,7 @@ const Chat = () => {
         console.error("오류 발생:", error);
       }
     };
-    
+
     // 게시물 정보 가져오기
     const fetchPostInfo = async () => {
       try {
@@ -343,7 +263,7 @@ const Chat = () => {
         }
 
         // 게시물 정보 가져오기 api 요청
-        const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/post/" + postId, {
+        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/post/" + postId, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -373,7 +293,7 @@ const Chat = () => {
 
   useEffect(() => {
     // 컴포넌트가 마운트되면 웹 소켓 연결
-    ws.current = new WebSocket('ws://'+process.env.REACT_APP_BACK_URL+'/ws/chat');
+    ws.current = new WebSocket('ws://' + process.env.REACT_APP_BACK_URL + '/ws/chat');
 
     // 세션 등록
     ws.current.onopen = () => {
@@ -446,7 +366,7 @@ const Chat = () => {
     }
   };
   return (
-    <InChatBox>
+    <ChatBox>
       <Header headerType={"inChat"} headerText={other}></Header>
 
       {/* 게시물 정보 */}
@@ -467,19 +387,6 @@ const Chat = () => {
             <HiddenText>까꿍</HiddenText>
           </HiddenTextBox>}
       </EmptyBox>
-
-      {/* 게시물 상태 */}
-      {/* {loading ? null : 
-        <Done>대여완료</Done>
-        } */}
-
-      {/* {loading ? null : 
-        <TurnToDone>대여완료 하기</TurnToDone>
-        } */}
-
-      {/* {loading ? null :
-        <State><TurnToOn>대여중으로 전환하기</TurnToOn></State>
-      } */}
 
       {/* 메세지 */}
       {loading ? <Loading /> : null}
@@ -524,7 +431,7 @@ const Chat = () => {
           <img src="/image/paperplane.svg" alt="" />
         </SendBtn>
       </MessageInputBox>
-    </InChatBox>
+    </ChatBox>
   );
 };
 

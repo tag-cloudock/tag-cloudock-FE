@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes  } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Home from "./pages/UserPages/Home";
 import User from "./pages/UserPages/User";
@@ -27,9 +27,8 @@ import NoticeDetail from "./pages/UserPages/NoticeDetail";
 const MainLayout = styled.div`
 `;
 
-
 function App() {
-  return ( 
+  return (
     <MainLayout>
       <BrowserRouter>
         <Routes>
@@ -59,8 +58,6 @@ function App() {
           <Route path="/council/manage" Component={CouncilManagement} />
           <Route path="/council/manage/info" Component={EditCouncilInfo} />
           <Route path="/council/manage/item" Component={CreationCouncilItem} />
-          
-        
         </Routes>
       </BrowserRouter>
     </MainLayout>

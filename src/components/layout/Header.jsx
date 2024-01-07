@@ -1,24 +1,14 @@
-/*
-용도: 헤더
-담당자: 양태석
-사용법: 헤더가 필요한 곳에서 사용
-기타: headerType으로 여러 형태의 헤더 지원
-*/
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 // 헤더 박스
 const HeaderBox = styled.div`
   z-index: 2;
-  /* background: "#F2F6F9"; */
   background: ${({ nobg }) => (nobg ? '#FBFBFB' : '#ffffff')};
   position: fixed;
   left: 0;
   right: 0;
   height: 50px;
-  
-  /* border-right: ${({ nobg }) => (nobg ? 'none' : '1px solid #eeeeee')};
-  border-left: ${({ nobg }) => (nobg ? 'none' : '1px solid #eeeeee')}; */
   border-bottom: ${({ nobg }) => (nobg ? 'none' : '1px solid #eeeeee')};
   @media screen and (min-width: 701px) {
     margin: 0px auto;
@@ -76,7 +66,6 @@ const Anno = styled.div`
   float: right;
   margin-left: 10px;
   border-radius: 5px;
-  /* background: #EEF6FF; */
   &:hover {
     background: #f3f3f3;
   }
@@ -104,9 +93,7 @@ const Help = styled.div`
     transform: translate(-50%, -50%);
     width: 13px;
   }
-  /* background: #EEF6FF; */
   &:hover {
-    /* background: #EEF6FF; */
     background: #f3f3f3;
   }
 `;
@@ -130,7 +117,6 @@ const HelpIntro = styled.div`
     font-weight: 800;
     color: #ffffff;
     top: 0;
-    /* width: 200px; */
     display: inline-block;
   }
 `;
@@ -153,7 +139,6 @@ const HeaderCenterText = styled.span`
 const HeaderBackBtn = styled.button`
   z-index: 1;
   position: absolute;
-  /* left: 0; */
   margin-top: 5px;
   margin-left: 5px;
   height: 40px;
@@ -171,7 +156,6 @@ const HeaderBackBtn = styled.button`
     top: 0;
     left: 0;
     height: 40px;
-    /* margin: 5px 5px; */
   }
   &:hover {
     background: #f5f5f5;
@@ -215,7 +199,6 @@ const Header = ({ headerType, headerText }) => {
                     <img src={"/image/megaphone.svg"}></img>
                   </Anno>
                 </Link>
-
                 <Help>
                   <img src={"/image/help.svg"}></img>
                 </Help>
@@ -276,27 +259,27 @@ const Header = ({ headerType, headerText }) => {
             </HeaderContent>
           </HeaderBox>
           <EmptyBox></EmptyBox>
-          </div>
-        );
-      case "chat": // 채팅방
-        return (
-          <div>
-            <HeaderBox>
-              <HeaderContent>
+        </div>
+      );
+    case "chat": // 채팅방
+      return (
+        <div>
+          <HeaderBox>
+            <HeaderContent>
               <HeaderBackBtn onClick={handleGoBack}><img src="/image/back.svg" alt="" /></HeaderBackBtn>
-                <HeaderCenterText>
-                  {headerText}
-                </HeaderCenterText>
-              </HeaderContent>
-                
-            </HeaderBox>
-            <EmptyBox></EmptyBox>
-          </div>
-        );
-      case "inChat": // 채팅 내부
-        return (
-          <div>
-            <HeaderBox>
+              <HeaderCenterText>
+                {headerText}
+              </HeaderCenterText>
+            </HeaderContent>
+
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    case "inChat": // 채팅 내부
+      return (
+        <div>
+          <HeaderBox>
             <HeaderContent>
               <HeaderBackBtn onClick={handleGoBack}>
                 <img src="/image/back.svg" alt="" />

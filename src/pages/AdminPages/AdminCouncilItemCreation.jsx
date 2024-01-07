@@ -1,9 +1,3 @@
-/*
-용도: 관리자 페이지
-담당자: 양태석
-사용법: App.js에서 라우팅됨.
-기타: ADMIN 권한 유저만 접근 가능
-*/
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
@@ -11,11 +5,9 @@ import axios from "axios";
 import styled from "styled-components";
 import Header from "../../components/layout/Header";
 
-
 const AdminBox = styled.div`
     padding: 0 20px;
 `;
-
 
 const InputBox = styled.input`
     display: block;
@@ -88,13 +80,12 @@ const List = styled.li`
     }
 `;
 
-
 const Summary = styled.summary`
     padding: 15px 10px;
     border-radius: 5px;
     border-radius: 10px;
     list-style: none;
-    color:  ${({ isDefault }) => ( isDefault ? '#aaaaaa' : '#333333')};
+    color:  ${({ isDefault }) => (isDefault ? '#aaaaaa' : '#333333')};
     &:after {
         content: '';
         float: right;
@@ -119,18 +110,11 @@ const Button = styled.button`
     display: block;
 `;
 
-
 const CouncilName = styled.div`
     margin: 20px 0px 10px 0px;
     font-weight: 700;
 
 `;
-
-
-
-//////////////
-
-
 
 const Items = styled.ul`
     background: #ffffff;
@@ -189,7 +173,6 @@ const Count = styled.div`
     border: 1px solid #cccccc;
 `;
 
-
 const Tag = styled.span`
   padding: 2px 7px;
   border-radius: 20px;
@@ -203,89 +186,87 @@ const Tag = styled.span`
 
 const AdminCouncilItemCreation = () => {
     const [councilData, setCouncilData] = useState({
-        college : '',
-        items : []
-    }); // 채팅방 리스트 상태
+        college: '',
+        items: []
+    }); 
     const [name, setName] = useState("");
-    const [type, setType] = useState("물품 유형"); 
-    const [key, setKey] = useState(0); 
+    const [type, setType] = useState("물품 유형");
+    const [key, setKey] = useState(0);
     const { id } = useParams();
-    
-
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
-  
+
     useEffect(() => {
-      const fetchCouncils = async () => {
-        try {
-          // 토큰 쿠키가 없다면 로그인 페이지로 이동
-          if (!cookies.token) {
-            navigate("/signin");
-            return;
-          }
-          const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/council/"+id, {
-            headers: {
-              Authorization: `Bearer ${cookies.token}`,
-            },
-          });
+        const fetchCouncils = async () => {
+            try {
+                // 토큰 쿠키가 없다면 로그인 페이지로 이동
+                if (!cookies.token) {
+                    navigate("/signin");
+                    return;
+                }
+                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`,
+                    },
+                });
 
-          setCouncilData(response.data);
-          console.log(response.data);
+                setCouncilData(response.data);
+                console.log(response.data);
 
-        } catch (error) {
-          console.error("오류 발생:", error);
-        }
-      };
+            } catch (error) {
+                console.error("오류 발생:", error);
+            }
+        };
 
-      fetchCouncils();
+        fetchCouncils();
     }, [cookies.token, navigate, key]); // [] 와 같이 비워도 됨.
 
 
     const handleAddCouncil = async (e) => {
         e.preventDefault();
-    
+
         // 입력을 아에 안했는지 검사
         if (name.length < 1) {
-          window.alert("학과를 입력해주세요.");
-          setName('');
-          return;
+            window.alert("학과를 입력해주세요.");
+            setName('');
+            return;
         }
         if (type == "물품 유형") {
-          window.alert("물품 유형을 선택해주세요.");
-          return;
+            window.alert("물품 유형을 선택해주세요.");
+            return;
         }
 
         try {
-          // 회원가입 api 요청
-          const councilId = id;
-          const signUpResponse = await axios.post("http://"+process.env.REACT_APP_BACK_URL+"/council-item",
-            {
-                councilId,
-                name,
-                type,
+            // 회원가입 api 요청
+            const councilId = id;
+            const signUpResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/council-item",
+                {
+                    councilId,
+                    name,
+                    type,
+                }
+            );
+            // 성공시
+            if (signUpResponse.status === 200) {
+                window.alert("생성 성공");
+                setKey(key + 1);
+                // navigate("/");
             }
-          );
-          // 성공시
-          if (signUpResponse.status === 200) {
-            window.alert("생성 성공");
-            setKey(key+1);
-            // navigate("/");
-          }
         } catch (error) {
             console.error("오류 발생:", error);
-          
+
         }
-      };
+    };
     const removeItem = async (id) => {
         try {
             console.log(id);
-            const response = await axios.delete("http://"+process.env.REACT_APP_BACK_URL+"/council-item/"+id, {
-            headers: {
-                Authorization: `Bearer ${cookies.token}`,
-            },
+            const response = await axios.delete("http://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id, {
+                headers: {
+                    Authorization: `Bearer ${cookies.token}`,
+                },
             });
             window.alert("삭제되었습니다.");
-            setKey(key+1);
+            setKey(key + 1);
             console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
@@ -294,19 +275,19 @@ const AdminCouncilItemCreation = () => {
     const ItemQuantityChange = async (id, quantity) => {
         try {
             console.log(id);
-            if (quantity < 0){
+            if (quantity < 0) {
                 return;
             }
-            const response = await axios.put("http://"+process.env.REACT_APP_BACK_URL+"/council-item/"+id, 
-            {
-                quantity
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`,
+            const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id,
+                {
+                    quantity
                 },
-            });
-            setKey(key+1);
+                {
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`,
+                    },
+                });
+            setKey(key + 1);
             console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
@@ -317,11 +298,11 @@ const AdminCouncilItemCreation = () => {
             <Header headerType={"admin"} headerText={"물품 추가"}></Header>
             <div>
                 <InputBox type="text" name="name" placeholder="물품명"
-                value={name}
-                onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                  />
+                    value={name}
+                    onChange={(e) => {
+                        setName(e.target.value);
+                    }}
+                />
 
                 <Details>
                     <Summary isDefault={type == "물품 유형"}>
@@ -335,11 +316,11 @@ const AdminCouncilItemCreation = () => {
                         </List>
                         <List>
                             <Button onClick={() => setType("PROVIDED")}>
-                         PROVIDED
+                                PROVIDED
                             </Button>
                         </List>
                     </ListBox>
-                    </Details>
+                </Details>
                 {/* 제출 버튼 */}
                 <SummitBtn onClick={handleAddCouncil}>추가</SummitBtn>
             </div>
@@ -349,25 +330,23 @@ const AdminCouncilItemCreation = () => {
                     {councilData.items.map((item) => (
                         <Item key={item.itemId}>
                             <Tag>{item.type === "RENTAL" ? "대여" : "제공"}</Tag>{item.name}
-                        
+
                             <ItemRemoveBtn onClick={() => removeItem(item.itemId)}>
                                 <img src={"/image/remove.svg"}></img>
                             </ItemRemoveBtn>
 
                             <CountBox>
-                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity+1)}><img src={"/image/up.svg"}></img></CountChangeBtn>
+                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity + 1)}><img src={"/image/up.svg"}></img></CountChangeBtn>
                                 <Count>{item.quantity}</Count>
-                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity-1)}><img src={"/image/down.svg"}></img></CountChangeBtn>
-                                
-                                
+                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity - 1)}><img src={"/image/down.svg"}></img></CountChangeBtn>
                             </CountBox>
                         </Item>
                     ))}
                 </Items>
-                
+
             </div>
         </AdminBox>
     );
-  };
+};
 
 export default AdminCouncilItemCreation;

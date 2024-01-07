@@ -1,15 +1,8 @@
-/*
-용도: 대여글 리스트 페이지
-담당자: 김서영
-사용법: 장소에 올라와있는 물품 대여 리스트를 볼수 있습니다
-기타: 뀽
-*/
-
 import Header from "../../components/layout/Header";
 import styled from "styled-components";
 import MenuBar from "../../components/layout/MenuBar";
-import { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 //전체 배경
 const Container = styled.div`
@@ -26,8 +19,6 @@ const PostBox = styled.div`
 
 //list 박스
 const BoardBox = styled.div`
-  //border-radius: 20px;
-  //border: 1px solid #eaeaea;
   background: #fff;
   padding: 5px 0px;
   & a:last-child div {
@@ -44,7 +35,6 @@ const Listbox = styled.div`
 
 //게시물 이미지
 const MainImage = styled.div`
-  //border-bottom: 1px solid #eaeaea;
   margin: 15px;
   width: 50px;
   height: 50px;

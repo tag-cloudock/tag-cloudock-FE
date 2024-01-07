@@ -1,12 +1,5 @@
-/*
-용도: 학생회 물품 페이지
-담당자: 최지우
-사용법: 학생회 물품을 볼 수 있습니다
-기타: css가더러워요
-*/
-import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate,useParams } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import MenuBar from "../../components/layout/MenuBar";
 import styled from "styled-components";
@@ -14,10 +7,6 @@ import Header from "../../components/layout/Header";
 
 const CouncilBox = styled.div`
   position: absolute;
-  /* padding: 0px 20px; */
-  /* border-left: 1px solid #eeeeee;
-  border-right: 1px solid #eeeeee; */
-  /* margin-left: -1px; */
   width: 100%;
   height: 100%;
   max-width: 700px;
@@ -79,20 +68,6 @@ const CouncilName = styled.div`
   font-weight: 700;
 `;
 
-const InfoDetail = styled.div`
-  display: flex;
-  width: 45.524px;
-  height: 45px;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
-  color: #676767;
-
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-`;
 const Update = styled.div`
   width: 110px;
   height: 21px;
@@ -137,18 +112,13 @@ const CategoryCount = styled.div`
 `;
 
 const CouncilDetail = () => {
-  const [councilData, setCouncilData] = useState({items:[]}); // 채팅방 리스트 상태
-  const { id } = useParams(); 
+  const [councilData, setCouncilData] = useState({ items: [] }); // 채팅방 리스트 상태
+  const { id } = useParams();
   useEffect(() => {
     const fetchCouncil = async () => {
       try {
-        // 토큰 쿠키가 없다면 로그인 페이지로 이동
-
-        // 유저의 채팅방 모두 가져오기 api 요청
-        const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/council/"+id, {
+        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
         });
-
-  
         setCouncilData(response.data);
         console.log(response.data);
 
@@ -158,7 +128,7 @@ const CouncilDetail = () => {
     };
 
     fetchCouncil();
-  }, [] );
+  }, []);
 
   return (
     <CouncilBox>
@@ -184,12 +154,12 @@ const CouncilDetail = () => {
       <ProductContainer>
         <CategoryTitle>제공 물품</CategoryTitle>
         <ul>
-            {councilData.items.map((item) => (
-              <li key={item.itemId}>
-                  {item.name}    
-                    <CategoryCount>{item.quantity}</CategoryCount>
-              </li>
-            ))}
+          {councilData.items.map((item) => (
+            <li key={item.itemId}>
+              {item.name}
+              <CategoryCount>{item.quantity}</CategoryCount>
+            </li>
+          ))}
         </ul>
       </ProductContainer>
       <ProductContainer>
