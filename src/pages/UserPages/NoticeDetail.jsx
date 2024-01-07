@@ -5,10 +5,10 @@
 기타: 
 */
 
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import MenuBar from "../layout/MenuBar";
+import MenuBar from "../../components/layout/MenuBar";
 
 const Container = styled.div`
   position: absolute;

@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import styled from "styled-components";
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 import Register from "./Register";
 
 
@@ -127,7 +127,7 @@ const Button = styled.button`
 `;
 
 
-const CiCreate = () => {
+const AdminCouncilCreation = () => {
     const [groupedCouncilList, setGroupedCouncilList] = useState([]); // 채팅방 리스트 상태
     const [key, setKey] = useState(0); 
     const [name, setName] = useState("");
@@ -349,4 +349,4 @@ const CiCreate = () => {
     );
   };
 
-export default CiCreate;
+export default AdminCouncilCreation;

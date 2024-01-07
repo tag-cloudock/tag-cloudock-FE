@@ -4,11 +4,11 @@
 사용법: App.js 라우팅
 기타: 
 */
-import MenuBar from "../layout/MenuBar";
-import Header from "../layout/Header";
+import MenuBar from "../../components/layout/MenuBar";
+import Header from "../../components/layout/Header";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import PostList from "./Home/PostList";
+import PostList from "../../components/page/Home/PostList";
 
 // 홈 각 박스 제목
 const BoxTitle = styled.div`

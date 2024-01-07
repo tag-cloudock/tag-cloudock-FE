@@ -10,7 +10,7 @@ import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import axios from "axios";
 import moment from "moment";
-import Footer from "../layout/Footer";
+import Footer from "../../components/layout/Footer";
 
 // 로그인 form 박스
 const LoginBox = styled.div`

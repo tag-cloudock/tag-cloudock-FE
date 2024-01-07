@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import styled from "styled-components";
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 
 
 const AdminBox = styled.div`
@@ -103,7 +103,7 @@ const CertifiState = styled.div`
         width: 50px;
     }
 `;
-const CiManage = () => {
+const AdminCertificationManagement = () => {
     const [certiRequest, setCertiRequest] = useState([]); // 채팅방 리스트 상태
     const [key, setKey] = useState(0); 
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
@@ -222,4 +222,4 @@ const CiManage = () => {
     );
   };
 
-export default CiManage;
+export default AdminCertificationManagement;

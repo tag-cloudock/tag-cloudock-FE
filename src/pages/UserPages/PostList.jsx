@@ -5,9 +5,9 @@
 기타: 뀽
 */
 
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 import styled from "styled-components";
-import MenuBar from "../layout/MenuBar";
+import MenuBar from "../../components/layout/MenuBar";
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -85,7 +85,7 @@ const ImageIcon = styled.img`
   margin-left: auto;
 `;
 
-const Post = () => {
+const PostList = () => {
   const [post, setPost] = useState([
     {
       id: 1,
@@ -153,4 +153,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default PostList;

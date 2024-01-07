@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import styled from "styled-components";
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 
 
 const AdminBox = styled.div`
@@ -57,7 +57,7 @@ const InputTitle = styled.div`
 `;
 
 
-const CouncilInfoUpdate = () => {
+const EditCouncilInfo = () => {
     const [councilData, setCouncilData] = useState({items:[]}); 
     const [location, setLocation] = useState("");
     const [operatingHours, setOperatingHours] = useState("");
@@ -173,4 +173,4 @@ const CouncilInfoUpdate = () => {
     );
   };
 
-export default CouncilInfoUpdate;
+export default EditCouncilInfo;

@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import styled from "styled-components";
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 
 
 const AdminBox = styled.div`
@@ -201,7 +201,7 @@ const Tag = styled.span`
   margin-right: 10px;
 `;
 
-const CiAdd = () => {
+const AdminCouncilItemCreation = () => {
     const [councilData, setCouncilData] = useState({
         college : '',
         items : []
@@ -370,4 +370,4 @@ const CiAdd = () => {
     );
   };
 
-export default CiAdd;
+export default AdminCouncilItemCreation;

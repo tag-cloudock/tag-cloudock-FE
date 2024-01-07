@@ -6,7 +6,7 @@
 */
 
 import styled from "styled-components";
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 import { Link } from "react-router-dom";
 
 

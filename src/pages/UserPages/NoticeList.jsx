@@ -4,9 +4,9 @@
 사용법: 
 기타: 
 */
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 import styled from "styled-components";
-import MenuBar from "../layout/MenuBar";
+import MenuBar from "../../components/layout/MenuBar";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -65,7 +65,7 @@ const ImageIcon = styled.img`
   margin-left: auto;
 `;
 
-const Notice = () => {
+const NoticeList = () => {
   const [notices, setNotices] = useState([
     {
       id: 1,
@@ -107,4 +107,4 @@ const Notice = () => {
   );
 };
 
-export default Notice;
+export default NoticeList;

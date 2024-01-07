@@ -4,7 +4,7 @@
 사용법: 
 기타: 
 */
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 import { useState } from "react";
 import styled from "styled-components";
 

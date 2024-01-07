@@ -9,8 +9,8 @@ import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import axios from "axios";
-import Header from "../layout/Header";
-import Loading from "../layout/Loading";
+import Header from "../../components/layout/Header";
+import Loading from "../../components/layout/Loading";
 
 
 const InChatBox = styled.div`
@@ -284,7 +284,7 @@ const HiddenText = styled.div`
    color : #ccd3d8;
 `;
 
-const InChat = () => {
+const Chat = () => {
   const location = useLocation(); // 상태 전달 받기 위해
   const [cookies] = useCookies(); // 쿠키 사용을 위해
   const { metype, id, other } = useParams(); // 주소의 파라미터 값 가져오기
@@ -528,4 +528,4 @@ const InChat = () => {
   );
 };
 
-export default InChat;
+export default Chat;

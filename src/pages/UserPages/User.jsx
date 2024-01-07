@@ -9,8 +9,8 @@ import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import Header from "../layout/Header";
-import MenuBar from "../layout/MenuBar";
+import Header from "../../components/layout/Header";
+import MenuBar from "../../components/layout/MenuBar";
 
 // 로그아웃 버튼
 const Logout = styled.button`

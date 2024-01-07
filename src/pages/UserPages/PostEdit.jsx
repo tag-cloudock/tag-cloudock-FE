@@ -4,9 +4,9 @@
 사용법: 
 기타: 
 */
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 
-const Write = () => {
+const PostEditPage = () => {
     return (
         <div>
             <Header headerType={"write"} headerText={"작성"}></Header>
@@ -14,4 +14,4 @@ const Write = () => {
     );
   };
 
-export default Write;
+export default PostEditPage;

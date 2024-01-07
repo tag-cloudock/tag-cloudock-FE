@@ -10,7 +10,7 @@ import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import axios from "axios";
 import moment from "moment";
-import Footer from "../layout/Footer";
+import Footer from "../../components/layout/Footer";
 
 // 로그인 form 박스
 const LoginBox = styled.div`
@@ -102,7 +102,7 @@ const SubmitBtn = styled.button`
     }
 `;
 
-const ManagerSignIn = () => {
+const CouncilSignIn = () => {
   const navigate = useNavigate(); // 페이지 이동을 위해
   const [, setCookie] = useCookies(); // 쿠키 생성을 위해
 
@@ -230,4 +230,4 @@ const ManagerSignIn = () => {
   );
 };
 
-export default ManagerSignIn;
+export default CouncilSignIn;

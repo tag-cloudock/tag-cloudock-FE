@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import styled from "styled-components";
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 
 
 const AdminBox = styled.div`
@@ -120,7 +120,7 @@ const Button = styled.button`
 `;
 
 
-const CouncillItemCreate = () => {
+const CreationCouncilItem = () => {
     const [name, setName] = useState("");
     const [type, setType] = useState("물품 유형"); 
     const [key, setKey] = useState(0); 
@@ -205,4 +205,4 @@ const CouncillItemCreate = () => {
     );
   };
 
-export default CouncillItemCreate;
+export default CreationCouncilItem;

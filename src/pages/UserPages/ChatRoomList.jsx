@@ -9,8 +9,8 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import axios from "axios";
-import Header from "../layout/Header";
-import MenuBar from "../layout/MenuBar";
+import Header from "../../components/layout/Header";
+import MenuBar from "../../components/layout/MenuBar";
 
 const ChatBox = styled.div`
   position: absolute;
@@ -125,7 +125,7 @@ const MoveToPost = styled.div`
   }
 `;
 
-const Chat = () => {
+const ChatRoomList = () => {
   const [chatRoomList, setChatRoomList] = useState([]); // 채팅방 리스트 상태
   const [cookies] = useCookies(); // 쿠키 사용하기 위해
   const navigate = useNavigate(); // 페이지 이동 위해
@@ -190,7 +190,7 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default ChatRoomList;
 
 
 

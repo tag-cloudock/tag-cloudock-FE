@@ -8,9 +8,9 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate,useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import MenuBar from "../layout/MenuBar";
+import MenuBar from "../../components/layout/MenuBar";
 import styled from "styled-components";
-import Header from "../layout/Header";
+import Header from "../../components/layout/Header";
 
 const CouncilBox = styled.div`
   position: absolute;
