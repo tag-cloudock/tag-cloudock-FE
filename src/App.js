@@ -46,10 +46,10 @@ function App() {
           <Route path="/admin/cimanage/add/:id" Component={CiAdd} />
           <Route path="/user/:userid" Component={User} />
           <Route path="/write" Component={Write} />
-          <Route path="/post" Component={Post} />
-          <Route path="/post/:id" component={PostDetail} />
-          <Route path="/council" Component={Council} />
-          <Route path="/council/:id" Component={CouncilDetail} />
+          <Route path="/post/:location" Component={Post} />
+          <Route path="/post/:location/:id" component={PostDetail} />
+          <Route path="/council/:campus" Component={Council} />
+          <Route path="/council/:campus/:id" Component={CouncilDetail} />
           <Route path="/signin" Component={SignIn} />
           <Route path="/signup" Component={SignUp} />
           <Route path="/chat" Component={Chat} />

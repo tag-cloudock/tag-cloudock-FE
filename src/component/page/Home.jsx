@@ -160,7 +160,7 @@ const Home = () => {
       </BoxTitle>
       <ParentContainer>
         {/* 글캠 링크 추가 */}
-        <Link to={"/"}>
+        <Link to={"/council/g"}>
           <ContainerBox isLeft={true}>
             <CampusText>
               <span>글로벌</span> 캠퍼스
@@ -168,7 +168,7 @@ const Home = () => {
           </ContainerBox>
         </Link>
         {/* 메캠 링크 추가 */}
-        <Link to={"/"}>
+        <Link to={"/council/m"}>
           <ContainerBox isLeft={false}>
             <CampusText>
               <span>메디컬</span> 캠퍼스
@@ -192,34 +192,34 @@ const Home = () => {
       </BoxTitle>
       <CenterContainer>
         <CampusBox>
-          <Link to={"/"}>
+          <Link to={"/post/바나대"}>
             <LocationBox>바나대</LocationBox>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/post/AI공학관"}>
             <LocationBox>AI공학관</LocationBox>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/post/중앙도서관"}>
             <LocationBox>중앙도서관</LocationBox>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/post/가천관"}>
             <LocationBox>가천관</LocationBox>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/post/공대2"}>
             <LocationBox>공대2</LocationBox>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/post/공대1"}>
             <LocationBox>공대1</LocationBox>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/post/글로벌센터"}>
             <LocationBox>글로벌센터</LocationBox>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/post/반도체대학"}>
             <LocationBox>반도체대학</LocationBox>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/post/비전타워"}>
             <LocationBox>비전타워</LocationBox>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/post/교육대학"}>
             <LocationBox>교육대학</LocationBox>
           </Link>
         </CampusBox>

@@ -9,7 +9,7 @@ import Header from "../layout/Header";
 import styled from "styled-components";
 import MenuBar from "../layout/MenuBar";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 //전체 배경
 const Container = styled.div`
@@ -22,7 +22,6 @@ const Container = styled.div`
 
 //박스 양옆 여백
 const PostBox = styled.div`
-  padding: 20px;
 `;
 
 //list 박스
@@ -125,10 +124,12 @@ const Post = () => {
       price: "2000원"
     }
   ]);
+  const { location } = useParams(); 
+  console.log(location);
 
   return (
     <Container>
-      <Header headerType={"admin"} headerText={"비전타워"}>         
+      <Header headerType={"admin"} headerText={location}>         
       </Header>
       <PostBox>
         <BoardBox>

@@ -96,10 +96,9 @@ const Admin = () => {
             </DashBoardBox>
             <Subtitle>MANAGE</Subtitle>
             <ManageBox>
-                <Link to={"/admin/cimanage"}><ManageBtn>학생회 대여품 관리</ManageBtn></Link>
+                <Link to={"/admin/cimanage"}><ManageBtn>학생회 관리</ManageBtn></Link>
                 <Link to={"/admin/certimanage"}><ManageBtn>인증 관리</ManageBtn></Link>
                 <ManageBtn>악성 유저 관리</ManageBtn>
-                <ManageBtn>문의함</ManageBtn>
                 <ManageBtn>공지사항 관리</ManageBtn>
             </ManageBox>
             

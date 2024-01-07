@@ -10,12 +10,19 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import styled from "styled-components";
 import Header from "../layout/Header";
+import Register from "./Register";
 
 
 const AdminBox = styled.div`
     padding: 0 20px;
 `;
 
+const SubTitle = styled.div`
+    margin: 20px 0px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #555555;
+`;
 
 const InputBox = styled.input`
     display: block;
@@ -222,6 +229,7 @@ const CiCreate = () => {
         <AdminBox>
             <Header headerType={"admin"} headerText={"학생회 추가"}></Header>
             <div>
+                <SubTitle>학생회 생성</SubTitle>
                 <InputBox type="text" name="name" placeholder="과 이름 (ex 컴퓨터공학과)"
                 value={name}
                 onChange={(e) => {
@@ -330,6 +338,10 @@ const CiCreate = () => {
                 onChange={(e) => {
                     setUsageGuidelines(e.target.value);
                   }}/>
+
+                {/* <SubTitle>학생회 계정 생성</SubTitle> */}
+                
+                <Register></Register>
                 {/* 제출 버튼 */}
                 <SummitBtn onClick={handleAddCouncil}>추가</SummitBtn>
             </div>

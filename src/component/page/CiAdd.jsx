@@ -125,9 +125,16 @@ const CouncilName = styled.div`
     font-weight: 700;
 
 `;
+
+
+
+//////////////
+
+
+
 const Items = styled.ul`
     background: #ffffff;
-    border-radius: 15px;
+    border-radius: 10px;
     box-shadow: rgba(205, 207, 208, 0.5) 0px 0px 15px;
 
     & li:not(:last-child){
@@ -154,6 +161,45 @@ const ItemRemoveBtn = styled.button`
     margin-top: 5px;
 `;
 
+const CountBox = styled.div`
+    float: right;
+    border: none;
+    background: none;
+    margin-right: 20px;
+    height: 30px;
+    line-height: 10px;
+    height: 30px;
+`;
+
+const CountChangeBtn = styled.button`
+    float: right;
+    margin: 5px;
+    background: none;
+    border: none;
+    & img{
+        width: 20px;
+    }
+`;
+const Count = styled.div`
+    float: right;
+    margin: 5px;
+    font-size: 15px;
+    border-radius: 30px;
+    padding: 5px 15px;
+    border: 1px solid #cccccc;
+`;
+
+
+const Tag = styled.span`
+  padding: 2px 7px;
+  border-radius: 20px;
+  border: 1px solid #559BFF;
+  color:#559BFF;
+  font-size: 15px;
+  font-weight: 700;
+  background: #EEF6FF;
+  margin-right: 10px;
+`;
 
 const CiAdd = () => {
     const [councilData, setCouncilData] = useState({
@@ -245,6 +291,27 @@ const CiAdd = () => {
             console.error("오류 발생:", error);
         }
     };
+    const ItemQuantityChange = async (id, quantity) => {
+        try {
+            console.log(id);
+            if (quantity < 0){
+                return;
+            }
+            const response = await axios.put("http://"+process.env.REACT_APP_BACK_URL+"/council-item/"+id, 
+            {
+                quantity
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${cookies.token}`,
+                },
+            });
+            setKey(key+1);
+            console.log(response);
+        } catch (error) {
+            console.error("오류 발생:", error);
+        }
+    };
     return (
         <AdminBox>
             <Header headerType={"admin"} headerText={"물품 추가"}></Header>
@@ -281,10 +348,19 @@ const CiAdd = () => {
                 <Items>
                     {councilData.items.map((item) => (
                         <Item key={item.itemId}>
-                            {item.type} - {item.name}
+                            <Tag>{item.type === "RENTAL" ? "대여" : "제공"}</Tag>{item.name}
+                        
                             <ItemRemoveBtn onClick={() => removeItem(item.itemId)}>
                                 <img src={"/image/remove.svg"}></img>
                             </ItemRemoveBtn>
+
+                            <CountBox>
+                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity+1)}><img src={"/image/up.svg"}></img></CountChangeBtn>
+                                <Count>{item.quantity}</Count>
+                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity-1)}><img src={"/image/down.svg"}></img></CountChangeBtn>
+                                
+                                
+                            </CountBox>
                         </Item>
                     ))}
                 </Items>

@@ -5,8 +5,10 @@
 기타: css가더러워요
 */
 import { useState, useEffect, useRef } from "react";
+import { Link, useNavigate,useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 import MenuBar from "../layout/MenuBar";
-import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../layout/Header";
 
@@ -135,25 +137,28 @@ const CategoryCount = styled.div`
 `;
 
 const CouncilDetail = () => {
-  const [councilData, setCouncilData] = useState({
-    name: "경영대학 학생회",
-    rentalItems: [
-      {
-        name: "손세정제",
-      },
-      {
-        name: "손세정제",
-      },
-    ],
-    provideItems: [
-      {
-        name: "손세정제",
-      },
-      {
-        name: "손세정제",
-      },
-    ],
-  }); // 채팅방 리스트 상태
+  const [councilData, setCouncilData] = useState({items:[]}); // 채팅방 리스트 상태
+  const { id } = useParams(); 
+  useEffect(() => {
+    const fetchCouncil = async () => {
+      try {
+        // 토큰 쿠키가 없다면 로그인 페이지로 이동
+
+        // 유저의 채팅방 모두 가져오기 api 요청
+        const response = await axios.get("http://"+process.env.REACT_APP_BACK_URL+"/council/"+id, {
+        });
+
+  
+        setCouncilData(response.data);
+        console.log(response.data);
+
+      } catch (error) {
+        console.error("오류 발생:", error);
+      }
+    };
+
+    fetchCouncil();
+  }, [] );
 
   return (
     <CouncilBox>
@@ -165,11 +170,11 @@ const CouncilDetail = () => {
         </TitleBox>
 
         <CouncilInfo>
-          <span>위치 </span> 공학관 505호
+          <span>위치 </span> {councilData.location}
           <br />
-          <span>이용시간 </span> 9시 ~ 10시
+          <span>이용시간 </span> {councilData.operatingHours}
           <br />
-          <span>이용수칙 </span> 뒷정리 필수입니다!!! <br />
+          <span>이용수칙 </span> {councilData.usageGuidelines} <br />
         </CouncilInfo>
         <Update>
           <img src={"/image/clockupdate.svg"}></img>
@@ -179,25 +184,19 @@ const CouncilDetail = () => {
       <ProductContainer>
         <CategoryTitle>제공 물품</CategoryTitle>
         <ul>
-          <li>
-            손 세정제 <CategoryCount>1</CategoryCount>{" "}
-          </li>
-          <li>
-            손 세정제<CategoryCount>1</CategoryCount>
-          </li>
-          <li>
-            손 세정제<CategoryCount>1</CategoryCount>
-          </li>
+            {councilData.items.map((item) => (
+              <li key={item.itemId}>
+                  {item.name}    
+                    <CategoryCount>{item.quantity}</CategoryCount>
+              </li>
+            ))}
         </ul>
       </ProductContainer>
       <ProductContainer>
         <CategoryTitle>대여 물품</CategoryTitle>
         <ul>
           <li>
-            손 세정제<CategoryCount>1</CategoryCount>
-          </li>
-          <li>
-            손 세정제<CategoryCount>1</CategoryCount>
+            개발중<CategoryCount>1</CategoryCount>
           </li>
         </ul>
       </ProductContainer>
