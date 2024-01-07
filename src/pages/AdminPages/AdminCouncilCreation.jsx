@@ -7,9 +7,17 @@ import Header from "../../components/layout/Header";
 import Register from "./Register";
 
 const AdminBox = styled.div`
-    padding: 0 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
+
 `;
 
+const ContentBox = styled.div`
+  padding: 0 20px;
+`;
 const SubTitle = styled.div`
     margin: 20px 0px;
     font-size: 20px;
@@ -219,7 +227,7 @@ const AdminCouncilCreation = () => {
     return (
         <AdminBox>
             <Header headerType={"noChatIcon"} headerText={"학생회 추가"}></Header>
-            <div>
+            <ContentBox>
                 <SubTitle>학생회 생성</SubTitle>
                 <InputBox type="text" name="name" placeholder="과 이름 (ex 컴퓨터공학과)"
                     value={name}
@@ -333,7 +341,7 @@ const AdminCouncilCreation = () => {
                 <Register></Register>
                 {/* 제출 버튼 */}
                 <SummitBtn onClick={handleAddCouncil}>추가</SummitBtn>
-            </div>
+            </ContentBox>
         </AdminBox>
     );
 };

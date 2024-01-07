@@ -6,7 +6,16 @@ import styled from "styled-components";
 import Header from "../../components/layout/Header";
 
 const AdminBox = styled.div`
-    padding: 0 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
+
+`;
+
+const ContentBox = styled.div`
+  padding: 0 20px;
 `;
 
 const InputBox = styled.input`
@@ -184,7 +193,7 @@ const Tag = styled.span`
   margin-right: 10px;
 `;
 
-const AdminCouncilItemCreation = () => {
+const AdminCouncilItemManagement = () => {
     const [councilData, setCouncilData] = useState({
         college: '',
         items: []
@@ -296,7 +305,7 @@ const AdminCouncilItemCreation = () => {
     return (
         <AdminBox>
             <Header headerType={"noChatIcon"} headerText={"물품 추가"}></Header>
-            <div>
+            <ContentBox>
                 <InputBox type="text" name="name" placeholder="물품명"
                     value={name}
                     onChange={(e) => {
@@ -323,8 +332,6 @@ const AdminCouncilItemCreation = () => {
                 </Details>
                 {/* 제출 버튼 */}
                 <SummitBtn onClick={handleAddCouncil}>추가</SummitBtn>
-            </div>
-            <div>
                 <CouncilName>{councilData.name}</CouncilName>
                 <Items>
                     {councilData.items.map((item) => (
@@ -344,9 +351,9 @@ const AdminCouncilItemCreation = () => {
                     ))}
                 </Items>
 
-            </div>
+            </ContentBox>
         </AdminBox>
     );
 };
 
-export default AdminCouncilItemCreation;
+export default AdminCouncilItemManagement;

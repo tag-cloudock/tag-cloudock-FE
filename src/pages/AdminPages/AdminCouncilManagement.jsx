@@ -6,8 +6,18 @@ import styled from "styled-components";
 import Header from "../../components/layout/Header";
 
 const AdminBox = styled.div`
-    padding: 0 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
+
 `;
+
+const ContentBox = styled.div`
+  padding: 0 20px;
+`;
+
 
 const CollegeBox = styled.ul`
     background: #ffffff;
@@ -144,6 +154,7 @@ const AdminCouncilManagement = () => {
     return (
         <AdminBox>
             <Header headerType={"noChatIcon"} headerText={"학생회 대여품 관리"}></Header>
+            <ContentBox>
             <Link to={"/admin/cimanage/create"}>
                 <CreateCouncil>
                     <img src={"/image/write_black.svg"}></img>
@@ -172,6 +183,7 @@ const AdminCouncilManagement = () => {
                     </div>
                 ))}
             </div>
+            </ContentBox>
         </AdminBox>
     );
 };

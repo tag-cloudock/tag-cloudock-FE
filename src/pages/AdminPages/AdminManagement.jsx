@@ -3,7 +3,16 @@ import Header from "../../components/layout/Header";
 import { Link } from "react-router-dom";
 
 const AdminBox = styled.div`
-    padding: 0 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
+
+`;
+
+const ContentBox = styled.div`
+  padding: 0 20px;
 `;
 
 const Subtitle = styled.div`
@@ -58,40 +67,43 @@ const AdminManagement = () => {
     return (
         <AdminBox>
             <Header headerType={"onlyText"} headerText={"관리자"}></Header>
-            <Subtitle>DASHBOARD</Subtitle>
-            <DashBoardBox>
-                <ul>
-                    <DashBoardDataLine>
-                        <DashBoardDataName>회원 수</DashBoardDataName>
-                        <DashBoardData>명</DashBoardData>
-                    </DashBoardDataLine>
-                    <DashBoardDataLine>
-                        <DashBoardDataName>인중된 회원 수</DashBoardDataName>
-                        <DashBoardData>명</DashBoardData>
-                    </DashBoardDataLine>
-                    <DashBoardDataLine>
-                        <DashBoardDataName>게시물 수</DashBoardDataName>
-                        <DashBoardData>개</DashBoardData>
-                    </DashBoardDataLine>
-                    <DashBoardDataLine>
-                        <DashBoardDataName>완료된 게시물 수</DashBoardDataName>
-                        <DashBoardData>개</DashBoardData>
-                    </DashBoardDataLine>
-                    <DashBoardDataLine>
-                        <DashBoardDataName>후기 수</DashBoardDataName>
-                        <DashBoardData>개</DashBoardData>
-                    </DashBoardDataLine>
-                </ul>
+            <ContentBox>
+                    <Subtitle>DASHBOARD</Subtitle>
+                <DashBoardBox>
+                    <ul>
+                        <DashBoardDataLine>
+                            <DashBoardDataName>회원 수</DashBoardDataName>
+                            <DashBoardData>명</DashBoardData>
+                        </DashBoardDataLine>
+                        <DashBoardDataLine>
+                            <DashBoardDataName>인중된 회원 수</DashBoardDataName>
+                            <DashBoardData>명</DashBoardData>
+                        </DashBoardDataLine>
+                        <DashBoardDataLine>
+                            <DashBoardDataName>게시물 수</DashBoardDataName>
+                            <DashBoardData>개</DashBoardData>
+                        </DashBoardDataLine>
+                        <DashBoardDataLine>
+                            <DashBoardDataName>완료된 게시물 수</DashBoardDataName>
+                            <DashBoardData>개</DashBoardData>
+                        </DashBoardDataLine>
+                        <DashBoardDataLine>
+                            <DashBoardDataName>후기 수</DashBoardDataName>
+                            <DashBoardData>개</DashBoardData>
+                        </DashBoardDataLine>
+                    </ul>
 
-            </DashBoardBox>
-            <Subtitle>MANAGE</Subtitle>
-            <ManageBox>
-                <Link to={"/admin/cimanage"}><ManageBtn>학생회 관리</ManageBtn></Link>
-                <Link to={"/admin/certimanage"}><ManageBtn>인증 관리</ManageBtn></Link>
-                <ManageBtn>악성 유저 관리</ManageBtn>
-                <ManageBtn>공지사항 관리</ManageBtn>
-            </ManageBox>
+                </DashBoardBox>
+                <Subtitle>MANAGE</Subtitle>
+                <ManageBox>
+                    <Link to={"/admin/cimanage"}><ManageBtn>학생회 관리</ManageBtn></Link>
+                    <Link to={"/admin/certimanage"}><ManageBtn>인증 관리</ManageBtn></Link>
+                    <ManageBtn>악성 유저 관리</ManageBtn>
+                    <ManageBtn>공지사항 관리</ManageBtn>
+                </ManageBox>
 
+            </ContentBox>
+            
         </AdminBox>
     );
 };

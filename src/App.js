@@ -14,7 +14,7 @@ import AdminManagement from "./pages/AdminPages/AdminManagement";
 import PostEdit from "./pages/UserPages/PostEdit";
 import AdminCouncilManagement from "./pages/AdminPages/AdminCouncilManagement";
 import AdminCouncilCreation from "./pages/AdminPages/AdminCouncilCreation";
-import AdminCouncilItemCreation from "./pages/AdminPages/AdminCouncilItemCreation";
+import AdminCouncilItemManagement from "./pages/AdminPages/AdminCouncilItemManagement";
 import Certification from "./pages/UserPages/Certification";
 import AdminCertificationManagement from "./pages/AdminPages/AdminCertificationManagement"
 import CouncilManagement from "./pages/CouncilManagerPages/CouncilManagement"
@@ -52,7 +52,7 @@ function App() {
           <Route path="/admin" Component={AdminManagement} />
           <Route path="/admin/cimanage" Component={AdminCouncilManagement} />{/* admin/manage/council */}
           <Route path="/admin/cimanage/create" Component={AdminCouncilCreation} />{/* admin/manage/council/create */}
-          <Route path="/admin/cimanage/add/:id" Component={AdminCouncilItemCreation} /> {/* admin/manage/council/item-add */}
+          <Route path="/admin/cimanage/add/:id" Component={AdminCouncilItemManagement} /> {/* admin/manage/council/items */}
           <Route path="/admin/certimanage" Component={AdminCertificationManagement} /> {/* admin/manage/certification */}
           
           {/* 학생회 */}
