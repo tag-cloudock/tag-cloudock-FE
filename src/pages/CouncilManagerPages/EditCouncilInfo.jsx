@@ -119,7 +119,7 @@ const EditCouncilInfo = () => {
   };
   return (
     <Container>
-      <Header headerType={"admin"} headerText={"운영 정보 수정"}></Header>
+      <Header headerText={"운영 정보 수정"}></Header>
       <div>
         <InputTitle>위치</InputTitle>
         <InputBox type="text" name="location" placeholder="위치 (ex AI공학관 505호)"

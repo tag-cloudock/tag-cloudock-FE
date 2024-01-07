@@ -138,7 +138,7 @@ const ChatRoomList = () => {
 
   return (
     <ChatBox>
-      <Header headerType={"chat"} headerText={"채팅"}></Header>
+      <Header headerType={"noChatIcon"} headerText={"채팅"}></Header>
 
       {chatRoomList.length == 0 ?
         <NoChatBox>

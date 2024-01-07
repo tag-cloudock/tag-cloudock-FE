@@ -218,7 +218,7 @@ const AdminCouncilCreation = () => {
     };
     return (
         <AdminBox>
-            <Header headerType={"admin"} headerText={"학생회 추가"}></Header>
+            <Header headerType={"noChatIcon"} headerText={"학생회 추가"}></Header>
             <div>
                 <SubTitle>학생회 생성</SubTitle>
                 <InputBox type="text" name="name" placeholder="과 이름 (ex 컴퓨터공학과)"

@@ -161,7 +161,7 @@ const CreationCouncilItem = () => {
     };
     return (
         <Container>
-            <Header headerType={"admin"} headerText={"물품 추가"}></Header>
+            <Header headerText={"물품 추가"}></Header>
             <div>
                 <InputBox type="text" name="name" placeholder="물품명"
                     value={name}

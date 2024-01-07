@@ -132,7 +132,7 @@ const CouncilDetail = () => {
 
   return (
     <CouncilBox>
-      <Header headerType={"detail"} headerText={"학생회"}></Header>
+      <Header headerText={"학생회"}></Header>
       <CouncilInforContainer>
         <TitleBox>
           <ProfileImg></ProfileImg>

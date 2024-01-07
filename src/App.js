@@ -5,7 +5,7 @@ import User from "./pages/UserPages/User";
 import PostList from "./pages/UserPages/PostList";
 import PostDetail from "./pages/UserPages/PostDetail";
 import CouncilList from "./pages/UserPages/CouncilList";
-import CouncilDetail from "./pages/CouncilManagerPages/CouncilDetail";
+import CouncilDetail from "./pages/UserPages/CouncilDetail";
 import SignIn from "./pages/UserPages/SignIn";
 import SignUp from "./pages/UserPages/SignUp";
 import ChatRoomList from "./pages/UserPages/ChatRoomList";

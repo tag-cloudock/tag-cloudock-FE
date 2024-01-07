@@ -195,7 +195,7 @@ const CouncilManagement = () => {
     };
     return (
         <AdminBox>
-            <Header headerType={"manage"} headerText={councilData.name + " 학생회"}></Header>
+            <Header headerType={"onlyText"} headerText={councilData.name + " 학생회"}></Header>
 
             <Subtitle>이용 정보
                 <Link to={"/council/manage/info"}>

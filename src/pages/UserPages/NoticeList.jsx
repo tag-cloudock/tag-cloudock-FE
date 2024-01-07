@@ -75,7 +75,7 @@ const NoticeList = () => {
 
   return (
     <Container>
-      <Header headerType={"admin"} headerText={"공지사항"}></Header>
+      <Header headerText={"공지사항"}></Header>
       <ContentBox>
         <BoardBox>
           {notices.map((notice, index) => (

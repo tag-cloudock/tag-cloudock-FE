@@ -367,7 +367,7 @@ const Chat = () => {
   };
   return (
     <ChatBox>
-      <Header headerType={"inChat"} headerText={other}></Header>
+      <Header headerType={"noChatIcon"} headerText={other}></Header>
 
       {/* 게시물 정보 */}
       {loading ? null :

@@ -137,7 +137,7 @@ const AdminCertificationManagement = () => {
 
     return (
         <AdminBox>
-            <Header headerType={"admin"} headerText={"학생증 인증 관리"}></Header>
+            <Header headerType={"noChatIcon"} headerText={"학생증 인증 관리"}></Header>
             <Subtitle>DASHBOARD</Subtitle>
             <Dashboard>
                 <ul>

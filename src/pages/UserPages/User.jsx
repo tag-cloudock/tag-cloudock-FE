@@ -150,7 +150,7 @@ const User = () => {
 
   return (
     <div>
-      <Header/>
+      <Header headerType={"user"}></Header>
       <ContentBox>
         <UserInfoBox>
           <ProfilImgBox>

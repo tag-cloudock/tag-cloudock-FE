@@ -139,7 +139,7 @@ const CouncilList = () => {
 
   return (
     <CouncilBox>
-      <Header headerType={"detail"} headerText={"학생회"}></Header>
+      <Header headerText={"학생회"}></Header>
 
       <ContentBox>
         <SubTitle>총 35개의 학생회에서 물품대여중🫶</SubTitle>

@@ -112,7 +112,7 @@ const Certification = () => {
     };
     return (
         <Container>
-            <Header headerType={"write"} headerText={"학생증 인증하기"}></Header>
+            <Header headerType={"noChatIcon"} headerText={"학생증 인증하기"}></Header>
             {/* 이미지 형식 제한해야함 */}
             <Announcement>
                 <p>

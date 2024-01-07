@@ -295,7 +295,7 @@ const AdminCouncilItemCreation = () => {
     };
     return (
         <AdminBox>
-            <Header headerType={"admin"} headerText={"물품 추가"}></Header>
+            <Header headerType={"noChatIcon"} headerText={"물품 추가"}></Header>
             <div>
                 <InputBox type="text" name="name" placeholder="물품명"
                     value={name}

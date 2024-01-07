@@ -119,7 +119,7 @@ const PostList = () => {
 
   return (
     <Container>
-      <Header headerType={"admin"} headerText={location}>         
+      <Header headerText={location}>         
       </Header>
       <PostBox>
         <BoardBox>

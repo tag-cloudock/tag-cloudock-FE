@@ -54,7 +54,7 @@ const NoticeContent = styled.div`
 const NoticeDetail = () => {
   return (
     <Container>
-      <Header headerType={"admin"} headerText={"공지사항"}></Header>
+      <Header headerText={"공지사항"}></Header>
       <ContentBox>
         <BoardBox>
           <Titlebox>

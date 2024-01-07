@@ -186,6 +186,7 @@ const Header = ({ headerType, headerText }) => {
     navigate(-1);
   };
 
+  // 홈, 기본, 챗룸, 챗방
   switch (headerType) {
     case "home": // 홈
       return (
@@ -228,7 +229,46 @@ const Header = ({ headerType, headerText }) => {
           <EmptyBox></EmptyBox>
         </div>
       );
-    case "detail": // 글 내부
+    case "edit": // 작성하기
+      return (
+        <div>
+          <HeaderBox>
+            <HeaderContent>
+              <HeaderBackBtn onClick={handleGoBack}>
+                <img src="/image/close.svg" alt="" />
+              </HeaderBackBtn>
+              <HeaderCenterText>{headerText}</HeaderCenterText>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    case "noChatIcon": // 채팅방
+      return (
+        <div>
+          <HeaderBox>
+            <HeaderContent>
+              <HeaderBackBtn onClick={handleGoBack}><img src="/image/back.svg" alt="" /></HeaderBackBtn>
+              <HeaderCenterText>
+                {headerText}
+              </HeaderCenterText>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    case "onlyText": // 어드민 페이지 내부
+      return (
+        <div>
+          <HeaderBox nobg={false}>
+            <HeaderContent>
+              <HeaderCenterText>{headerText}</HeaderCenterText>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    default:
       return (
         <div>
           <HeaderBox>
@@ -244,81 +284,6 @@ const Header = ({ headerType, headerText }) => {
               </ChatBtn>
             </HeaderContent>
           </HeaderBox>
-          <EmptyBox></EmptyBox>
-        </div>
-      );
-    case "write": // 작성하기
-      return (
-        <div>
-          <HeaderBox>
-            <HeaderContent>
-              <HeaderBackBtn onClick={handleGoBack}>
-                <img src="/image/close.svg" alt="" />
-              </HeaderBackBtn>
-              <HeaderCenterText>{headerText}</HeaderCenterText>
-            </HeaderContent>
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-        </div>
-      );
-    case "chat": // 채팅방
-      return (
-        <div>
-          <HeaderBox>
-            <HeaderContent>
-              <HeaderBackBtn onClick={handleGoBack}><img src="/image/back.svg" alt="" /></HeaderBackBtn>
-              <HeaderCenterText>
-                {headerText}
-              </HeaderCenterText>
-            </HeaderContent>
-
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-        </div>
-      );
-    case "inChat": // 채팅 내부
-      return (
-        <div>
-          <HeaderBox>
-            <HeaderContent>
-              <HeaderBackBtn onClick={handleGoBack}>
-                <img src="/image/back.svg" alt="" />
-              </HeaderBackBtn>
-              <HeaderCenterText>{headerText}</HeaderCenterText>
-            </HeaderContent>
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-        </div>
-      );
-    case "admin": // 어드민 페이지 내부
-      return (
-        <div>
-          <HeaderBox>
-            <HeaderContent>
-              <HeaderBackBtn onClick={handleGoBack}>
-                <img src="/image/back.svg" alt="" />
-              </HeaderBackBtn>
-              <HeaderCenterText>{headerText}</HeaderCenterText>
-            </HeaderContent>
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-        </div>
-      );
-    case "manage": // 어드민 페이지 내부
-      return (
-        <div>
-          <HeaderBox nobg={false}>
-            <HeaderContent>
-              <HeaderCenterText>{headerText}</HeaderCenterText>
-            </HeaderContent>
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-        </div>
-      );
-    default:
-      return (
-        <div>
-          <HeaderBox></HeaderBox>
           <EmptyBox></EmptyBox>
         </div>
       );

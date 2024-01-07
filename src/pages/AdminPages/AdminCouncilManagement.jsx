@@ -143,7 +143,7 @@ const AdminCouncilManagement = () => {
 
     return (
         <AdminBox>
-            <Header headerType={"admin"} headerText={"학생회 대여품 관리"}></Header>
+            <Header headerType={"noChatIcon"} headerText={"학생회 대여품 관리"}></Header>
             <Link to={"/admin/cimanage/create"}>
                 <CreateCouncil>
                     <img src={"/image/write_black.svg"}></img>

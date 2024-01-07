@@ -57,7 +57,7 @@ const ManageBtn = styled.div`
 const AdminManagement = () => {
     return (
         <AdminBox>
-            <Header headerType={"admin"} headerText={"관리자"}></Header>
+            <Header headerType={"onlyText"} headerText={"관리자"}></Header>
             <Subtitle>DASHBOARD</Subtitle>
             <DashBoardBox>
                 <ul>
