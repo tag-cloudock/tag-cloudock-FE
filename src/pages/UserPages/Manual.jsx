@@ -100,8 +100,9 @@ const Manual = () => {
         <ManualContent ref={(el) => (manualContentsRef.current[0] = el)}>
           <ImageIcon src={"/image/borrow.svg"} alt="" />
           <ManualText1>대여서비스</ManualText1>
-          <ManualText2>가천대 학생만을 위한 대여서비스에요. <br></br>학교 어디서든 빠르게
-            빌릴 수 있어요. 
+          <ManualText2>
+            가천대 학생만을 위한 대여서비스에요. <br></br>학교 어디서든 빠르게
+            빌릴 수 있어요.
           </ManualText2>
         </ManualContent>
 
@@ -109,8 +110,8 @@ const Manual = () => {
           <ImageIcon src={"/image/council2.svg"} alt="" />
           <ManualText1>학생증 대여 물품</ManualText1>
           <ManualText2>
-            학생회 대여 물품을 쉽게 알 수 있어요. <br></br>실시간으로 대여물품이 얼마나
-            남아 있는지 알 수 있어요.
+            학생회 대여 물품을 쉽게 알 수 있어요. <br></br>실시간으로 대여물품이
+            얼마나 남아 있는지 알 수 있어요.
           </ManualText2>
         </ManualContent>
 
