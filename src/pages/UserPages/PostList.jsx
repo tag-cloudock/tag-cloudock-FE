@@ -131,7 +131,6 @@ const PostList = () => {
                 <PostDetail>{post.detail}</PostDetail>
                 <PostPrice>{post.price}
                 <ImageIcon src={"/image/chatt.svg"} alt="" />
-         
                 </PostPrice>
               </Listbox>
             </Link>
