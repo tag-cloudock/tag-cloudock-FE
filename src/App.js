@@ -23,6 +23,7 @@ import CreationCouncilItem from "./pages/CouncilManagerPages/CreationCouncilItem
 import EditCouncilInfo from "./pages/CouncilManagerPages/EditCouncilInfo";
 import NoticeList from "./pages/UserPages/NoticeList";
 import NoticeDetail from "./pages/UserPages/NoticeDetail";
+import Manual from "./pages/UserPages/Manual";
 
 const MainLayout = styled.div`
 `;
@@ -47,6 +48,7 @@ function App() {
           <Route path="/chat/:metype/:id/:other" Component={Chat} />
           <Route path="/notice" Component={NoticeList} />
           <Route path="/notice/:id" Component={NoticeDetail} />
+          <Route path="/manual" Component={Manual} />
 
           {/* 어드민 */}
           <Route path="/admin" Component={AdminManagement} />

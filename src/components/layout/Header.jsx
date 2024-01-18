@@ -197,9 +197,10 @@ const Header = ({ headerType, headerText }) => {
               <AnnoBox>
                 <Link to={"/notice"}>
                   <Anno>
-                    <img src={"/image/megaphone.svg"}></img>
+                  <img src={"/image/megaphone.svg"}></img>
                   </Anno>
                 </Link>
+                <Link to={"/manual"}>
                 <Help>
                   <img src={"/image/help.svg"}></img>
                 </Help>
@@ -207,6 +208,7 @@ const Header = ({ headerType, headerText }) => {
                   <img src={"/image/help_intro.svg"}></img>
                   <span>도움말을 확인해보세요!</span>
                 </HelpIntro>
+                </Link>
               </AnnoBox>
             </HeaderContent>
           </HeaderBox>

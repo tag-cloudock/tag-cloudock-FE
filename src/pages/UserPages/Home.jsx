@@ -134,6 +134,20 @@ const LocationItem = styled.span`
   }
 `;
 
+// 화살표 아이콘 이미지 조정
+const ArrowIcon = styled.img`
+  width: 30px;
+  vertical-align: middle;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  float:right;
+  @media screen and (max-width: 700px) {
+    width: 24px;
+  }
+  padding-top: 7px;
+  padding-right: 35px;
+`;
+
 const Home = () => {
   return (
     <div>
@@ -162,7 +176,7 @@ const Home = () => {
       </CampusMoveBox>
       {/* 일반 대여 목록 */}
       <SubTitle>
-        대여를 원하고 있어요 <ImageIcon src={"/image/hand.svg"} alt="" />
+        대여를 원하고 있어요 <ImageIcon src={"/image/hand.svg"} alt="" /><Link to={"/post/:location"}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
       </SubTitle>
       <ContentAreaBox>
         <RecentPostBox>
