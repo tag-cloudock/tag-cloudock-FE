@@ -21,7 +21,9 @@ const Title = styled.div`
     margin-bottom: 150px;
     font-size: 60px;
     font-weight: 850;
+    
     & a{
+      font-family: 'Noto Sans KR'; 
       color : #379DFF;
     }
 `;
@@ -167,7 +169,7 @@ const SignIn = () => {
           <SubTitle>
             당장 필요할때 바로 빌리자
           </SubTitle>
-          <Link to={"/"}>대학빌림</Link>
+          <Link to={"/"}>Baram</Link>
         </Title>
 
         {/* 아이디 */}

@@ -3,11 +3,12 @@ import styled from "styled-components";
 
 // 푸터 박스
 const FooterBox = styled.div`
-    height: 5%;
-    position: fixed;
-    left: 0;
-    bottom: 0;
+
+    height: 300px;
     width: 100%;
+    background: #ffffff;
+    /* position: absolute; */
+    max-width: 701px;
 `;
 
 // 푸터 텍스트
@@ -15,6 +16,10 @@ const FooterText = styled.div`
     text-align: center;
     color:#cccccc;
     font-size: 15px;
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
 `;
 
 const GotoGithub = styled.a`

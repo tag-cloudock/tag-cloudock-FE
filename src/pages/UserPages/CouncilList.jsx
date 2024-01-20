@@ -121,13 +121,6 @@ const CouncilList = () => {
   useEffect(() => {
     const fetchCouncils = async () => {
       try {
-        // 토큰 쿠키가 없다면 로그인 페이지로 이동
-        if (!cookies.token) {
-          navigate("/signin");
-          return;
-        }
-
-        // 유저의 채팅방 모두 가져오기 api 요청
         const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/all", {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
@@ -162,7 +155,7 @@ const CouncilList = () => {
         <SubTitle>총 35개의 학생회에서 물품대여중🫶</SubTitle>
         <CampusAnnoBox>
           <BigText><span>{campus == 'g' ? "글로벌" : "메디컬"}</span> 캠퍼스입니다🙂</BigText>
-          <SmallText><RealTime>실시간</RealTime>으로 물건 개수를 확인하세요!</SmallText>
+          <SmallText><RealTime>실시간</RealTime>으로 물품 잔여 개수를 확인하세요!</SmallText>
         </CampusAnnoBox>
         {groupedCouncilList.map((college, index) => (
           <div key={index}>

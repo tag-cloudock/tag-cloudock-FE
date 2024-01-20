@@ -1,15 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useCookies } from "react-cookie";
 
 // 헤더 박스
 const HeaderBox = styled.div`
-  z-index: 2;
-  background: ${({ nobg }) => (nobg ? '#FBFBFB' : '#ffffff')};
+  z-index: 1;
+  background: ${({ nobg }) => (nobg ? '#379DFF' : '#ffffff')};
   position: fixed;
   left: 0;
   right: 0;
   height: 50px;
-  border-bottom: ${({ nobg }) => (nobg ? 'none' : '1px solid #eeeeee')};
+  /* border-bottom: ${({ nobg }) => (nobg ? 'none' : '1px solid #eeeeee')}; */
   @media screen and (min-width: 701px) {
     margin: 0px auto;
     max-width: 701px;
@@ -41,6 +42,7 @@ const HeaderText = styled.span`
 
 // 홈 헤더의 타이틀
 const HomeTitle = styled.div`
+  font-family: 'Noto Sans KR';  
   width: 30%;
   padding-left: 20px;
   height: 50px;
@@ -48,15 +50,14 @@ const HomeTitle = styled.div`
   line-height: 50px;
   font-weight: 800;
   font-size: 25px;
-  color: #d1d1d1;
+  color: #ffffff;
   float: left;
 `;
 
 // 공지사항 박스
 const AnnoBox = styled.div`
-  height: 50px;
-  width: calc(70% - 30px);
-  float: left;
+  float: right;
+  margin-right: 20px;
 `;
 
 const Anno = styled.div`
@@ -67,59 +68,13 @@ const Anno = styled.div`
   margin-left: 10px;
   border-radius: 5px;
   &:hover {
-    background: #f3f3f3;
+    background: #2F91EF;
   }
   & img {
     width: 30px;
   }
 `;
 
-const Help = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
-  float: right;
-  margin-top: 10px;
-  margin-left: 10px;
-  text-align: center;
-  line-height: 30px;
-  font-weight: 800;
-  font-size: 20px;
-  position: relative;
-  & img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 13px;
-  }
-  &:hover {
-    background: #f3f3f3;
-  }
-`;
-
-const HelpIntro = styled.div`
-  float: right;
-  margin-top: 12px;
-  position: relative;
-  width: 150px;
-  & img {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 24px;
-  }
-  & span {
-    position: absolute;
-    left: 7px;
-    line-height: 24px;
-    font-size: 13px;
-    font-weight: 800;
-    color: #ffffff;
-    top: 0;
-    display: inline-block;
-  }
-`;
 
 // 헤더 가운데 텍스트
 const HeaderCenterText = styled.span`
@@ -130,8 +85,8 @@ const HeaderCenterText = styled.span`
   width: 100%;
   height: 50px;
   line-height: 50px;
-  color: #C0C0C0;
-  font-weight: 800;
+  color: #000000;
+  font-weight: 500;
   font-size: 23px;
 `;
 
@@ -180,7 +135,7 @@ const ChatBtn = styled.div`
 
 const Header = ({ headerType, headerText }) => {
   const navigate = useNavigate(); // 페이지 이동을 위해
-
+  const [cookies] = useCookies();
   // 이전 페이지로 이동
   const handleGoBack = () => {
     navigate(-1);
@@ -193,21 +148,17 @@ const Header = ({ headerType, headerText }) => {
         <div>
           <HeaderBox nobg={"true"}>
             <HeaderContent>
-              <HomeTitle>대학빌림</HomeTitle>
+              <HomeTitle>Baram</HomeTitle>
               <AnnoBox>
-                <Link to={"/notice"}>
+                <Link to={"/user/" + cookies.userId}>
                   <Anno>
-                  <img src={"/image/megaphone.svg"}></img>
+                    <img style={{ width: '26px', marginTop:"2px", marginLeft:"2px"}} src={"/image/user.svg"}></img>
                   </Anno>
                 </Link>
-                <Link to={"/manual"}>
-                <Help>
-                  <img src={"/image/help.svg"}></img>
-                </Help>
-                <HelpIntro>
-                  <img src={"/image/help_intro.svg"}></img>
-                  <span>도움말을 확인해보세요!</span>
-                </HelpIntro>
+                <Link to={"/notice"}>
+                  <Anno>
+                    <img src={"/image/megaphone.svg"}></img>
+                  </Anno>
                 </Link>
               </AnnoBox>
             </HeaderContent>
@@ -231,7 +182,7 @@ const Header = ({ headerType, headerText }) => {
           <EmptyBox></EmptyBox>
         </div>
       );
-    case "edit": // 작성하기
+    case "close": // 작성하기
       return (
         <div>
           <HeaderBox>
@@ -245,7 +196,7 @@ const Header = ({ headerType, headerText }) => {
           <EmptyBox></EmptyBox>
         </div>
       );
-    case "noChatIcon": // 채팅방
+    case "noChatIcon": // 채팅 버튼 없는거
       return (
         <div>
           <HeaderBox>
@@ -259,7 +210,7 @@ const Header = ({ headerType, headerText }) => {
           <EmptyBox></EmptyBox>
         </div>
       );
-    case "onlyText": // 어드민 페이지 내부
+    case "onlyText": // 텍스트만
       return (
         <div>
           <HeaderBox nobg={false}>
@@ -270,7 +221,7 @@ const Header = ({ headerType, headerText }) => {
           <EmptyBox></EmptyBox>
         </div>
       );
-    default:
+    default: // 뒤로가기 버튼, 제목, 채팅방 버튼
       return (
         <div>
           <HeaderBox>

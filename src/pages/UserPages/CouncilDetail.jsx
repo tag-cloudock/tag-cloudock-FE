@@ -20,6 +20,9 @@ const CouncilInforContainer = styled.div`
 const TitleBox = styled.div`
   position: relative;
   height: 50px;
+  background: #f7f7f7;
+  padding: 5px 10px;
+  border-radius: 20px;
 `;
 
 const ProductContainer = styled.div`
@@ -60,12 +63,12 @@ const CouncilInfo = styled.div`
 const CouncilName = styled.div`
   position: absolute;
   width: 100%;
-  color: #676767;
+  color: #969696;
   height: 45px;
   line-height: 45px;
   text-align: center;
-  font-size: 23px;
-  font-weight: 700;
+  font-size: 25px;
+  font-weight: 800;
 `;
 
 const Update = styled.div`
@@ -136,7 +139,7 @@ const CouncilDetail = () => {
       <CouncilInforContainer>
         <TitleBox>
           <ProfileImg></ProfileImg>
-          <CouncilName>{councilData.name}</CouncilName>
+          <CouncilName>{councilData.name} 학생회</CouncilName>
         </TitleBox>
 
         <CouncilInfo>

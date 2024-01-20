@@ -17,15 +17,17 @@ const ManualContent = styled.div`
   align-items: center;
   position: relative;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 4s, transform 2s;
+  transform: translateY(40px);
+  transition: opacity 1s, transform 1s;
+  margin-bottom: 200px;
+  
 `;
 
 const ManualText1 = styled.div`
   color: #000000;
   font-size: 30px;
   width: 100%;
-  padding: 0px 0px 7px 50px;
+  /* padding: 0px 0px 7px 50px; */
   line-height: 180%;
 `;
 
@@ -33,38 +35,35 @@ const ManualText2 = styled.div`
   color: #636363;
   font-size: 18px;
   width: 100%;
-
-  padding: 0px 50px 200px 100px;
+  /* padding: 0px 50px 200px 100px; */
   line-height: 180%;
 `;
 
 const ImageIcon = styled.img`
-  width: 90%;
-  max-width: 480px;
+  width: 100%;
+  /* max-width: 480px; */
   box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px;
-  border-radius: 20px;
+  border-radius: 15px;
   margin-bottom: 20px;
 `;
 
 const Title = styled.div`
+  margin: 250px 0px 400px 0px;
   text-align: center;
   height: 45px;
   line-height: 45px;
-  margin-bottom: 250px;
   font-size: 85px;
   font-weight: 850;
-  & a {
-    color: #379dff;
-  }
+  font-family: 'Noto Sans KR';  
+  color: #379dff;
 `;
 
 const SubTitle = styled.div`
   text-align: center;
-  font-size: 30px;
+  font-size: 23px;
   font-weight: 600;
-  color: #adb5c2;
-  padding-top: 73px;
-  padding-bottom: 45px;
+  color: #343434;
+  /* padding-bottom: 15px; */
 `;
 
 const Manual = () => {
@@ -91,13 +90,15 @@ const Manual = () => {
   }, []);
   return (
     <div>
-      <Header headerType={"manual"} headerText={"도움말"}></Header>
-      <Title>
-        <SubTitle>당장 필요할때 바로 빌리자</SubTitle>
-        <Link to={"/"}>대학빌림</Link>
-      </Title>
+      <Header headerType={"close"}></Header>
       <ManualBox>
         <ManualContent ref={(el) => (manualContentsRef.current[0] = el)}>
+        <Title>
+          <SubTitle>가천대 대여 중개 서비스</SubTitle>
+          Baram
+        </Title>
+        </ManualContent>
+        <ManualContent ref={(el) => (manualContentsRef.current[1] = el)}>
           <ImageIcon src={"/image/borrow.svg"} alt="" />
           <ManualText1>대여서비스</ManualText1>
           <ManualText2>
@@ -106,7 +107,7 @@ const Manual = () => {
           </ManualText2>
         </ManualContent>
 
-        <ManualContent ref={(el) => (manualContentsRef.current[1] = el)}>
+        <ManualContent ref={(el) => (manualContentsRef.current[2] = el)}>
           <ImageIcon src={"/image/council2.svg"} alt="" />
           <ManualText1>학생증 대여 물품</ManualText1>
           <ManualText2>
@@ -115,19 +116,37 @@ const Manual = () => {
           </ManualText2>
         </ManualContent>
 
-        <ManualContent ref={(el) => (manualContentsRef.current[2] = el)}>
-          <ImageIcon src={"/image/userpage.svg"} alt="" />
-
+        <ManualContent ref={(el) => (manualContentsRef.current[3] = el)}>
+        <ImageIcon src={"/image/council2.svg"} alt="" />
+          <ManualText1>학생증 대여 물품</ManualText1>
           <ManualText2>
-            후기를 보고 믿을만한 학우와 거래할 수 있어요.
+            학생회 대여 물품을 쉽게 알 수 있어요. <br></br>실시간으로 대여물품이
+            얼마나 남아 있는지 알 수 있어요.
           </ManualText2>
         </ManualContent>
 
-        <ManualContent ref={(el) => (manualContentsRef.current[3] = el)}>
-          <ImageIcon src={"/image/studentconfirm.png"} alt="" />
-
+        <ManualContent ref={(el) => (manualContentsRef.current[4] = el)}>
+        <ImageIcon src={"/image/council2.svg"} alt="" />
+          <ManualText1>학생증 대여 물품</ManualText1>
           <ManualText2>
-            안전하게 대여할 수 있도록 학생증 인증 기능을 넣었어요.
+            학생회 대여 물품을 쉽게 알 수 있어요. <br></br>실시간으로 대여물품이
+            얼마나 남아 있는지 알 수 있어요.
+          </ManualText2>
+        </ManualContent>
+        <ManualContent ref={(el) => (manualContentsRef.current[5] = el)}>
+        <ImageIcon src={"/image/council2.svg"} alt="" />
+          <ManualText1>학생증 대여 물품</ManualText1>
+          <ManualText2>
+            학생회 대여 물품을 쉽게 알 수 있어요. <br></br>실시간으로 대여물품이
+            얼마나 남아 있는지 알 수 있어요.
+          </ManualText2>
+        </ManualContent>
+        <ManualContent ref={(el) => (manualContentsRef.current[6] = el)}>
+        <ImageIcon src={"/image/council2.svg"} alt="" />
+          <ManualText1>학생증 대여 물품</ManualText1>
+          <ManualText2>
+            학생회 대여 물품을 쉽게 알 수 있어요. <br></br>실시간으로 대여물품이
+            얼마나 남아 있는지 알 수 있어요.
           </ManualText2>
         </ManualContent>
       </ManualBox>

@@ -12,25 +12,23 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
 const Wrapped = styled.div`
-  padding: 7px 2%;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 17px;
-  color: #505050;
+  color: #000000;
+  border-radius: 10px;
+  
   line-height: 25px;
   height: 25px;
-  width: 94%;
-  margin: 0px auto;
   font-family: 'Noto Sans KR', sans-serif;
   &:hover {
-    border-radius: 10px;
-    background: #f7f7f7;
+    /* background: #f7f7f7; */
   }
-  @media screen and (max-width: 700px) {
-    padding: 5px 2%;
-    font-size: 15px;
-  }
-`;
+  padding: 10px 10px;
+  font-size: 15px;
 
+`;
+const Item = styled.div`
+`;
 // 최신글 location
 const Title = styled.span`
   font-family: 'Noto Sans KR', sans-serif;
@@ -38,7 +36,7 @@ const Title = styled.span`
   font-weight: 400;
   font-size: 17px;
   display: inline-block;
-  color: #505050;
+  color: #000000;
   @media screen and (max-width: 700px) {
     font-size: 15px;
   }
@@ -79,16 +77,14 @@ const RecentPosts = () => {
     <div>
       {/* post 데이터 렌더링 */}
       {posts.map((post, index) => (
-        <div key={post.postId}>
+        <Item key={post.postId}>
           <Link to={"/"}>
             <Wrapped>
               {post.location}
               <Title> {post.title}</Title>
-              {/* 처음 3개의 포스트에만 img 추가 */}
-              {index < 3 && <ImageIcon src="image/new.svg" alt="" />}
             </Wrapped>
           </Link>
-        </div>
+        </Item>
       ))}
     </div>
   );
