@@ -47,13 +47,17 @@ const PostTitle = styled.div`
 const PostInfo = styled.div`
   z-index: 1;
   position: fixed;
+  top: 49px;
   left: 0;
   right: 0;
   height: 60px;
+  /* margin: 0px 10px; */
   background-color: #ffffff;
+  box-shadow: 0px 2px 15px 0px rgba(157, 157, 157, 0.2);
   @media screen and (min-width: 701px) {
     margin: 0 auto;
     width: 700px;
+    border-radius: 13px;
   }
 `;
 

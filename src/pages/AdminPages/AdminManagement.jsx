@@ -20,7 +20,7 @@ const Subtitle = styled.div`
   margin-bottom: 10px;
   font-size: 20px;
   font-weight: bold;
-  color: #333333;
+  color: #000000;
 `;
 
 const DashBoardBox = styled.div`
@@ -38,10 +38,10 @@ const DashBoardDataLine = styled.li`
 `;
 const DashBoardDataName = styled.span`
     font-weight: bold;
-    color:#555555;
+    color:#000000;
 `;
 const DashBoardData = styled.span`
-    color: #aaaaaa;
+    color: #000000;
 `;
 const ManageBox = styled.div`
 `;
@@ -66,7 +66,7 @@ const ManageBtn = styled.div`
 const AdminManagement = () => {
     return (
         <AdminBox>
-            <Header headerType={"onlyText"} headerText={"관리자"}></Header>
+            <Header headerType={"onlyText"}></Header>
             <ContentBox>
                     <Subtitle>DASHBOARD</Subtitle>
                 <DashBoardBox>

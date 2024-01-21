@@ -32,7 +32,7 @@ const NoticeListbox = styled.div`
 `;
 
 const NoticeTitle = styled.div`
-  color: #636363;
+  color: #000000;
   font-size: 15px;
   font-weight: 700;
 `;
@@ -75,7 +75,7 @@ const NoticeList = () => {
 
   return (
     <Container>
-      <Header headerText={"공지사항"}></Header>
+      <Header headerType={"close"} headerText={"공지사항"}></Header>
       <ContentBox>
         <BoardBox>
           {notices.map((notice, index) => (
@@ -91,7 +91,6 @@ const NoticeList = () => {
           ))}
         </BoardBox>
       </ContentBox>
-      <MenuBar></MenuBar>
     </Container>
   );
 };

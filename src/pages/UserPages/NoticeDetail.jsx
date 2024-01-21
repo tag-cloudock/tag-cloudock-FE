@@ -24,29 +24,30 @@ const BoardBox = styled.div`
 const Titlebox = styled.div`
   border-bottom: 1px solid #eaeaea;
   margin: 0px;
-  padding: 20px 20px 15px;
+  padding: 20px 20px 5px 20px;
+  height: 30px;
 `;
 
 const NoticeTitle = styled.div`
-  color: #636363;
+  color: #000000;
   font-size: 15px;
   font-weight: 700;
-  padding-bottom: 2px;
+  float: left;
 `;
 
 const NoticeDate = styled.div`
   width: auto;
-  padding: 5px 0px;
   color: #636363;
   font-size: 12px;
   font-weight: 500;
-  padding-top: 10px;
+  float: right;
+  margin-top: 2px;
 `;
 
 const NoticeContent = styled.div`
-  color: #636363;
+  color: #000000;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 180%;
   padding: 20px 20px 80px;
 `;
@@ -54,7 +55,7 @@ const NoticeContent = styled.div`
 const NoticeDetail = () => {
   return (
     <Container>
-      <Header headerText={"공지사항"}></Header>
+      <Header headerType={"close"} headerText={"공지사항"}></Header>
       <ContentBox>
         <BoardBox>
           <Titlebox>
@@ -68,7 +69,6 @@ const NoticeDetail = () => {
             </NoticeContent>
         </BoardBox>
       </ContentBox>
-      <MenuBar></MenuBar>
     </Container>
   );
 };
