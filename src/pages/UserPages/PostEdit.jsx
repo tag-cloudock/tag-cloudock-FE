@@ -117,7 +117,7 @@ const DropdownButton = styled.button`
   border-radius: 10px;
   font-size: 18px;
   background-color: #ffffff;
-  color: #aaaaaa;
+  color: #000000;
   padding: 10px 20px;
   width: 100%;
   text-align: left;
@@ -128,12 +128,13 @@ const DropdownButton = styled.button`
 `;
 
 const DropdownContent = styled.div`
+    margin-top: 10px;
   display: ${props => (props.open ? 'block' : 'none')};
   border-radius: 10px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   position: absolute;
   width: 100%;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 16px 0px rgba(96, 96, 96, 0.2);
   z-index: 1;
   overflow: hidden;
 `;
@@ -146,7 +147,7 @@ const DropdownItem = styled.a`
   text-decoration: none;
   display: block;
   &:hover {
-    background-color: #f1f1f1;
+    background-color: #f5f5f5;
   }
 `;
 
@@ -217,7 +218,7 @@ const RangeInput = styled.input`
   appearance: none;
   height: 10px;
   border-radius: 5px;
-  background: #e0e0e0;
+  background: #eeeeee;
   outline: none;
   opacity: 0.7;
   -webkit-transition: .2s;
@@ -253,10 +254,10 @@ const PostEdit = () => {
     const [todayDate, setTodayDate] = useState('');
 
     const [title, setTitle] = useState('');
-    const [location, setLocation] = useState(null);
+    const [location, setLocation] = useState("가천대");
     const [locationDetail, setLocationDetail] = useState('');
-    const [rentalFee, setRentalFee] = useState('');
-    const [security, setSecurity] = useState('');
+    const [rentalFee, setRentalFee] = useState(500);
+    const [security, setSecurity] = useState('없음');
     const [needAt, setNeedAt] = useState('');
     const [returnAt, setReturnAt] = useState('');
     const [content, setContent] = useState('');
@@ -269,6 +270,13 @@ const PostEdit = () => {
 
     const handlePost = async (e) => {
         e.preventDefault();
+
+        if (title.length < 1) {
+            window.alert("제목을 입력해주세요.");
+            // useridRef.current.focus();
+            // setUserid('');
+            return;
+          }
         try {
             const formData = new FormData();
             formData.append('request', new Blob([JSON.stringify({
@@ -310,6 +318,8 @@ const PostEdit = () => {
         // 시작 날짜의 최소 선택일을 오늘로 설정
         const todayString = today.toISOString().split('T')[0];
         setTodayDate(todayString);
+        setNeedAt(todayString);
+        setReturnAt(todayString);
     }, []);
 
     const toggleDropdown = () => {
@@ -349,6 +359,9 @@ const PostEdit = () => {
                             <span>{isOpen ? ">" : "<"}</span>
                         </DropdownButton>
                         <DropdownContent open={isOpen}>
+                        <DropdownItem href="#" onClick={() => handleOptionClick('가천대')}>
+                                가천대
+                            </DropdownItem>
                             <DropdownItem href="#" onClick={() => handleOptionClick('비전타워')}>
                                 비전타워
                             </DropdownItem>
@@ -364,7 +377,7 @@ const PostEdit = () => {
                         type="text"
                         // ref={passwordRef}
                         name="locationDetail"
-                        placeholder="자세한 위치(ex 505호)"
+                        placeholder="자세한 위치"
                         onChange={(e) => {
                             setLocationDetail(e.target.value);
                         }}

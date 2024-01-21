@@ -78,16 +78,16 @@ const Anno = styled.div`
 
 // 헤더 가운데 텍스트
 const HeaderCenterText = styled.span`
-  text-align: center;
+  /* text-align: center; */
   font-family: 'Noto Sans KR';
   position: absolute;
-  left: 0;
+  left: 60px;
   width: 100%;
   height: 50px;
   line-height: 50px;
   color: #000000;
   font-weight: 500;
-  font-size: 23px;
+  font-size: 20px;
 `;
 
 // 뒤로가기 버튼
@@ -106,6 +106,7 @@ const HeaderBackBtn = styled.button`
   background: none;
   border: none;
   float: left;
+  cursor: pointer;
   & img {
     position: absolute;
     top: 0;
@@ -161,22 +162,6 @@ const Header = ({ headerType, headerText }) => {
                   </Anno>
                 </Link>
               </AnnoBox>
-            </HeaderContent>
-          </HeaderBox>
-          <EmptyBox></EmptyBox>
-        </div>
-      );
-    case "user": // 유저
-      return (
-        <div>
-          <HeaderBox nobg={"true"}>
-            <HeaderContent>
-              <HeaderText>{headerText}</HeaderText>
-              <ChatBtn>
-                <Link to={"/chat"}>
-                  <img src="/image/chat.svg" alt="" />
-                </Link>
-              </ChatBtn>
             </HeaderContent>
           </HeaderBox>
           <EmptyBox></EmptyBox>

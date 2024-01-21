@@ -53,7 +53,7 @@ const Title = styled.div`
   height: 45px;
   line-height: 45px;
   font-size: 85px;
-  font-weight: 850;
+  font-weight: 800;
   font-family: 'Noto Sans KR';  
   color: #379dff;
 `;

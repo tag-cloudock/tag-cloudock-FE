@@ -19,6 +19,8 @@ const ChatRoom = styled.li`
   padding: 18px 20px;
   height : 50px;
   line-height: 23px;
+  /* background: #FaFaFa;
+  border-radius: 20px; */
   border-bottom: 1px solid #eeeeee;
   list-style: none;
   display: flex;
@@ -62,8 +64,8 @@ const PostImg = styled.div`
 `;
 
 const NickName = styled.span`
-  font-weight: 800;
-  color: #777777;
+  font-weight: 700;
+  color: #000000;
 `;
 
 const LastMessageTime = styled.span`
@@ -162,7 +164,6 @@ const ChatRoomList = () => {
           ))}
         </ul>
       }
-      <MenuBar></MenuBar>
     </ChatBox>
   );
 };

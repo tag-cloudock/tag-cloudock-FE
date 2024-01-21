@@ -163,6 +163,7 @@ const HomeMainText = styled.div`
   }
 
   & div{
+    transition: right 0.3s ease; 
     font-size: 18px;
     color: #2e89de;
     font-weight: 700;
@@ -170,12 +171,18 @@ const HomeMainText = styled.div`
     height: 50px;
     /* line-height: 50px; */
     position: absolute;
-    right: -30px;
-    top: 130px;
-    /* background: #4ba8ff; */
-    @media screen and (min-width: 700px) {
-      top: 290px;
-  } 
+    right: 0px;
+        @media screen and (min-width: 700px) {
+          right: -30px;
+      } 
+        top: 80px;
+        /* background: #4ba8ff; */
+        @media screen and (min-width: 700px) {
+          top: 290px;
+      } 
+    &:hover{
+      right: -40px; /* 마우스 호버 시 이동할 거리 */
+    }
   }
   & img{
     position: absolute;
@@ -211,23 +218,35 @@ const CouncilBtn = styled.div`
   box-shadow: 0px 2px 15px 0px rgba(157, 157, 157, 0.25);
   height: 50px;
   margin: 15px 20px 0px 20px;
+  &:hover div{
+    margin-left: 10px; /* 마우스 호버 시 이동할 거리 */
+  }
+  &:hover img{
+    transform: scale(1.2); 
+  }
 `;
 const CouncilBtnText = styled.div`
   float: left;
-  font-size: 20px;
+  font-size: 22px;
   color: #000000;
-  font-weight: 700;
-  /* margin-top:15px; */
-  line-height: 25px;
-  & div{
+  font-weight: 400;
+  line-height: 27px;
+  transition: margin-left 0.3s ease; /* transition 속성 추가 */
+
+  & span {
     font-size: 15px;
     color: #b1b1b1;
+    display: block;
   }
 `;
-
-const MoveArrow = styled.div`
+const MoveArrow = styled.img`
   float: right;
-  margin-top:10px;
+  margin-top: 10px;
+  transition: transform 0.3s ease; /* transition 속성 추가 */
+
+  &:hover {
+    transform: scale(1.2); /* 마우스 호버 시 크기가 1.1배로 커지도록 설정 */
+  }
 `;
 
 const Bar = styled.div`
@@ -284,13 +303,11 @@ const Home = () => {
           <CouncilBtn>
             <CouncilBtnText>
               {campus == 0 ?"글" : "메"}캠 학생회 물품 보러가기
-              <div>
+              <span>
                 25개의 학생회, 150개의 물품대여중
-              </div>
+              </span>
             </CouncilBtnText>
-            <MoveArrow>
-              <img src={"/image/arrow.svg"} alt="" />
-            </MoveArrow>
+            <MoveArrow src={"/image/arrow.svg"} alt="" />
           </CouncilBtn>
         </Link>
 

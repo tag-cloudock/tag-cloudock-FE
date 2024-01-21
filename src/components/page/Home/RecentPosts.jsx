@@ -1,10 +1,3 @@
-/*
-용도: 최신 post 전체 목록을 내보내는 컴포넌트
-담당자: 김윤수
-사용법: Home.jsx에서 컴포넌트로 불러와 사용
-기타: .
-*/
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
@@ -16,16 +9,14 @@ const Wrapped = styled.div`
   font-size: 17px;
   color: #000000;
   border-radius: 10px;
-  
   line-height: 25px;
   height: 25px;
   font-family: 'Noto Sans KR', sans-serif;
-  &:hover {
-    /* background: #f7f7f7; */
+  &:hover span{
+    text-decoration: underline;
   }
   padding: 10px 10px;
   font-size: 15px;
-
 `;
 const Item = styled.div`
 `;
@@ -40,6 +31,7 @@ const Title = styled.span`
   @media screen and (max-width: 700px) {
     font-size: 15px;
   }
+
 `;
 
 // 최신 글 상위 3개에 뜨는 이모지

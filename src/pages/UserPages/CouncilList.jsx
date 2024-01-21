@@ -15,8 +15,8 @@ const CouncilBox = styled.div`
 
 const SubTitle = styled.div`
   font-size: 18px;
-  font-weight: 800;
-  color: #505050;
+  font-weight: 700;
+  color: #000000;
   margin-bottom: 10px;  
 `;
 
@@ -25,14 +25,13 @@ const CampusAnnoBox = styled.div`
   margin-bottom: 20px;
   border-radius: 15px;
   box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px;
-  padding: 20px 10px;
+  padding: 20px 20px;
 `;
 
 const BigText = styled.div`
-  font-weight: 800;
-  font-size: 28px;
-  color : #9e9e9e;
-  margin-bottom: 10px;
+  font-weight: 400;
+  font-size: 25px;
+  color : #379DFF;
   & span{ 
     font-size: 28px;
     color : #379DFF;
@@ -40,8 +39,8 @@ const BigText = styled.div`
 `;
 
 const SmallText = styled.div`
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 400;
   color : #9e9e9e;
 `;
 
@@ -93,14 +92,14 @@ const CouncilItem = styled.li`
 
 const CollegeName = styled.div`
     font-size: 15px;
-    font-weight: 800;
-    color: #505050;
+    font-weight: 700;
+    color: #000000;
     margin-bottom: 10px;
 `;
 
 const CouncilName = styled.div`
-    font-weight: 800;
-    color: #555555;
+    font-weight: 500;
+    color: #000000;
 `;
 
 const ItemInfo = styled.div`
@@ -154,7 +153,7 @@ const CouncilList = () => {
       <ContentBox>
         <SubTitle>총 35개의 학생회에서 물품대여중🫶</SubTitle>
         <CampusAnnoBox>
-          <BigText><span>{campus == 'g' ? "글로벌" : "메디컬"}</span> 캠퍼스입니다🙂</BigText>
+          <BigText>{campus == 'g' ? "글로벌" : "메디컬"} 캠퍼스입니다🙂</BigText>
           <SmallText><RealTime>실시간</RealTime>으로 물품 잔여 개수를 확인하세요!</SmallText>
         </CampusAnnoBox>
         {groupedCouncilList.map((college, index) => (

@@ -20,9 +20,10 @@ const CouncilInforContainer = styled.div`
 const TitleBox = styled.div`
   position: relative;
   height: 50px;
-  background: #f7f7f7;
+  /* border-bottom: 1px solid #c6c6c6; */
   padding: 5px 10px;
   border-radius: 20px;
+  background: #fafafa;
 `;
 
 const ProductContainer = styled.div`
@@ -42,20 +43,21 @@ const ProfileImg = styled.div`
   border-radius: 30px;
   border: 1px solid #c8c8c8;
   float: left;
+  background: #ffffff;
 `;
 const CouncilInfo = styled.div`
   padding: 20px 0px 10px 0px;
 
-  color: #676767;
+  color: #000000;
   font-size: 18px;
   font-weight: 400;
   line-height: 30px;
   & span {
-    color: #676767;
+    color: #000000;
     margin-right: 5px;
     font-size: 18px;
     font-style: normal;
-    font-weight: 800;
+    font-weight: 700;
     line-height: normal;
   }
 `;
@@ -63,12 +65,12 @@ const CouncilInfo = styled.div`
 const CouncilName = styled.div`
   position: absolute;
   width: 100%;
-  color: #969696;
+  color: #000000;
   height: 45px;
   line-height: 45px;
   text-align: center;
   font-size: 25px;
-  font-weight: 800;
+  font-weight: 700;
 `;
 
 const Update = styled.div`
@@ -94,7 +96,7 @@ const Update = styled.div`
 `;
 
 const CategoryTitle = styled.div`
-  color: #676767;
+  color: #000000;
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 10px;
@@ -109,9 +111,9 @@ const CategoryCount = styled.div`
   border-radius: 22px;
   float: right;
   text-align: center;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 15px;
-  color: #979797;
+  color: #000000;
 `;
 
 const CouncilDetail = () => {
@@ -135,7 +137,7 @@ const CouncilDetail = () => {
 
   return (
     <CouncilBox>
-      <Header headerText={"학생회"}></Header>
+      <Header></Header>
       <CouncilInforContainer>
         <TitleBox>
           <ProfileImg></ProfileImg>

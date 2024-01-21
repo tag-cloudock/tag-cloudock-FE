@@ -9,7 +9,7 @@ import MenuBar from "../../components/layout/MenuBar";
 // 로그아웃 버튼
 const Logout = styled.button`
   display: block;
-  margin: 30px auto 0px auto;
+  margin: 10px auto 0px auto;
   border: none;
   border-radius: 10px;
   background: none;
@@ -19,6 +19,7 @@ const Logout = styled.button`
   font-weight: 400;
   width: 200px;
   height: 40px;
+  cursor: pointer;
   &:hover {
     background: #f7f7f7;
   }
@@ -35,7 +36,7 @@ const UserInfoContentBox = styled.div`
 const Nickname = styled.div`
   display: inline-block;
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 700;
   color: #333333;
 `;
 const CountBox = styled.div`
@@ -46,7 +47,7 @@ const CountBox = styled.div`
 `;
 const CountInfoBox = styled.span`
   text-align: center;
-  font-weight: 800;
+  font-weight: 400;
   font-size: 17px;
   color: #379dff;
   display: inline-block;
@@ -65,7 +66,7 @@ const ProfilImg = styled.div`
   height: 80px;
   overflow: hidden;
   border-radius: 100px;
-  border: 2px solid #379dff;
+  border: 1px solid #e9e9e9;
   position: relative;
   & img {
     position: absolute;
@@ -126,9 +127,9 @@ const BoxTitle = styled.div`
   padding-bottom: 5px;
   text-align: left;
   line-height: 50px;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 22px;
-  color: #505050;
+  color: #000000;
   @media screen and (max-width: 700px) {
     padding-top: 3px;
     padding-bottom: 3px;
@@ -149,23 +150,24 @@ const ImageIcon = styled.img`
   }
 `;
 const Option = styled.span`
-  margin-left: 13px;
+  float: right;
 `;
 //옵션
 const OptionBox = styled.span`
-  margin: 0px 3px;
-  padding: 1px 8px;
+  display: block;
+  margin-top: 5px;
+  margin-right: 18px;
+ cursor: pointer;
+  /* margin: 0px 3px; */
+  /* padding: 1px 8px; */
   background: #ffffff;
-  border: 1px solid #379dff;
+  /* border: 1px solid #379dff; */
   border-radius: 30px;
-  font-weight: 800;
+  font-weight: 400;
   font-size: 14px;
-  color: #ffffff;
-  background: #379dff;
+  color: #d8d8d8;
+  /* background: #379dff; */
   &:hover {
-    background: #adebff;
-    color: #ffffff;
-    border: 1px solid #adebff;
   }
   @media screen and (max-width: 700px) {
     font-weight: 700;
@@ -253,7 +255,7 @@ const User = () => {
 
   return (
     <div>
-      <Header headerType={"user"}></Header>
+      <Header></Header>
       <UserBox>
         <UserInfoBox>
           <ProfilImgBox>
@@ -264,12 +266,8 @@ const User = () => {
           <UserInfoContentBox>
             <Nickname>{userInfo.nickname}</Nickname>
             <Option>
-              {cookies.certification == false ? (
-                <Link to={"/certification"}>
-                  <OptionBox>인증하기</OptionBox>
-                </Link>
-              ) : null}
-              <OptionBox onClick={removeCookies}>로그아웃</OptionBox>
+              <OptionBox>정보수정
+              </OptionBox>
             </Option>
             <CountBox>
               <CountInfoBox>
@@ -282,16 +280,6 @@ const User = () => {
             </CountBox>
           </UserInfoContentBox>
         </UserInfoBox>
-        {/* <Logout onClick={removeCookies}>로그아웃</Logout>
-        {cookies.certification == false ? (
-          <Certifi>
-            <Link to={"/certification"}>
-              <span>
-                물건을 대여하고 싶나요? <span>학생증 인증하기</span>
-              </span>
-            </Link>
-          </Certifi>
-        ) : null} */}
       </UserBox>
       <PostBox>
         <BoxTitle>
@@ -322,7 +310,12 @@ const User = () => {
         </BoxTitle>
         <PostInfoBox></PostInfoBox>
       </PostBox>
-      <MenuBar></MenuBar>
+      {cookies.certification == false ? (
+                <Link to={"/certification"}>
+                   <Logout>학생증 인증하기</Logout>
+                </Link>
+              ) : null}
+     <Logout onClick={removeCookies}>로그아웃</Logout>
     </div>
   );
 };

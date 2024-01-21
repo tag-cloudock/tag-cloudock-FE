@@ -25,6 +25,7 @@ import NoticeList from "./pages/UserPages/NoticeList";
 import NoticeDetail from "./pages/UserPages/NoticeDetail";
 import Manual from "./pages/UserPages/Manual";
 import KSignIn from "./pages/UserPages/KSignIn";
+import SocialKakao from "./pages/UserPages/SocialKakao";
 
 const MainLayout = styled.div`
 `;
@@ -43,7 +44,9 @@ function App() {
           <Route path="/post/:location/:id" component={PostDetail} /> {/* post/:id */}
           <Route path="/council/:campus" Component={CouncilList} />{/* council/campus/:campus */}
           <Route path="/council/:campus/:id" Component={CouncilDetail} /> {/* council/:id */}
-          <Route path="/signin" Component={SignIn} />
+          <Route path="/signin" Component={KSignIn} />
+          <Route path="/oauth/kakao" Component={SocialKakao} />
+          
           <Route path="/signup" Component={SignUp} />
           <Route path="/chat" Component={ChatRoomList} />
           <Route path="/chat/:metype/:id/:other" Component={Chat} />
