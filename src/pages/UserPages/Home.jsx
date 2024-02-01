@@ -123,8 +123,9 @@ const HomeContainer = styled.div`
 const Container = styled.div`
   /* opacity: 0%; */
   z-index: 2;
+  width: 100%;
   position: absolute;
-  margin-top: 230px;
+  margin-top: 270px;
 
   @media screen and (min-width: 700px) {
     margin-top: 360px;
@@ -207,7 +208,7 @@ const ArrowIcon = styled.img`
   @media screen and (max-width: 700px) {
     width: 24px;
   }
-  padding-top: 7px;
+  padding-top: 12px;
   padding-right: 35px;
 `;
 
@@ -299,7 +300,7 @@ const Home = () => {
         </CampusMoveBox>
 
         {/* 일반 대여 목록 */}
-        <Link to={campus == 0 ?"/council/g" : "/council/m"}>
+        <Link to={campus == 0 ?"/councils?campus=global" : "/councils?campus=medical"}>
           <CouncilBtn>
             <CouncilBtnText>
               {campus == 0 ?"글" : "메"}캠 학생회 물품 보러가기
@@ -314,11 +315,11 @@ const Home = () => {
 
 
         <SubTitle>
-          최근에 빌리길 바람 <ImageIcon src={"/image/hand.svg"} alt="" /><Link to={"/post/:location"}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
+          최근에 빌리길 바람 <ImageIcon src={"/image/hand.svg"} alt="" /><Link to={"/posts?location="+(campus == 0 ? "글로벌 캠퍼스" : "메디컬 캠퍼스")}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
         </SubTitle>
         <ContentAreaBox>
           <RecentPostBox>
-            <RecentPosts></RecentPosts>
+            <RecentPosts campus={campus}></RecentPosts>
           </RecentPostBox>
         </ContentAreaBox>
         {/* 장소 선택 목록 */}
@@ -328,36 +329,49 @@ const Home = () => {
         </SubTitle>
         <ContentAreaBox>
           <LocationItems>
-            <Link to={"/post/바나대"}>
+            {campus == 0 ? 
+            <div>
+            <Link to={"/posts?location=바나대"}>
               <LocationItem>#바나대</LocationItem>
             </Link>
-            <Link to={"/post/AI공학관"}>
+            <Link to={"/posts?location=AI공학관"}>
               <LocationItem>#AI공학관</LocationItem>
             </Link>
-            <Link to={"/post/중앙도서관"}>
+            <Link to={"/posts?location=중앙도서관"}>
               <LocationItem>#중앙도서관</LocationItem>
             </Link>
-            <Link to={"/post/가천관"}>
+            <Link to={"/posts?location=가천관"}>
               <LocationItem>#가천관</LocationItem>
             </Link>
-            <Link to={"/post/공대2"}>
+            <Link to={"/posts?location=공대2"}>
               <LocationItem>#공대2</LocationItem>
             </Link>
-            <Link to={"/post/공대1"}>
+            <Link to={"/posts?location=공대1"}>
               <LocationItem>#공대1</LocationItem>
             </Link>
-            <Link to={"/post/글로벌센터"}>
+            <Link to={"/posts?location=글로벌센터"}>
               <LocationItem>#글로벌센터</LocationItem>
             </Link>
-            <Link to={"/post/반도체대학"}>
+            <Link to={"/posts?location=반도체대학"}>
               <LocationItem>#반도체대학</LocationItem>
             </Link>
-            <Link to={"/post/비전타워"}>
+            <Link to={"/posts?location=비전타워"}>
               <LocationItem>#비전타워</LocationItem>
             </Link>
-            <Link to={"/post/교육대학"}>
+            <Link to={"/posts?location=교육대학"}>
               <LocationItem>#교육대학</LocationItem>
             </Link>
+            </div>
+            :
+            <div>
+              <Link to={"/posts?location=비전타워"}>
+              <LocationItem>#약학대학</LocationItem>
+              </Link>
+              <Link to={"/posts?location=교육대학"}>
+                <LocationItem>#학생회관</LocationItem>
+              </Link>
+            </div>
+            }
           </LocationItems>
         </ContentAreaBox>
         <Footer></Footer>

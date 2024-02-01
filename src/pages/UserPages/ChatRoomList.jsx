@@ -150,9 +150,9 @@ const ChatRoomList = () => {
         :
         <ul>
           {chatRoomList.map((chatRoom) => (
-            <Link key={chatRoom.id} to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)} state={{ postId: chatRoom.postId }}>
+            <Link key={chatRoom.id} to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)+"/"+chatRoom.postId } >
               <ChatRoom key={chatRoom.id}>
-                <Link to={"/"}><UserImg></UserImg></Link>
+                <Link to={"/"}><UserImg><img></img></UserImg></Link>
                 <ChatRoomContent>
                   <NickName>{chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname}</NickName>
                   <LastMessageTime>{chatRoom.lastMessage !== "no message" ? " " + chatRoom.lastMessageTime[3] + "시 " + chatRoom.lastMessageTime[4] + "분" : ""}</LastMessageTime><br></br>

@@ -99,7 +99,7 @@ const AdminManagement = () => {
                     <Link to={"/admin/cimanage"}><ManageBtn>학생회 관리</ManageBtn></Link>
                     <Link to={"/admin/certimanage"}><ManageBtn>인증 관리</ManageBtn></Link>
                     <ManageBtn>악성 유저 관리</ManageBtn>
-                    <ManageBtn>공지사항 관리</ManageBtn>
+                    <Link to={"/admin/anno-manage"}><ManageBtn>공지사항 관리</ManageBtn></Link>
                 </ManageBox>
 
             </ContentBox>

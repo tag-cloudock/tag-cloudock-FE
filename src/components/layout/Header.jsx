@@ -151,7 +151,7 @@ const Header = ({ headerType, headerText }) => {
             <HeaderContent>
               <HomeTitle>Baram</HomeTitle>
               <AnnoBox>
-                <Link to={"/user/" + cookies.userId}>
+                <Link to={"/user/" + cookies.id}>
                   <Anno>
                     <img style={{ width: '26px', marginTop:"2px", marginLeft:"2px"}} src={"/image/user.svg"}></img>
                   </Anno>

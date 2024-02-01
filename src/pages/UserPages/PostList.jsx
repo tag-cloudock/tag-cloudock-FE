@@ -1,9 +1,9 @@
 import Header from "../../components/layout/Header";
 import styled from "styled-components";
 import MenuBar from "../../components/layout/MenuBar";
-import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
-
+import { useState, useEffect } from "react";
+import { Link, useParams, useLocation } from "react-router-dom";
+import axios from "axios";
 //전체 배경
 const Container = styled.div`
   position: absolute;
@@ -26,19 +26,23 @@ const BoardBox = styled.div`
   }
 `;
 
+const Item = styled.div`
+border-bottom: 1px solid #eaeaea;
+
+padding: 20px;
+`;
+
 //list 박스 사이 구분선
 const Listbox = styled.div`
-  border-bottom: 1px solid #eaeaea;
-  margin: 0px;
-  padding: 10px 10px 10px;
+  /* padding: 10px 10px 10px; */
 `;
 
 //게시물 이미지
 const MainImage = styled.div`
-  margin: 15px;
-  width: 50px;
-  height: 50px;
-  background: skyblue;
+  margin-right: 15px;
+  width: 75px;
+  height: 75px;
+  background: #ebebeb;
   float: left;
   border-radius: 10px;
 `;
@@ -46,24 +50,28 @@ const MainImage = styled.div`
 //게시물 제목
 const NoticeTitle = styled.div`
 color: #1F1F1F;
+width: 70%;
 font-size: 15px;
 font-weight: 500;
-margin-bottom :10px;
+overflow: hidden; 
+text-overflow: ellipsis; 
 `;
 
 //게시물 상세설명(건물 위치등)
 const PostDetail = styled.div`
 color: #606060;
-font-size: 10px;
+font-size: 12px;
 font-weight: 400;
-margin-bottom :5px;
+margin-top: 5px;
 `;
 
 //게시물 가격
 const PostPrice = styled.div`
 color: #000;
-font-size: 13px;
-font-weight: 400;
+
+font-size: 14px;
+font-weight: 500;
+margin-top: 20px;
 `;
 
 //게시물 옆에 채팅? 댓글 아이콘
@@ -75,66 +83,72 @@ const ImageIcon = styled.img`
   margin-left: auto;
 `;
 
-const PostList = () => {
-  const [post, setPost] = useState([
-    {
-      id: 1,
-      title: "과학사의 이해",
-      detail: "비전타워 5층 502호 | 7분전",
-      price: "2000원"
-    },
-    {
-      id: 2,
-      title: "과학사의 이해",
-      detail: "비전타워 5층 502호 | 7분전",
-      price: "2000원"
-    },
-    {
-      id: 3,
-      title: "과학사의 이해",
-      detail: "비전타워 5층 502호 | 7분전",
-      price: "2000원"
-    },
-    {
-      id: 4,
-      title: "과학사의 이해",
-      detail: "비전타워 5층 502호 | 7분전",
-      price: "2000원"
-    },
-    {
-      id: 5,
-      title: "과학사의 이해",
-      detail: "비전타워 5층 502호 | 7분전",
-      price: "2000원"
-    },
-    {
-      id: 6,
-      title: "과학사의 이해",
-      detail: "비전타워 5층 502호 | 7분전",
-      price: "2000원"
-    }
-  ]);
-  const { location } = useParams(); 
-  console.log(location);
+const NoPostBox = styled.div`
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top:40%;
+  display: block;
+  max-width: 700px;
+  color : #cacaca;
+  font-size: 20px;
+  font-weight: 700;
+`;
 
+const NoPostText = styled.div`
+  font-size: 50px;
+  font-weight: 800;
+  margin-bottom: 20px;
+`;
+const PostList = () => {
+  const location = useLocation();
+  const [posts, setPosts] = useState([]);
+  const [locationName, setLocationName] = useState();
+  useEffect(() => {
+    // 최신 글 업로드
+    const fetchPosts = async () => {
+      try {
+        const locationValue = new URLSearchParams(location.search).get('location');
+        const response = await axios.get(
+          "http://" + process.env.REACT_APP_BACK_URL + "/post/all/"+locationValue
+        );
+        setPosts(response.data);
+        setLocationName(locationValue);
+        console.log(response);
+
+      } catch (error) {
+        console.log("포스트 오류 발생: ", error);
+      }
+    };
+    fetchPosts();
+  }, []);
   return (
     <Container>
-      <Header headerText={location}>         
+      <Header headerText={locationName}>         
       </Header>
       <PostBox>
         <BoardBox>
-          {post.map((post, index) => (
-            <Link to={"/post/"+index} key={index}>
-              <MainImage></MainImage>
+          
+          { posts.length != 0 ?posts.map((post, index) => (
+            <Link to={"/posts/"+post.postId} key={index}>
+              <Item>
+                <MainImage></MainImage>
               <Listbox>
                 <NoticeTitle>{post.title}</NoticeTitle>
-                <PostDetail>{post.detail}</PostDetail>
-                <PostPrice>{post.price}
+                <PostDetail>{post.location+" "+post.locationDetail}</PostDetail>
+                <PostPrice>{post.rentalFee}원
                 <ImageIcon src={"/image/chatt.svg"} alt="" />
                 </PostPrice>
               </Listbox>
+              </Item>
+              
             </Link>
-          ))}
+          ))
+        :
+        <NoPostBox>
+          <NoPostText>썰렁~</NoPostText>
+          {locationName} 사람들은 빌릴게 없나봐요ㅜㅜ
+        </NoPostBox>}
         </BoardBox>
       </PostBox>
       <MenuBar></MenuBar>

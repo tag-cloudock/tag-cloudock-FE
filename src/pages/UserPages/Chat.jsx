@@ -166,6 +166,7 @@ const InputBox = styled.input`
 // 헤더에 안가려지게 하는 더미 박스
 const EmptyBox = styled.div`
   height: 60px;
+  margin-bottom:20px;
 `;
 
 // 전송 버튼
@@ -211,10 +212,10 @@ const HiddenText = styled.div`
 const Chat = () => {
   const location = useLocation(); // 상태 전달 받기 위해
   const [cookies] = useCookies(); // 쿠키 사용을 위해
-  const { metype, id, other } = useParams(); // 주소의 파라미터 값 가져오기
+  const { metype, id, other, post } = useParams(); // 주소의 파라미터 값 가져오기
   const navigate = useNavigate(); // 페이지 이동을 위해
 
-  const postId = location.state.postId;
+  const postId = post;
   // 오랜 시간이 지나고 채팅 안에서 채팅룸으로 나가면 오류나는 이슈 있음.
 
   const inputMessageRef = useRef(); // 입력 박스 포커스용
@@ -292,7 +293,7 @@ const Chat = () => {
       setLoading(false);
     }, 300)
 
-  }, [cookies.token, id, navigate, postId]);
+  }, [cookies.token, id, navigate]);
 
 
   useEffect(() => {
@@ -375,7 +376,7 @@ const Chat = () => {
 
       {/* 게시물 정보 */}
       {loading ? null :
-        <Link to={'/post/' + postInfo.postId}>
+        <Link to={'/posts/' + postInfo.postId}>
           <PostInfo>
             <PostImg></PostImg>
             <PostTitle>{postInfo.title}</PostTitle>
@@ -414,10 +415,6 @@ const Chat = () => {
         })}
         {/* 최하단 포인트 */}
         <BottomPoint ref={messagesEndRef}>
-          {loading ? null :
-            <HiddenTextBox>
-              <HiddenText>까꿍</HiddenText>
-            </HiddenTextBox>}
         </BottomPoint>
       </MessagesBox>
 
