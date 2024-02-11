@@ -138,9 +138,7 @@ const HomeMainTextBox = styled.div`
   position: fixed;
   width: 100%;
   left: 0;
-  /* width: 2000px; */
-  /* max-width: 661px; */
-  background: #379dff;
+  background: linear-gradient(to top, #ffffff, #379dff 80%);
   top: -30px;
   padding: 80px 20px 500px 20px;
   @media screen and (min-width: 700px) {
@@ -153,9 +151,9 @@ const HomeMainText= styled.div`
   position: relative;
   margin: 0px auto;
   max-width: 661px;
-  font-size: 50px;
+  font-size: 65px;
   font-weight: 300;
-  line-height: 50px;
+  line-height: 60px;
   color: #ffffff;
   font-family: 'Nanum SeACe'; 
   @media screen and (min-width: 700px) {
