@@ -103,7 +103,7 @@ const NoPostText = styled.div`
 const PostList = () => {
   const location = useLocation();
   const [posts, setPosts] = useState([]);
-  const [locationName, setLocationName] = useState();
+  const [locationName, setLocationName] = useState("");
   useEffect(() => {
     // 최신 글 업로드
     const fetchPosts = async () => {
@@ -124,7 +124,7 @@ const PostList = () => {
   }, []);
   return (
     <Container>
-      <Header headerText={locationName}>         
+      <Header headerText={locationName.slice(2)}>         
       </Header>
       <PostBox>
         <BoardBox>
@@ -135,7 +135,7 @@ const PostList = () => {
                 <MainImage></MainImage>
               <Listbox>
                 <NoticeTitle>{post.title}</NoticeTitle>
-                <PostDetail>{post.location+" "+post.locationDetail}</PostDetail>
+                <PostDetail>{post.location.slice(2)+" "+post.locationDetail}</PostDetail>
                 <PostPrice>{post.rentalFee}원
                 <ImageIcon src={"/image/chatt.svg"} alt="" />
                 </PostPrice>

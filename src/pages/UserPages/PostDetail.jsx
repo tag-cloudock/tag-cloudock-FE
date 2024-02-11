@@ -261,7 +261,7 @@ const Nickname = styled.div`
 
 const PostDetail = () => {
   const navigate = useNavigate(); // 로그인 전 홈 진입 막기 위해
-  const [post, setPost] = useState({ title: "", createdAt: [], needAt: [], returnAt: [], userImgPath: "default.png", postImgPath: "default.png" }); // 최신 글 사용 위해
+  const [post, setPost] = useState({ title: "", createdAt: [], needAt: [], returnAt: [], userImgPath: "default.png", postImgPath: "default.png", location: "" }); // 최신 글 사용 위해
   const [cookies] = useCookies(); // 쿠키 사용하기 위해
   const [difference, setDifference] = useState();
   const [isModalUp, setIsModalUp] = useState(false);
@@ -354,7 +354,7 @@ const PostDetail = () => {
           <Image><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></Image>
           <InfoBox>
             <ListName>위치</ListName>
-            <ListNameDetail>{post.location + " " + post.locationDetail}</ListNameDetail>
+            <ListNameDetail>{post.location.slice(2) + " " + post.locationDetail}</ListNameDetail>
           </InfoBox>
           <InfoBox>
             <ListName>대여금</ListName>

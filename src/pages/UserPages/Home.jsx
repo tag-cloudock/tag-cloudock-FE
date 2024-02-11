@@ -309,7 +309,7 @@ const Home = () => {
 
 
         <SubTitle>
-          최근에 빌리길 바람 <ImageIcon src={"/image/hand.svg"} alt="" /><Link to={"/posts?location="+(campus == 0 ? "글로벌 캠퍼스" : "메디컬 캠퍼스")}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
+          최근에 빌리길 바람 <ImageIcon src={"/image/hand.svg"} alt="" /><Link to={"/posts?location=G "+(campus == 0 ? "글로벌 캠퍼스" : "메디컬 캠퍼스")}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
         </SubTitle>
         <ContentAreaBox>
           <RecentPostBox>
@@ -325,43 +325,43 @@ const Home = () => {
           <LocationItems>
             {campus == 0 ? 
             <div>
-            <Link to={"/posts?location=바나대"}>
+            <Link to={"/posts?location=G 바나대"}>
               <LocationItem>#바나대</LocationItem>
             </Link>
-            <Link to={"/posts?location=AI공학관"}>
+            <Link to={"/posts?location=G AI공학관"}>
               <LocationItem>#AI공학관</LocationItem>
             </Link>
-            <Link to={"/posts?location=중앙도서관"}>
+            <Link to={"/posts?location=G 중앙도서관"}>
               <LocationItem>#중앙도서관</LocationItem>
             </Link>
-            <Link to={"/posts?location=가천관"}>
+            <Link to={"/posts?location=G 가천관"}>
               <LocationItem>#가천관</LocationItem>
             </Link>
-            <Link to={"/posts?location=공대2"}>
+            <Link to={"/posts?location=G 공대2"}>
               <LocationItem>#공대2</LocationItem>
             </Link>
-            <Link to={"/posts?location=공대1"}>
+            <Link to={"/posts?location=G 공대1"}>
               <LocationItem>#공대1</LocationItem>
             </Link>
-            <Link to={"/posts?location=글로벌센터"}>
+            <Link to={"/posts?location=G 글로벌센터"}>
               <LocationItem>#글로벌센터</LocationItem>
             </Link>
-            <Link to={"/posts?location=반도체대학"}>
+            <Link to={"/posts?location=G 반도체대학"}>
               <LocationItem>#반도체대학</LocationItem>
             </Link>
-            <Link to={"/posts?location=비전타워"}>
+            <Link to={"/posts?location=G 비전타워"}>
               <LocationItem>#비전타워</LocationItem>
             </Link>
-            <Link to={"/posts?location=교육대학"}>
+            <Link to={"/posts?location=G 교육대학"}>
               <LocationItem>#교육대학</LocationItem>
             </Link>
             </div>
             :
             <div>
-              <Link to={"/posts?location=비전타워"}>
+              <Link to={"/posts?location=G 비전타워"}>
               <LocationItem>#약학대학</LocationItem>
               </Link>
-              <Link to={"/posts?location=교육대학"}>
+              <Link to={"/posts?location=G 교육대학"}>
                 <LocationItem>#학생회관</LocationItem>
               </Link>
             </div>
