@@ -197,11 +197,66 @@ const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
   background: #00000077;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ModalBox = styled.div`
-
+  margin: 0 auto;
+  width: 80%;
+  height: 250px;
+  max-width: 400px;
+  border-radius: 30px;
+  background: #ffffff;
+  position: relative;
 `;
+
+const ModalBtnBox = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 15px;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const ModalBtn = styled.button`
+  border: none;
+  width: 40%;
+  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#379DFF')};
+  padding: 20px;
+  text-align: center;
+  border-radius: 15px;
+
+  font-size: 15px;
+  color:${({ isLeft }) => (isLeft ? '#aaaaaa' : '#FFFFFF')};
+`;
+
+
+const ModalText = styled.div`
+  margin-top: 40px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 30px;
+  & span{
+    display: block;
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: 400;
+  }
+`;
+
+
+const Nickname = styled.div`
+  display: inline-block;
+  background: #e4f2ff;
+  padding: 3px 10px;
+  border-radius: 15px;
+`;
+
+
 
 
 const PostDetail = () => {
@@ -209,6 +264,7 @@ const PostDetail = () => {
   const [post, setPost] = useState({ title: "", createdAt: [], needAt: [], returnAt: [], userImgPath: "default.png", postImgPath: "default.png" }); // 최신 글 사용 위해
   const [cookies] = useCookies(); // 쿠키 사용하기 위해
   const [difference, setDifference] = useState();
+  const [isModalUp, setIsModalUp] = useState(false);
   const { id } = useParams();
 
   const getDateDiff = (d1, d2) => {
@@ -319,15 +375,34 @@ const PostDetail = () => {
               <DateText>{post.returnAt[0] + "." + post.returnAt[1] + "." + post.returnAt[2]}</DateText>
             </DateInfoBox>
           </BOX>
-          <ChatBox onClick={handleGoTalk} isMine={post.userId == cookies.userId}>{post.userId == cookies.userId ? "내 요청 입니다" : "대화하기"}</ChatBox>
+          <ChatBox onClick={() => {
+                        setIsModalUp(true);
+                    }} isMine={post.userId == cookies.userId}>{post.userId == cookies.userId ? "내 요청 입니다" : "대화하기"}</ChatBox>
         </BoardBox>
       </PostBox>
+
+      {isModalUp ?
       <ModalContainer>
         <ModalBox>
-
+          <ModalText>
+            <Nickname>{post.nickname}</Nickname> 님은<br></br> 학생증 인증이 안된 유저 입니다.<br></br>
+           <span>대화를 시작하겠습니까?</span>
+          </ModalText>
+          <ModalBtnBox>
+            <ModalBtn  onClick={() => {
+                        setIsModalUp(false);
+                    }} isLeft={true}>
+              아니요
+            </ModalBtn>
+            <ModalBtn onClick={handleGoTalk} isMine={post.userId == cookies.userId}>
+              시작하기
+            </ModalBtn>
+          </ModalBtnBox>
         </ModalBox>
       </ModalContainer>
+       : null}
     </Container>
+
   );
 
 };
