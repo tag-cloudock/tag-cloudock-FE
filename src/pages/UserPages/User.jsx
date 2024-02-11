@@ -78,7 +78,7 @@ const ProfilImg = styled.div`
 `;
 
 const UserBox = styled.div`
-  padding: 10px;
+  padding: 50px 10px;
 `;
 
 const UserInfoBox = styled.div`
@@ -182,7 +182,7 @@ const User = () => {
 
   const [img, setImg] = useState({}); // 유저 정보 상태
   const [isVertical, setIsVertical] = useState(true); // 유저 정보 상태
-  const { id } = useParams(); // 파라미터 값 가져오기
+  // const { id } = useParams(); // 파라미터 값 가져오기
 
   useEffect(() => {
     // 유저 정보 가져오기
@@ -195,7 +195,7 @@ const User = () => {
         }
         // 회원 조회 api 요청
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/account?id=" + id,
+          "http://" + process.env.REACT_APP_BACK_URL + "/account?id=" + cookies.id,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
@@ -217,7 +217,7 @@ const User = () => {
       }
     };
     fetchUserInfo();
-  }, [cookies.token, navigate, id]);
+  }, [cookies.token, navigate]);
 
   // 쿠키 지우기
   const removeCookies = async (e) => {
@@ -226,6 +226,7 @@ const User = () => {
     removeCookie("roles", { path: "/" });
     removeCookie("nickname", { path: "/" });
     removeCookie("userId", { path: "/" });
+    removeCookie("id", { path: "/" });
     navigate("/");
   };
 

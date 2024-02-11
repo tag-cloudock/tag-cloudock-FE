@@ -36,7 +36,7 @@ const ImageIcon = styled.img`
 
 // 학생회 캠퍼스 선택 박스 Parent
 const CampusMoveBox = styled.div`
-  margin: 0px 20px;
+  /* margin: 0px 20px; */
   height: 80px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -134,18 +134,25 @@ const Container = styled.div`
   background: #ffffff;
   max-width: 701px;
 `;
-const HomeMainText = styled.div`
+const HomeMainTextBox = styled.div`
   position: fixed;
   width: 100%;
-  max-width: 661px;
+  left: 0;
+  /* width: 2000px; */
+  /* max-width: 661px; */
   background: #379dff;
-  top: 0;
-  padding: 80px 20px 250px 20px;
+  top: -30px;
+  padding: 80px 20px 500px 20px;
   @media screen and (min-width: 700px) {
-    padding: 90px 20px 250px 20px;
+    padding: 90px 20px 500px 0px;
   } 
   margin-top: 30px;
-  /* height: 300px; */
+`;
+
+const HomeMainText= styled.div`
+  position: relative;
+  margin: 0px auto;
+  max-width: 661px;
   font-size: 50px;
   font-weight: 300;
   line-height: 50px;
@@ -155,13 +162,6 @@ const HomeMainText = styled.div`
     font-size: 90px;
     line-height: 90px;
   } 
-  & span{
-    font-family: 'Nanum SeACe';  
-    font-size: 30px;
-    @media screen and (min-width: 700px) {
-    font-size: 50px;
-    } 
-  }
 
   & div{
     transition: right 0.3s ease; 
@@ -197,7 +197,6 @@ const HomeMainText = styled.div`
   }
 `;
 
-
 // 화살표 아이콘 이미지 조정
 const ArrowIcon = styled.img`
   width: 30px;
@@ -215,12 +214,12 @@ const ArrowIcon = styled.img`
 const CouncilBtn = styled.div`
   border-radius: 20px;
   background: #FFF;
-  padding: 20px 15px;
+  padding: 20px 30px;
   box-shadow: 0px 2px 15px 0px rgba(157, 157, 157, 0.25);
   height: 50px;
   margin: 15px 20px 0px 20px;
   &:hover div{
-    margin-left: 10px; /* 마우스 호버 시 이동할 거리 */
+    margin-left: 30px; /* 마우스 호버 시 이동할 거리 */
   }
   &:hover img{
     transform: scale(1.2); 
@@ -265,18 +264,13 @@ const Home = () => {
     <HomeContainer>
       <Header headerType={"home"}></Header>
       {/* 학생회 대여 */}
-      <HomeMainText>
+      <HomeMainTextBox>
+        <HomeMainText>
         당신이<br />
         필요한 그 것<br />
-        꼭 빌리길 바람 <span>from. 애기</span>
-        <Link to={"/test"}>
-          <div>
-          자세히
-        <img src={"/image/menualArrow.svg"} alt="" />
-        </div>
-        </Link>
-        
-      </HomeMainText>
+        꼭 빌리길 바람
+        </HomeMainText>
+      </HomeMainTextBox>
       <Container>
         <Bar></Bar>
         <CampusMoveBox>

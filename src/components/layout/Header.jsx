@@ -29,6 +29,19 @@ const EmptyBox = styled.div`
   height: 50px;
 `;
 
+const Help = styled.div`
+  height: 25px;
+  width: 25px;
+  border-radius: 100px;
+  background: #ffffff;
+  text-align: center;
+  line-height: 25px;
+  font-weight: 900px;
+  color: #aaaaaa;
+  margin: 2px auto 0px auto;
+`;
+
+
 // 헤더 텍스트
 const HeaderText = styled.span`
   display: inline-block;
@@ -159,6 +172,11 @@ const Header = ({ headerType, headerText }) => {
                 <Link to={"/notice"}>
                   <Anno>
                     <img src={"/image/megaphone.svg"}></img>
+                  </Anno>
+                </Link>
+                <Link to={"/test"}>
+                  <Anno>
+                    <Help>?</Help>
                   </Anno>
                 </Link>
               </AnnoBox>

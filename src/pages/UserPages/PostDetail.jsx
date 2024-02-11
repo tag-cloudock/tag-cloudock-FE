@@ -189,7 +189,19 @@ const InfoBox = styled.div`
   margin: 10px 0px;
 `;
 
+const ModalContainer = styled.div`
+  z-index: 1000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000077;
+`;
 
+const ModalBox = styled.div`
+
+`;
 
 
 const PostDetail = () => {
@@ -233,7 +245,7 @@ const PostDetail = () => {
     e.preventDefault();
 
     const borrowerId = post.userId;
-    const renderId = cookies.userId;
+    const renderId = cookies.id;
     const postId = post.postId;
 
     try {
@@ -309,8 +321,12 @@ const PostDetail = () => {
           </BOX>
           <ChatBox onClick={handleGoTalk} isMine={post.userId == cookies.userId}>{post.userId == cookies.userId ? "내 요청 입니다" : "대화하기"}</ChatBox>
         </BoardBox>
-
       </PostBox>
+      <ModalContainer>
+        <ModalBox>
+
+        </ModalBox>
+      </ModalContainer>
     </Container>
   );
 
