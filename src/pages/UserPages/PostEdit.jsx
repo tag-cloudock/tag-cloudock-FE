@@ -19,7 +19,7 @@ const ContentBox = styled.div`
 const InputBoxTitle = styled.div`
 float: left;
 width: 100%;
-  font-size: 18px;
+  font-size: 14px;
   margin-top: 10px;
   font-weight: bold;
   color: #000000;
@@ -36,7 +36,7 @@ const TextareaBox = styled.textarea`
     color:#333333;
     font-size: 18px; 
     outline: none;
-    padding: 10px 3%;
+    padding: 20px 3%;
     &::placeholder {
         color: #aaaaaa; 
         font-size: 18px;
@@ -110,6 +110,7 @@ const DropdownWrapper = styled.div`
   width: 48%;
   position: relative;
   float: left;
+  
 `;
 
 const DropdownButton = styled.button`
@@ -118,12 +119,17 @@ const DropdownButton = styled.button`
   font-size: 18px;
   background-color: #ffffff;
   color: #000000;
-  padding: 10px 20px;
+  padding: 10px 10px;
   width: 100%;
   text-align: left;
+  display: flex;
+  justify-content: space-between;
   cursor: pointer;
-  & span{
-    float: right;
+  & div{
+    display: inline-block;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
   }
 `;
 
@@ -149,6 +155,7 @@ const DropdownItem = styled.a`
   &:hover {
     background-color: #f5f5f5;
   }
+  
 `;
 
 const DateWrapper = styled.div`
@@ -254,9 +261,9 @@ const PostEdit = () => {
     const [todayDate, setTodayDate] = useState('');
 
     const [title, setTitle] = useState('');
-    const [location, setLocation] = useState("가천대");
+    const [location, setLocation] = useState("G 글로벌 캠퍼스");
     const [locationDetail, setLocationDetail] = useState('');
-    const [rentalFee, setRentalFee] = useState(500);
+    const [rentalFee, setRentalFee] = useState(0);
     const [security, setSecurity] = useState('없음');
     const [needAt, setNeedAt] = useState('');
     const [returnAt, setReturnAt] = useState('');
@@ -355,21 +362,24 @@ const PostEdit = () => {
                 <InputContainer>
                     <DropdownWrapper>
                         <DropdownButton onClick={toggleDropdown}>
-                            {location ? location : '위치 선택'}
+                            <div>{location ? location : '위치 선택'}</div>
                             <span>{isOpen ? ">" : "<"}</span>
                         </DropdownButton>
                         <DropdownContent open={isOpen}>
-                        <DropdownItem href="#" onClick={() => handleOptionClick('가천대')}>
-                                가천대
+                        <DropdownItem href="#" onClick={() => handleOptionClick('G 글로벌 캠퍼스')}>
+                                G 글로벌 캠퍼스
                             </DropdownItem>
-                            <DropdownItem href="#" onClick={() => handleOptionClick('비전타워')}>
-                                비전타워
+                            <DropdownItem href="#" onClick={() => handleOptionClick('G 비전타워')}>
+                                G 비전타워
                             </DropdownItem>
-                            <DropdownItem href="#" onClick={() => handleOptionClick('가천관')}>
-                                가천관
+                            <DropdownItem href="#" onClick={() => handleOptionClick('G 가천관')}>
+                                G 가천관
                             </DropdownItem>
-                            <DropdownItem href="#" onClick={() => handleOptionClick('AI공학관')}>
-                                AI공학관
+                            <DropdownItem href="#" onClick={() => handleOptionClick('G AI공학관')}>
+                                G AI공학관
+                            </DropdownItem>
+                            <DropdownItem href="#" onClick={() => handleOptionClick('M 약학대학')}>
+                                M 약학대학
                             </DropdownItem>
                         </DropdownContent>
                     </DropdownWrapper>
@@ -386,7 +396,7 @@ const PostEdit = () => {
                 <InputBoxTitle>대여금</InputBoxTitle>
                 <InputBox
                     type="text"
-                    value={rentalFee+"원"}
+                    value={rentalFee == 0 ? "무료로 대여하기" : rentalFee+"원"}
                     name="rentalFee"
                     placeholder="₩ 대여금을 설정해주세요."
                 />
@@ -394,7 +404,7 @@ const PostEdit = () => {
                     type="range"
                     id="rentalFee"
                     name="rentalFee"
-                    min={500}
+                    min={0}
                     max={10000}
                     step={500}
                     value={rentalFee}

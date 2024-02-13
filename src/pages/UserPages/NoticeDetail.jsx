@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import Header from "../../components/layout/Header";
-import MenuBar from "../../components/layout/MenuBar";
+import { useParams } from "react-router-dom";
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Container = styled.div`
   position: absolute;
@@ -50,22 +53,40 @@ const NoticeContent = styled.div`
   font-weight: 400;
   line-height: 180%;
   padding: 20px 20px 80px;
+  white-space:pre;
 `;
 
 const NoticeDetail = () => {
+  const [notice, setNotice] = useState({title: "", createdAt: []});
+  const { id } = useParams();
+
+  useEffect(() => {
+    // 최신 글 업로드
+    const fetchAnno = async () => {
+      try {
+        const response = await axios.get(
+          "http://" + process.env.REACT_APP_BACK_URL + "/anno/"+id
+        );
+        setNotice(response.data);
+        console.log(response.data);
+
+      } catch (error) {
+        console.log("포스트 오류 발생: ", error);
+      }
+    };
+    fetchAnno();
+  }, []);
   return (
     <Container>
       <Header headerType={"close"} headerText={"공지사항"}></Header>
       <ContentBox>
         <BoardBox>
           <Titlebox>
-            <NoticeTitle>[공지] 말걸지마 ㅇㅋ</NoticeTitle>
-            <NoticeDate>2023-12-07</NoticeDate>
+            <NoticeTitle>[공지] {notice.title}</NoticeTitle>
+            <NoticeDate>{notice.createdAt[0]+"-"+notice.createdAt[1]+"-"+notice.createdAt[2]}</NoticeDate>
           </Titlebox>
             <NoticeContent>
-              하나 둘 we are egging 안녕하세요~ 애기쓰입니다. <br></br>
-              어쩌구저쩌구 <br></br>
-              말걸지 마세요 냠냠
+              {notice.content}
             </NoticeContent>
         </BoardBox>
       </ContentBox>

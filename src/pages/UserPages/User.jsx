@@ -70,15 +70,15 @@ const ProfilImg = styled.div`
   position: relative;
   & img {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    ${({ isVertical }) => (isVertical ? "width: 80px" : "height: 80px")};
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 `;
 
 const UserBox = styled.div`
-  padding: 10px;
+  padding: 50px 10px;
 `;
 
 const UserInfoBox = styled.div`
@@ -178,11 +178,11 @@ const OptionBox = styled.span`
 const User = () => {
   const navigate = useNavigate(); // 페이지 이동을 위해
   const [cookies, , removeCookie] = useCookies(); // 쿠키 가져오기, 쿠기 삭제를 위한 함수
-  const [userInfo, setUserInfo] = useState({}); // 유저 정보 상태
+  const [userInfo, setUserInfo] = useState({imgPath:"default.png"}); // 유저 정보 상태
 
   const [img, setImg] = useState({}); // 유저 정보 상태
   const [isVertical, setIsVertical] = useState(true); // 유저 정보 상태
-  const { userid } = useParams(); // 파라미터 값 가져오기
+  // const { id } = useParams(); // 파라미터 값 가져오기
 
   useEffect(() => {
     // 유저 정보 가져오기
@@ -195,37 +195,13 @@ const User = () => {
         }
         // 회원 조회 api 요청
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/account?id=" + userid,
+          "http://" + process.env.REACT_APP_BACK_URL + "/account?id=" + cookies.id,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
             },
           }
         );
-
-        var img = new Image();
-
-        // 이미지의 소스를 설정하여 로드를 시작합니다.
-        img.src =
-          "http://" +
-          process.env.REACT_APP_BACK_URL +
-          "/image/" +
-          response.data.imgPath;
-
-        // 이미지가 로드되면 실행되는 콜백 함수를 정의합니다.
-        img.onload = function () {
-          // 이미지의 가로 길이
-          var width = img.width;
-          // 이미지의 세로 길이
-          var height = img.height;
-
-          // 가로 세로 길이를 출력하거나 다른 작업을 수행합니다.
-          setImg(img);
-          setIsVertical(width <= height);
-          // console.log(width<=height);
-          console.log("가로 길이:", width);
-          console.log("세로 길이:", height);
-        };
 
         console.log(response.data);
         // 유저 상태 등록
@@ -241,7 +217,7 @@ const User = () => {
       }
     };
     fetchUserInfo();
-  }, [cookies.token, navigate, userid]);
+  }, [cookies.token, navigate]);
 
   // 쿠키 지우기
   const removeCookies = async (e) => {
@@ -250,6 +226,7 @@ const User = () => {
     removeCookie("roles", { path: "/" });
     removeCookie("nickname", { path: "/" });
     removeCookie("userId", { path: "/" });
+    removeCookie("id", { path: "/" });
     navigate("/");
   };
 
@@ -259,8 +236,8 @@ const User = () => {
       <UserBox>
         <UserInfoBox>
           <ProfilImgBox>
-            <ProfilImg isVertical={isVertical}>
-              <img src={img.src}></img>
+            <ProfilImg >
+              <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + userInfo.imgPath}></img>
             </ProfilImg>
           </ProfilImgBox>
           <UserInfoContentBox>
@@ -271,11 +248,11 @@ const User = () => {
             </Option>
             <CountBox>
               <CountInfoBox>
-                빌린 횟수 <br></br>2
+                빌린 횟수 <br></br>{userInfo.borrowCount}
               </CountInfoBox>
               <CountInfoBox>
                 빌려준 횟수
-                <br></br>2
+                <br></br>{userInfo.lendCount}
               </CountInfoBox>
             </CountBox>
           </UserInfoContentBox>

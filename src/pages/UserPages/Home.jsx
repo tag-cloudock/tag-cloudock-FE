@@ -36,16 +36,28 @@ const ImageIcon = styled.img`
 
 // 학생회 캠퍼스 선택 박스 Parent
 const CampusMoveBox = styled.div`
-  margin: 0px 20px;
-  height: 80px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* margin: 0px 20px; */
+  display: flex;
+  justify-content: space-evenly;
+
+  /* background: #f2f2f2; */
+  border-radius: 30px;
+  margin: 20px 20px 10px 20px;
+
 `;
 
 // 학생회 캠퍼스 선택 박스 Child
 const CampusBox = styled.button`
   border: none;
   background: none;
+  width: 30%;
+  margin: 7px 0px;
+  border-radius: 40px;
+  background: ${({ isOn }) => (isOn ? "#f1f1f1" : null)};
+  &:hover {
+    /* background: #f9f9f9; */
+  }
+  /* box-shadow: 0px 1px 8px rgba(74, 74, 74, 0.2); */
 `;
 
 
@@ -54,16 +66,11 @@ const CampusText = styled.div`
   width: 100%;
   text-align: center;
   font-weight: 400;
-  margin-top: 20px;
+  padding: 15px 0px;
   font-family: 'Noto Sans KR'; 
-  border-bottom: 2px solid #eeeeee;
+  /* border-bottom: 2px solid #eeeeee; */
   font-size: 20px;
-  color: #c3cbd5;
-  ${({ isOn }) => (isOn ? "color: #379dff; border-bottom: 2px solid #379dff;" : null)};
-  &:hover {
-    color: #379dff;
-    border-bottom: 2px solid #379dff;
-  }
+  color: ${({ isOn }) => (isOn ? " #818181" : "#d4dce6")};
 `;
 
 // 대여 박스 Parent
@@ -123,8 +130,9 @@ const HomeContainer = styled.div`
 const Container = styled.div`
   /* opacity: 0%; */
   z-index: 2;
+  width: 100%;
   position: absolute;
-  margin-top: 230px;
+  margin-top: 270px;
 
   @media screen and (min-width: 700px) {
     margin-top: 360px;
@@ -133,34 +141,32 @@ const Container = styled.div`
   background: #ffffff;
   max-width: 701px;
 `;
-const HomeMainText = styled.div`
+const HomeMainTextBox = styled.div`
   position: fixed;
   width: 100%;
-  max-width: 661px;
-  background: #379dff;
-  top: 0;
-  padding: 80px 20px 250px 20px;
+  left: 0;
+  background: linear-gradient(to top, #b5dbff, #379dff 80%);
+  top: -30px;
+  padding: 80px 20px 500px 20px;
   @media screen and (min-width: 700px) {
-    padding: 90px 20px 250px 20px;
+    padding: 90px 20px 500px 0px;
   } 
   margin-top: 30px;
-  /* height: 300px; */
-  font-size: 50px;
+`;
+
+const HomeMainText= styled.div`
+  position: relative;
+  margin: 0px auto;
+  max-width: 661px;
+  font-size: 65px;
   font-weight: 300;
-  line-height: 50px;
+  line-height: 60px;
   color: #ffffff;
   font-family: 'Nanum SeACe'; 
   @media screen and (min-width: 700px) {
     font-size: 90px;
     line-height: 90px;
   } 
-  & span{
-    font-family: 'Nanum SeACe';  
-    font-size: 30px;
-    @media screen and (min-width: 700px) {
-    font-size: 50px;
-    } 
-  }
 
   & div{
     transition: right 0.3s ease; 
@@ -196,7 +202,6 @@ const HomeMainText = styled.div`
   }
 `;
 
-
 // 화살표 아이콘 이미지 조정
 const ArrowIcon = styled.img`
   width: 30px;
@@ -207,19 +212,19 @@ const ArrowIcon = styled.img`
   @media screen and (max-width: 700px) {
     width: 24px;
   }
-  padding-top: 7px;
+  padding-top: 12px;
   padding-right: 35px;
 `;
 
 const CouncilBtn = styled.div`
   border-radius: 20px;
   background: #FFF;
-  padding: 20px 15px;
+  padding: 20px 30px;
   box-shadow: 0px 2px 15px 0px rgba(157, 157, 157, 0.25);
   height: 50px;
   margin: 15px 20px 0px 20px;
   &:hover div{
-    margin-left: 10px; /* 마우스 호버 시 이동할 거리 */
+    margin-left: 30px; /* 마우스 호버 시 이동할 거리 */
   }
   &:hover img{
     transform: scale(1.2); 
@@ -264,18 +269,13 @@ const Home = () => {
     <HomeContainer>
       <Header headerType={"home"}></Header>
       {/* 학생회 대여 */}
-      <HomeMainText>
+      <HomeMainTextBox>
+        <HomeMainText>
         당신이<br />
         필요한 그 것<br />
-        꼭 빌리길 바람 <span>from. 애기</span>
-        <Link to={"/test"}>
-          <div>
-          자세히
-        <img src={"/image/menualArrow.svg"} alt="" />
-        </div>
-        </Link>
-        
-      </HomeMainText>
+        꼭 빌리길 바람
+        </HomeMainText>
+      </HomeMainTextBox>
       <Container>
         <Bar></Bar>
         <CampusMoveBox>
@@ -283,7 +283,7 @@ const Home = () => {
 
           <CampusBox onClick={() => {
                         setCampus(0);
-                    }}>
+                    }} isOn={campus==0}>
             <CampusText isOn={campus==0}>
               글로벌
             </CampusText>
@@ -291,7 +291,7 @@ const Home = () => {
           {/* 메캠 링크 추가 */}
           <CampusBox onClick={() => {
                         setCampus(1);
-                    }}>
+                    }} isOn={campus==1}>
             <CampusText isOn={campus==1}>
               메디컬
             </CampusText>
@@ -299,7 +299,7 @@ const Home = () => {
         </CampusMoveBox>
 
         {/* 일반 대여 목록 */}
-        <Link to={campus == 0 ?"/council/g" : "/council/m"}>
+        <Link to={campus == 0 ?"/councils?campus=global" : "/councils?campus=medical"}>
           <CouncilBtn>
             <CouncilBtnText>
               {campus == 0 ?"글" : "메"}캠 학생회 물품 보러가기
@@ -314,11 +314,11 @@ const Home = () => {
 
 
         <SubTitle>
-          최근에 빌리길 바람 <ImageIcon src={"/image/hand.svg"} alt="" /><Link to={"/post/:location"}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
+          최근에 빌리길 바람 <ImageIcon src={"/image/hand.svg"} alt="" /><Link to={"/posts?location=G "+(campus == 0 ? "글로벌 캠퍼스" : "메디컬 캠퍼스")}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
         </SubTitle>
         <ContentAreaBox>
           <RecentPostBox>
-            <RecentPosts></RecentPosts>
+            <RecentPosts campus={campus}></RecentPosts>
           </RecentPostBox>
         </ContentAreaBox>
         {/* 장소 선택 목록 */}
@@ -328,36 +328,49 @@ const Home = () => {
         </SubTitle>
         <ContentAreaBox>
           <LocationItems>
-            <Link to={"/post/바나대"}>
+            {campus == 0 ? 
+            <div>
+            <Link to={"/posts?location=G 바나대"}>
               <LocationItem>#바나대</LocationItem>
             </Link>
-            <Link to={"/post/AI공학관"}>
+            <Link to={"/posts?location=G AI공학관"}>
               <LocationItem>#AI공학관</LocationItem>
             </Link>
-            <Link to={"/post/중앙도서관"}>
+            <Link to={"/posts?location=G 중앙도서관"}>
               <LocationItem>#중앙도서관</LocationItem>
             </Link>
-            <Link to={"/post/가천관"}>
+            <Link to={"/posts?location=G 가천관"}>
               <LocationItem>#가천관</LocationItem>
             </Link>
-            <Link to={"/post/공대2"}>
+            <Link to={"/posts?location=G 공대2"}>
               <LocationItem>#공대2</LocationItem>
             </Link>
-            <Link to={"/post/공대1"}>
+            <Link to={"/posts?location=G 공대1"}>
               <LocationItem>#공대1</LocationItem>
             </Link>
-            <Link to={"/post/글로벌센터"}>
+            <Link to={"/posts?location=G 글로벌센터"}>
               <LocationItem>#글로벌센터</LocationItem>
             </Link>
-            <Link to={"/post/반도체대학"}>
+            <Link to={"/posts?location=G 반도체대학"}>
               <LocationItem>#반도체대학</LocationItem>
             </Link>
-            <Link to={"/post/비전타워"}>
+            <Link to={"/posts?location=G 비전타워"}>
               <LocationItem>#비전타워</LocationItem>
             </Link>
-            <Link to={"/post/교육대학"}>
+            <Link to={"/posts?location=G 교육대학"}>
               <LocationItem>#교육대학</LocationItem>
             </Link>
+            </div>
+            :
+            <div>
+              <Link to={"/posts?location=G 비전타워"}>
+              <LocationItem>#약학대학</LocationItem>
+              </Link>
+              <Link to={"/posts?location=G 교육대학"}>
+                <LocationItem>#학생회관</LocationItem>
+              </Link>
+            </div>
+            }
           </LocationItems>
         </ContentAreaBox>
         <Footer></Footer>

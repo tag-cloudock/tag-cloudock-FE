@@ -31,11 +31,10 @@ const InputBox = styled.input`
     padding: 15px 3%;
     margin-top: 10px;
     width: 94%;
-    font-size: 15px;
-    font-weight: 800;
-    color: #333333;
+    color:#333333;
+    font-size: 18px; 
     border-radius: 10px;
-    border: 1px solid #E8E8E8;
+    border: 1px solid #dddddd;
     outline: none;
     &::placeholder {
         color: #aaaaaa; 
@@ -61,8 +60,7 @@ const Details = styled.details`
     position: relative;
     margin-top: 10px;
     width: 100%;
-    font-size: 15px;
-    font-weight: 800;
+    font-size: 18px;
     background: #ffffff;
     border-radius: 10px;
     border: 1px solid #E8E8E8;
@@ -126,6 +124,51 @@ const Button = styled.button`
     display: block;
 `;
 
+const FileInputBtn = styled.label`
+    display: block;
+    margin: 0 auto;
+    width: 66%;
+    text-align: left;
+    & div{
+      margin-top: 10px;
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color:#777777;
+      border: 1px solid #379DFF;
+      border-radius: 5px;
+      padding: 5px;
+    }
+`;
+const FileInputBox = styled.input`
+    width: 66%;
+    border: none;
+    background: none;
+    &::file-selector-button{
+      display: none;
+    }
+`;
+const TextareaBox = styled.textarea`
+    width: 94%;
+    height: 100px;
+    resize: none;
+    margin: 10px 0px;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    color:#333333;
+    font-size: 18px; 
+    outline: none;
+    padding: 10px 3%;
+    &::placeholder {
+        color: #aaaaaa; 
+        font-size: 18px;
+    }
+    &:focus {
+      border-color: #379DFF;
+    }
+`;
+
 const AdminCouncilCreation = () => {
     const [groupedCouncilList, setGroupedCouncilList] = useState([]); // 채팅방 리스트 상태
     const [key, setKey] = useState(0);
@@ -134,10 +177,13 @@ const AdminCouncilCreation = () => {
     const [location, setLocation] = useState("");
     const [operatingHours, setOperatingHours] = useState("");
     const [usageGuidelines, setUsageGuidelines] = useState("");
-
+    const [file, setFile] = useState(null);
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
-
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setFile(file);
+    };
     useEffect(() => {
         const fetchCouncils = async () => {
             try {
@@ -148,7 +194,7 @@ const AdminCouncilCreation = () => {
                 }
 
                 // 유저의 채팅방 모두 가져오기 api 요청
-                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/all", {
+                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/councils/all", {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
@@ -204,15 +250,26 @@ const AdminCouncilCreation = () => {
             return;
         }
         try {
-            // 회원가입 api 요청
-            const signUpResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/council",
+
+            const formData = new FormData();
+            formData.append('request', new Blob([JSON.stringify({
+                name,
+                college,
+                location,
+                operatingHours,
+                usageGuidelines
+            })],
                 {
-                    name,
-                    college,
-                    location,
-                    operatingHours,
-                    usageGuidelines
-                }
+                    type: "application/json"
+                }));
+            formData.append('pic', file);
+            const signUpResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/manage/council",
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+            }
             );
             // 성공시
             if (signUpResponse.status === 200) {
@@ -332,13 +389,20 @@ const AdminCouncilCreation = () => {
                         setOperatingHours(e.target.value);
                     }}
                 />
-                <InputBox type="text" name="usageGuidelines" placeholder="이용수칙 (ex 뒷정리 필수)"
-                    value={usageGuidelines}
+                <TextareaBox
+                    type="text"
+                    // ref={passwordRef}
+                    name="usageGuidelines"
+                    placeholder="이용수칙 (ex 뒷정리 필수)"
                     onChange={(e) => {
                         setUsageGuidelines(e.target.value);
-                    }} />
+                    }}
+                />
 
-                <Register></Register>
+                <FileInputBtn for="file">
+                    <div>학생회 사진 추가</div>
+                </FileInputBtn>
+                <FileInputBox type="file" name="file" id="file" onChange={handleFileChange} />
                 {/* 제출 버튼 */}
                 <SummitBtn onClick={handleAddCouncil}>추가</SummitBtn>
             </ContentBox>

@@ -1,8 +1,8 @@
 import Header from "../../components/layout/Header";
 import styled from "styled-components";
-import MenuBar from "../../components/layout/MenuBar";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Container = styled.div`
   position: absolute;
@@ -55,23 +55,24 @@ const ImageIcon = styled.img`
 `;
 
 const NoticeList = () => {
-  const [notices, setNotices] = useState([
-    {
-      id: 1,
-      title: "말걸지마",
-      date: "2023-12-07",
-    },
-    {
-      if: 2,
-      title: "말걸지마",
-      date: "2023-12-07",
-    },
-    {
-      id: 3,
-      title: "말걸지마",
-      date: "2023-12-07",
-    },
-  ]);
+  const [notices, setNotices] = useState([]);
+
+  useEffect(() => {
+    // 최신 글 업로드
+    const fetchAnnos = async () => {
+      try {
+        const response = await axios.get(
+          "http://" + process.env.REACT_APP_BACK_URL + "/anno/all"
+        );
+        setNotices(response.data);
+        console.log(response.data);
+
+      } catch (error) {
+        console.log("포스트 오류 발생: ", error);
+      }
+    };
+    fetchAnnos();
+  }, []);
 
   return (
     <Container>
@@ -79,13 +80,13 @@ const NoticeList = () => {
       <ContentBox>
         <BoardBox>
           {notices.map((notice, index) => (
-            <Link to={"/notice/"+notice.id} key={index}>
+            <Link to={"/notice/"+notice.annoId} key={index}>
               <NoticeListbox>
                 <NoticeTitle>
                   [공지] {notice.title}
                   <ImageIcon src={"/image/arrow.svg"} alt="" />
                 </NoticeTitle>
-                <NoticeDate>{notice.date}</NoticeDate>
+                <NoticeDate>{notice.createdAt[0]+"-"+notice.createdAt[1]+"-"+notice.createdAt[2]}</NoticeDate>
               </NoticeListbox>
             </Link>
           ))}

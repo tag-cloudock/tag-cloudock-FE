@@ -103,6 +103,10 @@ const SocialKakao = () => {
             path: "/",
             expires: expires,
           });
+          setCookie("id", response.data.id, {
+            path: "/",
+            expires: expires,
+          });
           setCookie("userId", response.data.userId, {
             path: "/",
             expires: expires,

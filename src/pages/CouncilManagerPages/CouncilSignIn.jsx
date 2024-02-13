@@ -150,6 +150,10 @@ const CouncilSignIn = () => {
           path: "/",
           expires: expires,
         });
+        setCookie("id", loginResponse.data.id, {
+          path: "/",
+          expires: expires,
+        });
         navigate("/council/manage");
       }
     } catch (error) {
@@ -178,7 +182,7 @@ const CouncilSignIn = () => {
           <SubTitle>
             학생회 전용
           </SubTitle>
-          <Link to={"/"}>대학빌림</Link>
+          <Link to={"/"}>BARAM</Link>
         </Title>
 
         {/* 아이디 */}
@@ -187,7 +191,7 @@ const CouncilSignIn = () => {
           ref={useridRef}
           name="id"
           value={userid}
-          placeholder="아이디"
+          placeholder="council + 번호"
           onChange={(e) => {
             setUserid(e.target.value);
           }}
@@ -200,7 +204,7 @@ const CouncilSignIn = () => {
           ref={passwordRef}
           name="password"
           value={password}
-          placeholder="비밀번호"
+          placeholder="비밀번호 ( 초기: 0000 )"
           onChange={(e) => {
             setPassword(e.target.value);
           }}
@@ -210,7 +214,6 @@ const CouncilSignIn = () => {
         <SubmitBtn onClick={handleLogin}>로그인</SubmitBtn>
         <ForgotPassword>비밀 번호를 잊으셨나요?</ForgotPassword>
       </LoginBox>
-      <Footer></Footer>
     </div>
   );
 };

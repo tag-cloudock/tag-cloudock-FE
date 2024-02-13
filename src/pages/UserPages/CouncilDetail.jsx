@@ -18,6 +18,7 @@ const CouncilInforContainer = styled.div`
 `;
 
 const TitleBox = styled.div`
+
   position: relative;
   height: 50px;
   /* border-bottom: 1px solid #c6c6c6; */
@@ -44,21 +45,39 @@ const ProfileImg = styled.div`
   border: 1px solid #c8c8c8;
   float: left;
   background: #ffffff;
+  overflow: hidden;
+
+  & img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 `;
 const CouncilInfo = styled.div`
+  display: inline-block;
+  width: 100%;
   padding: 20px 0px 10px 0px;
-
   color: #000000;
   font-size: 18px;
   font-weight: 400;
   line-height: 30px;
   & span {
+    font-family: 'Noto Sans KR';  
     color: #000000;
     margin-right: 5px;
     font-size: 18px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 500;
     line-height: normal;
+  }
+  & div{
+    /* width: 100%; */
+    font-size: 15px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    white-space:pre;
+    padding: 10px;
   }
 `;
 
@@ -70,17 +89,19 @@ const CouncilName = styled.div`
   line-height: 45px;
   text-align: center;
   font-size: 25px;
-  font-weight: 700;
+  font-weight: 500;
+  font-family: 'Noto Sans KR';  
 `;
 
 const Update = styled.div`
-  width: 110px;
+  width: 130px;
   height: 21px;
+  padding: 5px;
   border-radius: 30px;
   background: #eef6ff;
   color: #379dff;
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   vertical-align: center;
   & img {
@@ -89,7 +110,7 @@ const Update = styled.div`
     float: left;
   }
   & span {
-    margin-left: 3px;
+    margin-left: 5px;
     float: left;
     line-height: 21px;
   }
@@ -97,8 +118,9 @@ const Update = styled.div`
 
 const CategoryTitle = styled.div`
   color: #000000;
+  font-family: 'Noto Sans KR';  
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 10px;
 `;
 
@@ -117,7 +139,7 @@ const CategoryCount = styled.div`
 `;
 
 const CouncilDetail = () => {
-  const [councilData, setCouncilData] = useState({ items: [] }); // 채팅방 리스트 상태
+  const [councilData, setCouncilData] = useState({ items: [], imgPath:"default.png" }); // 채팅방 리스트 상태
   const { id } = useParams();
   useEffect(() => {
     const fetchCouncil = async () => {
@@ -140,7 +162,9 @@ const CouncilDetail = () => {
       <Header></Header>
       <CouncilInforContainer>
         <TitleBox>
-          <ProfileImg></ProfileImg>
+          <ProfileImg>
+            <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + councilData.imgPath}></img>
+          </ProfileImg>
           <CouncilName>{councilData.name} 학생회</CouncilName>
         </TitleBox>
 
@@ -149,7 +173,7 @@ const CouncilDetail = () => {
           <br />
           <span>이용시간 </span> {councilData.operatingHours}
           <br />
-          <span>이용수칙 </span> {councilData.usageGuidelines} <br />
+          <span>이용수칙 </span> <div>{councilData.usageGuidelines}</div> <br />
         </CouncilInfo>
         <Update>
           <img src={"/image/clockupdate.svg"}></img>
@@ -160,19 +184,26 @@ const CouncilDetail = () => {
         <CategoryTitle>제공 물품</CategoryTitle>
         <ul>
           {councilData.items.map((item) => (
+            item.type == "PROVIDED" ? 
             <li key={item.itemId}>
               {item.name}
               <CategoryCount>{item.quantity}</CategoryCount>
             </li>
+            : null
           ))}
         </ul>
       </ProductContainer>
       <ProductContainer>
         <CategoryTitle>대여 물품</CategoryTitle>
         <ul>
-          <li>
-            개발중<CategoryCount>1</CategoryCount>
-          </li>
+          {councilData.items.map((item) => (
+            item.type == "RENTAL" ? 
+            <li key={item.itemId}>
+              {item.name}
+              <CategoryCount>{item.quantity}</CategoryCount>
+            </li>
+            : null
+          ))}
         </ul>
       </ProductContainer>
       <MenuBar></MenuBar>

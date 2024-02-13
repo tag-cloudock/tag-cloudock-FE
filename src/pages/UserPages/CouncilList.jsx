@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -71,13 +71,20 @@ const CollegeBox = styled.ul`
   }
 `;
 
-const CouncilImg = styled.div`
+const CouncilImgBox = styled.div`
   width: 50px;
   height: 50px;
   border: 1px solid #eeeeee;
   border-radius: 50px;
   float: left;
   margin-right: 10px;
+  overflow: hidden;
+`;
+const CouncilImg = styled.img`
+  width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 `;
 
 const CouncilContent = styled.div`
@@ -110,27 +117,33 @@ const ItemInfo = styled.div`
 
 const CouncilList = () => {
   const [groupedCouncilList, setGroupedCouncilList] = useState([]); // 채팅방 리스트 상태
+  const [councilCount, setCouncilCount] = useState(); 
   const [key, setKey] = useState(0);
   const [cookies] = useCookies(); // 쿠키 사용하기 위해
   const navigate = useNavigate(); // 페이지 이동 위해
-  const { campus } = useParams();
+  const location = useLocation();
+  const [campus, setCampus] = useState();
   console.log(campus);
 
 
   useEffect(() => {
+    const campusValue = new URLSearchParams(location.search).get('campus');
+    setCampus(campusValue);
     const fetchCouncils = async () => {
       try {
-        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/all", {
+        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/all?campus="+campusValue, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
         });
 
+        setCouncilCount(response.data.length);
         const groupedData = response.data.reduce((acc, item, index) => {
           const key = item.college;
           if (index !== 0 && key !== response.data[index - 1].college) {
             acc.push([]);
           }
+          
           acc[acc.length - 1].push(item);
           return acc;
         }, [[]]);
@@ -151,9 +164,9 @@ const CouncilList = () => {
       <Header headerText={"학생회"}></Header>
 
       <ContentBox>
-        <SubTitle>총 35개의 학생회에서 물품대여중🫶</SubTitle>
+        <SubTitle>총 {councilCount}개의 학생회에서 물품대여중🫶</SubTitle>
         <CampusAnnoBox>
-          <BigText>{campus == 'g' ? "글로벌" : "메디컬"} 캠퍼스입니다🙂</BigText>
+          <BigText>{campus == 'global' ? "글로벌" : campus == 'medical' ? "메디컬" : "까아꿍"} 캠퍼스입니다🙂</BigText>
           <SmallText><RealTime>실시간</RealTime>으로 물품 잔여 개수를 확인하세요!</SmallText>
         </CampusAnnoBox>
         {groupedCouncilList.map((college, index) => (
@@ -161,9 +174,12 @@ const CouncilList = () => {
             <CollegeName>{college[0] != null ? college[0].college.slice(1) : null}</CollegeName>
             <CollegeBox>
               {college.map((council) => (
-                <Link to={"/council/" + campus + "/" + council.councilId} >
+                <Link to={"/councils/" + council.councilId} >
                   <CouncilItem key={council.councilId}>
-                    <CouncilImg></CouncilImg>
+                    <CouncilImgBox>
+                      <CouncilImg src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + council.imgPath}></CouncilImg>
+                    </CouncilImgBox>
+                    
                     <CouncilContent>
                       <CouncilName>{council.name}</CouncilName>
                       <ItemInfo>제공 물품 {council.providedItemCount} 대여 물품 {council.rentalItemCount}</ItemInfo>

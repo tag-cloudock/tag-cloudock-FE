@@ -22,12 +22,21 @@ const InfoBox = styled.div`
   margin-bottom: 20px;
   font-size: 18px;
   line-height: 30px;
-  font-weight: bold;
+  font-weight: 500;
   color: #777777;
-  padding: 20px 10px;
+  padding: 20px;
   border-radius: 10px;
   background: #ffffff;
   box-shadow: rgba(210, 210, 210, 0.5) 0px 0px 15px;
+  & span{
+    font-weight: 600;
+    color: #000000;
+    margin-right: 10px;
+  }
+  & div{
+    white-space:pre;
+  }
+  
 `;
 
 const CreateCouncil = styled.div`
@@ -106,7 +115,7 @@ const Count = styled.div`
 const Subtitle = styled.div`
   margin-top: 20px;
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   color: #333333;
   & span{
@@ -203,7 +212,7 @@ const CouncilManagement = () => {
     };
     return (
         <AdminBox>
-            <Header headerType={"onlyText"} headerText={councilData.name + " 학생회"}></Header>
+            <Header headerType={"council"} headerText={councilData.name + " 학생회"}></Header>
             <ContentBox>
                     <Subtitle>이용 정보
                     <Link to={"/council/manage/info"}>
@@ -211,9 +220,9 @@ const CouncilManagement = () => {
                     </Link>
                 </Subtitle>
                 <InfoBox>
-                    위치 : {councilData.location}<br />
-                    운영시간 : {councilData.operatingHours}<br />
-                    이용수칙 : {councilData.usageGuidelines}
+                    <span>위치</span> {councilData.location}<br />
+                    <span>운영시간</span> {councilData.operatingHours}<br />
+                    <span>이용수칙</span> <div>{councilData.usageGuidelines}</div>
                 </InfoBox>
                 <Subtitle>물품 리스트</Subtitle>
                 <Items>

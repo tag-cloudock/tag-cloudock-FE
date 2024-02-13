@@ -29,6 +29,19 @@ const EmptyBox = styled.div`
   height: 50px;
 `;
 
+const Help = styled.div`
+  height: 25px;
+  width: 25px;
+  border-radius: 100px;
+  background: #ffffff;
+  text-align: center;
+  line-height: 25px;
+  font-weight: 900px;
+  color: #aaaaaa;
+  margin: 2px auto 0px auto;
+`;
+
+
 // 헤더 텍스트
 const HeaderText = styled.span`
   display: inline-block;
@@ -134,6 +147,30 @@ const ChatBtn = styled.div`
   }
 `;
 
+const CouncilTitle = styled.div`
+display: inline-block;
+    width: 30%;
+  padding-left: 20px;
+  height: 50px;
+  text-align: left;
+  line-height: 50px;
+  font-weight: 800;
+  font-size: 25px;
+  color: #c5c5c5;
+  /* float: left; */
+`;
+
+const CouncilName = styled.div`
+  height: 50px;
+  margin-top: 5px;
+  margin-right: 20px;
+  line-height: 50px;
+  font-weight: 800;
+  font-size: 17px;
+  color: #c5c5c5;
+  float: right;
+`;
+
 const Header = ({ headerType, headerText }) => {
   const navigate = useNavigate(); // 페이지 이동을 위해
   const [cookies] = useCookies();
@@ -151,7 +188,7 @@ const Header = ({ headerType, headerText }) => {
             <HeaderContent>
               <HomeTitle>Baram</HomeTitle>
               <AnnoBox>
-                <Link to={"/user/" + cookies.userId}>
+                <Link to={"/user/" + cookies.id}>
                   <Anno>
                     <img style={{ width: '26px', marginTop:"2px", marginLeft:"2px"}} src={"/image/user.svg"}></img>
                   </Anno>
@@ -159,6 +196,11 @@ const Header = ({ headerType, headerText }) => {
                 <Link to={"/notice"}>
                   <Anno>
                     <img src={"/image/megaphone.svg"}></img>
+                  </Anno>
+                </Link>
+                <Link to={"/test"}>
+                  <Anno>
+                    <Help>?</Help>
                   </Anno>
                 </Link>
               </AnnoBox>
@@ -202,6 +244,16 @@ const Header = ({ headerType, headerText }) => {
             <HeaderContent>
               <HeaderCenterText>{headerText}</HeaderCenterText>
             </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    case "council": // 학생회용
+      return (
+        <div>
+          <HeaderBox nobg={false}>
+          <CouncilTitle>Baram</CouncilTitle>
+              <CouncilName>{headerText}</CouncilName>
           </HeaderBox>
           <EmptyBox></EmptyBox>
         </div>

@@ -26,6 +26,8 @@ import NoticeDetail from "./pages/UserPages/NoticeDetail";
 import Manual from "./pages/UserPages/Manual";
 import KSignIn from "./pages/UserPages/KSignIn";
 import SocialKakao from "./pages/UserPages/SocialKakao";
+import AdminAnnoManagement from "./pages/AdminPages/AdminAnnoManagement";
+import AdminAnnoCreation from "./pages/AdminPages/AdminAnnoCreation";
 
 const MainLayout = styled.div`
 `;
@@ -40,16 +42,16 @@ function App() {
           <Route path="/certification" Component={Certification} /> 
           <Route path="/user/:userid" Component={User} />
           <Route path="/write" Component={PostEdit} />{/* post/edit */}
-          <Route path="/post/:location" Component={PostList} />{/* post/location/:location */}
-          <Route path="/post/:location/:id" component={PostDetail} /> {/* post/:id */}
-          <Route path="/council/:campus" Component={CouncilList} />{/* council/campus/:campus */}
-          <Route path="/council/:campus/:id" Component={CouncilDetail} /> {/* council/:id */}
+          <Route path="/posts" Component={PostList} />{/* post/location/:location */}
+          <Route path="/posts/:id" Component={PostDetail} /> {/* post/:id */}
+          <Route path="/councils" Component={CouncilList} />{/* council/campus/:campus */}
+          <Route path="/councils/:id" Component={CouncilDetail} /> {/* council/:id */}
           <Route path="/signin" Component={KSignIn} />
           <Route path="/oauth/kakao" Component={SocialKakao} />
           
           <Route path="/signup" Component={SignUp} />
           <Route path="/chat" Component={ChatRoomList} />
-          <Route path="/chat/:metype/:id/:other" Component={Chat} />
+          <Route path="/chat/:metype/:id/:other/:post" Component={Chat} />
           <Route path="/notice" Component={NoticeList} />
           <Route path="/notice/:id" Component={NoticeDetail} />
           <Route path="/test" Component={Manual} />
@@ -60,7 +62,9 @@ function App() {
           <Route path="/admin/cimanage/create" Component={AdminCouncilCreation} />{/* admin/manage/council/create */}
           <Route path="/admin/cimanage/add/:id" Component={AdminCouncilItemManagement} /> {/* admin/manage/council/items */}
           <Route path="/admin/certimanage" Component={AdminCertificationManagement} /> {/* admin/manage/certification */}
-          
+          <Route path="/admin/anno-manage" Component={AdminAnnoManagement} />
+          <Route path="/admin/anno-manage/create" Component={AdminAnnoCreation} />
+  
           {/* 학생회 */}
           <Route path="/council/signin" Component={CouncilSignIn} />
           <Route path="/council/manage" Component={CouncilManagement} />

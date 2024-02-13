@@ -109,10 +109,42 @@ const MoveToPost = styled.div`
   }
 `;
 
+// 학생회 캠퍼스 선택 박스 Parent
+const CampusMoveBox = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+`;
+
+// 학생회 캠퍼스 선택 박스 Child
+const CampusBox = styled.button`
+  border: none;
+  background: none;
+`;
+
+
+// 학생회 선택 Text
+const CampusText = styled.div`
+  width: 100%;
+  text-align: center;
+  font-weight: 400;
+  margin-top: 20px;
+  font-family: 'Noto Sans KR'; 
+  border-bottom: 2px solid #eeeeee;
+  font-size: 20px;
+  color: #c3cbd5;
+  ${({ isOn }) => (isOn ? "color: #379dff; border-bottom: 2px solid #379dff;" : null)};
+  &:hover {
+    color: #379dff;
+    border-bottom: 2px solid #379dff;
+  }
+`;
+
+
 const ChatRoomList = () => {
   const [chatRoomList, setChatRoomList] = useState([]);
   const [cookies] = useCookies(); 
   const navigate = useNavigate();
+  const [chatRoomType, setChatRoomType] = useState(0);
 
   useEffect(() => {
     const fetchChatRooms = async () => {
@@ -142,6 +174,26 @@ const ChatRoomList = () => {
     <ChatBox>
       <Header headerType={"noChatIcon"} headerText={"채팅"}></Header>
 
+      <CampusMoveBox>
+          {/* 글캠 링크 추가 */}
+
+          <CampusBox onClick={() => {
+                        setChatRoomType(0);
+                    }}>
+            <CampusText isOn={chatRoomType==0}>
+              빌리고 있어요
+            </CampusText>
+          </CampusBox>
+          {/* 메캠 링크 추가 */}
+          <CampusBox onClick={() => {
+                        setChatRoomType(1);
+                    }}>
+            <CampusText isOn={chatRoomType==1}>
+              빌려주고 있어요
+            </CampusText>
+          </CampusBox>
+        </CampusMoveBox>
+
       {chatRoomList.length == 0 ?
         <NoChatBox>
           <NoChatText>썰렁~</NoChatText>
@@ -149,10 +201,10 @@ const ChatRoomList = () => {
         </NoChatBox>
         :
         <ul>
-          {chatRoomList.map((chatRoom) => (
-            <Link key={chatRoom.id} to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)} state={{ postId: chatRoom.postId }}>
+          {chatRoomList[chatRoomType].map((chatRoom) => (
+            <Link key={chatRoom.id} to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)+"/"+chatRoom.postId } >
               <ChatRoom key={chatRoom.id}>
-                <Link to={"/"}><UserImg></UserImg></Link>
+                <Link to={"/"}><UserImg><img></img></UserImg></Link>
                 <ChatRoomContent>
                   <NickName>{chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname}</NickName>
                   <LastMessageTime>{chatRoom.lastMessage !== "no message" ? " " + chatRoom.lastMessageTime[3] + "시 " + chatRoom.lastMessageTime[4] + "분" : ""}</LastMessageTime><br></br>

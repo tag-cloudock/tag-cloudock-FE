@@ -29,9 +29,17 @@ const PostImg = styled.div`
   margin: 10px 10px;
   width:40px;
   height: 40px;
-  border-radius: 10px;
-  border: 1px solid #dddddd;
   float:left;
+  overflow: hidden;
+  /* background: #dfdfdf; */
+  & img{
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    /* max-height: 400px; */
+    object-fit: cover;
+    object-position: center;
+  }
 `;
 
 // 게시물 제목
@@ -166,6 +174,7 @@ const InputBox = styled.input`
 // 헤더에 안가려지게 하는 더미 박스
 const EmptyBox = styled.div`
   height: 60px;
+  margin-bottom:20px;
 `;
 
 // 전송 버튼
@@ -208,13 +217,159 @@ const HiddenText = styled.div`
   color : #ccd3d8;
 `;
 
+const PostText = styled.div`
+  display: inline-block;
+`;
+const DoneBtn = styled.button`
+  border: none;
+  margin-top: 12px;
+  float: right;
+  padding: 10px;
+  background: #00e288;
+  color:#ffffff;
+  font-weight: 600;
+  border-radius: 15px;
+  font-size: 14px;
+  margin-right: 10px;
+`;
+
+const ModalContainer = styled.div`
+  z-index: 1000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000077;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalBox = styled.div`
+  margin: 0 auto;
+  width: 80%;
+  height: 250px;
+  max-width: 400px;
+  border-radius: 30px;
+  background: #ffffff;
+  position: relative;
+`;
+
+const ModalBox2 = styled.div`
+  margin: 0 auto;
+  width: 80%;
+  height: 400px;
+  max-width: 400px;
+  border-radius: 30px;
+  background: #ffffff;
+  position: relative;
+  text-align: center;
+`;
+
+const ModalBtnBox = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 15px;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const ModalBtn = styled.button`
+  border: none;
+  width: 40%;
+  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#379DFF')};
+  padding: 17px;
+  text-align: center;
+  border-radius: 15px;
+
+  font-size: 15px;
+  color:${({ isLeft }) => (isLeft ? '#aaaaaa' : '#FFFFFF')};
+`;
+
+
+const ModalText = styled.div`
+  margin-top: 60px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 30px;
+  & span{
+    display: block;
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: 400;
+  }
+`;
+
+const ModalText2 = styled.div`
+  margin-top: 40px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 30px;
+  & span{
+    display: block;
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: 400;
+  }
+`;
+
+
+
+const Nickname = styled.div`
+  display: inline-block;
+  background: #e4f2ff;
+  padding: 3px 10px;
+  border-radius: 15px;
+`;
+
+
+const TextareaBox = styled.textarea`
+    width: 70%;
+    height: 50px;
+    resize: none;
+
+    margin: 10px auto;
+    background: #f5f5f5;
+    border:none;
+    /* border: 1px solid #dddddd; */
+
+    border-radius: 10px;
+    color:#333333;
+    font-size: 15px; 
+    outline: none;
+    padding: 20px;
+    &::placeholder {
+        color: #aaaaaa; 
+        font-size: 15px;
+    }
+`;
+
+const Stars = styled.div`
+margin: 20px 20px;
+    display: flex;
+    justify-content: space-evenly;
+`;
+
+const Star = styled.div`
+
+    width: 50px;
+    height: 50px;
+    background: #eeeeee;
+`;
+
+
+
 const Chat = () => {
   const location = useLocation(); // 상태 전달 받기 위해
   const [cookies] = useCookies(); // 쿠키 사용을 위해
-  const { metype, id, other } = useParams(); // 주소의 파라미터 값 가져오기
+  const { metype, id, other, post } = useParams(); // 주소의 파라미터 값 가져오기
   const navigate = useNavigate(); // 페이지 이동을 위해
 
-  const postId = location.state.postId;
+  const postId = post;
   // 오랜 시간이 지나고 채팅 안에서 채팅룸으로 나가면 오류나는 이슈 있음.
 
   const inputMessageRef = useRef(); // 입력 박스 포커스용
@@ -227,6 +382,8 @@ const Chat = () => {
   const [loading, setLoading] = useState(true);
   const [postInfo, setPostInfo] = useState({ needAt: [], returnAt: [] });
 
+  const [isDoneModalOn, setIsDoneModalOn] = useState(false);
+  const [isReviewModalOn, setIsReviewModalOn] = useState(false);
   // 최하단 이동용
   useEffect(() => {
     messagesEndRef.current.scrollIntoView();
@@ -292,7 +449,7 @@ const Chat = () => {
       setLoading(false);
     }, 300)
 
-  }, [cookies.token, id, navigate, postId]);
+  }, [cookies.token, id, navigate]);
 
 
   useEffect(() => {
@@ -369,21 +526,46 @@ const Chat = () => {
       sendMessage();
     }
   };
+
+  const handleDone = async (e) => {
+    e.preventDefault();
+
+
+    try {
+      const response = await axios.put(
+        "http://" + process.env.REACT_APP_BACK_URL + "/post/done/" + postInfo.postId
+      );
+      console.log(response.data);
+      navigate("/");
+       
+    } catch (error) {
+    }
+};
   return (
     <ChatBox>
       <Header headerType={"noChatIcon"} headerText={other}></Header>
 
       {/* 게시물 정보 */}
       {loading ? null :
-        <Link to={'/post/' + postInfo.postId}>
-          <PostInfo>
-            <PostImg></PostImg>
-            <PostTitle>{postInfo.title}</PostTitle>
-            <PostDuration>
-              <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText>
-            </PostDuration>
-          </PostInfo>
-        </Link>
+
+        <PostInfo>
+          <Link to={'/posts/' + postInfo.postId}>
+            <PostImg><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + postInfo.postImgPath}></img></PostImg>
+            <PostText>
+              <PostTitle>{postInfo.title}</PostTitle>
+              <PostDuration>
+                <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText>
+              </PostDuration>
+            </PostText>
+          </Link>
+          {postInfo.isClose ? null :
+          <DoneBtn onClick={() => {
+            setIsDoneModalOn(true);
+          }}>
+            대여 완료하기
+          </DoneBtn>}
+        </PostInfo>
+
       }
       <EmptyBox>
         {loading ? null :
@@ -392,8 +574,9 @@ const Chat = () => {
           </HiddenTextBox>}
       </EmptyBox>
 
+
       {/* 메세지 */}
-      {loading ? <Loading /> : null}
+      {/* {loading ? <Loading /> : null} */}
       <MessagesBox>
         <TestBox></TestBox>
         {loading ? null : messageList.map((message, index) => {
@@ -414,27 +597,97 @@ const Chat = () => {
         })}
         {/* 최하단 포인트 */}
         <BottomPoint ref={messagesEndRef}>
-          {loading ? null :
-            <HiddenTextBox>
-              <HiddenText>까꿍</HiddenText>
-            </HiddenTextBox>}
         </BottomPoint>
       </MessagesBox>
 
       {/* 메세지 입력 박스 */}
       <MessageInputBox>
-        <InputBox placeholder="메세지 보내기"
+        <InputBox placeholder={postInfo.isClose ? "완료된 요청입니다" : "메세지 보내기"}
           value={inputMessage}
           onChange={(e) => {
             setInputMessage(e.target.value);
           }}
           onKeyPress={(e) => { activeEnter(e) }}
+          disabled = {postInfo.isClose}
           ref={inputMessageRef}
         ></InputBox>
         <SendBtn onClick={sendMessage} isNoText={inputMessage < 1}>
           <img src="/image/paperplane.svg" alt="" />
         </SendBtn>
       </MessageInputBox>
+
+      {isDoneModalOn ?
+        <ModalContainer>
+          <ModalBox>
+            <ModalText>
+              <Nickname>{postInfo.nickname}</Nickname> 님과의 <br></br>거래를 종료하시겠습니까?<br></br>
+            </ModalText>
+            <ModalBtnBox>
+              <ModalBtn onClick={() => {
+                setIsDoneModalOn(false);
+              }} isLeft={true}>
+                아니요
+              </ModalBtn>
+              <ModalBtn onClick={() => {
+                setIsDoneModalOn(false);
+                setIsReviewModalOn(true);
+              }} isMine={""}>
+                종료하기
+              </ModalBtn>
+            </ModalBtnBox>
+          </ModalBox>
+        </ModalContainer>
+        : null}
+
+      {isReviewModalOn ?
+        <ModalContainer>
+          <ModalBox2>
+            <ModalText2>
+              <Nickname>{postInfo.nickname}</Nickname> 님과의 <br></br> 거래는 어땠나요?<br></br>
+            </ModalText2>
+            <Stars>
+
+              <Star>
+
+              </Star>
+              <Star>
+
+              </Star>
+              <Star>
+
+              </Star>
+              <Star>
+
+              </Star>
+              <Star>
+
+              </Star>
+            </Stars>
+
+            <TextareaBox
+              type="text"
+              // ref={passwordRef}
+              name="content"
+              placeholder="후기를 작성하세요"
+            // onChange={(e) => {
+            //     setContent(e.target.value);
+            // }}
+            />
+
+            <ModalBtnBox>
+              <ModalBtn onClick={() => {
+                setIsDoneModalOn(false);
+                setIsReviewModalOn(false);
+              }} isLeft={true}>
+                작성 안하기
+              </ModalBtn>
+              <ModalBtn onClick={handleDone} isMine={""}>
+                작성 완료
+              </ModalBtn>
+            </ModalBtnBox>
+          </ModalBox2>
+        </ModalContainer>
+        : null}
     </ChatBox>
   );
 };
