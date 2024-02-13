@@ -147,6 +147,30 @@ const ChatBtn = styled.div`
   }
 `;
 
+const CouncilTitle = styled.div`
+display: inline-block;
+    width: 30%;
+  padding-left: 20px;
+  height: 50px;
+  text-align: left;
+  line-height: 50px;
+  font-weight: 800;
+  font-size: 25px;
+  color: #c5c5c5;
+  /* float: left; */
+`;
+
+const CouncilName = styled.div`
+  height: 50px;
+  margin-top: 5px;
+  margin-right: 20px;
+  line-height: 50px;
+  font-weight: 800;
+  font-size: 17px;
+  color: #c5c5c5;
+  float: right;
+`;
+
 const Header = ({ headerType, headerText }) => {
   const navigate = useNavigate(); // 페이지 이동을 위해
   const [cookies] = useCookies();
@@ -220,6 +244,16 @@ const Header = ({ headerType, headerText }) => {
             <HeaderContent>
               <HeaderCenterText>{headerText}</HeaderCenterText>
             </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+    case "council": // 학생회용
+      return (
+        <div>
+          <HeaderBox nobg={false}>
+          <CouncilTitle>Baram</CouncilTitle>
+              <CouncilName>{headerText}</CouncilName>
           </HeaderBox>
           <EmptyBox></EmptyBox>
         </div>

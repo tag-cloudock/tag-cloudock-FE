@@ -94,13 +94,14 @@ const CouncilName = styled.div`
 `;
 
 const Update = styled.div`
-  width: 110px;
+  width: 130px;
   height: 21px;
+  padding: 5px;
   border-radius: 30px;
   background: #eef6ff;
   color: #379dff;
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   vertical-align: center;
   & img {
@@ -109,7 +110,7 @@ const Update = styled.div`
     float: left;
   }
   & span {
-    margin-left: 3px;
+    margin-left: 5px;
     float: left;
     line-height: 21px;
   }
@@ -183,19 +184,26 @@ const CouncilDetail = () => {
         <CategoryTitle>제공 물품</CategoryTitle>
         <ul>
           {councilData.items.map((item) => (
+            item.type == "PROVIDED" ? 
             <li key={item.itemId}>
               {item.name}
               <CategoryCount>{item.quantity}</CategoryCount>
             </li>
+            : null
           ))}
         </ul>
       </ProductContainer>
       <ProductContainer>
         <CategoryTitle>대여 물품</CategoryTitle>
         <ul>
-          <li>
-            개발중<CategoryCount>1</CategoryCount>
-          </li>
+          {councilData.items.map((item) => (
+            item.type == "RENTAL" ? 
+            <li key={item.itemId}>
+              {item.name}
+              <CategoryCount>{item.quantity}</CategoryCount>
+            </li>
+            : null
+          ))}
         </ul>
       </ProductContainer>
       <MenuBar></MenuBar>

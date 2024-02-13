@@ -26,11 +26,30 @@ const InputBox = styled.input`
     margin-top: 10px;
     width: 94%;
     font-size: 15px;
-    font-weight: 800;
+    font-weight: 500;
     color: #333333;
     border-radius: 10px;
     border: 1px solid #E8E8E8;
     outline: none;
+    &::placeholder {
+        color: #aaaaaa; 
+    }
+    &:focus {
+      border-color: #38d9a9;
+    }
+`;
+const TextareaBox = styled.textarea`
+    width: 94%;
+    height: 100px;
+    resize: none;
+    margin: 10px 0px;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    color:#333333;
+    font-size: 15px; 
+    outline: none;
+    padding: 20px 3%;
     &::placeholder {
         color: #aaaaaa; 
     }
@@ -54,8 +73,8 @@ const SummitBtn = styled.button`
 const InputTitle = styled.div`
     margin-top: 20px;
     font-size: 17px;
-    font-weight: 700;
-    color: #aaaaaa;
+    font-weight: 600;
+    color: #000000;
 `;
 
 
@@ -145,7 +164,7 @@ const EditCouncilInfo = () => {
           }}
         />
         <InputTitle>이용 수칙</InputTitle>
-        <InputBox type="text" name="usageGuidelines" placeholder="이용 수칙 (ex 뒷정리 필수)"
+        <TextareaBox type="text" name="usageGuidelines" placeholder="이용 수칙 (ex 뒷정리 필수)"
           value={usageGuidelines}
           onChange={(e) => {
             setUsageGuidelines(e.target.value);

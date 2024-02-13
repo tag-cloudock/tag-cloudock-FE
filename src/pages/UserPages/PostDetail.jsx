@@ -87,7 +87,7 @@ color: #000000;
 font-size: 17px;
 line-height: 27px;
 font-weight: 400;
-margin: 30px 0px;
+margin: 30px 0px 100px 0px;
 white-space:pre;
 
 `;
@@ -100,8 +100,6 @@ const Image = styled.div`
   /* max-height: 300px; */
   overflow: hidden;
   /* background: #dfdfdf; */
-
-
   & img{
     border-radius: 20px;
     width: 100%;
@@ -176,7 +174,7 @@ margin: 30px 0px;
   padding: 10px;
   border-radius: 8px;
 
-  background:${({ isMine }) => (isMine ? '#b1d9ff' : '#379DFF')};
+  background:${({ isDone }) => (isDone ? '#b1d9ff' : '#379DFF')};
   color: var(--White, #FFF);
 text-align: center;
 font-size: 20px;
@@ -256,8 +254,12 @@ const Nickname = styled.div`
   border-radius: 15px;
 `;
 
-
-
+const Done = styled.div`
+  display: inline-block;
+  background: #ffdede;
+  padding: 0px 10px;
+  border-radius: 15px;
+`;
 
 const PostDetail = () => {
   const navigate = useNavigate(); // 로그인 전 홈 진입 막기 위해
@@ -265,6 +267,7 @@ const PostDetail = () => {
   const [cookies] = useCookies(); // 쿠키 사용하기 위해
   const [difference, setDifference] = useState();
   const [isModalUp, setIsModalUp] = useState(false);
+  const [isDoneModalUp, setIsDoneModalUp] = useState(false);
   const { id } = useParams();
 
   const getDateDiff = (d1, d2) => {
@@ -332,6 +335,28 @@ const PostDetail = () => {
     }
   };
 
+  const handleDonePost = async (e) => {
+    e.preventDefault();
+    try {
+      const donePost = async () => {
+        try {
+          const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/post/done/"+post.postId,
+            {
+              headers: {
+                Authorization: `Bearer ${cookies.token}`,
+              },
+            });
+          console.log(response.data);
+          setIsDoneModalUp(false);
+
+        } catch (error) {
+          console.log("오류 발생: ", error);
+        }
+      };
+      donePost();
+    } catch (error) {
+    }
+  };
   return (
     <Container>
       <Header headerType={"admin"}></Header>
@@ -351,7 +376,10 @@ const PostDetail = () => {
             <PostDate>{post.createdAt[0] + "." + post.createdAt[1] + "." + post.createdAt[2]}</PostDate>
           </PostInfo>
           <Detail>{post.content}</Detail>
-          <Image><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></Image>
+          {
+            post.postImgPath != "default.png" ? <Image><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></Image> : null
+          }
+
           <InfoBox>
             <ListName>위치</ListName>
             <ListNameDetail>{post.location.slice(2) + " " + post.locationDetail}</ListNameDetail>
@@ -376,31 +404,56 @@ const PostDetail = () => {
             </DateInfoBox>
           </BOX>
           <ChatBox onClick={() => {
-                        setIsModalUp(true);
-                    }} isMine={post.userId == cookies.userId}>{post.userId == cookies.userId ? "내 요청 입니다" : "대화하기"}</ChatBox>
+            if (post.userId == cookies.id ){
+              setIsDoneModalUp(true);
+            }else{
+              setIsModalUp(true);
+            }
+          }} isDone={post.isClose} disabled={post.isClose}>{post.isClose ? "완료된 요청입니다" : post.userId == cookies.id ? "종료하기" : "대화하기"}</ChatBox>
         </BoardBox>
       </PostBox>
 
+      {isDoneModalUp ?
+        <ModalContainer>
+          <ModalBox>
+            <ModalText>
+              요청을 <Done>종료</Done>하면<br></br>더 이상 대여가 불가능합니다.<br></br>
+              <span>계속 하시겠습니까?</span>
+            </ModalText>
+            <ModalBtnBox>
+              <ModalBtn onClick={() => {
+                setIsDoneModalUp(false);
+              }} isLeft={true}>
+                아니요
+              </ModalBtn>
+              <ModalBtn onClick={handleDonePost}>
+                종료하기
+              </ModalBtn>
+            </ModalBtnBox>
+          </ModalBox>
+        </ModalContainer>
+        : null}
+
       {isModalUp ?
-      <ModalContainer>
-        <ModalBox>
-          <ModalText>
-            <Nickname>{post.nickname}</Nickname> 님은<br></br> 학생증 인증이 안된 유저 입니다.<br></br>
-           <span>대화를 시작하겠습니까?</span>
-          </ModalText>
-          <ModalBtnBox>
-            <ModalBtn  onClick={() => {
-                        setIsModalUp(false);
-                    }} isLeft={true}>
-              아니요
-            </ModalBtn>
-            <ModalBtn onClick={handleGoTalk} isMine={post.userId == cookies.userId}>
-              시작하기
-            </ModalBtn>
-          </ModalBtnBox>
-        </ModalBox>
-      </ModalContainer>
-       : null}
+        <ModalContainer>
+          <ModalBox>
+            <ModalText>
+              <Nickname>{post.nickname}</Nickname> 님은<br></br> 학생증 인증이 {post.certification ? "완료된" : "안된 "}유저 입니다.<br></br>
+              <span>대화를 시작하겠습니까?</span>
+            </ModalText>
+            <ModalBtnBox>
+              <ModalBtn onClick={() => {
+                setIsModalUp(false);
+              }} isLeft={true}>
+                아니요
+              </ModalBtn>
+              <ModalBtn onClick={handleGoTalk}>
+                시작하기
+              </ModalBtn>
+            </ModalBtnBox>
+          </ModalBox>
+        </ModalContainer>
+        : null}
     </Container>
 
   );

@@ -248,11 +248,11 @@ const User = () => {
             </Option>
             <CountBox>
               <CountInfoBox>
-                빌린 횟수 <br></br>2
+                빌린 횟수 <br></br>{userInfo.borrowCount}
               </CountInfoBox>
               <CountInfoBox>
                 빌려준 횟수
-                <br></br>2
+                <br></br>{userInfo.lendCount}
               </CountInfoBox>
             </CountBox>
           </UserInfoContentBox>

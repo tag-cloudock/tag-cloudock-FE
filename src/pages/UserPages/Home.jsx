@@ -37,15 +37,27 @@ const ImageIcon = styled.img`
 // 학생회 캠퍼스 선택 박스 Parent
 const CampusMoveBox = styled.div`
   /* margin: 0px 20px; */
-  height: 80px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  justify-content: space-evenly;
+
+  /* background: #f2f2f2; */
+  border-radius: 30px;
+  margin: 20px 20px 10px 20px;
+
 `;
 
 // 학생회 캠퍼스 선택 박스 Child
 const CampusBox = styled.button`
   border: none;
   background: none;
+  width: 30%;
+  margin: 7px 0px;
+  border-radius: 40px;
+  background: ${({ isOn }) => (isOn ? "#f1f1f1" : null)};
+  &:hover {
+    /* background: #f9f9f9; */
+  }
+  /* box-shadow: 0px 1px 8px rgba(74, 74, 74, 0.2); */
 `;
 
 
@@ -54,16 +66,11 @@ const CampusText = styled.div`
   width: 100%;
   text-align: center;
   font-weight: 400;
-  margin-top: 20px;
+  padding: 15px 0px;
   font-family: 'Noto Sans KR'; 
-  border-bottom: 2px solid #eeeeee;
+  /* border-bottom: 2px solid #eeeeee; */
   font-size: 20px;
-  color: #c3cbd5;
-  ${({ isOn }) => (isOn ? "color: #379dff; border-bottom: 2px solid #379dff;" : null)};
-  &:hover {
-    color: #379dff;
-    border-bottom: 2px solid #379dff;
-  }
+  color: ${({ isOn }) => (isOn ? " #818181" : "#d4dce6")};
 `;
 
 // 대여 박스 Parent
@@ -138,7 +145,7 @@ const HomeMainTextBox = styled.div`
   position: fixed;
   width: 100%;
   left: 0;
-  background: linear-gradient(to top, #ffffff, #379dff 80%);
+  background: linear-gradient(to top, #b5dbff, #379dff 80%);
   top: -30px;
   padding: 80px 20px 500px 20px;
   @media screen and (min-width: 700px) {
@@ -276,7 +283,7 @@ const Home = () => {
 
           <CampusBox onClick={() => {
                         setCampus(0);
-                    }}>
+                    }} isOn={campus==0}>
             <CampusText isOn={campus==0}>
               글로벌
             </CampusText>
@@ -284,7 +291,7 @@ const Home = () => {
           {/* 메캠 링크 추가 */}
           <CampusBox onClick={() => {
                         setCampus(1);
-                    }}>
+                    }} isOn={campus==1}>
             <CampusText isOn={campus==1}>
               메디컬
             </CampusText>

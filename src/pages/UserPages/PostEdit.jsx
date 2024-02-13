@@ -19,7 +19,7 @@ const ContentBox = styled.div`
 const InputBoxTitle = styled.div`
 float: left;
 width: 100%;
-  font-size: 18px;
+  font-size: 14px;
   margin-top: 10px;
   font-weight: bold;
   color: #000000;
@@ -36,7 +36,7 @@ const TextareaBox = styled.textarea`
     color:#333333;
     font-size: 18px; 
     outline: none;
-    padding: 10px 3%;
+    padding: 20px 3%;
     &::placeholder {
         color: #aaaaaa; 
         font-size: 18px;
@@ -263,7 +263,7 @@ const PostEdit = () => {
     const [title, setTitle] = useState('');
     const [location, setLocation] = useState("G 글로벌 캠퍼스");
     const [locationDetail, setLocationDetail] = useState('');
-    const [rentalFee, setRentalFee] = useState(500);
+    const [rentalFee, setRentalFee] = useState(0);
     const [security, setSecurity] = useState('없음');
     const [needAt, setNeedAt] = useState('');
     const [returnAt, setReturnAt] = useState('');
@@ -396,7 +396,7 @@ const PostEdit = () => {
                 <InputBoxTitle>대여금</InputBoxTitle>
                 <InputBox
                     type="text"
-                    value={rentalFee+"원"}
+                    value={rentalFee == 0 ? "무료로 대여하기" : rentalFee+"원"}
                     name="rentalFee"
                     placeholder="₩ 대여금을 설정해주세요."
                 />
@@ -404,7 +404,7 @@ const PostEdit = () => {
                     type="range"
                     id="rentalFee"
                     name="rentalFee"
-                    min={500}
+                    min={0}
                     max={10000}
                     step={500}
                     value={rentalFee}

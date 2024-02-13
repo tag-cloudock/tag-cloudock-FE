@@ -42,9 +42,20 @@ const MainImage = styled.div`
   margin-right: 15px;
   width: 75px;
   height: 75px;
-  background: #ebebeb;
   float: left;
-  border-radius: 10px;
+  /* border-radius: 10px; */
+
+  /* overflow: hidden; */
+  /* background: #dfdfdf; */
+  & img{
+    border: 1px solid #eeeeee;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    /* max-height: 400px; */
+    object-fit: cover;
+    object-position: center;
+  }
 `;
 
 //게시물 제목
@@ -100,6 +111,20 @@ const NoPostText = styled.div`
   font-weight: 800;
   margin-bottom: 20px;
 `;
+
+const DoneTag = styled.div`
+  float: left;
+  font-size: 13px;
+  padding: 3px 5px;
+  color: #ffffff;
+  background-color: #2edb5c;
+  /* border: 1px solid #3cf858; */
+  border-radius:15px;
+  margin-right: 3px;
+  margin-top: -1px;
+
+`;
+
 const PostList = () => {
   const location = useLocation();
   const [posts, setPosts] = useState([]);
@@ -132,9 +157,9 @@ const PostList = () => {
           { posts.length != 0 ?posts.map((post, index) => (
             <Link to={"/posts/"+post.postId} key={index}>
               <Item>
-                <MainImage></MainImage>
+                <MainImage><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></MainImage>
               <Listbox>
-                <NoticeTitle>{post.title}</NoticeTitle>
+                {post.close ? <DoneTag>완료</DoneTag> : null}<NoticeTitle>{post.title}</NoticeTitle>
                 <PostDetail>{post.location.slice(2)+" "+post.locationDetail}</PostDetail>
                 <PostPrice>{post.rentalFee}원
                 <ImageIcon src={"/image/chatt.svg"} alt="" />
@@ -147,7 +172,7 @@ const PostList = () => {
         :
         <NoPostBox>
           <NoPostText>썰렁~</NoPostText>
-          {locationName} 사람들은 빌릴게 없나봐요ㅜㅜ
+          {locationName.slice(2)} 사람들은 빌릴게 없나봐요ㅜㅜ
         </NoPostBox>}
         </BoardBox>
       </PostBox>
