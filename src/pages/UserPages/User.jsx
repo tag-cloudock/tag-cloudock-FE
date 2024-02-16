@@ -27,19 +27,47 @@ const Logout = styled.button`
 
 const ProfilImgBox = styled.div`
   display: inline-block;
+  max-width: 170px;
+  max-height: 170px;
+  min-width: 90px;
+  min-height: 90px;
+  width: 24vw;
+  height: 24vw;
 `;
-const ProveBox = styled.div`
+const ProfilImg = styled.div`
+  max-width: 170px;
+  max-height: 170px;
+  min-width: 90px;
+  min-height: 90px;
+  width: 24vw;
+  height: 24vw;
+  overflow: hidden;
+  border-radius: 100px;
+  border: 1px solid #e9e9e9;
+  position: relative;
+  & img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+`;
+const ProveBox = styled.span`
   display: inline-block;
   border-radius: 30px;
   font-weight: 1000;
-  font-size: 15px;
   color: white;
-  margin-left: 10px;
-  margin-top: 25px;
-  padding: 7px;
-  float: right;
+  margin: 5px 15px 0px 15px;
+  padding: min(2vw, 8px);
   background: #379dff;
+  width: 12vw;
+  max-width: 70px;
+  min-width: 50px;
+  text-align: center;
+  font-size: min(3vw, 17px);
 `;
+
 const BorrowCheckBox = styled.div`
   display: inline-block;
   border-radius: 30px;
@@ -61,137 +89,100 @@ const LendCheckBox = styled.div`
   margin-right: 10px;
   background: #379dff;
 `;
-const UserInfoContentBox = styled.div`
-  width: calc(100% - 300px);
+const UserInfoContentBox = styled.span`
+  width: 60vw;
+  max-width: 460px;
+  min-width: 230px;
   float: right;
 
-  margin-right: 25%;
 `;
 const Nickname = styled.span`
   display: inline-block;
-  font-size: 50px;
   font-weight: 800;
   color: #333333;
-  margin-left: 20px;
+  margin-left: 5px;
+  font-size: min(7vw, 48px);
 `;
 const RateBox = styled.div`
   display: flex;
-  padding: 3px;
-  margin-top: 5px;
-  margin-left: -7px;
-  padding-right: 10%;
+  @media screen and (max-width: 700px) {
+  }
 `;
 const RateInfoBox1 = styled.span`
-  line-height: 3;
+  line-height: 2.5;
   text-align: center;
-  font-weight: 400;
+  font-weight: 800;
   font-size: 18px;
   display: inline-block;
-  margin-left: 10px;
   background: #ffffff;
-  padding: 20px;
+  padding: 10px 40px;
   box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px 0px;
   border-radius: 10px 0px 0px 10px;
-  width: 33%;
-  @media screen and (max-width: 700px) {
-    font-weight: 800;
-    font-size: 15px;
-  }
+  width: 160px;
 `;
 const RateInfoBox2 = styled.span`
-  line-height: 3;
+  line-height: 2.5;
   text-align: center;
-  font-weight: 400;
+  font-weight: 800;
   font-size: 18px;
   display: inline-block;
-  padding: 10px;
   background: #ffffff;
-  padding: 20px;
   box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
-  width: 33%;
+  padding: 10px 40px;
   border-left: thin solid #d5d5d5;
-  @media screen and (max-width: 700px) {
-    font-weight: 800;
-    font-size: 15px;
-  }
+  width: 160px;
 `;
 const RateInfoBox3 = styled.span`
-  line-height: 3;
+  line-height: 2.5;
   text-align: center;
-  font-weight: 400;
+  font-weight: 800;
   font-size: 18px;
   display: inline-block;
-
-  padding: 10px;
   background: #ffffff;
-  padding: 20px;
   box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
-  width: 33%;
+  padding: 10px 40px;
   border-radius: 0px 10px 10px 0px;
   border-left: thin solid #d5d5d5;
-  @media screen and (max-width: 700px) {
-    font-weight: 800;
-    font-size: 15px;
-  }
+  width: 160px;
 `;
 const CountBox = styled.div`
   display: flex;
-  padding: 3px;
-  margin-top: 5px;
-  margin-left: -7px;
-  float: right;
-  padding-right: 10%;
+  margin-top: 10px;
+  @media screen and (max-width: 700px) {
+    margin-top: 0vw;
+  }
 `;
 const CountInfoBox1 = styled.span`
   line-height: 1.5;
   text-align: center;
   font-weight: 400;
-  font-size: 18px;
+  font-size: min(3.5vw, 20px);
   color: #d5d5d5;
   display: inline-block;
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 14px;
+  padding: min(2vw, 14px) min(2vw, 22px);
   background: #f6f6f6;
   border-radius: 10px 0px 0px 10px;
-  width: 100px;
-  @media screen and (max-width: 700px) {
-    font-weight: 800;
-    font-size: 15px;
-  }
+  width: 19vw;
+  max-width: 137px;
+  min-width: 105px;
+  
 `;
 const CountInfoBox2 = styled.span`
   line-height: 1.5;
   text-align: center;
   font-weight: 400;
-  font-size: 18px;
+  font-size: min(3.5vw, 20px);
   color: #d5d5d5;
   display: inline-block;
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 14px;
+  padding: min(2vw, 14px) min(2vw, 22px);
   background: #f6f6f6;
   border-radius: 0px 10px 10px 0px;
-  width: 100px;
+  width: 19vw;
+  max-width: 137px;
+  min-width: 105px;
   border-left: thin solid #d5d5d5;
-  @media screen and (max-width: 700px) {
-    font-weight: 800;
-    font-size: 15px;
-  }
-`;
-
-const ProfilImg = styled.div`
-  width: 130px;
-  height: 130px;
-  overflow: hidden;
-  border-radius: 100px;
-  border: 1px solid #e9e9e9;
-  position: relative;
-  & img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
 `;
 
 const UserBox = styled.div`
@@ -199,9 +190,7 @@ const UserBox = styled.div`
 `;
 
 const UserInfoBox = styled.div`
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 15px;
+  padding: 10px;
 `;
 
 const Certifi = styled.div`
@@ -265,12 +254,17 @@ const ImageIcon = styled.img`
     width: 24px;
   }
 `;
-const Option = styled.span`
+const ImageIcon2 = styled.img`
+  width: 6vw;
+  min-width: 30px;
+  max-width: 44px;
+  vertical-align: middle;
+`;
+const Option = styled.div`
   float: right;
 `;
 const RecentRateBox = styled.div`
   padding: 10px;
-  /* box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px; */
   align-items: center;
   justify-content: center;
   border-bottom: thin solid #d5d5d5;
@@ -284,25 +278,15 @@ const Location = styled.span`
   padding: 0px 17px 0px 7px;
 `;
 //옵션
-const OptionBox = styled.span`
+const OptionBox = styled.div`
   display: block;
-  margin-top: 27px;
-  margin-right: 0px;
-  cursor: pointer;
-  /* margin: 0px 3px; */
-  /* padding: 1px 8px; */
-  background: #ffffff;
-  /* border: 1px solid #379dff; */
+  margin-top: min(2vw, 14px);
+  margin-right: -10px;
   border-radius: 30px;
   font-weight: 400;
   font-size: 14px;
   color: #d8d8d8;
-  /* background: #379dff; */
   &:hover {
-  }
-  @media screen and (max-width: 700px) {
-    font-weight: 700;
-    font-size: 13px;
   }
 `;
 
@@ -385,14 +369,16 @@ const User = () => {
             <Link to={"/"}>
               <Option>
                 <OptionBox>
-                  <ImageIcon src={"/image/settingbutton.svg"} alt="" />
+                  <ImageIcon2 src={"/image/settingbutton.svg"} alt="" />
                 </OptionBox>
               </Option>
             </Link>
+            <Nickname>{userInfo.nickname}</Nickname>
+
             <Link to={"/"}>
               <ProveBox>인증하기</ProveBox>
             </Link>
-            <Nickname>{userInfo.nickname}</Nickname>
+
             <CountBox>
               <CountInfoBox1>
                 빌린 횟수 <br></br>
@@ -410,15 +396,15 @@ const User = () => {
       <PostBox>
         <RateBox>
           <RateInfoBox1>
-            <ImageIcon src={"/image/smilingface.svg"} alt="" />
+            <ImageIcon2 src={"/image/smilingface.svg"} alt="" />
             <br></br>7
           </RateInfoBox1>
           <RateInfoBox2>
-            <ImageIcon src={"/image/face.svg"} alt="" />
+            <ImageIcon2 src={"/image/face.svg"} alt="" />
             <br></br>7
           </RateInfoBox2>
           <RateInfoBox3>
-            <ImageIcon src={"/image/upsetface.svg"} alt="" />
+            <ImageIcon2 src={"/image/upsetface.svg"} alt="" />
             <br></br>7
           </RateInfoBox3>
         </RateBox>
