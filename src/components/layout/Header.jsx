@@ -55,13 +55,14 @@ const HeaderText = styled.span`
 
 // 홈 헤더의 타이틀
 const HomeTitle = styled.div`
-  font-family: 'Noto Sans KR';  
+  /* font-family: 'Noto Sans KR';   */
+  font-family: "Poppins";
   width: 30%;
   padding-left: 20px;
   height: 50px;
   text-align: left;
   line-height: 50px;
-  font-weight: 800;
+  font-weight: 600;
   font-size: 25px;
   color: #ffffff;
   float: left;
@@ -186,7 +187,7 @@ const Header = ({ headerType, headerText }) => {
         <div>
           <HeaderBox nobg={"true"}>
             <HeaderContent>
-              <HomeTitle>Baram</HomeTitle>
+              <HomeTitle>amadda</HomeTitle>
               <AnnoBox>
                 <Link to={"/user/" + cookies.id}>
                   <Anno>

@@ -88,8 +88,11 @@ font-size: 17px;
 line-height: 27px;
 font-weight: 400;
 margin: 30px 0px 100px 0px;
-white-space:pre;
-
+white-space: pre-wrap;
+/* word-wrap: break-word; */
+& span{
+  width: 100px;
+}
 `;
 
 //게시물 이미지
@@ -375,7 +378,9 @@ const PostDetail = () => {
             </Link>
             <PostDate>{post.createdAt[0] + "." + post.createdAt[1] + "." + post.createdAt[2]}</PostDate>
           </PostInfo>
-          <Detail>{post.content}</Detail>
+          <Detail>
+            {post.content}
+          </Detail>
           {
             post.postImgPath != "default.png" ? <Image><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></Image> : null
           }

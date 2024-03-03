@@ -1,7 +1,7 @@
 import MenuBar from "../../components/layout/MenuBar";
 import Header from "../../components/layout/Header";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useState } from 'react';
 import RecentPosts from "../../components/page/Home/RecentPosts";
 import Footer from "../../components/layout/Footer";
@@ -50,8 +50,8 @@ const CampusMoveBox = styled.div`
 const CampusBox = styled.button`
   border: none;
   background: none;
-  width: 30%;
-  margin: 7px 0px;
+  width: 45%;
+  margin: 3px 0px;
   border-radius: 40px;
   background: ${({ isOn }) => (isOn ? "#f1f1f1" : null)};
   &:hover {
@@ -66,7 +66,7 @@ const CampusText = styled.div`
   width: 100%;
   text-align: center;
   font-weight: 400;
-  padding: 15px 0px;
+  padding: 10px 0px;
   font-family: 'Noto Sans KR'; 
   /* border-bottom: 2px solid #eeeeee; */
   font-size: 20px;
@@ -144,51 +144,44 @@ const Container = styled.div`
 const HomeMainTextBox = styled.div`
   position: fixed;
   width: 100%;
+  height: 100%;
   left: 0;
-  background: linear-gradient(to top, #b5dbff, #379dff 80%);
+  background: linear-gradient(to top, #6fb9ff, #379dff 50%);
   top: -30px;
-  padding: 80px 20px 500px 20px;
-  @media screen and (min-width: 700px) {
-    padding: 90px 20px 500px 0px;
-  } 
+
   margin-top: 30px;
 `;
+const BlurBar= styled.div`
+  width: 50px;
+  height: 500px;
+  position: absolute;
+  ${({ isLeft }) => (isLeft ? "left: 0;"  : "right: 0;"   )}
+  background: linear-gradient(${({ isLeft }) => (isLeft ? "to left"  : "to right"   )}, #379eff00, #379dff 100%);
+`
 
 const HomeMainText= styled.div`
   position: relative;
   margin: 0px auto;
-  max-width: 661px;
+  max-width:701px;
   font-size: 65px;
-  font-weight: 300;
+  overflow: hidden;
   line-height: 60px;
   color: #ffffff;
-  font-family: 'Nanum SeACe'; 
   @media screen and (min-width: 700px) {
     font-size: 90px;
     line-height: 90px;
   } 
+  & span{
+    margin-left: -20px;
+    margin-top: 10px;
+    display: inline-block;
+    width: 1000px;
+    font-weight: 800;
+    color:#ffffff22;
 
-  & div{
-    transition: right 0.3s ease; 
-    font-size: 18px;
-    color: #2e89de;
-    font-weight: 700;
-    width: 150px;
-    height: 50px;
-    /* line-height: 50px; */
-    position: absolute;
-    right: 0px;
-        @media screen and (min-width: 700px) {
-          right: -30px;
-      } 
-        top: 80px;
-        /* background: #4ba8ff; */
-        @media screen and (min-width: 700px) {
-          top: 290px;
-      } 
-    &:hover{
-      right: -40px; /* 마우스 호버 시 이동할 거리 */
-    }
+  }
+  & span:nth-child(even) {
+    margin-left: -80px;
   }
   & img{
     position: absolute;
@@ -223,12 +216,15 @@ const CouncilBtn = styled.div`
   box-shadow: 0px 2px 15px 0px rgba(157, 157, 157, 0.25);
   height: 50px;
   margin: 15px 20px 0px 20px;
-  &:hover div{
+  @media screen and (min-width: 700px) {
+    &:hover div{
     margin-left: 30px; /* 마우스 호버 시 이동할 거리 */
   }
   &:hover img{
     transform: scale(1.2); 
   }
+  } 
+  
 `;
 const CouncilBtnText = styled.div`
   float: left;
@@ -261,8 +257,6 @@ width: 50px;
   background: #d5d5d5;
   border-radius: 20px;
 `;
-
-
 const Home = () => {
   const [campus, setCampus] = useState(0);
   return (
@@ -271,9 +265,12 @@ const Home = () => {
       {/* 학생회 대여 */}
       <HomeMainTextBox>
         <HomeMainText>
-        당신이<br />
-        필요한 그 것<br />
-        꼭 빌리길 바람
+          <BlurBar isLeft={true}></BlurBar>
+          <BlurBar isLeft={false}></BlurBar>
+          {/* <span>{"아!아!아!아!아!아!아!"}</span>
+          <span>{" 아!아!아!아!아!아!아!"}</span>
+          <span>{"아!아!아!아!아!아!아!"}</span>
+          <span>{" 아!아!아!아!아!아!아!"}</span> */}
         </HomeMainText>
       </HomeMainTextBox>
       <Container>
@@ -314,7 +311,7 @@ const Home = () => {
 
 
         <SubTitle>
-          최근에 빌리길 바람 <ImageIcon src={"/image/hand.svg"} alt="" /><Link to={"/posts?location=G "+(campus == 0 ? "글로벌 캠퍼스" : "메디컬 캠퍼스")}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
+          최근에 빌리길 바람 <Link to={"/posts?location=G "+(campus == 0 ? "글로벌 캠퍼스" : "메디컬 캠퍼스")}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
         </SubTitle>
         <ContentAreaBox>
           <RecentPostBox>
@@ -324,7 +321,6 @@ const Home = () => {
         {/* 장소 선택 목록 */}
         <SubTitle>
           어딘가요? 내 물건을 바라는 곳
-          <ImageIcon src={"/image/sad.svg"} alt="" />
         </SubTitle>
         <ContentAreaBox>
           <LocationItems>
