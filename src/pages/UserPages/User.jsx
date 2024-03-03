@@ -28,42 +28,159 @@ const Logout = styled.button`
 const ProfilImgBox = styled.div`
   display: inline-block;
 `;
-
-const UserInfoContentBox = styled.div`
-  width: calc(100% - 100px);
-  float: right;
-`;
-const Nickname = styled.div`
+const ProveBox = styled.div`
   display: inline-block;
-  font-size: 20px;
-  font-weight: 700;
+  border-radius: 30px;
+  font-weight: 1000;
+  font-size: 15px;
+  color: white;
+  margin-left: 10px;
+  margin-top: 25px;
+  padding: 7px;
+  float: right;
+  background: #379dff;
+`;
+const BorrowCheckBox = styled.div`
+  display: inline-block;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 13px;
+  color: white;
+  padding: 7px 13px 7px 13px;
+  margin-right: 10px;
+
+  background: #76bcff;
+`;
+const LendCheckBox = styled.div`
+  display: inline-block;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 13px;
+  color: white;
+  padding: 7px;
+  margin-right: 10px;
+  background: #379dff;
+`;
+const UserInfoContentBox = styled.div`
+  width: calc(100% - 300px);
+  float: right;
+
+  margin-right: 25%;
+`;
+const Nickname = styled.span`
+  display: inline-block;
+  font-size: 50px;
+  font-weight: 800;
   color: #333333;
+  margin-left: 20px;
+`;
+const RateBox = styled.div`
+  display: flex;
+  padding: 3px;
+  margin-top: 5px;
+  margin-left: -7px;
+  padding-right: 10%;
+`;
+const RateInfoBox1 = styled.span`
+  line-height: 3;
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+  display: inline-block;
+  margin-left: 10px;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px 0px;
+  border-radius: 10px 0px 0px 10px;
+  width: 33%;
+  @media screen and (max-width: 700px) {
+    font-weight: 800;
+    font-size: 15px;
+  }
+`;
+const RateInfoBox2 = styled.span`
+  line-height: 3;
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+  display: inline-block;
+  padding: 10px;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
+  width: 33%;
+  border-left: thin solid #d5d5d5;
+  @media screen and (max-width: 700px) {
+    font-weight: 800;
+    font-size: 15px;
+  }
+`;
+const RateInfoBox3 = styled.span`
+  line-height: 3;
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+  display: inline-block;
+
+  padding: 10px;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
+  width: 33%;
+  border-radius: 0px 10px 10px 0px;
+  border-left: thin solid #d5d5d5;
+  @media screen and (max-width: 700px) {
+    font-weight: 800;
+    font-size: 15px;
+  }
 `;
 const CountBox = styled.div`
   display: flex;
   padding: 3px;
   margin-top: 5px;
   margin-left: -7px;
+  float: right;
+  padding-right: 10%;
 `;
-const CountInfoBox = styled.span`
+const CountInfoBox1 = styled.span`
+  line-height: 1.5;
   text-align: center;
   font-weight: 400;
-  font-size: 17px;
-  color: #379dff;
+  font-size: 18px;
+  color: #d5d5d5;
   display: inline-block;
-  margin: 5px;
+  margin-top: 10px;
   padding: 10px;
-  background: #eef6ff;
-  border-radius: 10px;
-  width: 100%;
+  background: #f6f6f6;
+  border-radius: 10px 0px 0px 10px;
+  width: 100px;
   @media screen and (max-width: 700px) {
     font-weight: 800;
     font-size: 15px;
   }
 `;
+const CountInfoBox2 = styled.span`
+  line-height: 1.5;
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+  color: #d5d5d5;
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px;
+  background: #f6f6f6;
+  border-radius: 0px 10px 10px 0px;
+  width: 100px;
+  border-left: thin solid #d5d5d5;
+  @media screen and (max-width: 700px) {
+    font-weight: 800;
+    font-size: 15px;
+  }
+`;
+
 const ProfilImg = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 130px;
+  height: 130px;
   overflow: hidden;
   border-radius: 100px;
   border: 1px solid #e9e9e9;
@@ -78,14 +195,13 @@ const ProfilImg = styled.div`
 `;
 
 const UserBox = styled.div`
-  padding: 50px 10px;
+  padding: 50px 10px 20px;
 `;
 
 const UserInfoBox = styled.div`
   background: #ffffff;
   padding: 20px;
   border-radius: 15px;
-  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
 `;
 
 const Certifi = styled.div`
@@ -152,12 +268,27 @@ const ImageIcon = styled.img`
 const Option = styled.span`
   float: right;
 `;
+const RecentRateBox = styled.div`
+  padding: 10px;
+  /* box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px; */
+  align-items: center;
+  justify-content: center;
+  border-bottom: thin solid #d5d5d5;
+`;
+const RateDateBox = styled.div`
+  float: right;
+  padding: 7px;
+`;
+const Location = styled.span`
+  font-weight: 800;
+  padding: 0px 17px 0px 7px;
+`;
 //옵션
 const OptionBox = styled.span`
   display: block;
-  margin-top: 5px;
-  margin-right: 18px;
- cursor: pointer;
+  margin-top: 27px;
+  margin-right: 0px;
+  cursor: pointer;
   /* margin: 0px 3px; */
   /* padding: 1px 8px; */
   background: #ffffff;
@@ -178,7 +309,7 @@ const OptionBox = styled.span`
 const User = () => {
   const navigate = useNavigate(); // 페이지 이동을 위해
   const [cookies, , removeCookie] = useCookies(); // 쿠키 가져오기, 쿠기 삭제를 위한 함수
-  const [userInfo, setUserInfo] = useState({imgPath:"default.png"}); // 유저 정보 상태
+  const [userInfo, setUserInfo] = useState({ imgPath: "default.png" }); // 유저 정보 상태
 
   const [img, setImg] = useState({}); // 유저 정보 상태
   const [isVertical, setIsVertical] = useState(true); // 유저 정보 상태
@@ -195,7 +326,10 @@ const User = () => {
         }
         // 회원 조회 api 요청
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/account?id=" + cookies.id,
+          "http://" +
+            process.env.REACT_APP_BACK_URL +
+            "/account?id=" +
+            cookies.id,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
@@ -236,47 +370,77 @@ const User = () => {
       <UserBox>
         <UserInfoBox>
           <ProfilImgBox>
-            <ProfilImg >
-              <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + userInfo.imgPath}></img>
+            <ProfilImg>
+              <img
+                src={
+                  "http://" +
+                  process.env.REACT_APP_BACK_URL +
+                  "/image/" +
+                  userInfo.imgPath
+                }
+              ></img>
             </ProfilImg>
           </ProfilImgBox>
           <UserInfoContentBox>
+            <Link to={"/"}>
+              <Option>
+                <OptionBox>
+                  <ImageIcon src={"/image/settingbutton.svg"} alt="" />
+                </OptionBox>
+              </Option>
+            </Link>
+            <Link to={"/"}>
+              <ProveBox>인증하기</ProveBox>
+            </Link>
             <Nickname>{userInfo.nickname}</Nickname>
-            <Option>
-              <OptionBox>정보수정
-              </OptionBox>
-            </Option>
             <CountBox>
-              <CountInfoBox>
-                빌린 횟수 <br></br>{userInfo.borrowCount}
-              </CountInfoBox>
-              <CountInfoBox>
+              <CountInfoBox1>
+                빌린 횟수 <br></br>
+                {userInfo.borrowCount}
+              </CountInfoBox1>
+              <CountInfoBox2>
                 빌려준 횟수
-                <br></br>{userInfo.lendCount}
-              </CountInfoBox>
+                <br></br>
+                {userInfo.lendCount}
+              </CountInfoBox2>
             </CountBox>
           </UserInfoContentBox>
         </UserInfoBox>
       </UserBox>
       <PostBox>
+        <RateBox>
+          <RateInfoBox1>
+            <ImageIcon src={"/image/smilingface.svg"} alt="" />
+            <br></br>7
+          </RateInfoBox1>
+          <RateInfoBox2>
+            <ImageIcon src={"/image/face.svg"} alt="" />
+            <br></br>7
+          </RateInfoBox2>
+          <RateInfoBox3>
+            <ImageIcon src={"/image/upsetface.svg"} alt="" />
+            <br></br>7
+          </RateInfoBox3>
+        </RateBox>
+      </PostBox>
+      <PostBox>
         <BoxTitle>
-          빌려준 후기
+          최근 후기
           <ImageIcon src={"/image/text.svg"} alt="" />
           <Link to={"/"}>
             <ImageIcon src={"/image/moreinfo.svg"} alt="" />
           </Link>
         </BoxTitle>
-        <PostInfoBox></PostInfoBox>
-      </PostBox>
-      <PostBox>
-        <BoxTitle>
-          빌린 후기
-          <ImageIcon src={"/image/heart.svg"} alt="" />
-          <Link to={"/"}>
-            <ImageIcon src={"/image/moreinfo.svg"} alt="" />
-          </Link>
-        </BoxTitle>
-        <PostInfoBox></PostInfoBox>
+        <PostInfoBox>
+          <RecentRateBox>
+            <LendCheckBox>빌려줬어요</LendCheckBox>깨끗하게 쓰고 돌려주심
+            <RateDateBox>1일전</RateDateBox>
+          </RecentRateBox>
+          <RecentRateBox>
+            <BorrowCheckBox>빌렸어요</BorrowCheckBox>빨리 빌려주심
+            <RateDateBox>1일전</RateDateBox>
+          </RecentRateBox>
+        </PostInfoBox>
       </PostBox>
       <PostBox>
         <BoxTitle>
@@ -285,14 +449,15 @@ const User = () => {
             <ImageIcon src={"/image/moreinfo.svg"} alt="" />
           </Link>
         </BoxTitle>
-        <PostInfoBox></PostInfoBox>
+        <PostInfoBox>
+          <RecentRateBox>
+            <Location>AI 공학관</Location>보조 배터리 빌려요
+            <RateDateBox>1일전</RateDateBox>
+          </RecentRateBox>
+        </PostInfoBox>
       </PostBox>
-      {cookies.certification == false ? (
-                <Link to={"/certification"}>
-                   <Logout>학생증 인증하기</Logout>
-                </Link>
-              ) : null}
-     <Logout onClick={removeCookies}>로그아웃</Logout>
+
+      <Logout onClick={removeCookies}>로그아웃</Logout>
     </div>
   );
 };
