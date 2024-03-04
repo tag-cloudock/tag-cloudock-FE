@@ -30,15 +30,13 @@ const PostImg = styled.div`
   width:40px;
   height: 40px;
   float:left;
-  overflow: hidden;
-  /* background: #dfdfdf; */
   & img{
     border-radius: 10px;
     width: 100%;
     height: 100%;
-    /* max-height: 400px; */
     object-fit: cover;
     object-position: center;
+    border: 1px solid #eeeeee;
   }
 `;
 
@@ -49,6 +47,11 @@ const PostTitle = styled.div`
   color:#222222;
   margin-top: 8px;
   font-family: 'Noto Sans KR';
+
+  /* width: 50px; */
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
 `;
 
 // 게시물 정보 박스
@@ -218,19 +221,21 @@ const HiddenText = styled.div`
 `;
 
 const PostText = styled.div`
-  display: inline-block;
+    margin-right: 20px;
 `;
 const DoneBtn = styled.button`
+  position: fixed;
+  right: 10px;
+  top:10px;
   border: none;
-  margin-top: 12px;
+  /* margin-top: 12px; */
   float: right;
-  padding: 10px;
-  background: #00e288;
-  color:#ffffff;
+  padding: 7px;
+  background: #d2e9ffb9;
+  color:#379effba;
   font-weight: 600;
   border-radius: 15px;
-  font-size: 14px;
-  margin-right: 10px;
+  font-size: 13px;
 `;
 
 const ModalContainer = styled.div`
@@ -264,14 +269,16 @@ const ModalBox2 = styled.div`
   max-width: 400px;
   border-radius: 30px;
   background: #ffffff;
+  
   position: relative;
   text-align: center;
+
 `;
 
 const ModalBtnBox = styled.div`
   position: absolute;
   width: 100%;
-  bottom: 15px;
+  bottom: 22px;
   display: flex;
   justify-content: space-evenly;
 `;
@@ -280,7 +287,7 @@ const ModalBtn = styled.button`
   border: none;
   width: 40%;
   background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#379DFF')};
-  padding: 17px;
+  padding: 15px;
   text-align: center;
   border-radius: 15px;
 
@@ -354,11 +361,16 @@ margin: 20px 20px;
     justify-content: space-evenly;
 `;
 
-const Star = styled.div`
-
-    width: 50px;
-    height: 50px;
-    background: #eeeeee;
+const Star = styled.button`
+    width: 60px;
+    height: 60px;
+    & img{
+      width: 60px;
+      height: 60px;
+      opacity: ${({ isSeleted }) => (isSeleted ? null : '30%')};
+    }
+    border: none;
+    background: none;
 `;
 
 
@@ -366,8 +378,10 @@ const Star = styled.div`
 const Chat = () => {
   const location = useLocation(); // 상태 전달 받기 위해
   const [cookies] = useCookies(); // 쿠키 사용을 위해
-  const { metype, id, other, post } = useParams(); // 주소의 파라미터 값 가져오기
+  const { metype, id, interlocutorId, post } = useParams(); // 주소의 파라미터 값 가져오기
   const navigate = useNavigate(); // 페이지 이동을 위해
+  const [rateData, setRateData] = useState(-1);
+  const [review, setReview] = useState("");
 
   const postId = post;
   // 오랜 시간이 지나고 채팅 안에서 채팅룸으로 나가면 오류나는 이슈 있음.
@@ -377,6 +391,7 @@ const Chat = () => {
   const ws = useRef(null); // 웹소켓
 
   // 상태
+  const [interlocutorInfo, setInterlocutorInfo] = useState({});
   const [messageList, setMessageList] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [loading, setLoading] = useState(true);
@@ -393,6 +408,27 @@ const Chat = () => {
     // 로딩 시작
     setLoading(true);
     // 모든 메세지 가져오기
+    const fetchUserInfo = async () => {
+      try {
+        // 토큰 쿠키가 없다면 로그인 페이지로 이동
+        if (!cookies.token) {
+          navigate("/signin");
+          return;
+        }
+        // 메세지 가져오기 api요청
+        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/account?id=" +interlocutorId , {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        });
+        console.log(response.data);
+        // 메세지 상태 저장
+        setInterlocutorInfo(response.data);
+      } catch (error) {
+        console.error("오류 발생:", error);
+      }
+    };
+
     const fetchMessages = async () => {
       try {
         // 토큰 쿠키가 없다면 로그인 페이지로 이동
@@ -431,6 +467,7 @@ const Chat = () => {
         });
 
         setPostInfo(response.data);
+        console.log(response.data);
       } catch (error) {
         // 없는 게시물 이라면
         if (error.response && error.response.status === 404) {
@@ -443,6 +480,7 @@ const Chat = () => {
     };
     fetchMessages();
     fetchPostInfo();
+    fetchUserInfo();
 
     // 0.3초 동안 로딩후 로딩 종료
     setTimeout(() => {
@@ -527,23 +565,66 @@ const Chat = () => {
     }
   };
 
-  const handleDone = async (e) => {
+  const handleDone = async (e, isWrite) => {
     e.preventDefault();
 
-
+    
     try {
+      if (isWrite){
+        if (rateData == -1) {
+          window.alert(rateData);
+          return;
+        }
+        if (review.length == 0) {
+          window.alert("후기를 작성해주세요");
+          return;
+        }
+        const writerType = "BORROWER";
+      const recipientId = interlocutorInfo.id;
+      var rate = "";
+      if  (rateData == 0){
+        rate = "LOVE";
+      }else if (rateData == 1){
+        rate = "GOOD";
+      }else if (rateData == 2){
+        rate = "BAD";
+      }
+      const text = review;
+      const response2 = await axios.post(
+        "http://" + process.env.REACT_APP_BACK_URL + "/review",
+                {
+                    writerType,
+                    recipientId,
+                    rate,
+                    text
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`,
+                    },
+                }
+            );
+
+      console.log(response2.data);
+      }
       const response = await axios.put(
-        "http://" + process.env.REACT_APP_BACK_URL + "/post/done/" + postInfo.postId
-      );
+
+        "http://" + process.env.REACT_APP_BACK_URL + "/post/done/" + postInfo.postId + "/" + interlocutorInfo.id + "/" + cookies.id, {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        });
       console.log(response.data);
+    
+      window.alert("감사합니다 :D");
       navigate("/");
-       
     } catch (error) {
+      console.error("오류 발생:", error);
     }
 };
   return (
     <ChatBox>
-      <Header headerType={"noChatIcon"} headerText={other}></Header>
+      <Header headerType={"noChatIcon"} headerText={interlocutorInfo.nickname}></Header>
 
       {/* 게시물 정보 */}
       {loading ? null :
@@ -552,20 +633,18 @@ const Chat = () => {
           <Link to={'/posts/' + postInfo.postId}>
             <PostImg><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + postInfo.postImgPath}></img></PostImg>
             <PostText>
-              <PostTitle>{postInfo.title}</PostTitle>
-              <PostDuration>
-                <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText>
-              </PostDuration>
+                <PostTitle>{postInfo.title}</PostTitle>
+                <PostDuration>
+                  <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText>
+                </PostDuration>
             </PostText>
           </Link>
-          {postInfo.isClose ? null :
-          <DoneBtn onClick={() => {
+          {!postInfo.isClose && postInfo.userId == cookies.id ? <DoneBtn onClick={() => {
             setIsDoneModalOn(true);
           }}>
-            대여 완료하기
-          </DoneBtn>}
+            대여 완료
+          </DoneBtn> : null}
         </PostInfo>
-
       }
       <EmptyBox>
         {loading ? null :
@@ -573,7 +652,6 @@ const Chat = () => {
             <HiddenText>까꿍</HiddenText>
           </HiddenTextBox>}
       </EmptyBox>
-
 
       {/* 메세지 */}
       {/* {loading ? <Loading /> : null} */}
@@ -620,7 +698,7 @@ const Chat = () => {
         <ModalContainer>
           <ModalBox>
             <ModalText>
-              <Nickname>{postInfo.nickname}</Nickname> 님과의 <br></br>거래를 종료하시겠습니까?<br></br>
+              <Nickname>{postInfo.nickname}</Nickname> 님과의 <br></br>대여를 완료하시겠습니까?<br></br>
             </ModalText>
             <ModalBtnBox>
               <ModalBtn onClick={() => {
@@ -632,7 +710,7 @@ const Chat = () => {
                 setIsDoneModalOn(false);
                 setIsReviewModalOn(true);
               }} isMine={""}>
-                종료하기
+                완료하기
               </ModalBtn>
             </ModalBtnBox>
           </ModalBox>
@@ -643,24 +721,24 @@ const Chat = () => {
         <ModalContainer>
           <ModalBox2>
             <ModalText2>
-              <Nickname>{postInfo.nickname}</Nickname> 님과의 <br></br> 거래는 어땠나요?<br></br>
+              <Nickname>{postInfo.nickname}</Nickname> 님과의 <br></br> 대여는 어땠나요?<br></br>
             </ModalText2>
             <Stars>
 
-              <Star>
-
+              <Star isSeleted={rateData == 0} onClick={() => {
+                        setRateData(0);
+                    }}>
+              <img src={"/image/smilingface.svg"} alt="" />
               </Star>
-              <Star>
-
+              <Star isSeleted={rateData == 1} onClick={() => {
+                        setRateData(1);
+                    }}>
+              <img src={"/image/face.svg"} alt="" />
               </Star>
-              <Star>
-
-              </Star>
-              <Star>
-
-              </Star>
-              <Star>
-
+              <Star isSeleted={rateData == 2} onClick={() => {
+                        setRateData(2);
+                    }}>
+              <img src={"/image/upsetface.svg"} alt="" />
               </Star>
             </Stars>
 
@@ -669,20 +747,17 @@ const Chat = () => {
               // ref={passwordRef}
               name="content"
               placeholder="후기를 작성하세요"
-            // onChange={(e) => {
-            //     setContent(e.target.value);
-            // }}
+            onChange={(e) => {
+              setReview(e.target.value);
+            }}
             />
 
             <ModalBtnBox>
-              <ModalBtn onClick={() => {
-                setIsDoneModalOn(false);
-                setIsReviewModalOn(false);
-              }} isLeft={true}>
+              <ModalBtn onClick={(e) => handleDone(e, false)} isLeft={true}>
                 작성 안하기
               </ModalBtn>
-              <ModalBtn onClick={handleDone} isMine={""}>
-                작성 완료
+              <ModalBtn onClick={(e) => handleDone(e, true)}  isMine={""}>
+                작성 하기
               </ModalBtn>
             </ModalBtnBox>
           </ModalBox2>

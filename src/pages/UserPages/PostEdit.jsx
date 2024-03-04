@@ -276,47 +276,47 @@ const PostEdit = () => {
     };
 
     const handlePost = async (e) => {
-        e.preventDefault();
+      e.preventDefault();
 
-        if (title.length < 1) {
-            window.alert("제목을 입력해주세요.");
-            // useridRef.current.focus();
-            // setUserid('');
-            return;
-          }
-        try {
-            const formData = new FormData();
-            formData.append('request', new Blob([JSON.stringify({
-                title,
-                location,
-                locationDetail,
-                rentalFee,
-                security,
-                needAt,
-                returnAt,
-                content
-            })],
-                {
-                    type: "application/json"
-                }));
-            formData.append('pic', file);
-
-            const Response = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/post",
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${cookies.token}`,
-                    },
-                }
-            );
-            if (Response.status === 200) {
-                window.alert("작성 완료");
-                navigate("/");
-            }
-        } catch (error) {
+      if (title.length < 1) {
+          window.alert("제목을 입력해주세요.");
+          // useridRef.current.focus();
+          // setUserid('');
+          return;
         }
-    };
+      try {
+          const formData = new FormData();
+          formData.append('request', new Blob([JSON.stringify({
+              title,
+              location,
+              locationDetail,
+              rentalFee,
+              security,
+              needAt,
+              returnAt,
+              content
+          })],
+              {
+                  type: "application/json"
+              }));
+          formData.append('pic', file);
+
+          const Response = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/post",
+              formData,
+              {
+                  headers: {
+                      'Content-Type': 'multipart/form-data',
+                      Authorization: `Bearer ${cookies.token}`,
+                  },
+              }
+          );
+          if (Response.status === 200) {
+              window.alert("작성 완료");
+              navigate("/");
+          }
+      } catch (error) {
+      }
+  };
 
     useEffect(() => {
         // 오늘 날짜를 얻기 위해 현재 날짜 객체를 생성

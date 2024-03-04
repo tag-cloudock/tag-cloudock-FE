@@ -51,7 +51,7 @@ function App() {
           
           <Route path="/signup" Component={SignUp} />
           <Route path="/chat" Component={ChatRoomList} />
-          <Route path="/chat/:metype/:id/:other/:post" Component={Chat} />
+          <Route path="/chat/:metype/:id/:interlocutorId/:post" Component={Chat} />
           <Route path="/notice" Component={NoticeList} />
           <Route path="/notice/:id" Component={NoticeDetail} />
           <Route path="/test" Component={Manual} />

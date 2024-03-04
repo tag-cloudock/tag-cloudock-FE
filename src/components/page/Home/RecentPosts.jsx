@@ -18,6 +18,9 @@ const Wrapped = styled.div`
   padding: 10px 10px;
   font-size: 15px;
 
+  & > * {
+    opacity: ${({ isDone }) => (isDone ? "30%" : '100%')};
+  }
   display: flex;
   justify-content: space-between;
 `;
@@ -102,8 +105,8 @@ const RecentPosts = ( prop ) => {
       {posts.map((post, index) => (
         <Item key={post.postId}>
           <Link to={"/posts/"+post.postId}>
-            <Wrapped>
-              {post.location.slice(2)}
+            <Wrapped isDone={post.close}>
+              <div>{post.location.slice(2)}</div>
               <Title> {post.title}</Title>
               <CreatedTime>{getTimeDiff(post.createdAt)}</CreatedTime>
             </Wrapped>

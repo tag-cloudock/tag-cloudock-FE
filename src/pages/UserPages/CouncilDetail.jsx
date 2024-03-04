@@ -23,8 +23,9 @@ const TitleBox = styled.div`
   height: 50px;
   /* border-bottom: 1px solid #c6c6c6; */
   padding: 5px 10px;
-  border-radius: 20px;
-  background: #fafafa;
+  /* border-radius: 20px; */
+  /* background: #fafafa; */
+  border-bottom: 1px solid#eeeeee;
 `;
 
 const ProductContainer = styled.div`
@@ -35,7 +36,10 @@ const ProductContainer = styled.div`
     font-weight: 500;
     list-style-type: none;
     line-height: 40px;
-    border-bottom: 1px solid#E1E1E1;
+    border-bottom: 1px solid#eeeeee;
+  }
+  & ul li:last-child {
+    border-bottom: none;
   }
 `;
 const ProfileImg = styled.div`
@@ -88,7 +92,7 @@ const CouncilName = styled.div`
   height: 45px;
   line-height: 45px;
   text-align: center;
-  font-size: 25px;
+  font-size: 18px;
   font-weight: 500;
   font-family: 'Noto Sans KR';  
 `;
@@ -206,7 +210,6 @@ const CouncilDetail = () => {
           ))}
         </ul>
       </ProductContainer>
-      <MenuBar></MenuBar>
     </CouncilBox>
   );
 };

@@ -19,28 +19,28 @@ const ChatRoom = styled.li`
   padding: 18px 20px;
   height : 50px;
   line-height: 23px;
-  /* background: #FaFaFa;
-  border-radius: 20px; */
   border-bottom: 1px solid #eeeeee;
   list-style: none;
   display: flex;
   justify-content: space-between;
+  & > * {
+    opacity: ${({ isDone }) => (isDone ? "30%" : '100%')};
+  }
 `;
 
 const UserImg = styled.a`
   display: block;
   height: 50px;
   width: 50px;
-  border-radius: 50px;
-  border: 1px solid #dddddd;
   margin-right: 10px;
-  background: #ffffff;
-  text-align: center;
-  line-height: 50px;
-  font-size: 20px;
-  font-weight: 900;
-  color: #dedede;
-
+  & img{
+    border-radius: 100px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border: 1px solid #dddddd;
+  }
 `;
 
 const ChatRoomContent = styled.div`
@@ -55,12 +55,19 @@ const ChatRoomContent = styled.div`
 `;
 
 const PostImg = styled.div`
-  background: #ffffff;
+  /* background: #ffffff; */
   height: 50px;
   width: 50px;
   margin-left: 10px;
   border-radius: 10px;
-  border: 1px solid #dddddd;
+  & img{
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border: 1px solid #dddddd;
+  }
 `;
 
 const NickName = styled.span`
@@ -141,7 +148,7 @@ const CampusText = styled.div`
 
 
 const ChatRoomList = () => {
-  const [chatRoomList, setChatRoomList] = useState([]);
+  const [chatRoomList, setChatRoomList] = useState([[],[]]);
   const [cookies] = useCookies(); 
   const navigate = useNavigate();
   const [chatRoomType, setChatRoomType] = useState(0);
@@ -194,7 +201,7 @@ const ChatRoomList = () => {
           </CampusBox>
         </CampusMoveBox>
 
-      {chatRoomList.length == 0 ?
+      {chatRoomList[chatRoomType].length == 0 ?
         <NoChatBox>
           <NoChatText>썰렁~</NoChatText>
           <Link to={"/"}><MoveToPost>빌려줄수있는 물건 보러 가기!</MoveToPost></Link>
@@ -202,15 +209,15 @@ const ChatRoomList = () => {
         :
         <ul>
           {chatRoomList[chatRoomType].map((chatRoom) => (
-            <Link key={chatRoom.id} to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname)+"/"+chatRoom.postId } >
-              <ChatRoom key={chatRoom.id}>
-                <Link to={"/"}><UserImg><img></img></UserImg></Link>
+            <Link key={chatRoom.id} to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderId : chatRoom.borrowerId)+"/"+chatRoom.postId } >
+              <ChatRoom key={chatRoom.id} isDone={chatRoom.done}>
+                <Link to={"/user/"+(chatRoom.userType === "BORROWER" ? chatRoom.lenderId : chatRoom.borrowerId)}><UserImg><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + chatRoom.userImgPath}></img></UserImg></Link>
                 <ChatRoomContent>
                   <NickName>{chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname}</NickName>
                   <LastMessageTime>{chatRoom.lastMessage !== "no message" ? " " + chatRoom.lastMessageTime[3] + "시 " + chatRoom.lastMessageTime[4] + "분" : ""}</LastMessageTime><br></br>
                   <LastMessage>{chatRoom.lastMessage !== "no message" ? chatRoom.lastMessage : "채팅이 시작되었습니다!"}</LastMessage>
                 </ChatRoomContent>
-                <Link to={"/"}><PostImg></PostImg></Link>
+                <Link to={"/posts/"+chatRoom.postId}><PostImg><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + chatRoom.postImgPath}></img></PostImg></Link>
               </ChatRoom>
             </Link>
           ))}

@@ -16,6 +16,7 @@ const SubTitle = styled.div`
   font-weight: 700;
   font-size: 22px;
   color: #000000;
+  margin-top: 15px;
   @media screen and (max-width: 700px) {
     padding-top: 10px;
     padding-bottom: 15px;
@@ -42,7 +43,7 @@ const CampusMoveBox = styled.div`
 
   /* background: #f2f2f2; */
   border-radius: 30px;
-  margin: 20px 20px 10px 20px;
+  margin: 30px 20px 10px 20px;
 
 `;
 
@@ -215,7 +216,7 @@ const CouncilBtn = styled.div`
   padding: 20px 30px;
   box-shadow: 0px 2px 15px 0px rgba(157, 157, 157, 0.25);
   height: 50px;
-  margin: 15px 20px 0px 20px;
+  margin: 30px 20px 0px 20px;
   @media screen and (min-width: 700px) {
     &:hover div{
     margin-left: 30px; /* 마우스 호버 시 이동할 거리 */

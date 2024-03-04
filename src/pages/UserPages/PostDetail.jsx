@@ -326,7 +326,7 @@ const PostDetail = () => {
             });
           console.log(response.data);
           if (response.status === 200) {
-            navigate("/chat/l/" + response.data.roomId + "/" + response.data.borrowerNickname + "/" + postId);
+            navigate("/chat/l/" + response.data.roomId + "/" + response.data.borrowerId + "/" + postId);
           }
 
         } catch (error) {
@@ -351,6 +351,7 @@ const PostDetail = () => {
             });
           console.log(response.data);
           setIsDoneModalUp(false);
+          navigate("/");
 
         } catch (error) {
           console.log("오류 발생: ", error);

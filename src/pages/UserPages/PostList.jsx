@@ -30,11 +30,14 @@ const Item = styled.div`
 border-bottom: 1px solid #eaeaea;
 
 padding: 20px;
+& > * {
+    opacity: ${({ isDone }) => (isDone ? "30%" : '100%')};
+  }
 `;
 
 //list 박스 사이 구분선
 const Listbox = styled.div`
-  /* padding: 10px 10px 10px; */
+  
 `;
 
 //게시물 이미지
@@ -64,6 +67,7 @@ color: #1F1F1F;
 width: 70%;
 font-size: 15px;
 font-weight: 500;
+white-space: nowrap; 
 overflow: hidden; 
 text-overflow: ellipsis; 
 `;
@@ -156,10 +160,10 @@ const PostList = () => {
           
           { posts.length != 0 ?posts.map((post, index) => (
             <Link to={"/posts/"+post.postId} key={index}>
-              <Item>
+              <Item isDone={post.close}>
                 <MainImage><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></MainImage>
-              <Listbox>
-                {post.close ? <DoneTag>완료</DoneTag> : null}<NoticeTitle>{post.title}</NoticeTitle>
+              <Listbox > 
+                <NoticeTitle>{post.title}</NoticeTitle>
                 <PostDetail>{post.location.slice(2)+" "+post.locationDetail}</PostDetail>
                 <PostPrice>{post.rentalFee}원
                 <ImageIcon src={"/image/chatt.svg"} alt="" />

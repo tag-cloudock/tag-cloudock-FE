@@ -14,7 +14,7 @@ const Logout = styled.button`
   border-radius: 10px;
   background: none;
   color: #379dff;
-  font-size: 20px;
+  font-size: 17px;
   line-height: 30px;
   font-weight: 400;
   width: 200px;
@@ -25,27 +25,19 @@ const Logout = styled.button`
   }
 `;
 
-const ProfilImgBox = styled.div`
-  display: inline-block;
-  max-width: 170px;
-  max-height: 170px;
-  min-width: 90px;
-  min-height: 90px;
-  width: 24vw;
-  height: 24vw;
-`;
 const ProfilImg = styled.div`
-  max-width: 170px;
-  max-height: 170px;
-  min-width: 90px;
-  min-height: 90px;
-  width: 24vw;
-  height: 24vw;
-  overflow: hidden;
+  width: 130px;
+  height: 130px;
+  @media screen and (max-width: 700px) {
+    width: 100px;
+    height: 100px;
+  }
   border-radius: 100px;
-  border: 1px solid #e9e9e9;
+  border: none;
   position: relative;
   & img {
+    border-radius: 100px;
+    border: 1px solid #e9e9e9;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -53,144 +45,58 @@ const ProfilImg = styled.div`
     object-position: center;
   }
 `;
-const ProveBox = styled.span`
+
+const ProfilImgBox = styled.div`
   display: inline-block;
-  border-radius: 30px;
-  font-weight: 1000;
-  color: white;
-  margin: 5px 15px 0px 15px;
-  padding: min(2vw, 8px);
-  background: #379dff;
-  width: 12vw;
-  max-width: 70px;
-  min-width: 50px;
-  text-align: center;
-  font-size: min(3vw, 17px);
 `;
 
-const BorrowCheckBox = styled.div`
-  display: inline-block;
-  border-radius: 30px;
-  font-weight: 800;
-  font-size: 13px;
-  color: white;
-  padding: 7px 13px 7px 13px;
-  margin-right: 10px;
-
-  background: #76bcff;
-`;
-const LendCheckBox = styled.div`
-  display: inline-block;
-  border-radius: 30px;
-  font-weight: 800;
-  font-size: 13px;
-  color: white;
-  padding: 7px;
-  margin-right: 10px;
-  background: #379dff;
-`;
-const UserInfoContentBox = styled.span`
-  width: 60vw;
-  max-width: 460px;
-  min-width: 230px;
-  float: right;
-
-`;
-const Nickname = styled.span`
-  display: inline-block;
-  font-weight: 800;
-  color: #333333;
-  margin-left: 5px;
-  font-size: min(7vw, 48px);
-`;
-const RateBox = styled.div`
-  display: flex;
+const UserInfoContentBox = styled.div`
+  width: calc(100% - 150px);
   @media screen and (max-width: 700px) {
+    width: calc(100% - 110px);
   }
+  float: right;
 `;
-const RateInfoBox1 = styled.span`
-  line-height: 2.5;
-  text-align: center;
-  font-weight: 800;
-  font-size: 18px;
+const Nickname = styled.div`
   display: inline-block;
-  background: #ffffff;
-  padding: 10px 40px;
-  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px 0px;
-  border-radius: 10px 0px 0px 10px;
-  width: 160px;
-`;
-const RateInfoBox2 = styled.span`
-  line-height: 2.5;
-  text-align: center;
-  font-weight: 800;
-  font-size: 18px;
-  display: inline-block;
-  background: #ffffff;
-  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
-  padding: 10px 40px;
-  border-left: thin solid #d5d5d5;
-  width: 160px;
-`;
-const RateInfoBox3 = styled.span`
-  line-height: 2.5;
-  text-align: center;
-  font-weight: 800;
-  font-size: 18px;
-  display: inline-block;
-  background: #ffffff;
-  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
-  padding: 10px 40px;
-  border-radius: 0px 10px 10px 0px;
-  border-left: thin solid #d5d5d5;
-  width: 160px;
+  font-size: 22px;
+  margin-top: 15px;
+  @media screen and (max-width: 700px) {
+    margin-top: 3px;
+  }
+  font-weight: 700;
+  color: #333333;
 `;
 const CountBox = styled.div`
   display: flex;
-  margin-top: 10px;
+  padding: 3px;
+  margin-top: 5px;
+  margin-left: -10px;
+`;
+const CountInfoBox = styled.span`
+  text-align: center;
+  font-weight: 400;
+  font-size: 20px;
+  color: #379dff;
+  display: inline-block;
+  margin: 5px 0px 5px 8px;
+  padding: 15px;
+  background: #eef6ff;
+  border-radius: 10px;
+  width: 100%;
   @media screen and (max-width: 700px) {
-    margin-top: 0vw;
+    font-size: 15px;
+    padding: 10px;
   }
-`;
-const CountInfoBox1 = styled.span`
-  line-height: 1.5;
-  text-align: center;
-  font-weight: 400;
-  font-size: min(3.5vw, 20px);
-  color: #d5d5d5;
-  display: inline-block;
-  margin-top: 14px;
-  padding: min(2vw, 14px) min(2vw, 22px);
-  background: #f6f6f6;
-  border-radius: 10px 0px 0px 10px;
-  width: 19vw;
-  max-width: 137px;
-  min-width: 105px;
-  
-`;
-const CountInfoBox2 = styled.span`
-  line-height: 1.5;
-  text-align: center;
-  font-weight: 400;
-  font-size: min(3.5vw, 20px);
-  color: #d5d5d5;
-  display: inline-block;
-  margin-top: 14px;
-  padding: min(2vw, 14px) min(2vw, 22px);
-  background: #f6f6f6;
-  border-radius: 0px 10px 10px 0px;
-  width: 19vw;
-  max-width: 137px;
-  min-width: 105px;
-  border-left: thin solid #d5d5d5;
 `;
 
 const UserBox = styled.div`
-  padding: 50px 10px 20px;
+  padding: 30px 20px;
 `;
 
 const UserInfoBox = styled.div`
-  padding: 10px;
+  border-radius: 15px;
+  /* box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px; */
 `;
 
 const Certifi = styled.div`
@@ -217,7 +123,7 @@ const Certifi = styled.div`
 `;
 //후기 박스
 const PostBox = styled.div`
-  padding: 10px;
+  padding: 10px 20px;
 `;
 //
 const PostInfoBox = styled.div`
@@ -225,6 +131,9 @@ const PostInfoBox = styled.div`
   padding: 20px;
   border-radius: 15px;
   box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
+  & a:last-child div{
+    border-bottom: none;
+  }
 `;
 //박스 제목
 const BoxTitle = styled.div`
@@ -254,50 +163,164 @@ const ImageIcon = styled.img`
     width: 24px;
   }
 `;
-const ImageIcon2 = styled.img`
-  width: 6vw;
-  min-width: 30px;
-  max-width: 44px;
-  vertical-align: middle;
-`;
-const Option = styled.div`
+const Option = styled.span`
   float: right;
-`;
-const RecentRateBox = styled.div`
-  padding: 10px;
-  align-items: center;
-  justify-content: center;
-  border-bottom: thin solid #d5d5d5;
-`;
-const RateDateBox = styled.div`
-  float: right;
-  padding: 7px;
-`;
-const Location = styled.span`
-  font-weight: 800;
-  padding: 0px 17px 0px 7px;
 `;
 //옵션
-const OptionBox = styled.div`
+const OptionBox = styled.span`
   display: block;
-  margin-top: min(2vw, 14px);
-  margin-right: -10px;
+  cursor: pointer;
+
+  background: #ffffff;
   border-radius: 30px;
   font-weight: 400;
   font-size: 14px;
   color: #d8d8d8;
   &:hover {
   }
+  @media screen and (max-width: 700px) {
+    font-weight: 700;
+    font-size: 13px;
+  }
+`;
+
+const RateInfoBox1 = styled.span`
+  line-height: 2.5;
+  text-align: center;
+  font-weight: 800;
+  font-size: 18px;
+  display: inline-block;
+  background: #ffffff;
+  padding: 10px 40px;
+  border-radius: 10px 0px 0px 10px;
+  width: 160px;
+`;
+const RateInfoBox2 = styled.span`
+  line-height: 2.5;
+  text-align: center;
+  font-weight: 800;
+  font-size: 18px;
+  display: inline-block;
+  background: #ffffff;
+  padding: 10px 40px;
+  border-left: 1.5px solid #ededed;
+  width: 160px;
+`;
+const RateInfoBox3 = styled.span`
+  line-height: 2.5;
+  text-align: center;
+  font-weight: 800;
+  font-size: 18px;
+  display: inline-block;
+  background: #ffffff;
+  padding: 10px 40px;
+  /* border-radius: 0px 10px 10px 0px; */
+  border-left: 1.5px solid #ededed;
+  width: 160px;
+`;
+
+const ImageIcon2 = styled.img`
+  width: 30px;
+  vertical-align: middle;
+`;
+
+const ImageIcon3 = styled.img`
+margin-top: 5px;
+  width: 25px;
+  /* vertical-align: middle; */
+`;
+
+const RateBox = styled.div`
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
+  @media screen and (max-width: 700px) {
+  }
+`;
+
+const RecentRateBox = styled.div`
+  /* padding: 10px; */
+  align-items: center;
+  &:last-child{
+    border-bottom: none;
+  }
+  border-bottom: 1px solid #eaeaea;
+
+  display: flex;
+  justify-content: space-between;
+
+  padding: 7px 0px;
+`;
+const RateDateBox = styled.div`
+  white-space: nowrap; 
+`;
+
+const ReviewText = styled.div`
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  text-align: left;
+
+  width: 100%;
+  margin-left: 5px;
+`;
+
+const LendCheckBox = styled.div`
+  display: inline-block;
+  border-radius: 30px;
+  font-weight:600;
+  font-size: 12px;
+  color: white;
+  padding: 6px;
+  white-space: nowrap; 
+  background: #379dff;
+`;
+
+const BorrowCheckBox = styled.div`
+  display: inline-block;
+  border-radius: 30px;
+  font-weight:600;
+  font-size: 12px;
+  color: white;
+  padding: 6px 13px;
+  background: #76bcff;
+  white-space: nowrap; 
+`;
+
+const UserPostItemBox = styled.div`
+  color: #000000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  border-bottom: 1px solid #eaeaea;
+  
+`;
+
+const PostTitle = styled.div`
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;  
+  text-align: left;
+`;
+
+
+const PostDate = styled.div`
+  margin-left: 20px;
+  white-space: nowrap; 
 `;
 
 const User = () => {
   const navigate = useNavigate(); // 페이지 이동을 위해
   const [cookies, , removeCookie] = useCookies(); // 쿠키 가져오기, 쿠기 삭제를 위한 함수
-  const [userInfo, setUserInfo] = useState({ imgPath: "default.png" }); // 유저 정보 상태
+  const [userInfo, setUserInfo] = useState({imgPath:"default.png"}); // 유저 정보 상태
+  const [reviewData, setReviewData] = useState({reviews:[]});
+  const [userPosts, setUserPosts] = useState([]);
 
   const [img, setImg] = useState({}); // 유저 정보 상태
   const [isVertical, setIsVertical] = useState(true); // 유저 정보 상태
-  // const { id } = useParams(); // 파라미터 값 가져오기
+  const { userid } = useParams(); // 파라미터 값 가져오기
 
   useEffect(() => {
     // 유저 정보 가져오기
@@ -310,31 +333,83 @@ const User = () => {
         }
         // 회원 조회 api 요청
         const response = await axios.get(
-          "http://" +
-            process.env.REACT_APP_BACK_URL +
-            "/account?id=" +
-            cookies.id,
+          "http://" + process.env.REACT_APP_BACK_URL + "/account?id=" + userid,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
             },
           }
         );
-
+        setUserInfo(response.data);
         console.log(response.data);
         // 유저 상태 등록
-        setUserInfo(response.data);
       } catch (error) {
         // 없는 유저라면 쿠키 지우고 로그인 페이지로 이동
         if (error.response && error.response.status === 404) {
           removeCookies();
           navigate("/signin");
-        } else {
+        } else{
           console.error("오류 발생:", error);
         }
       }
     };
+    const fetchReview = async () => {
+      try {
+        // 토큰 쿠키가 없다면 로그인 페이지로 이동
+        if (!cookies.token) {
+          navigate("/signin");
+          return;
+        }
+        const response = await axios.get(
+          "http://" + process.env.REACT_APP_BACK_URL + "/review/"+userid,
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          }
+        );
+        setReviewData(response.data);
+        console.log(response.data);
+        // 유저 상태 등록
+      } catch (error) {
+        // 없는 유저라면 쿠키 지우고 로그인 페이지로 이동
+        if (error.response && error.response.status === 404) {
+          removeCookies();
+          navigate("/signin");
+        } 
+        console.error("오류 발생:", error);
+      }
+    };
+    const fetchUserPosts = async () => {
+      try {
+        // 토큰 쿠키가 없다면 로그인 페이지로 이동
+        if (!cookies.token) {
+          navigate("/signin");
+          return;
+        }
+        const response = await axios.get(
+          "http://" + process.env.REACT_APP_BACK_URL + "/post/user/"+userid,
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          }
+        );
+        setUserPosts(response.data);
+        console.log(response.data);
+        // 유저 상태 등록
+      } catch (error) {
+        // 없는 유저라면 쿠키 지우고 로그인 페이지로 이동
+        if (error.response && error.response.status === 404) {
+          removeCookies();
+          navigate("/signin");
+        } 
+        console.error("오류 발생:", error);
+      }
+    };
+    fetchUserPosts();
     fetchUserInfo();
+    fetchReview();
   }, [cookies.token, navigate]);
 
   // 쿠키 지우기
@@ -354,96 +429,83 @@ const User = () => {
       <UserBox>
         <UserInfoBox>
           <ProfilImgBox>
-            <ProfilImg>
-              <img
-                src={
-                  "http://" +
-                  process.env.REACT_APP_BACK_URL +
-                  "/image/" +
-                  userInfo.imgPath
-                }
-              ></img>
+            <ProfilImg >
+              <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + userInfo.imgPath}></img>
             </ProfilImg>
           </ProfilImgBox>
           <UserInfoContentBox>
-            <Link to={"/"}>
-              <Option>
+            <Nickname>{userInfo.nickname}</Nickname>
+            <Option>
                 <OptionBox>
-                  <ImageIcon2 src={"/image/settingbutton.svg"} alt="" />
+                  <ImageIcon3 src={"/image/settingbutton.svg"} alt="" />
                 </OptionBox>
               </Option>
-            </Link>
-            <Nickname>{userInfo.nickname}</Nickname>
-
-            <Link to={"/"}>
-              <ProveBox>인증하기</ProveBox>
-            </Link>
-
             <CountBox>
-              <CountInfoBox1>
-                빌린 횟수 <br></br>
-                {userInfo.borrowCount}
-              </CountInfoBox1>
-              <CountInfoBox2>
+              <CountInfoBox>
+                빌린 횟수 <br></br>{userInfo.borrowCount}
+              </CountInfoBox>
+              <CountInfoBox>
                 빌려준 횟수
-                <br></br>
-                {userInfo.lendCount}
-              </CountInfoBox2>
+                <br></br>{userInfo.lendCount}
+              </CountInfoBox>
             </CountBox>
           </UserInfoContentBox>
         </UserInfoBox>
       </UserBox>
       <PostBox>
         <RateBox>
-          <RateInfoBox1>
-            <ImageIcon2 src={"/image/smilingface.svg"} alt="" />
-            <br></br>7
-          </RateInfoBox1>
-          <RateInfoBox2>
-            <ImageIcon2 src={"/image/face.svg"} alt="" />
-            <br></br>7
-          </RateInfoBox2>
-          <RateInfoBox3>
-            <ImageIcon2 src={"/image/upsetface.svg"} alt="" />
-            <br></br>7
-          </RateInfoBox3>
-        </RateBox>
+            <RateInfoBox1>
+              <ImageIcon2 src={"/image/smilingface.svg"} alt="" />
+              <br></br>{reviewData.loveCount}
+            </RateInfoBox1>
+            <RateInfoBox2>
+              <ImageIcon2 src={"/image/face.svg"} alt="" />
+              <br></br>{reviewData.goodCount}
+            </RateInfoBox2>
+            <RateInfoBox3>
+              <ImageIcon2 src={"/image/upsetface.svg"} alt="" />
+              <br></br>{reviewData.badCount}
+            </RateInfoBox3>
+          </RateBox>
       </PostBox>
       <PostBox>
         <BoxTitle>
-          최근 후기
-          <ImageIcon src={"/image/text.svg"} alt="" />
-          <Link to={"/"}>
-            <ImageIcon src={"/image/moreinfo.svg"} alt="" />
-          </Link>
+        최근 후기
         </BoxTitle>
         <PostInfoBox>
-          <RecentRateBox>
-            <LendCheckBox>빌려줬어요</LendCheckBox>깨끗하게 쓰고 돌려주심
+        {reviewData.reviews.map((review, index) => (
+            <RecentRateBox key={index}>
+              {review.writerType == "BORROWER" ?
+              <BorrowCheckBox>빌렸어요</BorrowCheckBox>
+               : 
+               <LendCheckBox>빌려줬어요</LendCheckBox>}
+            <ReviewText>{review.text}</ReviewText>
             <RateDateBox>1일전</RateDateBox>
           </RecentRateBox>
-          <RecentRateBox>
-            <BorrowCheckBox>빌렸어요</BorrowCheckBox>빨리 빌려주심
-            <RateDateBox>1일전</RateDateBox>
-          </RecentRateBox>
+        ))}
         </PostInfoBox>
       </PostBox>
       <PostBox>
         <BoxTitle>
           {userInfo.nickname}님이 작성한 글이에요
-          <Link to={"/"}>
-            <ImageIcon src={"/image/moreinfo.svg"} alt="" />
-          </Link>
         </BoxTitle>
         <PostInfoBox>
-          <RecentRateBox>
-            <Location>AI 공학관</Location>보조 배터리 빌려요
-            <RateDateBox>1일전</RateDateBox>
-          </RecentRateBox>
+        {userPosts.map((post, index) => (
+          <Link to={"/posts/"+post.postId}>
+            <UserPostItemBox key={index}>
+             <PostTitle>{post.title}</PostTitle>
+             <PostDate>{post.createdAt[1]}/{post.createdAt[2]}</PostDate>
+            </UserPostItemBox>
+          </Link>
+        ))}
         </PostInfoBox>
       </PostBox>
-
-      <Logout onClick={removeCookies}>로그아웃</Logout>
+      {cookies.certification == false ? (
+                <Link to={"/certification"}>
+                   <Logout>학생증 인증하기</Logout>
+                </Link>
+              ) : null}
+     <Logout onClick={removeCookies}>로그아웃</Logout>
     </div>
   );
 };
