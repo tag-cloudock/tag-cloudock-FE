@@ -399,6 +399,8 @@ const Chat = () => {
 
   const [isDoneModalOn, setIsDoneModalOn] = useState(false);
   const [isReviewModalOn, setIsReviewModalOn] = useState(false);
+
+  const [isBorrower, setIsBorrower] = useState(false);
   // 최하단 이동용
   useEffect(() => {
     messagesEndRef.current.scrollIntoView();
@@ -579,7 +581,9 @@ const Chat = () => {
           window.alert("후기를 작성해주세요");
           return;
         }
-        const writerType = "BORROWER";
+        const postId = postInfo.postId; 
+
+        const writerType = isBorrower ? "BORROWER" : "LENDER";
       const recipientId = interlocutorInfo.id;
       var rate = "";
       if  (rateData == 0){
@@ -593,6 +597,7 @@ const Chat = () => {
       const response2 = await axios.post(
         "http://" + process.env.REACT_APP_BACK_URL + "/review",
                 {
+                    postId,
                     writerType,
                     recipientId,
                     rate,
@@ -607,15 +612,16 @@ const Chat = () => {
 
       console.log(response2.data);
       }
-      const response = await axios.put(
+      if (isBorrower){
+        const response = await axios.put(
 
-        "http://" + process.env.REACT_APP_BACK_URL + "/post/done/" + postInfo.postId + "/" + interlocutorInfo.id + "/" + cookies.id, {
-          headers: {
-            Authorization: `Bearer ${cookies.token}`,
-          },
-        });
-      console.log(response.data);
-    
+          "http://" + process.env.REACT_APP_BACK_URL + "/post/done/" + postInfo.postId + "/" + interlocutorInfo.id + "/" + cookies.id, {
+            headers: {
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          });
+        console.log(response.data);
+      }
       window.alert("감사합니다 :D");
       navigate("/");
     } catch (error) {
@@ -640,9 +646,16 @@ const Chat = () => {
             </PostText>
           </Link>
           {!postInfo.isClose && postInfo.userId == cookies.id ? <DoneBtn onClick={() => {
+            setIsBorrower(true);
             setIsDoneModalOn(true);
           }}>
             대여 완료
+          </DoneBtn> : null}
+          { postInfo.isClose && !postInfo.lenderWriteReview  && postInfo.userId != cookies.id  ? <DoneBtn onClick={() => {
+            setIsBorrower(false);
+            setIsReviewModalOn(true);
+          }}>
+            후기 작성
           </DoneBtn> : null}
         </PostInfo>
       }
@@ -753,9 +766,16 @@ const Chat = () => {
             />
 
             <ModalBtnBox>
-              <ModalBtn onClick={(e) => handleDone(e, false)} isLeft={true}>
+              {isBorrower ?<ModalBtn onClick={(e) => handleDone(e, false)} isLeft={true}>
                 작성 안하기
-              </ModalBtn>
+              </ModalBtn> :
+              <ModalBtn onClick={() => {
+                setIsReviewModalOn(false);
+              }}  isLeft={true}>
+               취소 하기
+            </ModalBtn>
+            }
+              
               <ModalBtn onClick={(e) => handleDone(e, true)}  isMine={""}>
                 작성 하기
               </ModalBtn>

@@ -213,7 +213,7 @@ const ArrowIcon = styled.img`
 const CouncilBtn = styled.div`
   border-radius: 20px;
   background: #FFF;
-  padding: 20px 30px;
+  padding: 20px 20px;
   box-shadow: 0px 2px 15px 0px rgba(157, 157, 157, 0.25);
   height: 50px;
   margin: 30px 20px 0px 20px;
@@ -305,14 +305,14 @@ const Home = () => {
                 25개의 학생회, 150개의 물품대여중
               </span>
             </CouncilBtnText>
-            <MoveArrow src={"/image/arrow.svg"} alt="" />
+           
           </CouncilBtn>
         </Link>
 
 
 
         <SubTitle>
-          최근에 빌리길 바람 <Link to={"/posts?location=G "+(campus == 0 ? "글로벌 캠퍼스" : "메디컬 캠퍼스")}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
+          최근에 빌리길 바람 <Link to={"/posts?campus="+(campus == 0 ? "global" : "medical")}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
         </SubTitle>
         <ContentAreaBox>
           <RecentPostBox>

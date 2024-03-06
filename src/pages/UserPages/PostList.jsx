@@ -98,6 +98,15 @@ const ImageIcon = styled.img`
   margin-left: auto;
 `;
 
+const ChatRoomCount = styled.span`
+  width: 17px;
+  height: 17px;
+  font-size: 15px;
+  color: #9a9a9a;
+  line-height: 17px;
+  float: right;
+`;
+
 const NoPostBox = styled.div`
   width: 100%;
   text-align: center;
@@ -133,16 +142,32 @@ const PostList = () => {
   const location = useLocation();
   const [posts, setPosts] = useState([]);
   const [locationName, setLocationName] = useState("");
+  const [campusName, setCampusName] = useState("");
+  const [type, setType] = useState();
   useEffect(() => {
     // 최신 글 업로드
     const fetchPosts = async () => {
       try {
         const locationValue = new URLSearchParams(location.search).get('location');
-        const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/post/all/"+locationValue
-        );
+        const campusValue = new URLSearchParams(location.search).get('campus');
+
+        var response;
+        if (locationValue != null){
+          setType("LOCATION");
+          setLocationName(locationValue);
+          response = await axios.get(
+            
+            "http://" + process.env.REACT_APP_BACK_URL + "/post/all/location/"+locationValue
+          );
+        }else{
+          setType("CAMPUS");
+          setCampusName(campusValue);
+          response = await axios.get(
+            "http://" + process.env.REACT_APP_BACK_URL + "/post/all/campus/"+campusValue
+          );
+        }
+        
         setPosts(response.data);
-        setLocationName(locationValue);
         console.log(response);
 
       } catch (error) {
@@ -153,7 +178,7 @@ const PostList = () => {
   }, []);
   return (
     <Container>
-      <Header headerText={locationName.slice(2)}>         
+      <Header headerText={type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬")+ " 최근 글"}>         
       </Header>
       <PostBox>
         <BoardBox>
@@ -166,7 +191,7 @@ const PostList = () => {
                 <NoticeTitle>{post.title}</NoticeTitle>
                 <PostDetail>{post.location.slice(2)+" "+post.locationDetail}</PostDetail>
                 <PostPrice>{post.rentalFee}원
-                <ImageIcon src={"/image/chatt.svg"} alt="" />
+                <ChatRoomCount>1</ChatRoomCount><ImageIcon src={"/image/chatt.svg"} alt="" />
                 </PostPrice>
               </Listbox>
               </Item>
@@ -176,7 +201,7 @@ const PostList = () => {
         :
         <NoPostBox>
           <NoPostText>썰렁~</NoPostText>
-          {locationName.slice(2)} 사람들은 빌릴게 없나봐요ㅜㅜ
+          {type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬")} 사람들은 빌릴게 없나봐요ㅜㅜ
         </NoPostBox>}
         </BoardBox>
       </PostBox>

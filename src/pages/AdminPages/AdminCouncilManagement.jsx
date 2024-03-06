@@ -33,10 +33,16 @@ const CollegeBox = styled.ul`
 const CouncilImg = styled.div`
     width: 50px;
     height: 50px;
-    border: 1px solid #eeeeee;
-    border-radius: 50px;
     float: left;
     margin-right: 10px;
+    & img{
+        border: 1px solid #eeeeee;
+    border-radius: 50px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 `;
 
 const CouncilContent = styled.div`
@@ -138,7 +144,7 @@ const AdminCouncilManagement = () => {
     const removeCouncil = async (id) => {
         try {
             console.log(id);
-            const response = await axios.delete("http://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
+            const response = await axios.delete("http://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + id, {
                 headers: {
                     Authorization: `Bearer ${cookies.token}`,
                 },
@@ -153,7 +159,7 @@ const AdminCouncilManagement = () => {
 
     return (
         <AdminBox>
-            <Header headerType={"noChatIcon"} headerText={"학생회 대여품 관리"}></Header>
+            <Header headerType={"noChatIcon"} headerText={"학생회 관리"}></Header>
             <ContentBox>
             <Link to={"/admin/cimanage/create"}>
                 <CreateCouncil>
@@ -167,7 +173,9 @@ const AdminCouncilManagement = () => {
                         <CollegeBox>
                             {college.map((council) => (
                                 <Council key={council.councilId}>
-                                    <CouncilImg></CouncilImg>
+                                    <CouncilImg>
+                                        <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + council.imgPath}></img>
+                                    </CouncilImg>
                                     <Link to={"/admin/cimanage/add/" + council.councilId} >
                                         <CouncilContent>
                                             <CouncilName>{council.name}</CouncilName>

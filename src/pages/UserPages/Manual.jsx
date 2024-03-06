@@ -48,11 +48,11 @@ const ImageIcon = styled.img`
 `;
 
 const Title = styled.div`
-  margin: 200px 0px 400px 0px;
+  margin: 250px 0px 400px 0px;
   text-align: center;
   height: 45px;
   line-height: 45px;
-  font-size: 55px;
+  font-size: 65px;
   font-weight: 600;
   /* font-family: 'Noto Sans KR';   */
   font-family: "Poppins";
@@ -61,7 +61,7 @@ const Title = styled.div`
 
 const SubTitle = styled.div`
   text-align: center;
-  font-size: 23px;
+  font-size: 20px;
   font-weight: 600;
   color: #343434;
   /* padding-bottom: 15px; */
@@ -96,7 +96,7 @@ const Manual = () => {
         <ManualContent ref={(el) => (manualContentsRef.current[0] = el)}>
         <Title>
           <SubTitle>가천대 대여 중개 서비스</SubTitle>
-          amadda
+          achacha
         </Title>
         </ManualContent>
         <ManualContent ref={(el) => (manualContentsRef.current[1] = el)}>

@@ -37,7 +37,7 @@ const Help = styled.div`
   text-align: center;
   line-height: 25px;
   font-weight: 900px;
-  color: #aaaaaa;
+  color: #379DFF;
   margin: 2px auto 0px auto;
 `;
 
@@ -57,13 +57,13 @@ const HeaderText = styled.span`
 const HomeTitle = styled.div`
   /* font-family: 'Noto Sans KR';   */
   font-family: "Poppins";
-  width: 30%;
+  width: 50%;
   padding-left: 20px;
   height: 50px;
   text-align: left;
   line-height: 50px;
   font-weight: 600;
-  font-size: 25px;
+  font-size: 23px;
   color: #ffffff;
   float: left;
 `;
@@ -187,7 +187,7 @@ const Header = ({ headerType, headerText }) => {
         <div>
           <HeaderBox nobg={"true"}>
             <HeaderContent>
-              <HomeTitle>amadda</HomeTitle>
+              <HomeTitle>Baram</HomeTitle>
               <AnnoBox>
                 <Link to={"/user/" + cookies.id}>
                   <Anno>

@@ -253,6 +253,7 @@ const RecentRateBox = styled.div`
   padding: 7px 0px;
 `;
 const RateDateBox = styled.div`
+  color: #c3c3c3;
   white-space: nowrap; 
 `;
 
@@ -309,6 +310,16 @@ const PostTitle = styled.div`
 const PostDate = styled.div`
   margin-left: 20px;
   white-space: nowrap; 
+  color: #c3c3c3;
+`;
+
+const NoData = styled.div`
+  margin: 20px 0px;
+  text-align: center;
+  font-size: 15px;
+  /* margin-left: 20px; */
+  color: #e4e4e4;
+  font-weight: 600;
 `;
 
 const User = () => {
@@ -473,16 +484,18 @@ const User = () => {
         최근 후기
         </BoxTitle>
         <PostInfoBox>
-        {reviewData.reviews.map((review, index) => (
+        {reviewData.reviews.length != 0 ? reviewData.reviews.map((review, index) => (
             <RecentRateBox key={index}>
               {review.writerType == "BORROWER" ?
               <BorrowCheckBox>빌렸어요</BorrowCheckBox>
                : 
                <LendCheckBox>빌려줬어요</LendCheckBox>}
             <ReviewText>{review.text}</ReviewText>
-            <RateDateBox>1일전</RateDateBox>
+            <RateDateBox>{review.createdAt[1]}/{review.createdAt[2]}</RateDateBox>
           </RecentRateBox>
-        ))}
+        )): 
+          <NoData>아직 후기가 없습니다</NoData>
+        }
         </PostInfoBox>
       </PostBox>
       <PostBox>
@@ -490,14 +503,15 @@ const User = () => {
           {userInfo.nickname}님이 작성한 글이에요
         </BoxTitle>
         <PostInfoBox>
-        {userPosts.map((post, index) => (
+        {userPosts.length != 0 ?userPosts.map((post, index) => (
           <Link to={"/posts/"+post.postId}>
             <UserPostItemBox key={index}>
              <PostTitle>{post.title}</PostTitle>
              <PostDate>{post.createdAt[1]}/{post.createdAt[2]}</PostDate>
             </UserPostItemBox>
           </Link>
-        ))}
+        )) : 
+        <NoData>아직 작성한 글이 없습니다</NoData>}
         </PostInfoBox>
       </PostBox>
       {cookies.certification == false ? (

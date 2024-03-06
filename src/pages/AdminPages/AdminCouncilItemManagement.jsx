@@ -193,6 +193,44 @@ const Tag = styled.span`
   margin-right: 10px;
 `;
 
+const Toggle = styled.div`
+  display: flex;
+  margin: 10px 0px;
+  float: right;
+`;
+
+
+const ToggleBtn = styled.button`
+    border: none;
+    background: none;
+`;
+
+const ToggleBox = styled.div`
+  width: 30px;
+  height: 15px;
+  border-radius: 50px;
+  padding: 5px;
+  background: ${({ isOn }) => (isOn ? '#2be149' : '#eeeeee')};
+  display: flex;
+`;
+
+const ToggleCircle = styled.div`
+  width: 15px;
+  height: 15px;
+  background: #ffffff;
+  border-radius: 50px;
+  ${({ isOn }) => (isOn ? 'none' : 'opacity: 0%')};
+
+`;
+
+const ToggleText = styled.div`
+    align-items: center;
+    line-height: 25px;
+    font-size: 15px;
+    color: #aaaaaa;
+    margin-right: 5px;
+`;
+
 const AdminCouncilItemManagement = () => {
     const [councilData, setCouncilData] = useState({
         college: '',
@@ -302,10 +340,38 @@ const AdminCouncilItemManagement = () => {
             console.error("오류 발생:", error);
         }
     };
+
+    const managerChange = async (id, isCouncilSelfManage) => {
+        try {
+            const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + id + "/" + isCouncilSelfManage,
+                {
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`,
+                    },
+                });
+            setKey(key + 1);
+            console.log(response);
+        } catch (error) {
+            console.error("오류 발생:", error);
+        }
+    };
     return (
         <AdminBox>
-            <Header headerType={"noChatIcon"} headerText={"물품 추가"}></Header>
+            <Header headerType={"noChatIcon"} headerText={councilData.name}></Header>
+            
             <ContentBox>
+            <Toggle>
+                <ToggleText>개수 정보 제공</ToggleText>
+                <ToggleBtn onClick={() => managerChange(councilData.councilId, !councilData.isCouncilSelfManage )}>
+                <ToggleBox isOn ={councilData.isCouncilSelfManage}>
+                    <ToggleCircle isOn ={councilData.isCouncilSelfManage == false}>
+                    </ToggleCircle>
+                    <ToggleCircle isOn ={councilData.isCouncilSelfManage == true}>   
+                    </ToggleCircle>
+                </ToggleBox>
+                </ToggleBtn>
+                
+            </Toggle>
                 <InputBox type="text" name="name" placeholder="물품명"
                     value={name}
                     onChange={(e) => {
@@ -332,7 +398,7 @@ const AdminCouncilItemManagement = () => {
                 </Details>
                 {/* 제출 버튼 */}
                 <SummitBtn onClick={handleAddCouncil}>추가</SummitBtn>
-                <CouncilName>{councilData.name}</CouncilName>
+                <CouncilName>{"물품 리스트"}</CouncilName>
                 <Items>
                     {councilData.items.map((item) => (
                         <Item key={item.itemId}>

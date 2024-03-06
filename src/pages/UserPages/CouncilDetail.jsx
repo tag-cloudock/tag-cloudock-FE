@@ -46,7 +46,7 @@ const ProfileImg = styled.div`
   width: 46px;
   height: 46px;
   border-radius: 30px;
-  border: 1px solid #c8c8c8;
+  border: 1px solid #eeeeee;
   float: left;
   background: #ffffff;
   overflow: hidden;
@@ -92,15 +92,15 @@ const CouncilName = styled.div`
   height: 45px;
   line-height: 45px;
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
   font-family: 'Noto Sans KR';  
 `;
 
 const Update = styled.div`
-  width: 130px;
+  display: inline-block;
   height: 21px;
-  padding: 5px;
+  padding: 5px 10px;
   border-radius: 30px;
   background: #eef6ff;
   color: #379dff;
@@ -110,7 +110,6 @@ const Update = styled.div`
   vertical-align: center;
   & img {
     margin-top: 4px;
-    margin-left: 3px;
     float: left;
   }
   & span {
@@ -179,10 +178,13 @@ const CouncilDetail = () => {
           <br />
           <span>이용수칙 </span> <div>{councilData.usageGuidelines}</div> <br />
         </CouncilInfo>
+
+        {councilData.isCouncilSelfManage ? 
         <Update>
           <img src={"/image/clockupdate.svg"}></img>
-          <span>실시간 업데이트중!</span>
+          <span>실시간 개수 업데이트</span>
         </Update>
+        : null}
       </CouncilInforContainer>
       <ProductContainer>
         <CategoryTitle>제공 물품</CategoryTitle>
@@ -191,7 +193,8 @@ const CouncilDetail = () => {
             item.type == "PROVIDED" ? 
             <li key={item.itemId}>
               {item.name}
-              <CategoryCount>{item.quantity}</CategoryCount>
+              {councilData.isCouncilSelfManage ? 
+              <CategoryCount>{item.quantity}</CategoryCount>:null}
             </li>
             : null
           ))}
@@ -204,7 +207,8 @@ const CouncilDetail = () => {
             item.type == "RENTAL" ? 
             <li key={item.itemId}>
               {item.name}
-              <CategoryCount>{item.quantity}</CategoryCount>
+              {councilData.isCouncilSelfManage ? 
+              <CategoryCount>{item.quantity}</CategoryCount>:null}
             </li>
             : null
           ))}
