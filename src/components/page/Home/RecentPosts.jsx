@@ -18,6 +18,9 @@ const Wrapped = styled.div`
   padding: 10px 10px;
   font-size: 15px;
 
+  @media screen and (max-width: 700px) {
+    font-size: 13px;
+  }
   & > * {
     opacity: ${({ isDone }) => (isDone ? "30%" : '100%')};
   }
@@ -31,11 +34,11 @@ const Title = styled.span`
   font-family: 'Noto Sans KR', sans-serif;
   padding-left: 15px;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 15px;
   display: inline-block;
   color: #000000;
   @media screen and (max-width: 700px) {
-    font-size: 15px;
+    font-size: 13px;
   }
   white-space: nowrap; 
   overflow: hidden; 

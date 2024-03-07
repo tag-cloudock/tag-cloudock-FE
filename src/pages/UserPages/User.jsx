@@ -167,21 +167,20 @@ const Option = styled.span`
   float: right;
 `;
 //옵션
-const OptionBox = styled.span`
+const OptionBox = styled.button`
+  margin-top: 3px;
   display: block;
-  cursor: pointer;
-
-  background: #ffffff;
+  height: 30px;
+  border: none;
+  background: none;
   border-radius: 30px;
   font-weight: 400;
   font-size: 14px;
   color: #d8d8d8;
-  &:hover {
-  }
-  @media screen and (max-width: 700px) {
+  /* @media screen and (max-width: 700px) {
     font-weight: 700;
     font-size: 13px;
-  }
+  } */
 `;
 
 const RateInfoBox1 = styled.span`
@@ -225,9 +224,7 @@ const ImageIcon2 = styled.img`
 `;
 
 const ImageIcon3 = styled.img`
-margin-top: 5px;
   width: 25px;
-  /* vertical-align: middle; */
 `;
 
 const RateBox = styled.div`
@@ -322,12 +319,121 @@ const NoData = styled.div`
   font-weight: 600;
 `;
 
+const ModalContainer = styled.div`
+  z-index: 1000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000077;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalBox = styled.div`
+  margin: 0 auto;
+  width: 80%;
+  height: 250px;
+  max-width: 400px;
+  border-radius: 30px;
+  background: #ffffff;
+  position: relative;
+`;
+
+const ModalBox2 = styled.div`
+  margin: 0 auto;
+  width: 80%;
+  height: 250px;
+  max-width: 400px;
+  border-radius: 30px;
+  background: #ffffff;
+  
+  position: relative;
+  text-align: center;
+
+`;
+
+const ModalBtnBox = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 22px;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const ModalBtn = styled.button`
+  border: none;
+  width: 40%;
+  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#379DFF')};
+  padding: 15px;
+  text-align: center;
+  border-radius: 15px;
+
+  font-size: 15px;
+  color:${({ isLeft }) => (isLeft ? '#aaaaaa' : '#FFFFFF')};
+`;
+
+const InputBox = styled.input`
+    width: 80%;
+    resize: none;
+
+    text-align: center;
+    margin: 40px auto 10px auto;
+    background: #f5f5f5;
+    border:none;
+    border-radius: 10px;
+    color:#333333;
+    font-size: 15px; 
+    outline: none;
+    padding: 13px 10px;
+    &::placeholder {
+        color: #aaaaaa; 
+        font-size: 15px;
+    }
+`;
+
+const FileInputBtn = styled.label`
+    display: block;
+    margin: 0 auto;
+    
+    & div{
+      width: 80%;
+      margin-top: 5px;
+      display: inline-block;
+      font-size: 15px;
+      color:#ffffff;
+      background: ${({ isFileSelected }) => (isFileSelected ? "#379DFF" : "#89c6ff")};
+      border-radius: 10px;
+      padding: 15px 10px;
+    }
+`;
+const FileInputBox = styled.input`
+    /* width: 66%; */
+    display: none;
+    border: none;
+    background: none;
+    &::file-selector-button{
+      display: none;
+    }
+`;
+
 const User = () => {
   const navigate = useNavigate(); // 페이지 이동을 위해
   const [cookies, , removeCookie] = useCookies(); // 쿠키 가져오기, 쿠기 삭제를 위한 함수
   const [userInfo, setUserInfo] = useState({imgPath:"default.png"}); // 유저 정보 상태
   const [reviewData, setReviewData] = useState({reviews:[]});
   const [userPosts, setUserPosts] = useState([]);
+  const [isDoneModalOn, setIsDoneModalOn] = useState(false);
+  const [nickname, setNickname] = useState("");
+  const [key, setKey] = useState(0);
+  const [file, setFile] = useState(null);
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setFile(file);
+    };
 
   const [img, setImg] = useState({}); // 유저 정보 상태
   const [isVertical, setIsVertical] = useState(true); // 유저 정보 상태
@@ -421,7 +527,44 @@ const User = () => {
     fetchUserPosts();
     fetchUserInfo();
     fetchReview();
-  }, [cookies.token, navigate]);
+  }, [cookies.token, navigate, key]);
+  const handleChange = async (e) => {
+    e.preventDefault();
+
+    if (nickname.length < 1) {
+        window.alert("닉네임을 입력해주세요.");
+        return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('request', new Blob([JSON.stringify({
+          nickname
+      })],
+          {
+              type: "application/json"
+          }));
+      formData.append('pic', file);
+      const signUpResponse = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/account/update",
+      formData,
+      {
+          headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Bearer ${cookies.token}`,
+
+          },
+      }
+      );
+        // 성공시
+        if (signUpResponse.status === 200) {
+            setIsDoneModalOn(false);
+            setKey(key+1);
+        }
+    } catch (error) {
+        console.error("오류 발생:", error);
+
+    }
+};
 
   // 쿠키 지우기
   const removeCookies = async (e) => {
@@ -447,7 +590,9 @@ const User = () => {
           <UserInfoContentBox>
             <Nickname>{userInfo.nickname}</Nickname>
             <Option>
-                <OptionBox>
+                <OptionBox onClick={() => {
+                setIsDoneModalOn(true);
+              }}>
                   <ImageIcon3 src={"/image/settingbutton.svg"} alt="" />
                 </OptionBox>
               </Option>
@@ -520,6 +665,46 @@ const User = () => {
                 </Link>
               ) : null}
      <Logout onClick={removeCookies}>로그아웃</Logout>
+
+
+
+        {isDoneModalOn ? 
+     <ModalContainer>
+          <ModalBox2>
+            {/* <ModalText2>
+             닉네임<br></br>
+            </ModalText2> */}
+
+            
+            <InputBox
+              type="text"
+              name="nickname"
+              placeholder="새로운 닉네임"
+              onChange={(e) => {
+                setNickname(e.target.value);
+            }}
+              maxLength={5}
+            />
+
+<FileInputBtn for="file" isFileSelected={file!=null}>
+                    <div>프로필 사진 변경</div>
+                </FileInputBtn>
+                <FileInputBox type="file" name="file" id="file" onChange={handleFileChange}/>
+            <ModalBtnBox>
+
+              <ModalBtn   onClick={() => {
+                setIsDoneModalOn(false);
+              }} isLeft={true}>
+               취소 하기
+            </ModalBtn>
+              
+              <ModalBtn  onClick={handleChange} isMine={""}>
+                적용 하기
+              </ModalBtn>
+            </ModalBtnBox>
+          </ModalBox2>
+        </ModalContainer>
+        :null}
     </div>
   );
 };

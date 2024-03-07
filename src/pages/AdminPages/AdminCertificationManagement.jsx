@@ -88,7 +88,7 @@ const UserInfo = styled.div`
 
 const CertifiState = styled.div`
     position: absolute;
-    top: 20px;
+    top: 30px;
     right: 20px;
     & img{
         ${({ isCertifi }) => (isCertifi ? null : 'opacity: 30%')};
@@ -105,7 +105,7 @@ const AdminCertificationManagement = () => {
     useEffect(() => {
         const fetchCertificationRequests = async () => {
             try {
-                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/certification/requests", {
+                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/certifi/requests", {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
@@ -122,18 +122,6 @@ const AdminCertificationManagement = () => {
         fetchCertificationRequests();
     }, [cookies.token, navigate, key]); // [] 와 같이 비워도 됨.
 
-    const getImage = (path) => {
-        var img = new Image();
-        var isVertical = true;
-        img.src = "http://" + process.env.REACT_APP_BACK_URL + "/image/" + path;
-
-        img.onload = function () {
-            var width = img.width;
-            var height = img.height;
-            isVertical = width <= height;
-        };
-        return { path: img.src, isVertical };
-    };
 
     return (
         <AdminBox>
@@ -153,16 +141,15 @@ const AdminCertificationManagement = () => {
             </Dashboard>
             <RequestsBox>
                 {certiRequest.map((request, index) => {
-                    const imgInfo = getImage(request.imgPath);
                     return (
                         <Link to={"/admin/certimanage/" + request.certiId} key={request.certiId} >
                             <Council key={request.certiId}>
-                                <UserImg isVertical={imgInfo.isVertical}>
+                                {/* <UserImg isVertical={imgInfo.isVertical}>
                                     <img src={imgInfo.path} />
-                                </UserImg>
+                                </UserImg> */}
                                 <UserInfo>
-                                    <span>아이디</span>{request.user.userId} <span>닉네임</span>{request.user.nickName}<br />
-                                    <span>이름</span>{"양태석"} <span>학번</span>{202235277}<br />
+                                    <span>아이디</span>{request.user.userId}<br /> <span>닉네임</span>{request.user.nickName}<br />
+                                    <span>이름</span>{request.name} <span>학번</span>{request.studentIdNumber}<br />
                                     <span>요청 시각</span>{request.requestAt[1]}/{request.requestAt[2]} {request.requestAt[3]}:{request.requestAt[4]}
                                 </UserInfo>
                                 <CertifiState isCertifi={request.user.certification}>

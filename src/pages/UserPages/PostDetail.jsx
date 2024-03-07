@@ -30,7 +30,7 @@ const BoardBox = styled.div`
 //게시물 제목
 const Title = styled.div`
 color: #000000;
-font-size: 23px;
+font-size: 20px;
 font-weight: 700;
 overflow: hidden; 
   text-overflow: ellipsis; 
@@ -44,9 +44,8 @@ const PostInfo = styled.div`
 //게시물 작성자
 const User = styled.div`
 /* margin: 15px 0px 0px; */
-color: #676767;
+color: rgb(103, 103, 103);
 font-size: 15px;
-font-weight: 700;
 & span{
   display: inline-block;
   margin-top: 3px;
@@ -60,10 +59,10 @@ const UserImage = styled.div`
   width: 25px;
   height: 25px;
   float: left;
-  border-radius: 100px;
-  overflow: hidden;
-  border: 1px solid #eeeeee;
+
   & img{
+    border-radius: 100px;
+    border: 1px solid #eeeeee;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -99,15 +98,11 @@ white-space: pre-wrap;
 const Image = styled.div`
   margin: 10px 0px 30px 0px;
   width: 100%;
-  /* height: 300px; */
-  /* max-height: 300px; */
-  overflow: hidden;
-  /* background: #dfdfdf; */
   & img{
+    border: 1px solid #eeeeee;
     border-radius: 20px;
     width: 100%;
     height: 100%;
-    /* max-height: 400px; */
     object-fit: cover;
     object-position: center;
   }
@@ -116,9 +111,12 @@ const Image = styled.div`
 //위치 가격 보증품 
 const ListName = styled.div`
 display: inline-block;
-  color: #000000;
+  color: #379DFF;
   font-size: 17px;
-  font-weight: 700;
+  background: #e6f3ff;
+  padding: 5px 7px;
+  border-radius: 7px;
+  /* font-weight: 700; */
   /* float: left; */
   margin-right: 10px;
 `;
@@ -133,7 +131,7 @@ const ListNameDetail = styled.div`
 
 //빌린날 BOX
 const BOX = styled.div`
-  border: 2px solid #eaeaea;
+  border: 1px solid #eeeeee;
   border-radius: 20px;
   display: flex;
   justify-content: space-around;
@@ -148,14 +146,14 @@ const DateInfoBox = styled.div`
 const DateTitle = styled.div`
   color: #676767;
   font-size: 17px;
-  font-weight: 700;
+  /* font-weight: 700; */
   text-align: center;
   margin-bottom: 5px;
 `;
 //필요한날짜
 const DateText = styled.div`
   color: #676767;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   text-align: center;
 `;
@@ -177,7 +175,7 @@ margin: 30px 0px;
   padding: 10px;
   border-radius: 8px;
 
-  background:${({ isDone }) => (isDone ? '#b1d9ff' : '#379DFF')};
+  background:${({ isDone }) => (isDone ? '#cee7ff' : '#379DFF')};
   color: var(--White, #FFF);
 text-align: center;
 font-size: 20px;
@@ -187,7 +185,7 @@ font-weight: 600;
 
 const InfoBox = styled.div`
   width: 100%;
-  margin: 10px 0px;
+  margin: 15px 0px;
 `;
 
 const ModalContainer = styled.div`
@@ -400,12 +398,12 @@ const PostDetail = () => {
           </InfoBox>
           <BOX>
             <DateInfoBox>
-              <DateTitle>필요한날</DateTitle>
+              <DateTitle>필요한 날</DateTitle>
               <DateText>{post.needAt[0] + "." + post.needAt[1] + "." + post.needAt[2]}</DateText>
             </DateInfoBox>
             <RangeDate>{difference}일</RangeDate>
             <DateInfoBox>
-              <DateTitle>반납날짜</DateTitle>
+              <DateTitle>반납하는 날</DateTitle>
               <DateText>{post.returnAt[0] + "." + post.returnAt[1] + "." + post.returnAt[2]}</DateText>
             </DateInfoBox>
           </BOX>

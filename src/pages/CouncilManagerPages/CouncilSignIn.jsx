@@ -182,7 +182,7 @@ const CouncilSignIn = () => {
           <SubTitle>
             학생회 전용
           </SubTitle>
-          <Link to={"/"}>BARAM</Link>
+          <Link to={"/"}>Baram</Link>
         </Title>
 
         {/* 아이디 */}
@@ -212,7 +212,9 @@ const CouncilSignIn = () => {
 
         {/* 제출 버튼 */}
         <SubmitBtn onClick={handleLogin}>로그인</SubmitBtn>
-        <ForgotPassword>비밀 번호를 잊으셨나요?</ForgotPassword>
+        <Link to={"/council/forgot"}>
+        <ForgotPassword>아이디/비밀번호를 잊으셨나요?</ForgotPassword>
+            </Link>
       </LoginBox>
     </div>
   );

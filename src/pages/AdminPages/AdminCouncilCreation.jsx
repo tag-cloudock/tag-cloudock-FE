@@ -180,6 +180,7 @@ const AdminCouncilCreation = () => {
     const [file, setFile] = useState(null);
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
+
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setFile(file);
@@ -266,9 +267,8 @@ const AdminCouncilCreation = () => {
             const signUpResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/manage/council",
             formData,
             {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${cookies.token}`,
             }
             );
             // 성공시

@@ -66,6 +66,12 @@ const HomeTitle = styled.div`
   font-size: 23px;
   color: #ffffff;
   float: left;
+  & span{
+    font-size: 17px;
+     font-family: 'Noto Sans KR';  
+     margin-left: 5px;
+     opacity: 50%;
+  }
 `;
 
 // 공지사항 박스
@@ -187,7 +193,7 @@ const Header = ({ headerType, headerText }) => {
         <div>
           <HeaderBox nobg={"true"}>
             <HeaderContent>
-              <HomeTitle>Baram</HomeTitle>
+              <HomeTitle>Baram<span>바람</span></HomeTitle>
               <AnnoBox>
                 <Link to={"/user/" + cookies.id}>
                   <Anno>

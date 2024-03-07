@@ -14,24 +14,13 @@ const SubTitle = styled.div`
   text-align: left;
   line-height: 50px;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 20px;
   color: #000000;
   margin-top: 15px;
   @media screen and (max-width: 700px) {
     padding-top: 10px;
-    padding-bottom: 15px;
+    padding-bottom: 20px;
     font-size: 20px;
-  }
-`;
-
-// 아이콘 이미지 조정
-const ImageIcon = styled.img`
-  width: 30px;
-  vertical-align: middle;
-  margin-left: 5px;
-  margin-bottom: 5px;
-  @media screen and (max-width: 700px) {
-    width: 24px;
   }
 `;
 
@@ -41,7 +30,7 @@ const CampusMoveBox = styled.div`
   display: flex;
   justify-content: space-evenly;
 
-  /* background: #f2f2f2; */
+  background: #f9f9f9;
   border-radius: 30px;
   margin: 30px 20px 10px 20px;
 
@@ -51,10 +40,10 @@ const CampusMoveBox = styled.div`
 const CampusBox = styled.button`
   border: none;
   background: none;
-  width: 45%;
-  margin: 3px 0px;
+  width: 50%;
+  margin: 5px 5px;
   border-radius: 40px;
-  background: ${({ isOn }) => (isOn ? "#f1f1f1" : null)};
+  background: ${({ isOn }) => (isOn ? "#ffffff" : null)};
   &:hover {
     /* background: #f9f9f9; */
   }
@@ -68,10 +57,8 @@ const CampusText = styled.div`
   text-align: center;
   font-weight: 400;
   padding: 10px 0px;
-  font-family: 'Noto Sans KR'; 
-  /* border-bottom: 2px solid #eeeeee; */
-  font-size: 20px;
-  color: ${({ isOn }) => (isOn ? " #818181" : "#d4dce6")};
+  font-size: 17px;
+  color: ${({ isOn }) => (isOn ? " #379dff" : "#d4dce6")};
 `;
 
 // 대여 박스 Parent
@@ -93,7 +80,7 @@ const RecentPostBox = styled.div`
   justify-content: center;
 
   & div div:nth-child(odd) a div {
-    background: #f6f6f6;
+    background: #f8f8f8;
   }
 `;
 
@@ -104,6 +91,7 @@ const LocationItems = styled.div`
   /* margin-bottom: 100px; */
   background: #ffffff;
   border-radius: 20px;
+  text-align: center;
   /* box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px; */
 `;
 
@@ -111,14 +99,16 @@ const LocationItems = styled.div`
 const LocationItem = styled.span`
   display: inline-block;
   /* margin: 7px 5px; */
-  background: #ffffff;
-  border-radius: 10px;
+  background: #ebf6ff;
+  text-align: center;
+  border-radius: 50px;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 14px;
   color: #379dff;
   padding: 7px;
+  margin: 5px;
   &:hover {
-    background: #f4f4f4;
+    /* background: #f4f4f4; */
     /* color: #ffffff; */
   }
 `;
@@ -214,7 +204,8 @@ const CouncilBtn = styled.div`
   border-radius: 20px;
   background: #FFF;
   padding: 20px 20px;
-  box-shadow: 0px 2px 15px 0px rgba(157, 157, 157, 0.25);
+  /* box-shadow: 0px 2px 15px 0px rgba(181, 181, 181, 0.25); */
+  border: 1px solid #eeeeee;
   height: 50px;
   margin: 30px 20px 0px 20px;
   @media screen and (min-width: 700px) {
@@ -230,14 +221,15 @@ const CouncilBtn = styled.div`
 const CouncilBtnText = styled.div`
   float: left;
   font-size: 22px;
-  color: #000000;
+  color: #379dff;
   font-weight: 400;
   line-height: 27px;
   transition: margin-left 0.3s ease; /* transition 속성 추가 */
-
+  font-weight: 500;
   & span {
+    margin-top: 2px;
     font-size: 15px;
-    color: #b1b1b1;
+    color: #bebebe;
     display: block;
   }
 `;
@@ -302,7 +294,7 @@ const Home = () => {
             <CouncilBtnText>
               {campus == 0 ?"글" : "메"}캠 학생회 물품 보러가기
               <span>
-                25개의 학생회, 150개의 물품대여중
+                25개의 학생회, 150개의 물품대여중!
               </span>
             </CouncilBtnText>
            
@@ -321,7 +313,7 @@ const Home = () => {
         </ContentAreaBox>
         {/* 장소 선택 목록 */}
         <SubTitle>
-          어딘가요? 내 물건을 바라는 곳
+          어딘가요? 내 물건을 바라는 곳!
         </SubTitle>
         <ContentAreaBox>
           <LocationItems>
@@ -339,11 +331,48 @@ const Home = () => {
             <Link to={"/posts?location=G 가천관"}>
               <LocationItem>#가천관</LocationItem>
             </Link>
-            <Link to={"/posts?location=G 공대2"}>
-              <LocationItem>#공대2</LocationItem>
+            <Link to={"/posts?location=G 공과대학1"}>
+              <LocationItem>#공과대학1</LocationItem>
             </Link>
-            <Link to={"/posts?location=G 공대1"}>
-              <LocationItem>#공대1</LocationItem>
+            <Link to={"/posts?location=G 공과대학2"}>
+              <LocationItem>#공과대학2</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 반도체대학"}>
+              <LocationItem>#반도체대학</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 한의과대학"}>
+              <LocationItem>#한의과대학</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 예체대1"}>
+              <LocationItem>#예체대1</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 예체대2"}>
+              <LocationItem>#예체대2</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 전자정보도서관"}>
+              <LocationItem>#전자정보도서관</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 대학원"}>
+              <LocationItem>#대학원</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 교육대학원"}>
+              <LocationItem>#교육대학원</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 바이오나노연구원"}>
+              <LocationItem>#바이오나노연구원</LocationItem>
+            </Link>
+              
+            <Link to={"/posts?location=G 학생회관"}>
+              <LocationItem>#학생회관</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 제1기숙사"}>
+              <LocationItem>#제1기숙사</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 제2기숙사"}>
+              <LocationItem>#제2기숙사</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 제3기숙사"}>
+              <LocationItem>#제3기숙사</LocationItem>
             </Link>
             <Link to={"/posts?location=G 글로벌센터"}>
               <LocationItem>#글로벌센터</LocationItem>
@@ -355,7 +384,13 @@ const Home = () => {
               <LocationItem>#비전타워</LocationItem>
             </Link>
             <Link to={"/posts?location=G 교육대학"}>
-              <LocationItem>#교육대학</LocationItem>
+              <LocationItem>#법과대학</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 제1기숙사"}>
+              <LocationItem>#바개동</LocationItem>
+            </Link>
+            <Link to={"/posts?location=G 제1기숙사"}>
+              <LocationItem>#광장</LocationItem>
             </Link>
             </div>
             :

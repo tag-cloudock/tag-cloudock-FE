@@ -38,6 +38,8 @@ const InputBox = styled.input`
       border-color: #38d9a9;
     }
 `;
+
+
 const TextareaBox = styled.textarea`
     width: 94%;
     height: 100px;
