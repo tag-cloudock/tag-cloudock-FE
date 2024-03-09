@@ -135,6 +135,11 @@ const AdminAnnoManagement = () => {
                     navigate("/signin");
                     return;
                 }
+                if (cookies.roles != "ADMIN") {
+                    navigate("/");
+                    return;
+                  
+                  }
 
                 // 유저의 채팅방 모두 가져오기 api 요청
                 const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/anno/all", {

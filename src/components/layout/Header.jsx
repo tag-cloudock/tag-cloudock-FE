@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 // 헤더 박스
 const HeaderBox = styled.div`
   z-index: 1;
-  background: ${({ nobg }) => (nobg ? '#379DFF' : '#ffffff')};
+  background: ${({ nobg }) => (nobg ? '#6093FF' : '#ffffff')};
   position: fixed;
   left: 0;
   right: 0;
@@ -62,7 +62,8 @@ const HomeTitle = styled.div`
   height: 50px;
   text-align: left;
   line-height: 50px;
-  font-weight: 600;
+  font-weight: 800;
+  
   font-size: 23px;
   color: #ffffff;
   float: left;
@@ -155,13 +156,14 @@ const ChatBtn = styled.div`
 `;
 
 const CouncilTitle = styled.div`
+font-family: "Poppins";
 display: inline-block;
     width: 30%;
   padding-left: 20px;
   height: 50px;
   text-align: left;
   line-height: 50px;
-  font-weight: 800;
+  font-weight: 850;
   font-size: 25px;
   color: #c5c5c5;
   /* float: left; */
@@ -193,7 +195,7 @@ const Header = ({ headerType, headerText }) => {
         <div>
           <HeaderBox nobg={"true"}>
             <HeaderContent>
-              <HomeTitle>Baram<span>바람</span></HomeTitle>
+              <HomeTitle>Baram</HomeTitle>
               <AnnoBox>
                 <Link to={"/user/" + cookies.id}>
                   <Anno>

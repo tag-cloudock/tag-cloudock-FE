@@ -9,11 +9,28 @@ import MenuBar from "../../components/layout/MenuBar";
 // 로그아웃 버튼
 const Logout = styled.button`
   display: block;
+  margin: 10px auto 20px auto;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  color: #6093FF;
+  font-size: 17px;
+  line-height: 30px;
+  font-weight: 400;
+  width: 200px;
+  height: 40px;
+  cursor: pointer;
+  &:hover {
+    background: #f7f7f7;
+  }
+`;
+const MoveCertifi = styled.button`
+  display: block;
   margin: 10px auto 0px auto;
   border: none;
   border-radius: 10px;
   background: none;
-  color: #379dff;
+  color: #6093FF;
   font-size: 17px;
   line-height: 30px;
   font-weight: 400;
@@ -76,12 +93,12 @@ const CountBox = styled.div`
 const CountInfoBox = styled.span`
   text-align: center;
   font-weight: 400;
-  font-size: 20px;
-  color: #379dff;
+  font-size: 18px;
+  color: #6093FF;
   display: inline-block;
   margin: 5px 0px 5px 8px;
   padding: 15px;
-  background: #eef6ff;
+  background: #f3f7ff;
   border-radius: 10px;
   width: 100%;
   @media screen and (max-width: 700px) {
@@ -117,7 +134,7 @@ const Certifi = styled.div`
     text-align: center;
   }
   & span span {
-    color: #379dff;
+    color: #6093FF;
     text-align: center;
   }
 `;
@@ -128,9 +145,10 @@ const PostBox = styled.div`
 //
 const PostInfoBox = styled.div`
   background: #ffffff;
-  padding: 20px;
+  padding: 20px 10px;
   border-radius: 15px;
-  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
+  /* box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px; */
+  border: 1px solid #eeeeee;
   & a:last-child div{
     border-bottom: none;
   }
@@ -189,7 +207,6 @@ const RateInfoBox1 = styled.span`
   font-weight: 800;
   font-size: 18px;
   display: inline-block;
-  background: #ffffff;
   padding: 10px 40px;
   border-radius: 10px 0px 0px 10px;
   width: 160px;
@@ -200,9 +217,8 @@ const RateInfoBox2 = styled.span`
   font-weight: 800;
   font-size: 18px;
   display: inline-block;
-  background: #ffffff;
   padding: 10px 40px;
-  border-left: 1.5px solid #ededed;
+  border-left: 1px solid #f5f5f5;
   width: 160px;
 `;
 const RateInfoBox3 = styled.span`
@@ -211,10 +227,9 @@ const RateInfoBox3 = styled.span`
   font-weight: 800;
   font-size: 18px;
   display: inline-block;
-  background: #ffffff;
   padding: 10px 40px;
   /* border-radius: 0px 10px 10px 0px; */
-  border-left: 1.5px solid #ededed;
+  border-left: 1px solid #f5f5f5;
   width: 160px;
 `;
 
@@ -230,8 +245,9 @@ const ImageIcon3 = styled.img`
 const RateBox = styled.div`
   display: flex;
   border-radius: 10px;
+  background: #f5f5f5c5;
   overflow: hidden;
-  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px;
+  /* border: 1px solid #eeeeee; */
   @media screen and (max-width: 700px) {
   }
 `;
@@ -268,21 +284,21 @@ const LendCheckBox = styled.div`
   display: inline-block;
   border-radius: 30px;
   font-weight:600;
-  font-size: 12px;
+  font-size: 10px;
   color: white;
   padding: 6px;
   white-space: nowrap; 
-  background: #379dff;
+  background: #6093FF;
 `;
 
 const BorrowCheckBox = styled.div`
   display: inline-block;
   border-radius: 30px;
   font-weight:600;
-  font-size: 12px;
+  font-size: 10px;
   color: white;
   padding: 6px 13px;
-  background: #76bcff;
+  background: #aac5ff;
   white-space: nowrap; 
 `;
 
@@ -346,7 +362,7 @@ const ModalBox = styled.div`
 const ModalBox2 = styled.div`
   margin: 0 auto;
   width: 80%;
-  height: 250px;
+  height: 280px;
   max-width: 400px;
   border-radius: 30px;
   background: #ffffff;
@@ -367,7 +383,7 @@ const ModalBtnBox = styled.div`
 const ModalBtn = styled.button`
   border: none;
   width: 40%;
-  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#379DFF')};
+  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#6093FF')};
   padding: 15px;
   text-align: center;
   border-radius: 15px;
@@ -381,7 +397,7 @@ const InputBox = styled.input`
     resize: none;
 
     text-align: center;
-    margin: 40px auto 10px auto;
+    margin: 20px auto 10px auto;
     background: #f5f5f5;
     border:none;
     border-radius: 10px;
@@ -405,7 +421,7 @@ const FileInputBtn = styled.label`
       display: inline-block;
       font-size: 15px;
       color:#ffffff;
-      background: ${({ isFileSelected }) => (isFileSelected ? "#379DFF" : "#89c6ff")};
+      background: ${({ isFileSelected }) => (isFileSelected ? "#6093FF" : "#dce7ff")};
       border-radius: 10px;
       padding: 15px 10px;
     }
@@ -418,6 +434,14 @@ const FileInputBox = styled.input`
     &::file-selector-button{
       display: none;
     }
+`;
+
+const ModalText = styled.div`
+  margin-top: 20px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  /* line-height: 30px; */
 `;
 
 const User = () => {
@@ -636,10 +660,10 @@ const User = () => {
                : 
                <LendCheckBox>빌려줬어요</LendCheckBox>}
             <ReviewText>{review.text}</ReviewText>
-            <RateDateBox>{review.createdAt[1]}/{review.createdAt[2]}</RateDateBox>
+            <RateDateBox>{review.createdAt[1]}월 {review.createdAt[2]}일</RateDateBox>
           </RecentRateBox>
         )): 
-          <NoData>아직 후기가 없습니다</NoData>
+          <NoData>아직 후기가 없어요!</NoData>
         }
         </PostInfoBox>
       </PostBox>
@@ -652,16 +676,16 @@ const User = () => {
           <Link to={"/posts/"+post.postId}>
             <UserPostItemBox key={index}>
              <PostTitle>{post.title}</PostTitle>
-             <PostDate>{post.createdAt[1]}/{post.createdAt[2]}</PostDate>
+             <PostDate>{post.createdAt[1]}월 {post.createdAt[2]}일</PostDate>
             </UserPostItemBox>
           </Link>
         )) : 
-        <NoData>아직 작성한 글이 없습니다</NoData>}
+        <NoData>아직 작성한 글이 없어요!</NoData>}
         </PostInfoBox>
       </PostBox>
       {cookies.certification == false ? (
                 <Link to={"/certification"}>
-                   <Logout>학생증 인증하기</Logout>
+                   <MoveCertifi>학생증 인증하기</MoveCertifi>
                 </Link>
               ) : null}
      <Logout onClick={removeCookies}>로그아웃</Logout>
@@ -671,9 +695,9 @@ const User = () => {
         {isDoneModalOn ? 
      <ModalContainer>
           <ModalBox2>
-            {/* <ModalText2>
-             닉네임<br></br>
-            </ModalText2> */}
+            <ModalText>
+             프로필 수정
+            </ModalText>
 
             
             <InputBox

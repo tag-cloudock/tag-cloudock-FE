@@ -76,6 +76,21 @@ const AdminAnnoCreation = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const navigate = useNavigate(); // 페이지 이동 위해
+    const [cookies, , removeCookie] = useCookies();
+
+      useEffect(() => {
+        if (!cookies.token) {
+          navigate("/signin");
+          return;
+        
+        }
+        if (cookies.roles != "ADMIN") {
+            navigate("/");
+            return;
+          
+          }
+
+    });
 
     const handleAddAnno = async (e) => {
         e.preventDefault();
@@ -100,7 +115,13 @@ const AdminAnnoCreation = () => {
                     title,
                     content,
                     createdAt
-                }
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${cookies.token}`,
+                },
+            }
+                
             );
             // 성공시
             if (signUpResponse.status === 200) {

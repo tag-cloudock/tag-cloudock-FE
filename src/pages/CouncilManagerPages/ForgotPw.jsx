@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
@@ -17,13 +17,15 @@ const LoginBox = styled.div`
 
 // 타이틀
 const Title = styled.div`
+
   text-align: center;
   height: 45px;
   line-height: 45px;
-  margin-bottom: 150px;
-  font-size: 60px;
+  margin-bottom: 100px;
+  font-size: 63px;
   font-weight: 850;
   & a{
+    font-family: "Poppins";
     color : #38d9a9;
   }
 `;
@@ -41,7 +43,8 @@ const SubTitle = styled.div`
 const ForgotPassword = styled.span`
   display: block;
   text-align: center;
-  color : #585858;
+  color : #848484a9;
+  font-weight: 600;
 `;
 
 // 입력 박스
@@ -88,7 +91,7 @@ const SubmitBtn = styled.button`
 
 // 비밀번호 잊어버림 문구
 const GoBack = styled.span`
-  margin-top: 50px;
+  margin-top: 30px;
   display: block;
   text-align: center;
   color : #38d9a9;
@@ -97,7 +100,7 @@ const GoBack = styled.span`
 const AlertBox = styled.div`
   width: 100%;
   /* height: 100px; */
-  background: #f4f4f4;
+  background: #f4f4f49a;
   border-radius: 20px;
   padding: 50px 0px;
   line-height: 30px;
@@ -107,17 +110,17 @@ const AlertBox = styled.div`
 
 const ForgotPw = () => {
   const navigate = useNavigate(); // 페이지 이동을 위해
-  const [, setCookie] = useCookies(); // 쿠키 생성을 위해
+  const [cookies, setCookie] = useCookies(); // 쿠키 생성을 위해
 
-  // 입력 박스 포커스
-  const useridRef = useRef();
-  const passwordRef = useRef();
-
-  // 입력 박스 텍스트 상태
-  const [userid, setUserid] = useState("");
-  const [password, setPassword] = useState("");
-
- 
+  useEffect(() => {
+    if (!cookies.token) {
+      navigate("/signin");
+      return;
+    }
+    if (cookies.roles != "MANAGER") {
+      navigate("/");
+      return;  
+    } });
 
   return (
     <div>
@@ -125,14 +128,14 @@ const ForgotPw = () => {
         {/* 타이틀 */}
         <Title>
           <SubTitle>
-            학생회 전용
+            학생회 로그인
           </SubTitle>
           <Link to={"/"}>Baram</Link>
         </Title>
 
         <AlertBox>
-        <ForgotPassword>아이디 또는 비밀번호 잊으셨나요?</ForgotPassword>
-        <ForgotPassword>아래 오픈 카카오톡으로 문의 바랍니다!</ForgotPassword>
+        <ForgotPassword>아이디/비밀번호 잊었나요?</ForgotPassword>
+        <ForgotPassword>오픈 카카오톡으로 문의 하세요!</ForgotPassword>
         </AlertBox>
 
         <Link to={"/council/signin"}>

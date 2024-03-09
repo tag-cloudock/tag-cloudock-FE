@@ -8,7 +8,7 @@ import Footer from "../../components/layout/Footer";
 
 // 홈 각 박스 제목
 const SubTitle = styled.div`
-  padding-top: 25px;
+  padding-top: 10px;
   padding-bottom: 5px;
   padding-left: 20px;
   text-align: left;
@@ -30,7 +30,7 @@ const CampusMoveBox = styled.div`
   display: flex;
   justify-content: space-evenly;
 
-  background: #f9f9f9;
+  background: #f2f2f2;
   border-radius: 30px;
   margin: 30px 20px 10px 20px;
 
@@ -41,7 +41,7 @@ const CampusBox = styled.button`
   border: none;
   background: none;
   width: 50%;
-  margin: 5px 5px;
+  margin: 3px 3px;
   border-radius: 40px;
   background: ${({ isOn }) => (isOn ? "#ffffff" : null)};
   &:hover {
@@ -55,10 +55,10 @@ const CampusBox = styled.button`
 const CampusText = styled.div`
   width: 100%;
   text-align: center;
-  font-weight: 400;
-  padding: 10px 0px;
+  font-weight: 500;
+  padding: 7px 0px;
   font-size: 17px;
-  color: ${({ isOn }) => (isOn ? " #379dff" : "#d4dce6")};
+  color: ${({ isOn }) => (isOn ? " #6093FF" : "#a3abb5")};
 `;
 
 // 대여 박스 Parent
@@ -80,7 +80,7 @@ const RecentPostBox = styled.div`
   justify-content: center;
 
   & div div:nth-child(odd) a div {
-    background: #f8f8f8;
+    background: #f4f4f4;
   }
 `;
 
@@ -99,13 +99,13 @@ const LocationItems = styled.div`
 const LocationItem = styled.span`
   display: inline-block;
   /* margin: 7px 5px; */
-  background: #ebf6ff;
+  background: #f1f6ff;
   text-align: center;
   border-radius: 50px;
   font-weight: 400;
   font-size: 14px;
-  color: #379dff;
-  padding: 7px;
+  color: #6093FF;
+  padding: 7px 10px;
   margin: 5px;
   &:hover {
     /* background: #f4f4f4; */
@@ -114,7 +114,7 @@ const LocationItem = styled.span`
 `;
 
 const HomeContainer = styled.div`
-  background: #379dff;
+  background: #6093FF;
   /* box-shadow: 0px 8px 16px 0px rgba(142, 142, 142, 0.2); */
 `;
 
@@ -123,10 +123,10 @@ const Container = styled.div`
   z-index: 2;
   width: 100%;
   position: absolute;
-  margin-top: 270px;
+  margin-top: 350px;
 
   @media screen and (min-width: 700px) {
-    margin-top: 360px;
+    /* margin-top: 360px; */
   } 
   border-radius: 30px 30px 0px 0px;
   background: #ffffff;
@@ -137,33 +137,40 @@ const HomeMainTextBox = styled.div`
   width: 100%;
   height: 100%;
   left: 0;
-  background: linear-gradient(to top, #6fb9ff, #379dff 50%);
+  background: linear-gradient(to top, #6fb9ff, #6093FF 50%);
   top: -30px;
 
   margin-top: 30px;
 `;
 const BlurBar= styled.div`
+  z-index: 100;
   width: 50px;
   height: 500px;
   position: absolute;
   ${({ isLeft }) => (isLeft ? "left: 0;"  : "right: 0;"   )}
-  background: linear-gradient(${({ isLeft }) => (isLeft ? "to left"  : "to right"   )}, #379eff00, #379dff 100%);
+  background: linear-gradient(${({ isLeft }) => (isLeft ? "to left"  : "to right"   )}, #379eff00, #6093FF 90%);
 `
 
 const HomeMainText= styled.div`
   position: relative;
-  margin: 0px auto;
+  margin: 50px auto;
   max-width:701px;
   font-size: 65px;
-  overflow: hidden;
+  /* overflow: hidden; */
   line-height: 60px;
   color: #ffffff;
+
+  margin-top: 35px;
+  height: 250px;
+  
+  /* background: #ffffff72; */
+
   @media screen and (min-width: 700px) {
     font-size: 90px;
     line-height: 90px;
   } 
   & span{
-    margin-left: -20px;
+    /* margin-left: -20px; */
     margin-top: 10px;
     display: inline-block;
     width: 1000px;
@@ -171,19 +178,27 @@ const HomeMainText= styled.div`
     color:#ffffff22;
 
   }
-  & span:nth-child(even) {
-    margin-left: -80px;
-  }
+  padding: 20px;
   & img{
-    position: absolute;
-    top: 15px;
-    margin-left: 5px;
-    /* margin-top: 15px; */
+    border-radius: 0px;
+    /* position: absolute; */
+    width: 100%;
+    margin-top: 40px;
+    border-radius: 20px;
     @media screen and (min-width: 700px) {
-      top: 35px;
-    margin-left: 5px;
+    border-radius: 30px;
   } 
   }
+`;
+
+const AdAlert = styled.div`
+/* z-index: 100; */
+  /* position: absolute; */
+  color: #ffffff;
+  top: 100px;
+  font-weight: 700;
+  font-size: 15px;
+  float: right;
 `;
 
 // 화살표 아이콘 이미지 조정
@@ -201,13 +216,14 @@ const ArrowIcon = styled.img`
 `;
 
 const CouncilBtn = styled.div`
-  border-radius: 20px;
-  background: #FFF;
-  padding: 20px 20px;
+  /* border-radius: 20px; */
+  padding: 30px 30px;
   /* box-shadow: 0px 2px 15px 0px rgba(181, 181, 181, 0.25); */
-  border: 1px solid #eeeeee;
+  /* border: 1px solid #f2f2f2; */
+  background: #f1f5ff;
+  /* background: #f4f4f4a2; */
   height: 50px;
-  margin: 30px 20px 0px 20px;
+  margin: 30px 0px 0px 0px;
   @media screen and (min-width: 700px) {
     &:hover div{
     margin-left: 30px; /* 마우스 호버 시 이동할 거리 */
@@ -220,16 +236,18 @@ const CouncilBtn = styled.div`
 `;
 const CouncilBtnText = styled.div`
   float: left;
-  font-size: 22px;
-  color: #379dff;
-  font-weight: 400;
+  font-size: 25px;
+  /* color: #6093FF; */
+  
+  color : #6093FF;
   line-height: 27px;
   transition: margin-left 0.3s ease; /* transition 속성 추가 */
-  font-weight: 500;
+  font-weight: 700;
   & span {
+    font-weight: 400;
     margin-top: 2px;
     font-size: 15px;
-    color: #bebebe;
+    color: #2e2e2e;
     display: block;
   }
 `;
@@ -250,6 +268,16 @@ width: 50px;
   background: #d5d5d5;
   border-radius: 20px;
 `;
+
+const Intro = styled.div`
+  /* position: absolute; */
+  font-size: 20px;
+  /* font-weight: 700; */
+  width: 100%;
+  text-align: center;
+  bottom: 0px;
+`;
+
 const Home = () => {
   const [campus, setCampus] = useState(0);
   return (
@@ -258,13 +286,14 @@ const Home = () => {
       {/* 학생회 대여 */}
       <HomeMainTextBox>
         <HomeMainText>
-          <BlurBar isLeft={true}></BlurBar>
-          <BlurBar isLeft={false}></BlurBar>
-          {/* <span>{"아!아!아!아!아!아!아!"}</span>
-          <span>{" 아!아!아!아!아!아!아!"}</span>
-          <span>{"아!아!아!아!아!아!아!"}</span>
-          <span>{" 아!아!아!아!아!아!아!"}</span> */}
+        {/* <BlurBar isLeft={true}></BlurBar> */}
+        <a href="https://www.leets.land">
+          <img src={"/image/ad.svg"}></img>
+          </a>
+          {/* <Intro>가천대 대여 중개 사이트</Intro> */}
+          {/* <AdAlert>교내 홍보 문의</AdAlert> */}
         </HomeMainText>
+       
       </HomeMainTextBox>
       <Container>
         <Bar></Bar>
@@ -292,7 +321,7 @@ const Home = () => {
         <Link to={campus == 0 ?"/councils?campus=global" : "/councils?campus=medical"}>
           <CouncilBtn>
             <CouncilBtnText>
-              {campus == 0 ?"글" : "메"}캠 학생회 물품 보러가기
+              {campus == 0 ?"글" : "메"}캠 학생회 대여품 보러 GO!
               <span>
                 25개의 학생회, 150개의 물품대여중!
               </span>
@@ -320,86 +349,86 @@ const Home = () => {
             {campus == 0 ? 
             <div>
             <Link to={"/posts?location=G 바나대"}>
-              <LocationItem>#바나대</LocationItem>
+              <LocationItem>바나대</LocationItem>
             </Link>
             <Link to={"/posts?location=G AI공학관"}>
-              <LocationItem>#AI공학관</LocationItem>
+              <LocationItem>AI공학관</LocationItem>
             </Link>
             <Link to={"/posts?location=G 중앙도서관"}>
-              <LocationItem>#중앙도서관</LocationItem>
+              <LocationItem>중앙도서관</LocationItem>
             </Link>
             <Link to={"/posts?location=G 가천관"}>
-              <LocationItem>#가천관</LocationItem>
+              <LocationItem>가천관</LocationItem>
             </Link>
             <Link to={"/posts?location=G 공과대학1"}>
-              <LocationItem>#공과대학1</LocationItem>
+              <LocationItem>공과대학1</LocationItem>
             </Link>
             <Link to={"/posts?location=G 공과대학2"}>
-              <LocationItem>#공과대학2</LocationItem>
+              <LocationItem>공과대학2</LocationItem>
             </Link>
             <Link to={"/posts?location=G 반도체대학"}>
-              <LocationItem>#반도체대학</LocationItem>
+              <LocationItem>반도체대학</LocationItem>
             </Link>
             <Link to={"/posts?location=G 한의과대학"}>
-              <LocationItem>#한의과대학</LocationItem>
+              <LocationItem>한의과대학</LocationItem>
             </Link>
             <Link to={"/posts?location=G 예체대1"}>
-              <LocationItem>#예체대1</LocationItem>
+              <LocationItem>예체대1</LocationItem>
             </Link>
             <Link to={"/posts?location=G 예체대2"}>
-              <LocationItem>#예체대2</LocationItem>
+              <LocationItem>예체대2</LocationItem>
             </Link>
             <Link to={"/posts?location=G 전자정보도서관"}>
-              <LocationItem>#전자정보도서관</LocationItem>
+              <LocationItem>전자정보도서관</LocationItem>
             </Link>
             <Link to={"/posts?location=G 대학원"}>
-              <LocationItem>#대학원</LocationItem>
+              <LocationItem>대학원</LocationItem>
             </Link>
             <Link to={"/posts?location=G 교육대학원"}>
-              <LocationItem>#교육대학원</LocationItem>
+              <LocationItem>교육대학원</LocationItem>
             </Link>
             <Link to={"/posts?location=G 바이오나노연구원"}>
-              <LocationItem>#바이오나노연구원</LocationItem>
+              <LocationItem>바이오나노연구원</LocationItem>
             </Link>
               
             <Link to={"/posts?location=G 학생회관"}>
-              <LocationItem>#학생회관</LocationItem>
+              <LocationItem>학생회관</LocationItem>
             </Link>
             <Link to={"/posts?location=G 제1기숙사"}>
-              <LocationItem>#제1기숙사</LocationItem>
+              <LocationItem>제1기숙사</LocationItem>
             </Link>
             <Link to={"/posts?location=G 제2기숙사"}>
-              <LocationItem>#제2기숙사</LocationItem>
+              <LocationItem>제2기숙사</LocationItem>
             </Link>
             <Link to={"/posts?location=G 제3기숙사"}>
-              <LocationItem>#제3기숙사</LocationItem>
+              <LocationItem>제3기숙사</LocationItem>
             </Link>
             <Link to={"/posts?location=G 글로벌센터"}>
-              <LocationItem>#글로벌센터</LocationItem>
+              <LocationItem>글로벌센터</LocationItem>
             </Link>
             <Link to={"/posts?location=G 반도체대학"}>
-              <LocationItem>#반도체대학</LocationItem>
+              <LocationItem>반도체대학</LocationItem>
             </Link>
             <Link to={"/posts?location=G 비전타워"}>
-              <LocationItem>#비전타워</LocationItem>
+              <LocationItem>비전타워</LocationItem>
             </Link>
             <Link to={"/posts?location=G 교육대학"}>
-              <LocationItem>#법과대학</LocationItem>
+              <LocationItem>법과대학</LocationItem>
             </Link>
             <Link to={"/posts?location=G 제1기숙사"}>
-              <LocationItem>#바개동</LocationItem>
+              <LocationItem>바개동</LocationItem>
             </Link>
             <Link to={"/posts?location=G 제1기숙사"}>
-              <LocationItem>#광장</LocationItem>
+              <LocationItem>광장</LocationItem>
             </Link>
             </div>
             :
             <div>
               <Link to={"/posts?location=G 비전타워"}>
-              <LocationItem>#약학대학</LocationItem>
+              <LocationItem>약학대학</LocationItem>
               </Link>
               <Link to={"/posts?location=G 교육대학"}>
-                <LocationItem>#학생회관</LocationItem>
+                <LocationItem>학생회관</LocationItem>
               </Link>
             </div>
             }

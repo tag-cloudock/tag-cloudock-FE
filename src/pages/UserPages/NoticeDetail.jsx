@@ -18,7 +18,7 @@ const ContentBox = styled.div`
 `;
 
 const BoardBox = styled.div`
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid #eaeaea;
   background: #fff;
   padding: 5px 0px;

@@ -119,6 +119,15 @@ const AdminCertificationManagementDetail = () => {
 
 
     useEffect(() => {
+        if (!cookies.token) {
+            navigate("/signin");
+            return;
+        }
+        if (cookies.roles != "ADMIN") {
+            navigate("/");
+            return;
+          
+          }
         const fetchCertificationRequests = async () => {
             try {
                 const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/certifi/requests/"+id, {
@@ -189,7 +198,7 @@ const AdminCertificationManagementDetail = () => {
                                {certiRequest.user.certification ==false ?
                                 <ModalBtnBox>
 
-                            <ModalBtn    isLeft={true}>
+                            <ModalBtn  isLeft={true}>
                             거절
                             </ModalBtn>
 

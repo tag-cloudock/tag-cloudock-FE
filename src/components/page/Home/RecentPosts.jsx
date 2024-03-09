@@ -15,7 +15,7 @@ const Wrapped = styled.div`
   &:hover span{
     text-decoration: underline;
   }
-  padding: 10px 10px;
+  padding: 7px 10px;
   font-size: 15px;
 
   @media screen and (max-width: 700px) {

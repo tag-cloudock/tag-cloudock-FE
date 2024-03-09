@@ -17,13 +17,15 @@ const LoginBox = styled.div`
 
 // 타이틀
 const Title = styled.div`
+font-family: "Poppins";
   text-align: center;
   height: 45px;
   line-height: 45px;
   margin-bottom: 150px;
-  font-size: 60px;
+  font-size: 63px;
   font-weight: 850;
   & a{
+    font-family: "Poppins";
     color : #38d9a9;
   }
 `;
@@ -51,16 +53,18 @@ const InputBox = styled.input`
   margin: 10px auto;
   height: 40px;
   background: #ffffff;
-  border: 1px solid #dddddd;
+  /* border: 1px solid #dddddd; */
+  border: none;
+  background: #f6f6f6;
   border-radius: 10px;
   color:#333333;
-  font-size: 18px; 
+  font-size: 17px; 
   outline: none;
   padding: 0px 3%;
   width: 60%;
   &::placeholder {
       color: #aaaaaa; 
-      font-size: 18px;
+      font-size: 17px;
   }
   &:focus {
     border-color: #38d9a9;
@@ -180,7 +184,7 @@ const CouncilSignIn = () => {
         {/* 타이틀 */}
         <Title>
           <SubTitle>
-            학생회 전용
+            학생회 로그인
           </SubTitle>
           <Link to={"/"}>Baram</Link>
         </Title>
@@ -191,7 +195,7 @@ const CouncilSignIn = () => {
           ref={useridRef}
           name="id"
           value={userid}
-          placeholder="council + 번호"
+          placeholder="아이디"
           onChange={(e) => {
             setUserid(e.target.value);
           }}
@@ -204,7 +208,7 @@ const CouncilSignIn = () => {
           ref={passwordRef}
           name="password"
           value={password}
-          placeholder="비밀번호 ( 초기: 0000 )"
+          placeholder="비밀번호"
           onChange={(e) => {
             setPassword(e.target.value);
           }}
@@ -213,7 +217,7 @@ const CouncilSignIn = () => {
         {/* 제출 버튼 */}
         <SubmitBtn onClick={handleLogin}>로그인</SubmitBtn>
         <Link to={"/council/forgot"}>
-        <ForgotPassword>아이디/비밀번호를 잊으셨나요?</ForgotPassword>
+        <ForgotPassword>아이디/비밀번호를 잊었나요?</ForgotPassword>
             </Link>
       </LoginBox>
     </div>

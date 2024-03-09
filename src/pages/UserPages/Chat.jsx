@@ -63,8 +63,8 @@ const PostInfo = styled.div`
   right: 0;
   height: 60px;
   /* margin: 0px 10px; */
-  background-color: #ffffff;
-  box-shadow: 0px 2px 15px 0px rgba(157, 157, 157, 0.2);
+  background-color: #fafafa;
+  /* box-shadow: 0px 2px 15px 0px rgba(157, 157, 157, 0.2); */
   @media screen and (min-width: 701px) {
     margin: 0 auto;
     width: 700px;
@@ -84,13 +84,13 @@ const DurationText = styled.span`
 
 // 기한 숫자
 const DurationDate = styled.span`
-  background: #EEF6FF;
+  background: #f5f8ff;
   border-radius: 20px;
-  border: 1px solid #379DFF;
+  border: 1px solid #6093FF;
   font-size: 11px;
-  padding: 3px;
+  padding: 2px 10px;
   font-weight: 700;
-  color:#379DFF;
+  color:#6093FF;
 `;
 
 // 메세지들
@@ -130,7 +130,7 @@ const Message = styled.li`
   vertical-align: left;
   text-align: left;
   max-width: 250px;
-  background: ${({ isMe }) => (isMe ? '#379DFF' : 'none')};
+  background: ${({ isMe }) => (isMe ? '#6093FF' : 'none')};
   color: ${({ isMe }) => (isMe ? '#ffffff' : '000000')};
   padding: 12px;
   line-height: 20px;
@@ -230,11 +230,11 @@ const DoneBtn = styled.button`
   border: none;
   /* margin-top: 12px; */
   float: right;
-  padding: 7px;
-  background: #d2e9ffb9;
-  color:#379effba;
+  padding: 7px 10px;
+  background: #e2ebff;
+  color:#6093FF;
   font-weight: 600;
-  border-radius: 15px;
+  border-radius: 7px;
   font-size: 13px;
 `;
 
@@ -286,7 +286,7 @@ const ModalBtnBox = styled.div`
 const ModalBtn = styled.button`
   border: none;
   width: 40%;
-  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#379DFF')};
+  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#6093FF')};
   padding: 15px;
   text-align: center;
   border-radius: 15px;
@@ -407,6 +407,10 @@ const Chat = () => {
   },);
 
   useEffect(() => {
+    if (!cookies.token) {
+      navigate("/signin");
+      return;
+    }
     // 로딩 시작
     setLoading(true);
     // 모든 메세지 가져오기
@@ -711,7 +715,7 @@ const Chat = () => {
         <ModalContainer>
           <ModalBox>
             <ModalText>
-              <Nickname>{postInfo.nickname}</Nickname> 님과의 <br></br>대여를 완료하시겠습니까?<br></br>
+              <Nickname>{postInfo.nickname}</Nickname> 님과 <br></br>대여를 완료하였나요?<br></br>
             </ModalText>
             <ModalBtnBox>
               <ModalBtn onClick={() => {
@@ -723,7 +727,7 @@ const Chat = () => {
                 setIsDoneModalOn(false);
                 setIsReviewModalOn(true);
               }} isMine={""}>
-                완료하기
+                네
               </ModalBtn>
             </ModalBtnBox>
           </ModalBox>
@@ -759,7 +763,7 @@ const Chat = () => {
               type="text"
               // ref={passwordRef}
               name="content"
-              placeholder="후기를 작성하세요"
+              placeholder="후기를 작성해주세요!"
             onChange={(e) => {
               setReview(e.target.value);
             }}
@@ -767,7 +771,7 @@ const Chat = () => {
 
             <ModalBtnBox>
               {isBorrower ?<ModalBtn onClick={(e) => handleDone(e, false)} isLeft={true}>
-                작성 안하기
+                안할래요
               </ModalBtn> :
               <ModalBtn onClick={() => {
                 setIsReviewModalOn(false);
@@ -777,7 +781,7 @@ const Chat = () => {
             }
               
               <ModalBtn onClick={(e) => handleDone(e, true)}  isMine={""}>
-                작성 하기
+                보내기
               </ModalBtn>
             </ModalBtnBox>
           </ModalBox2>

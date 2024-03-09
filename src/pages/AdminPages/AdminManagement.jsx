@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import Header from "../../components/layout/Header";
 import { Link } from "react-router-dom";
+import { useEffect,useState } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 const AdminBox = styled.div`
   position: absolute;
@@ -64,7 +67,21 @@ const ManageBtn = styled.div`
 
 `;
 const AdminManagement = () => {
-    return (
+    const [key, setKey] = useState(0);
+    const [cookies] = useCookies(); // 쿠키 사용하기 위해
+    const navigate = useNavigate(); // 페이지 이동 위해
+    useEffect(() => {
+        if (!cookies.token) {
+            navigate("/signin");
+            return;
+        }
+        if (cookies.roles != "ADMIN") {
+            navigate("/");
+            return;  
+          }
+          setKey(1);
+        });
+    return key == 1 ? (
         <AdminBox>
             <Header headerType={"onlyText"}></Header>
             <ContentBox>
@@ -103,9 +120,8 @@ const AdminManagement = () => {
                 </ManageBox>
 
             </ContentBox>
-            
         </AdminBox>
-    );
+    ) : null;
 };
 
 export default AdminManagement;

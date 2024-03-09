@@ -21,27 +21,27 @@ const SubTitle = styled.div`
 `;
 
 const CampusAnnoBox = styled.div`
-  background: #ffffff;
-  margin-bottom: 20px;
-  border-radius: 15px;
-  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px;
-  padding: 20px 20px;
+  background: #f1f5ff;
+  /* margin-bottom: 20px; */
+  /* border-radius: 15px; */
+  /* box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px; */
+  padding: 30px 20px;
+  @media screen and (min-width: 700px) {
+    border-radius: 15px; 
+  }
+  
 `;
 
 const BigText = styled.div`
-  font-weight: 400;
+  font-weight: 800;
   font-size: 25px;
-  color : #379DFF;
-  & span{ 
-    font-size: 28px;
-    color : #379DFF;
-  }
+  color : #6093FF;
 `;
 
 const SmallText = styled.div`
   font-size: 15px;
   font-weight: 400;
-  color : #9e9e9e;
+  color : #6093FF;
 `;
 
 const RealTime = styled.span`
@@ -63,11 +63,12 @@ const ContentBox = styled.div`
 const CollegeBox = styled.ul`
   background: #ffffff;
   margin-bottom: 20px;
-  border-radius: 15px;
-  box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px;
+  border-radius: 5px;
+  /* border: 1px solid #eeeeee; */
+  /* box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px; */
   overflow: hidden;
   & a:not(:last-child) li{
-      border-bottom: 1px solid #dddddd;
+      border-bottom: 1px solid #eeeeee;
   }
 `;
 
@@ -98,10 +99,16 @@ const CouncilItem = styled.li`
 `;
 
 const CollegeName = styled.div`
+    display: inline-block;
+    padding: 7px 15px;
+    border-radius: 7px;
     font-size: 15px;
+    font-weight: 400;
+    color: #6e6e6e;
     font-weight: 700;
-    color: #000000;
     margin-bottom: 10px;
+    background: #f5f5f5;
+    /* 379dff */
 `;
 
 const CouncilName = styled.div`
@@ -163,12 +170,26 @@ const CouncilList = () => {
     <CouncilBox>
       <Header headerText={"학생회"}></Header>
 
-      <ContentBox>
-        <SubTitle>총 {councilCount}개의 학생회에서 물품대여중🫶</SubTitle>
-        <CampusAnnoBox>
-          <BigText>{campus == 'global' ? "글로벌" : campus == 'medical' ? "메디컬" : "까아꿍"} 캠퍼스입니다🙂</BigText>
-          <SmallText><RealTime>실시간</RealTime>으로 물품 잔여 개수를 확인하세요!</SmallText>
+      <CampusAnnoBox>
+          <BigText>{campus == 'global' ? "글" : campus == 'medical' ? "메" : "까아꿍"}캠에서 빌리길 바람</BigText>
+          <SmallText>총 {councilCount}개의 학생회에서 물품대여중</SmallText>
         </CampusAnnoBox>
+      <ContentBox>
+        <div>
+        <CollegeName>{"총학생회"}</CollegeName>
+        <Link >
+                  <CouncilItem key={-1}>
+                    <CouncilImgBox>
+                      <CouncilImg src={"image/tc.jpg"}></CouncilImg>
+                    </CouncilImgBox>
+                    
+                    <CouncilContent>
+                      <CouncilName>{"총학생회"}</CouncilName>
+                      <ItemInfo>제공품 {0} 대여품 {0}</ItemInfo>
+                    </CouncilContent>
+                  </CouncilItem>
+                </Link>
+        </div>
         {groupedCouncilList.map((college, index) => (
           <div key={index}>
             <CollegeName>{college[0] != null ? college[0].college.slice(1) : null}</CollegeName>
@@ -182,7 +203,7 @@ const CouncilList = () => {
                     
                     <CouncilContent>
                       <CouncilName>{council.name}</CouncilName>
-                      <ItemInfo>제공 물품 {council.providedItemCount} 대여 물품 {council.rentalItemCount}</ItemInfo>
+                      <ItemInfo>제공품 {council.providedItemCount} 대여품 {council.rentalItemCount}</ItemInfo>
                     </CouncilContent>
                   </CouncilItem>
                 </Link>

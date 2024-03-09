@@ -27,7 +27,7 @@ const BoardBox = styled.div`
 `;
 
 const Item = styled.div`
-border-bottom: 1px solid #eaeaea;
+border-bottom: 1px solid #eeeeee;
 
 padding: 20px;
 & > * {
@@ -114,13 +114,13 @@ const NoPostBox = styled.div`
   top:40%;
   display: block;
   max-width: 700px;
-  color : #cacaca;
+  color : #e6e6e6;
   font-size: 20px;
-  font-weight: 700;
+  /* font-weight: 700; */
 `;
 
 const NoPostText = styled.div`
-  font-size: 50px;
+  font-size: 60px;
   font-weight: 800;
   margin-bottom: 20px;
 `;
@@ -200,8 +200,8 @@ const PostList = () => {
           ))
         :
         <NoPostBox>
-          <NoPostText>썰렁~</NoPostText>
-          {type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬")} 사람들은 빌릴게 없나봐요ㅜㅜ
+          <NoPostText>썰렁</NoPostText>
+          {type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬")} 사람들은 빌릴게 없어요
         </NoPostBox>}
         </BoardBox>
       </PostBox>

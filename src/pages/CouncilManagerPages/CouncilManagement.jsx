@@ -19,45 +19,58 @@ const ContentBox = styled.div`
 `;
 
 const InfoBox = styled.div`
-  margin-bottom: 20px;
-  font-size: 18px;
+  margin-bottom: 50px;
+  font-size: 17px;
   line-height: 30px;
   font-weight: 500;
-  color: #777777;
-  padding: 20px;
-  border-radius: 10px;
+  color: #525252;
+  /* padding: 20px; */
+  /* border-radius: 10px; */
   background: #ffffff;
-  box-shadow: rgba(210, 210, 210, 0.5) 0px 0px 15px;
+  /* border: 1px solid #eeeeee; */
   & span{
+    font-size: 17px;
     font-weight: 600;
-    color: #000000;
+    color: #b7b7b7;
     margin-right: 10px;
   }
   & div{
+    margin-top: 10px;
+    border-radius: 10px;
     white-space:pre;
+    background: #f6f6f6;
+    padding: 20px;
   }
-  
 `;
 
 const CreateCouncil = styled.div`
-  margin-top: 20px;
+  /* float: right; */
+  margin: 0px auto;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  margin-top: 30px;
   margin-bottom: 20px;
   font-size: 18px;
   font-weight: bold;
   color: #777777;
   text-align: center;
-  border-radius: 10px;
-  background: #ffffff;
-  box-shadow: rgba(210, 210, 210, 0.5) 0px 0px 15px;
+  border-radius: 50px;
+  background: #eeeeeeca;
+  /* border: 1px solid #eeeeee; */
+  /* box-shadow: rgba(210, 210, 210, 0.5) 0px 0px 15px; */
   & img{
-    opacity: 30%;
+    margin-top: 5px;
+    width: 40px;
+    height: 40px;
+    opacity: 20%;
   }
 `;
 
 const Items = styled.ul`
     background: #ffffff;
     border-radius: 10px;
-    box-shadow: rgba(205, 207, 208, 0.5) 0px 0px 15px;
+    /* box-shadow: rgba(205, 207, 208, 0.5) 0px 0px 15px; */
 
     & li:not(:last-child){
         border-bottom: 1px solid #dddddd;
@@ -146,13 +159,18 @@ const CouncilManagement = () => {
     const navigate = useNavigate(); // 페이지 이동 위해
 
     useEffect(() => {
+        if (!cookies.token) {
+            navigate("/signin");
+            return;
+        }
+        if (cookies.roles != "MANAGER") {
+            navigate("/");
+            return;  
+          }
         const fetchCouncils = async () => {
             try {
                 // 토큰 쿠키가 없다면 로그인 페이지로 이동
-                if (!cookies.token) {
-                    navigate("/signin");
-                    return;
-                }
+                
 
                 // 유저의 채팅방 모두 가져오기 api 요청
                 const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/manage/council", {
@@ -214,7 +232,7 @@ const CouncilManagement = () => {
         <AdminBox>
             <Header headerType={"council"} headerText={councilData.name + " 학생회"}></Header>
             <ContentBox>
-                    <Subtitle>이용 정보
+                    <Subtitle>
                     <Link to={"/council/manage/info"}>
                         <span>수정하기</span>
                     </Link>
@@ -224,7 +242,6 @@ const CouncilManagement = () => {
                     <span>운영시간</span> {councilData.operatingHours}<br />
                     <span>이용수칙</span> <div>{councilData.usageGuidelines}</div>
                 </InfoBox>
-                <Subtitle>물품 리스트</Subtitle>
                 <Items>
                     {councilData.items.map((item) => (
                         <Item key={item.itemId}>
@@ -238,8 +255,6 @@ const CouncilManagement = () => {
                                 <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity + 1)}><img src={"/image/up.svg"}></img></CountChangeBtn>
                                 <Count>{item.quantity}</Count>
                                 <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity - 1)}><img src={"/image/down.svg"}></img></CountChangeBtn>
-
-
                             </CountBox>
                         </Item>
                     ))}

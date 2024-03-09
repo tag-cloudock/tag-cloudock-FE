@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import styled from "styled-components";
@@ -22,17 +22,20 @@ const ContentBox = styled.div`
 const InputBox = styled.input`
     display: block;
     border: none;
-    padding: 15px 3%;
+    padding: 15px 10px;
     margin-top: 10px;
-    width: 94%;
+    width: calc(100%);
     font-size: 15px;
-    font-weight: 800;
-    color: #333333;
+    font-weight: 600;
+    color:#5d5d5d;
     border-radius: 10px;
-    border: 1px solid #E8E8E8;
+    /* border: 1px solid #E8E8E8; */
+    background: #f8f8f8;
     outline: none;
     &::placeholder {
-        color: #aaaaaa; 
+      color: #dbdbdb; 
+        font-weight: 600;
+        font-size: 15px;
     }
     &:focus {
       border-color: #38d9a9;
@@ -59,8 +62,8 @@ const Details = styled.details`
     font-weight: 800;
     background: #ffffff;
     border-radius: 10px;
-    border: 1px solid #E8E8E8;
-
+    /* border: 1px solid #E8E8E8; */
+    background: #f8f8f8;
     &[open] summary:after {
     transform: rotate(-45deg) translate(0%, 0%);
     }
@@ -97,7 +100,7 @@ const Summary = styled.summary`
     border-radius: 10px;
     list-style: none;
     color:  ${({ isDefault }) => (isDefault ? '#aaaaaa' : '#333333')};
-    &:after {
+    /* &:after {
         content: '';
         float: right;
         width: 10px;
@@ -107,7 +110,7 @@ const Summary = styled.summary`
         transform: rotate(45deg) translate(50%, 0%);
         transform-origin: center center;
         transition: transform ease-in-out 100ms
-    }
+    } */
 `;
 
 const Button = styled.button`
@@ -131,6 +134,15 @@ const CreationCouncilItem = () => {
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
 
+     useEffect(() => {
+        if (!cookies.token) {
+            navigate("/signin");
+            return;
+        }
+        if (cookies.roles != "MANAGER") {
+            navigate("/");
+            return;  
+          } });
 
     const handleAddCouncil = async (e) => {
         e.preventDefault();
@@ -180,17 +192,17 @@ const CreationCouncilItem = () => {
                 />
                 <Details>
                     <Summary isDefault={type == "물품 유형"}>
-                        {type}
+                        {type == "RENTAL" ? "대여품" : "제공품"}
                     </Summary>
                     <OptionList>
                         <Option>
                             <Button onClick={() => setType("RENTAL")}>
-                                RENTAL
+                                대여품
                             </Button>
                         </Option>
                         <Option>
                             <Button onClick={() => setType("PROVIDED")}>
-                                PROVIDED
+                                제공품
                             </Button>
                         </Option>
                     </OptionList>

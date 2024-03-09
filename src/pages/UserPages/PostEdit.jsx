@@ -16,74 +16,76 @@ const ContentBox = styled.div`
   padding: 20px;
 `;
 
-const InputBoxTitle = styled.div`
-float: left;
-width: 100%;
-  font-size: 14px;
-  margin-top: 10px;
-  font-weight: bold;
-  color: #000000;
-`;
+
 
 const TextareaBox = styled.textarea`
     width: 94%;
-    height: 100px;
+    height: 150px;
     resize: none;
-    margin: 10px 0px;
-    background: #ffffff;
-    border: 1px solid #dddddd;
+    margin: 20px 0px;
+    background: #f5f5f5c5;
+    border: none;
+    /* border: 1px solid #f5f5f5c5; */
     border-radius: 10px;
     color:#333333;
-    font-size: 18px; 
+    font-size: 17px; 
     outline: none;
-    padding: 20px 3%;
+    padding: 15px 3%;
     &::placeholder {
-        color: #aaaaaa; 
-        font-size: 18px;
+      color: #dbdbdb; 
+        font-weight: 600;
+        font-size: 17px;
     }
     &:focus {
-      border-color: #379DFF;
+      border-color: #6093FF;
     }
 `;
 
 const InputBox = styled.input`
-    width: 94%;
+    width: 100%;
     height: 40px;
-    margin: 10px 0px;
+    margin: 20px 0px;
     background: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 10px;
+    /* border: 1px solid #dddddd; */
+    border: none;
+    border-bottom: 2px solid #eeeeee;
+    border-radius: 0px;
     color:#333333;
-    font-size: 18px; 
+    font-weight: 600;
+        font-size: 18px;
     outline: none;
-    padding: 0px 3%;
+    /* padding: 0px 3%; */
     &::placeholder {
-        color: #aaaaaa; 
+        color: #dbdbdb; 
+        font-weight: 600;
         font-size: 18px;
     }
     &:focus {
-      border-color: #379DFF;
+      border-color: #6093FF;
     }
 `;
 
 const HalfInputBox = styled.input`
-    width: 42%;
+    width: 50%;
     height: 40px;
     margin: 10px auto;
     background: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 10px;
+    border: none;
+    border-bottom: 2px solid #eeeeee;
+    border-radius: 0px;
     color:#333333;
     font-size: 18px; 
     float: right;
     outline: none;
-    padding: 0px 3%;
+    padding: 0px;
+    font-weight: 600;
     &::placeholder {
-        color: #aaaaaa; 
+      color: #dbdbdb; 
+        font-weight: 600;
         font-size: 18px;
     }
     &:focus {
-      border-color: #379DFF;
+      border-color: #6093FF;
     }
 `;
 
@@ -97,7 +99,7 @@ const SubmitBtn = styled.button`
     background: #efefef;
     border: none;
     border-radius: 10px;
-    background: #379DFF;
+    background: #6093FF;
     font-weight: bold;
     color:#ffffff;
     font-size: 18px; 
@@ -114,14 +116,17 @@ const DropdownWrapper = styled.div`
 `;
 
 const DropdownButton = styled.button`
-  border: 1px solid #dddddd;
+  /* border: 1px solid #dddddd; */
+  /* border-bottom: 2px solid #eeeeee; */
+  border: none;
   border-radius: 10px;
-  font-size: 18px;
-  background-color: #ffffff;
-  color: #000000;
+  color: #5c5c5c; 
+        font-weight: 600;
+        font-size: 18px;
+  background-color: #f5f5f5c5;
   padding: 10px 10px;
   width: 100%;
-  text-align: left;
+  text-align: center;
   display: flex;
   justify-content: space-between;
   cursor: pointer;
@@ -170,8 +175,8 @@ margin: 10px 0px;
   & span{
     margin: 0px 10px;
     height: 30px;
-    font-size: 20px;
-    color:#aaaaaa;
+    font-size: 25px;
+    color:#eeeeee;
     vertical-align: middle;
   }
 `;
@@ -184,48 +189,68 @@ const DateLabel = styled.label`
 const DateInput = styled.input`
   padding: 10px 20px;
   width: 48%;
-  border: 1px solid #dddddd;
-border-radius: 10px;
-&:focus {
-  }
+  border:none;
+  border-bottom: 2px solid #eeeeee;
+  
+  background:none;
+  /* background-color: #f8f8f8; */
+border-radius: 0px;
+/* &:focus {
+  } */
 
 `;
 
-// 제출 버튼
 const FileInputBtn = styled.label`
     display: block;
     margin: 0 auto;
-    /* width: 80%; */
-    text-align: left;
-    /* padding: 20px; */
+    
     & div{
+      /* width: 80%; */
       margin-top: 10px;
       display: inline-block;
-      font-size: 12px;
-      font-weight: 700;
-      color:#379DFF;
-      border: 1px solid #379DFF;
-      border-radius: 30px;
-      padding: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color:#ffffff;
+      background: ${({ isFileSelected }) => (isFileSelected ? "#6093FF" : "#c4d6ff")};
+      border-radius: 10px;
+      padding: 10px 10px;
     }
 `;
-
 const FileInputBox = styled.input`
+    /* width: 66%; */
+    display: none;
     border: none;
     background: none;
-    margin-left: 5px;
     &::file-selector-button{
       display: none;
     }
 `;
+
+const RentalFeeBox = styled.div`
+
+  display: flex;
+  margin: 10px 0px;
+`;
+const RentalFee = styled.div`
+height: 10px;
+line-height: 10px;
+background: #6093FF;
+color: #ffffff;
+font-weight: 700;
+font-size: 15px;
+border-radius:10px;
+padding: 10px;
+white-space: nowrap; 
+margin-left: 10px;
+`;
 const RangeInput = styled.input`
   width: 100%;
-  margin-top: 10px;
+  margin: 10px 0px;
   -webkit-appearance: none;
   appearance: none;
   height: 10px;
   border-radius: 5px;
-  background: #eeeeee;
+  background: #f2f2f2;
   outline: none;
   opacity: 0.7;
   -webkit-transition: .2s;
@@ -241,18 +266,20 @@ const RangeInput = styled.input`
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #379DFF;
+    background: #6093FF;
     cursor: pointer;
   }
 
-  &::-moz-range-thumb {
+  /* &::-moz-range-thumb {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #379DFF;
+    background: #6093FF;
     cursor: pointer;
-  }
+  } */
 `;
+
+
 
 const PostEdit = () => {
     const navigate = useNavigate();
@@ -319,6 +346,12 @@ const PostEdit = () => {
   };
 
     useEffect(() => {
+      if (!cookies.token) {
+        navigate("/signin");
+        return;
+      }
+      window.scrollTo(0, 0);
+      
         // 오늘 날짜를 얻기 위해 현재 날짜 객체를 생성
         const today = new Date();
 
@@ -344,11 +377,13 @@ const PostEdit = () => {
     const handleEndDateChange = (e) => {
         setReturnAt(e.target.value);
     };
+
+    
     return (
         <EditBox>
             <Header headerType={"close"} headerText={"작성"}></Header>
             <ContentBox>
-                <InputBoxTitle>제목</InputBoxTitle>
+                {/* <InputBoxTitle>제목</InputBoxTitle> */}
                 <InputBox
                     type="text"
                     // ref={passwordRef}
@@ -358,28 +393,36 @@ const PostEdit = () => {
                         setTitle(e.target.value);
                     }}
                 />
-                <InputBoxTitle>빌리는 위치</InputBoxTitle>
+                {/* <InputBoxTitle>내용</InputBoxTitle> */}
+                <TextareaBox
+                    type="text"
+                    // ref={passwordRef}
+                    name="content"
+                    placeholder="내용(최대 100글자)"
+                    onChange={(e) => {
+                        setContent(e.target.value);
+                    }}
+                />
                 <InputContainer>
                     <DropdownWrapper>
                         <DropdownButton onClick={toggleDropdown}>
-                            <div>{location ? location : '위치 선택'}</div>
-                            <span>{isOpen ? ">" : "<"}</span>
+                            <div>{location ? location.slice(2) : '위치 선택'}</div>
                         </DropdownButton>
                         <DropdownContent open={isOpen}>
                         <DropdownItem href="#" onClick={() => handleOptionClick('G 글로벌 캠퍼스')}>
-                                G 글로벌 캠퍼스
+                                글로벌 캠퍼스
                             </DropdownItem>
                             <DropdownItem href="#" onClick={() => handleOptionClick('G 비전타워')}>
-                                G 비전타워
+                                비전타워
                             </DropdownItem>
                             <DropdownItem href="#" onClick={() => handleOptionClick('G 가천관')}>
-                                G 가천관
+                                가천관
                             </DropdownItem>
                             <DropdownItem href="#" onClick={() => handleOptionClick('G AI공학관')}>
-                                G AI공학관
+                                AI공학관
                             </DropdownItem>
                             <DropdownItem href="#" onClick={() => handleOptionClick('M 약학대학')}>
-                                M 약학대학
+                                약학대학
                             </DropdownItem>
                         </DropdownContent>
                     </DropdownWrapper>
@@ -393,13 +436,17 @@ const PostEdit = () => {
                         }}
                     />
                 </InputContainer>
-                <InputBoxTitle>대여금</InputBoxTitle>
+                
                 <InputBox
                     type="text"
-                    value={rentalFee == 0 ? "무료로 대여하기" : rentalFee+"원"}
-                    name="rentalFee"
-                    placeholder="₩ 대여금을 설정해주세요."
+                    // ref={passwordRef}
+                    name="security"
+                    placeholder="보증품을 입력하세요(ex 신분증, 현금)"
+                    onChange={(e) => {
+                        setSecurity(e.target.value);
+                    }}
                 />
+                <RentalFeeBox>
                 <RangeInput
                     type="range"
                     id="rentalFee"
@@ -412,20 +459,10 @@ const PostEdit = () => {
                         setRentalFee(e.target.value);
                     }}
                 />
-
-
-
-                <InputBoxTitle>보증품</InputBoxTitle>
-                <InputBox
-                    type="text"
-                    // ref={passwordRef}
-                    name="security"
-                    placeholder="보증품을 입력하세요(ex 신분증, 현금)"
-                    onChange={(e) => {
-                        setSecurity(e.target.value);
-                    }}
-                />
-                <InputBoxTitle>대여 기간</InputBoxTitle>
+                <RentalFee
+                >{rentalFee == 0 ? "대여금" : rentalFee+"원"}</RentalFee>
+                </RentalFeeBox>
+                
                 <DateWrapper>
                     {/* <DateLabel htmlFor="startDate">시작 날짜:</DateLabel> */}
                     <DateInput
@@ -449,18 +486,9 @@ const PostEdit = () => {
                         required
                     />
                 </DateWrapper>
-                <InputBoxTitle>내용</InputBoxTitle>
-                <TextareaBox
-                    type="text"
-                    // ref={passwordRef}
-                    name="content"
-                    placeholder="내용(최대 100글자)"
-                    onChange={(e) => {
-                        setContent(e.target.value);
-                    }}
-                />
-                <FileInputBtn for="file">
-                    <div>사진 추가하기</div>
+              
+                <FileInputBtn for="file" isFileSelected={file!=null}>
+                    <div>사진 추가</div>
                     <FileInputBox type="file" name="file" id="file" onChange={handleFileChange} />
                 </FileInputBtn>
 

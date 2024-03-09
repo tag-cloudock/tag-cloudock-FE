@@ -1,5 +1,5 @@
 import Header from "../../components/layout/Header";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate} from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
@@ -28,7 +28,7 @@ const Announcement = styled.div`
         margin: 10px 0;
     }
     & p span{
-        color: #379DFF;
+        color: #6093FF;
     }
 `;
 
@@ -43,20 +43,21 @@ const InputBox = styled.input`
     display: block;
     margin: 10px auto;
     height: 40px;
-    background: #ffffff;
-    border: 1px solid #dddddd;
+    background: #f7f7f7;
+    /* border: 1px solid #dddddd; */
+    border: none;
     border-radius: 10px;
     color:#333333;
-    font-size: 18px; 
+    font-size: 17px; 
     outline: none;
     padding: 0px 3%;
     width: 74%;
     &::placeholder {
         color: #aaaaaa; 
-        font-size: 18px;
+        font-size: 17px;
     }
     &:focus {
-      border-color: #379DFF;
+      border-color: #6093FF;
     }
 `;
 
@@ -67,7 +68,7 @@ const SubmitBtn = styled.button`
     background: #efefef;
     border: none;
     border-radius: 10px;
-    background: #379DFF;
+    background: #6093FF;
     font-weight: bold;
     color:#ffffff;
     font-size: 18px; 
@@ -92,7 +93,7 @@ const FileInputBtn = styled.label`
         background: #efefef;
         border: none;
         border-radius: 10px;
-        background: ${({ isFileSelected }) => (isFileSelected ? "#379DFF" : "#89c6ff")};
+        background: ${({ isFileSelected }) => (isFileSelected ? "#6093FF" : "#d6e3ff")};
         font-weight: bold;
         color:#ffffff;
         text-align: center;
@@ -122,6 +123,12 @@ const Certification = () => {
     const navigate = useNavigate(); // 페이지 이동을 위해
     const [name, setName] = useState();
     const [studentIdNumber, setstudentIdNumber] = useState();
+    useEffect(() => {
+        if (!cookies.token) {
+          navigate("/signin");
+          return;
+        }
+    });
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setFile(file);
@@ -179,9 +186,6 @@ const Certification = () => {
             <Announcement>
                 <p>
                     더욱 원활한 대여를 위해 <span>학생증 인증</span>을 하세요.
-                </p>
-                <p>
-                    상대방에게 신뢰감을 주어 대여 성사율이 높아집니다.
                 </p>
                 <p>
                     <span>모바일 학생증</span>의 캡처 사진 또는

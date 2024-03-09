@@ -86,7 +86,7 @@ color: #000000;
 font-size: 17px;
 line-height: 27px;
 font-weight: 400;
-margin: 30px 0px 100px 0px;
+margin: 30px 0px 20px 0px;
 white-space: pre-wrap;
 /* word-wrap: break-word; */
 & span{
@@ -111,9 +111,9 @@ const Image = styled.div`
 //위치 가격 보증품 
 const ListName = styled.div`
 display: inline-block;
-  color: #379DFF;
+  color: #6093FF;
   font-size: 17px;
-  background: #e6f3ff;
+  background: #f0f5ff;
   padding: 5px 7px;
   border-radius: 7px;
   /* font-weight: 700; */
@@ -175,7 +175,7 @@ margin: 30px 0px;
   padding: 10px;
   border-radius: 8px;
 
-  background:${({ isDone }) => (isDone ? '#cee7ff' : '#379DFF')};
+  background:${({ isDone }) => (isDone ? '#d4e2ff' : '#6093FF')};
   color: var(--White, #FFF);
 text-align: center;
 font-size: 20px;
@@ -223,8 +223,8 @@ const ModalBtnBox = styled.div`
 const ModalBtn = styled.button`
   border: none;
   width: 40%;
-  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#379DFF')};
-  padding: 20px;
+  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#6093FF')};
+  padding: 15px 20px;
   text-align: center;
   border-radius: 15px;
 
@@ -242,7 +242,8 @@ const ModalText = styled.div`
   & span{
     display: block;
     margin-top: 20px;
-    font-size: 15px;
+    font-size: 17px;
+    color: #6093FF;
     font-weight: 400;
   }
 `;
@@ -442,8 +443,8 @@ const PostDetail = () => {
         <ModalContainer>
           <ModalBox>
             <ModalText>
-              <Nickname>{post.nickname}</Nickname> 님은<br></br> 학생증 인증이 {post.certification ? "완료된" : "안된 "}유저 입니다.<br></br>
-              <span>대화를 시작하겠습니까?</span>
+              <Nickname>{post.nickname}</Nickname> 님은<br></br> 학생증 인증이 {post.certification ? "완료된" : "안된 "}학우에요!<br></br>
+              <span>대화를 시작 할까요?</span>
             </ModalText>
             <ModalBtnBox>
               <ModalBtn onClick={() => {

@@ -92,7 +92,7 @@ const NoChatBox = styled.div`
   top:40%;
   display: block;
   max-width: 700px;
-  color : #cacaca;
+  color : #eeeeee;
   & a{
     color : #cacaca;
   }
@@ -136,13 +136,14 @@ const CampusText = styled.div`
   font-weight: 400;
   margin-top: 20px;
   font-family: 'Noto Sans KR'; 
-  border-bottom: 2px solid #eeeeee;
-  font-size: 20px;
+  border-bottom: 1.5px solid #eeeeee;
+  font-size: 17px;
   color: #c3cbd5;
-  ${({ isOn }) => (isOn ? "color: #379dff; border-bottom: 2px solid #379dff;" : null)};
+  padding-bottom:5px;
+  ${({ isOn }) => (isOn ? "color: #6093FF; border-bottom: 1.5px solid #6093FF;" : null)};
   &:hover {
-    color: #379dff;
-    border-bottom: 2px solid #379dff;
+    color: #6093FF;
+    border-bottom: 1.5px solid #6093FF;
   }
 `;
 
@@ -154,6 +155,10 @@ const ChatRoomList = () => {
   const [chatRoomType, setChatRoomType] = useState(0);
 
   useEffect(() => {
+    if (!cookies.token) {
+      navigate("/signin");
+      return;
+    }
     const fetchChatRooms = async () => {
       try {
         if (!cookies.token) {
@@ -203,7 +208,7 @@ const ChatRoomList = () => {
 
       {chatRoomList[chatRoomType].length == 0 ?
         <NoChatBox>
-          <NoChatText>썰렁~</NoChatText>
+          <NoChatText>썰렁</NoChatText>
           <Link to={"/"}><MoveToPost>빌려줄수있는 물건 보러 가기!</MoveToPost></Link>
         </NoChatBox>
         :

@@ -53,7 +53,7 @@ const Title = styled.div`
   height: 45px;
   line-height: 45px;
   font-size: 52px;
-  font-weight: 600;
+  font-weight: 850;
   /* font-family: 'Noto Sans KR';   */
   font-family: "Poppins";
   color: #379dff;
@@ -96,7 +96,7 @@ const Manual = () => {
         <ManualContent ref={(el) => (manualContentsRef.current[0] = el)}>
         <Title>
           <SubTitle>가천대 대여 중개 서비스</SubTitle>
-          Baaram
+          Baram
         </Title>
         </ManualContent>
         <ManualContent ref={(el) => (manualContentsRef.current[1] = el)}>

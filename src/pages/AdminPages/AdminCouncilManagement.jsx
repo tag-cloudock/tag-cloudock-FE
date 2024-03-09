@@ -106,6 +106,15 @@ const AdminCouncilManagement = () => {
     const navigate = useNavigate(); // 페이지 이동 위해
 
     useEffect(() => {
+        if (!cookies.token) {
+            navigate("/signin");
+            return;
+        }
+        if (cookies.roles != "ADMIN") {
+            navigate("/");
+            return;
+          
+          }
         const fetchCouncils = async () => {
             try {
                 // 토큰 쿠키가 없다면 로그인 페이지로 이동
