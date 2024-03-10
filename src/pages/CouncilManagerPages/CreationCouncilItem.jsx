@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import styled from "styled-components";
@@ -134,15 +134,16 @@ const CreationCouncilItem = () => {
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
 
-     useEffect(() => {
+    useEffect(() => {
         if (!cookies.token) {
             navigate("/signin");
             return;
         }
         if (cookies.roles != "MANAGER") {
             navigate("/");
-            return;  
-          } });
+            return;
+        }
+    });
 
     const handleAddCouncil = async (e) => {
         e.preventDefault();
@@ -170,7 +171,7 @@ const CreationCouncilItem = () => {
                 }
             );
             // 성공시
-            if (PostResponse.status === 200) {
+            if (PostResponse.data.code === 200) {
                 window.alert("생성 성공");
                 setKey(key + 1);
                 navigate("/council/manage");

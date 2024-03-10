@@ -156,15 +156,14 @@ const CategoryCount = styled.div`
 `;
 
 const CouncilDetail = () => {
-  const [councilData, setCouncilData] = useState({ items: [], imgPath:"default.png" }); // 채팅방 리스트 상태
+  const [councilData, setCouncilData] = useState({ items: [], imgPath: "default.png" }); // 채팅방 리스트 상태
   const { id } = useParams();
   useEffect(() => {
     const fetchCouncil = async () => {
       try {
         const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
         });
-        setCouncilData(response.data);
-        console.log(response.data);
+        setCouncilData(response.data.data);
 
       } catch (error) {
         console.error("오류 발생:", error);
@@ -178,11 +177,11 @@ const CouncilDetail = () => {
     <CouncilBox>
       <Header></Header>
       <TitleBox>
-          {/* <ProfileImg>
+        {/* <ProfileImg>
             <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + councilData.imgPath}></img>
           </ProfileImg> */}
-          <CouncilName>{councilData.name}</CouncilName>
-        </TitleBox>
+        <CouncilName>{councilData.name}</CouncilName>
+      </TitleBox>
       <CouncilInforContainer>
 
         <CouncilInfo>
@@ -193,25 +192,25 @@ const CouncilDetail = () => {
           <span>이용수칙 </span> <div>{councilData.usageGuidelines}</div> <br />
         </CouncilInfo>
       </CouncilInforContainer>
-      
+
       <ProductContainer>
-      {councilData.isCouncilSelfManage ? 
-      <div>
-        <Update>
-          <div></div>
-          <span>실시간 개수 업데이트 중</span>
-        </Update></div>
-        : null}
+        {councilData.isCouncilSelfManage ?
+          <div>
+            <Update>
+              <div></div>
+              <span>실시간 개수 업데이트 중</span>
+            </Update></div>
+          : null}
         <CategoryTitle>제공 물품</CategoryTitle>
         <ul>
           {councilData.items.map((item) => (
-            item.type == "PROVIDED" ? 
-            <li key={item.itemId}>
-              {item.name}
-              {councilData.isCouncilSelfManage ? 
-              <CategoryCount>{item.quantity}</CategoryCount>:null}
-            </li>
-            : null
+            item.type == "PROVIDED" ?
+              <li key={item.itemId}>
+                {item.name}
+                {councilData.isCouncilSelfManage ?
+                  <CategoryCount>{item.quantity}</CategoryCount> : null}
+              </li>
+              : null
           ))}
         </ul>
       </ProductContainer>
@@ -219,13 +218,13 @@ const CouncilDetail = () => {
         <CategoryTitle>대여 물품</CategoryTitle>
         <ul>
           {councilData.items.map((item) => (
-            item.type == "RENTAL" ? 
-            <li key={item.itemId}>
-              {item.name}
-              {councilData.isCouncilSelfManage ? 
-              <CategoryCount>{item.quantity}</CategoryCount>:null}
-            </li>
-            : null
+            item.type == "RENTAL" ?
+              <li key={item.itemId}>
+                {item.name}
+                {councilData.isCouncilSelfManage ?
+                  <CategoryCount>{item.quantity}</CategoryCount> : null}
+              </li>
+              : null
           ))}
         </ul>
       </ProductContainer>

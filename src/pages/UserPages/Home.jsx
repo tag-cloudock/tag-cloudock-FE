@@ -323,7 +323,7 @@ const Home = () => {
             <CouncilBtnText>
               {campus == 0 ?"글" : "메"}캠 학생회 대여품 보러 GO!
               <span>
-                25개의 학생회, 150개의 물품대여중!
+                총학생회에서 18가지 물품을 대여, 제공 중이에요
               </span>
             </CouncilBtnText>
            

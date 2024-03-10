@@ -286,10 +286,8 @@ const AdminCouncilItemManagement = () => {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
-                });
-
-                setCouncilData(response.data);
-                console.log(response.data);
+                });           
+                setCouncilData(response.data.data);
 
             } catch (error) {
                 console.error("오류 발생:", error);
@@ -318,7 +316,7 @@ const AdminCouncilItemManagement = () => {
             }
           );
           // 성공시
-          if (PutResponse.status === 200) {
+          if (PutResponse.data.code === 200) {
             window.alert("수정 성공");
             navigate("/council/manage");
           }
@@ -352,7 +350,7 @@ const AdminCouncilItemManagement = () => {
                 }
             );
             // 성공시
-            if (signUpResponse.status === 200) {
+            if (signUpResponse.data.code === 200) {
                 window.alert("생성 성공");
                 setKey(key + 1);
                 // navigate("/");
@@ -372,7 +370,6 @@ const AdminCouncilItemManagement = () => {
             });
             window.alert("삭제되었습니다.");
             setKey(key + 1);
-            console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
         }
@@ -393,7 +390,6 @@ const AdminCouncilItemManagement = () => {
                     },
                 });
             setKey(key + 1);
-            console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
         }
@@ -408,7 +404,6 @@ const AdminCouncilItemManagement = () => {
                     },
                 });
             setKey(key + 1);
-            console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
         }

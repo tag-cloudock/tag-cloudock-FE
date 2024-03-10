@@ -170,7 +170,7 @@ margin-top: 11px;
 const ChatBox = styled.button`
 width: 100%;
 border: none;
-margin: 30px 0px;
+margin: 0px 0px 30px 0px;
   /* margin: 20px 0px 100px 0px; */
   padding: 10px;
   border-radius: 8px;
@@ -263,6 +263,28 @@ const Done = styled.div`
   border-radius: 15px;
 `;
 
+const ChatCount = styled.div`
+  /* display: inline-block;
+  background: #ffdede;
+  padding: 0px 10px;
+  border-radius: 15px; */
+  height: 30px;
+  font-size: 15px;
+  margin-top: 30px;
+  color: #6093FF;
+  display: flex;
+  align-items: center;
+  & div{
+    margin-right: 3px;
+    margin-top: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 10px;
+    background: #6093FF;
+  }
+`;
+
+
 const PostDetail = () => {
   const navigate = useNavigate(); // 로그인 전 홈 진입 막기 위해
   const [post, setPost] = useState({ title: "", createdAt: [], needAt: [], returnAt: [], userImgPath: "default.png", postImgPath: "default.png", location: "" }); // 최신 글 사용 위해
@@ -288,13 +310,10 @@ const PostDetail = () => {
         const response = await axios.get(
           "http://" + process.env.REACT_APP_BACK_URL + "/post/" + id
         );
-        console.log(response.data);
-        setPost(response.data);
-        const needAt = response.data.needAt[0] + "-" + response.data.needAt[1] + "-" + response.data.needAt[2];
-        const returnAt = response.data.returnAt[0] + "-" + response.data.returnAt[1] + "-" + response.data.returnAt[2];
-        console.log(needAt);
+        setPost(response.data.data);
+        const needAt = response.data.data.needAt;
+        const returnAt = response.data.data.returnAt;
         setDifference(getDateDiff(needAt, returnAt));
-
       } catch (error) {
         console.log("포스트 오류 발생: ", error);
       }
@@ -323,9 +342,8 @@ const PostDetail = () => {
                 Authorization: `Bearer ${cookies.token}`,
               },
             });
-          console.log(response.data);
-          if (response.status === 200) {
-            navigate("/chat/l/" + response.data.roomId + "/" + response.data.borrowerId + "/" + postId);
+          if (response.data.code === 200) {
+            navigate("/chat/l/" + response.data.data.roomId + "/" + response.data.data.borrowerId + "/" + postId);
           }
 
         } catch (error) {
@@ -342,16 +360,14 @@ const PostDetail = () => {
     try {
       const donePost = async () => {
         try {
-          const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/post/done/"+post.postId,
+          const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/post/done/" + post.postId,
             {
               headers: {
                 Authorization: `Bearer ${cookies.token}`,
               },
             });
-          console.log(response.data);
           setIsDoneModalUp(false);
           navigate("/");
-
         } catch (error) {
           console.log("오류 발생: ", error);
         }
@@ -376,7 +392,7 @@ const PostDetail = () => {
                 <span>{post.nickname}</span>
               </User>
             </Link>
-            <PostDate>{post.createdAt[0] + "." + post.createdAt[1] + "." + post.createdAt[2]}</PostDate>
+            <PostDate>{post.createdAt.slice(0,10)}</PostDate>
           </PostInfo>
           <Detail>
             {post.content}
@@ -400,18 +416,24 @@ const PostDetail = () => {
           <BOX>
             <DateInfoBox>
               <DateTitle>필요한 날</DateTitle>
-              <DateText>{post.needAt[0] + "." + post.needAt[1] + "." + post.needAt[2]}</DateText>
+              <DateText>{post.needAt}</DateText>
             </DateInfoBox>
             <RangeDate>{difference}일</RangeDate>
             <DateInfoBox>
               <DateTitle>반납하는 날</DateTitle>
-              <DateText>{post.returnAt[0] + "." + post.returnAt[1] + "." + post.returnAt[2]}</DateText>
+              <DateText>{post.returnAt}</DateText>
             </DateInfoBox>
+            
           </BOX>
+          
+          {post.isClose ? <ChatCount></ChatCount> :
+          <ChatCount>
+            <div></div>
+            <span>{post.chatCount}명과 대화중</span></ChatCount>}
           <ChatBox onClick={() => {
-            if (post.userId == cookies.id ){
+            if (post.userId == cookies.id) {
               setIsDoneModalUp(true);
-            }else{
+            } else {
               setIsModalUp(true);
             }
           }} isDone={post.isClose} disabled={post.isClose}>{post.isClose ? "완료된 요청입니다" : post.userId == cookies.id ? "종료하기" : "대화하기"}</ChatBox>

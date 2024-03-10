@@ -102,6 +102,7 @@ const CreateCouncil = styled.div`
 const AdminCouncilManagement = () => {
     const [groupedCouncilList, setGroupedCouncilList] = useState([]); // 채팅방 리스트 상태
     const [key, setKey] = useState(0);
+
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
 
@@ -113,8 +114,8 @@ const AdminCouncilManagement = () => {
         if (cookies.roles != "ADMIN") {
             navigate("/");
             return;
-          
-          }
+
+        }
         const fetchCouncils = async () => {
             try {
                 // 토큰 쿠키가 없다면 로그인 페이지로 이동
@@ -130,9 +131,9 @@ const AdminCouncilManagement = () => {
                     },
                 });
 
-                const groupedData = response.data.reduce((acc, item, index) => {
+                const groupedData = response.data.data.reduce((acc, item, index) => {
                     const key = item.college;
-                    if (index !== 0 && key !== response.data[index - 1].college) {
+                    if (index !== 0 && key !== response.data.data[index - 1].college) {
                         acc.push([]);
                     }
                     acc[acc.length - 1].push(item);
@@ -170,36 +171,36 @@ const AdminCouncilManagement = () => {
         <AdminBox>
             <Header headerType={"noChatIcon"} headerText={"학생회 관리"}></Header>
             <ContentBox>
-            <Link to={"/admin/cimanage/create"}>
-                <CreateCouncil>
-                    <img src={"/image/write_black.svg"}></img>
-                </CreateCouncil>
-            </Link>
-            <div>
-                {groupedCouncilList.map((college, index) => (
-                    <div key={index}>
-                        <CollegeName>{college[0] != null ? college[0].college.slice(1) : null}</CollegeName>
-                        <CollegeBox>
-                            {college.map((council) => (
-                                <Council key={council.councilId}>
-                                    <CouncilImg>
-                                        <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + council.imgPath}></img>
-                                    </CouncilImg>
-                                    <Link to={"/admin/cimanage/add/" + council.councilId} >
-                                        <CouncilContent>
-                                            <CouncilName>{council.name}</CouncilName>
-                                            <ItemInfo>제공 물품 {council.providedItemCount} 대여 물품 {council.rentalItemCount}</ItemInfo>
-                                        </CouncilContent>
-                                    </Link>
-                                    <RemoveBtn onClick={() => removeCouncil(council.councilId)}>
-                                        <img src={"/image/remove.svg"}></img>
-                                    </RemoveBtn>
-                                </Council>
-                            ))}
-                        </CollegeBox>
-                    </div>
-                ))}
-            </div>
+                <Link to={"/admin/cimanage/create"}>
+                    <CreateCouncil>
+                        <img src={"/image/write_black.svg"}></img>
+                    </CreateCouncil>
+                </Link>
+                <div>
+                    {groupedCouncilList.map((college, index) => (
+                        <div key={index}>
+                            <CollegeName>{college[0] != null ? college[0].college.slice(1) : null}</CollegeName>
+                            <CollegeBox>
+                                {college.map((council) => (
+                                    <Council key={council.councilId}>
+                                        <CouncilImg>
+                                            <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + council.imgPath}></img>
+                                        </CouncilImg>
+                                        <Link to={"/admin/cimanage/add/" + council.councilId} >
+                                            <CouncilContent>
+                                                <CouncilName>{council.name}</CouncilName>
+                                                <ItemInfo>제공 물품 {council.providedItemCount} 대여 물품 {council.rentalItemCount}</ItemInfo>
+                                            </CouncilContent>
+                                        </Link>
+                                        <RemoveBtn onClick={() => removeCouncil(council.councilId)}>
+                                            <img src={"/image/remove.svg"}></img>
+                                        </RemoveBtn>
+                                    </Council>
+                                ))}
+                            </CollegeBox>
+                        </div>
+                    ))}
+                </div>
             </ContentBox>
         </AdminBox>
     );

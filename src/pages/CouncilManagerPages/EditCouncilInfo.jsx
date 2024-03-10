@@ -103,12 +103,12 @@ const EditCouncilInfo = () => {
     }
     if (cookies.roles != "MANAGER") {
       navigate("/");
-      return;  
-    } 
+      return;
+    }
     const fetchCouncils = async () => {
       try {
         // 토큰 쿠키가 없다면 로그인 페이지로 이동
-       
+
 
         // 유저의 채팅방 모두 가져오기 api 요청
         const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/manage/council", {
@@ -117,11 +117,10 @@ const EditCouncilInfo = () => {
           },
         });
 
-        setCouncilData(response.data);
-        setLocation(response.data.location);
-        setOperatingHours(response.data.operatingHours);
-        setUsageGuidelines(response.data.usageGuidelines);
-        console.log(response.data);
+        setCouncilData(response.data.data);
+        setLocation(response.data.data.location);
+        setOperatingHours(response.data.data.operatingHours);
+        setUsageGuidelines(response.data.data.usageGuidelines);
 
       } catch (error) {
         console.error("오류 발생:", error);
@@ -150,7 +149,7 @@ const EditCouncilInfo = () => {
         }
       );
       // 성공시
-      if (PutResponse.status === 200) {
+      if (PutResponse.data.code === 200) {
         window.alert("수정 성공");
         navigate("/council/manage");
       }

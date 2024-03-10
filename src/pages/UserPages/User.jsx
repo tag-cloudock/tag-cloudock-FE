@@ -64,6 +64,7 @@ const ProfilImg = styled.div`
 `;
 
 const ProfilImgBox = styled.div`
+margin-top: 8px;
   display: inline-block;
 `;
 
@@ -73,6 +74,22 @@ const UserInfoContentBox = styled.div`
     width: calc(100% - 110px);
   }
   float: right;
+  & img{
+    
+    width: 35px;
+  }
+`;
+const NicknameBox = styled.div`
+  display: flex;
+  & img{
+    margin-left: 5px;
+    margin-top: 2px;
+    width: 35px;
+  }
+`;
+const InfoTopBox = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 const Nickname = styled.div`
   display: inline-block;
@@ -83,6 +100,7 @@ const Nickname = styled.div`
   }
   font-weight: 700;
   color: #333333;
+
 `;
 const CountBox = styled.div`
   display: flex;
@@ -239,7 +257,7 @@ const ImageIcon2 = styled.img`
 `;
 
 const ImageIcon3 = styled.img`
-  width: 25px;
+  width: 10px;
 `;
 
 const RateBox = styled.div`
@@ -447,32 +465,26 @@ const ModalText = styled.div`
 const User = () => {
   const navigate = useNavigate(); // 페이지 이동을 위해
   const [cookies, , removeCookie] = useCookies(); // 쿠키 가져오기, 쿠기 삭제를 위한 함수
-  const [userInfo, setUserInfo] = useState({imgPath:"default.png"}); // 유저 정보 상태
-  const [reviewData, setReviewData] = useState({reviews:[]});
+  const [userInfo, setUserInfo] = useState({ imgPath: "default.png" }); // 유저 정보 상태
+  const [reviewData, setReviewData] = useState({ reviews: [] });
   const [userPosts, setUserPosts] = useState([]);
   const [isDoneModalOn, setIsDoneModalOn] = useState(false);
   const [nickname, setNickname] = useState("");
   const [key, setKey] = useState(0);
   const [file, setFile] = useState(null);
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        setFile(file);
-    };
-
-  const [img, setImg] = useState({}); // 유저 정보 상태
-  const [isVertical, setIsVertical] = useState(true); // 유저 정보 상태
-  const { userid } = useParams(); // 파라미터 값 가져오기
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFile(file);
+  };
+  const { userid } = useParams();
 
   useEffect(() => {
-    // 유저 정보 가져오기
     const fetchUserInfo = async () => {
       try {
-        // 토큰 쿠키가 없다면 로그인 페이지로 이동
         if (!cookies.token) {
           navigate("/signin");
           return;
         }
-        // 회원 조회 api 요청
         const response = await axios.get(
           "http://" + process.env.REACT_APP_BACK_URL + "/account?id=" + userid,
           {
@@ -481,17 +493,15 @@ const User = () => {
             },
           }
         );
-        setUserInfo(response.data);
-        console.log(response.data);
-        // 유저 상태 등록
-      } catch (error) {
-        // 없는 유저라면 쿠키 지우고 로그인 페이지로 이동
-        if (error.response && error.response.status === 404) {
-          removeCookies();
+
+        if (response.data.code != 200) {
           navigate("/signin");
-        } else{
-          console.error("오류 발생:", error);
         }
+
+        setUserInfo(response.data.data);
+
+      } catch (error) {
+        console.error("오류 발생:", error);
       }
     };
     const fetchReview = async () => {
@@ -502,22 +512,16 @@ const User = () => {
           return;
         }
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/review/"+userid,
+          "http://" + process.env.REACT_APP_BACK_URL + "/review/" + userid,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
             },
           }
         );
-        setReviewData(response.data);
-        console.log(response.data);
+        setReviewData(response.data.data);
         // 유저 상태 등록
       } catch (error) {
-        // 없는 유저라면 쿠키 지우고 로그인 페이지로 이동
-        if (error.response && error.response.status === 404) {
-          removeCookies();
-          navigate("/signin");
-        } 
         console.error("오류 발생:", error);
       }
     };
@@ -529,22 +533,15 @@ const User = () => {
           return;
         }
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/post/user/"+userid,
+          "http://" + process.env.REACT_APP_BACK_URL + "/post/user/" + userid,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
             },
           }
         );
-        setUserPosts(response.data);
-        console.log(response.data);
-        // 유저 상태 등록
+        setUserPosts(response.data.data);
       } catch (error) {
-        // 없는 유저라면 쿠키 지우고 로그인 페이지로 이동
-        if (error.response && error.response.status === 404) {
-          removeCookies();
-          navigate("/signin");
-        } 
         console.error("오류 발생:", error);
       }
     };
@@ -556,39 +553,35 @@ const User = () => {
     e.preventDefault();
 
     if (nickname.length < 1) {
-        window.alert("닉네임을 입력해주세요.");
-        return;
+      window.alert("닉네임을 입력해주세요.");
+      return;
     }
 
     try {
       const formData = new FormData();
       formData.append('request', new Blob([JSON.stringify({
-          nickname
+        nickname
       })],
-          {
-              type: "application/json"
-          }));
+        {
+          type: "application/json"
+        }));
       formData.append('pic', file);
       const signUpResponse = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/account/update",
-      formData,
-      {
+        formData,
+        {
           headers: {
-              'Content-Type': 'multipart/form-data',
-              Authorization: `Bearer ${cookies.token}`,
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${cookies.token}`,
 
           },
-      }
-      );
-        // 성공시
-        if (signUpResponse.status === 200) {
-            setIsDoneModalOn(false);
-            setKey(key+1);
         }
+      );
+      setIsDoneModalOn(false);
+      setKey(key + 1);
     } catch (error) {
-        console.error("오류 발생:", error);
-
+      console.error("오류 발생:", error);
     }
-};
+  };
 
   // 쿠키 지우기
   const removeCookies = async (e) => {
@@ -612,14 +605,20 @@ const User = () => {
             </ProfilImg>
           </ProfilImgBox>
           <UserInfoContentBox>
-            <Nickname>{userInfo.nickname}</Nickname>
+            <InfoTopBox>
+            <NicknameBox>
+              <Nickname>{userInfo.nickname}</Nickname>
+              {cookies.certification == true ? <img src="/image/certifi.svg"></img> : null}
+            </NicknameBox>
             <Option>
-                <OptionBox onClick={() => {
+              <OptionBox onClick={() => {
                 setIsDoneModalOn(true);
               }}>
-                  <ImageIcon3 src={"/image/settingbutton.svg"} alt="" />
-                </OptionBox>
-              </Option>
+                <ImageIcon3 src={"/image/settingbutton.svg"} alt="" />
+              </OptionBox>
+            </Option>
+            </InfoTopBox>
+           
             <CountBox>
               <CountInfoBox>
                 빌린 횟수 <br></br>{userInfo.borrowCount}
@@ -634,37 +633,37 @@ const User = () => {
       </UserBox>
       <PostBox>
         <RateBox>
-            <RateInfoBox1>
-              <ImageIcon2 src={"/image/smilingface.svg"} alt="" />
-              <br></br>{reviewData.loveCount}
-            </RateInfoBox1>
-            <RateInfoBox2>
-              <ImageIcon2 src={"/image/face.svg"} alt="" />
-              <br></br>{reviewData.goodCount}
-            </RateInfoBox2>
-            <RateInfoBox3>
-              <ImageIcon2 src={"/image/upsetface.svg"} alt="" />
-              <br></br>{reviewData.badCount}
-            </RateInfoBox3>
-          </RateBox>
+          <RateInfoBox1>
+            <ImageIcon2 src={"/image/smilingface.svg"} alt="" />
+            <br></br>{reviewData.loveCount}
+          </RateInfoBox1>
+          <RateInfoBox2>
+            <ImageIcon2 src={"/image/face.svg"} alt="" />
+            <br></br>{reviewData.goodCount}
+          </RateInfoBox2>
+          <RateInfoBox3>
+            <ImageIcon2 src={"/image/upsetface.svg"} alt="" />
+            <br></br>{reviewData.badCount}
+          </RateInfoBox3>
+        </RateBox>
       </PostBox>
       <PostBox>
         <BoxTitle>
-        최근 후기
+          최근 후기
         </BoxTitle>
         <PostInfoBox>
-        {reviewData.reviews.length != 0 ? reviewData.reviews.map((review, index) => (
+          {reviewData.reviews.length != 0 ? reviewData.reviews.map((review, index) => (
             <RecentRateBox key={index}>
               {review.writerType == "BORROWER" ?
-              <BorrowCheckBox>빌렸어요</BorrowCheckBox>
-               : 
-               <LendCheckBox>빌려줬어요</LendCheckBox>}
-            <ReviewText>{review.text}</ReviewText>
-            <RateDateBox>{review.createdAt[1]}월 {review.createdAt[2]}일</RateDateBox>
-          </RecentRateBox>
-        )): 
-          <NoData>아직 후기가 없어요!</NoData>
-        }
+                <BorrowCheckBox>빌렸어요</BorrowCheckBox>
+                :
+                <LendCheckBox>빌려줬어요</LendCheckBox>}
+              <ReviewText>{review.text}</ReviewText>
+              <RateDateBox>{review.createdAt.slice(5, 7)}월 {review.createdAt.slice(8, 10)}일</RateDateBox>
+            </RecentRateBox>
+          )) :
+            <NoData>아직 후기가 없어요!</NoData>
+          }
         </PostInfoBox>
       </PostBox>
       <PostBox>
@@ -672,63 +671,63 @@ const User = () => {
           {userInfo.nickname}님이 작성한 글이에요
         </BoxTitle>
         <PostInfoBox>
-        {userPosts.length != 0 ?userPosts.map((post, index) => (
-          <Link to={"/posts/"+post.postId}>
-            <UserPostItemBox key={index}>
-             <PostTitle>{post.title}</PostTitle>
-             <PostDate>{post.createdAt[1]}월 {post.createdAt[2]}일</PostDate>
-            </UserPostItemBox>
-          </Link>
-        )) : 
-        <NoData>아직 작성한 글이 없어요!</NoData>}
+          {userPosts.length != 0 ? userPosts.map((post, index) => (
+            <Link to={"/posts/" + post.postId}>
+              <UserPostItemBox key={index}>
+                <PostTitle>{post.title}</PostTitle>
+                <PostDate>{post.createdAt.slice(5, 7)}월 {post.createdAt.slice(8, 10)}일</PostDate>
+              </UserPostItemBox>
+            </Link>
+          )) :
+            <NoData>아직 작성한 글이 없어요!</NoData>}
         </PostInfoBox>
       </PostBox>
       {cookies.certification == false ? (
-                <Link to={"/certification"}>
-                   <MoveCertifi>학생증 인증하기</MoveCertifi>
-                </Link>
-              ) : null}
-     <Logout onClick={removeCookies}>로그아웃</Logout>
+        <Link to={"/certification"}>
+          <MoveCertifi>학생증 인증하기</MoveCertifi>
+        </Link>
+      ) : null}
+      <Logout onClick={removeCookies}>로그아웃</Logout>
 
 
 
-        {isDoneModalOn ? 
-     <ModalContainer>
+      {isDoneModalOn ?
+        <ModalContainer>
           <ModalBox2>
             <ModalText>
-             프로필 수정
+              프로필 수정
             </ModalText>
 
-            
+
             <InputBox
               type="text"
               name="nickname"
               placeholder="새로운 닉네임"
               onChange={(e) => {
                 setNickname(e.target.value);
-            }}
+              }}
               maxLength={5}
             />
 
-<FileInputBtn for="file" isFileSelected={file!=null}>
-                    <div>프로필 사진 변경</div>
-                </FileInputBtn>
-                <FileInputBox type="file" name="file" id="file" onChange={handleFileChange}/>
+            <FileInputBtn for="file" isFileSelected={file != null}>
+              <div>프로필 사진 변경</div>
+            </FileInputBtn>
+            <FileInputBox type="file" name="file" id="file" onChange={handleFileChange} />
             <ModalBtnBox>
 
-              <ModalBtn   onClick={() => {
+              <ModalBtn onClick={() => {
                 setIsDoneModalOn(false);
               }} isLeft={true}>
-               취소 하기
-            </ModalBtn>
-              
-              <ModalBtn  onClick={handleChange} isMine={""}>
+                취소 하기
+              </ModalBtn>
+
+              <ModalBtn onClick={handleChange} isMine={""}>
                 적용 하기
               </ModalBtn>
             </ModalBtnBox>
           </ModalBox2>
         </ModalContainer>
-        :null}
+        : null}
     </div>
   );
 };

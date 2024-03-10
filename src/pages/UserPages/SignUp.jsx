@@ -19,7 +19,7 @@ const Title = styled.div`
     margin-bottom: 120px;
     font-size: 60px;
     font-weight: 850;
-    color : #379DFF;
+    color : #6093FF;
 `;
 
 const SubTitle = styled.div`
@@ -59,7 +59,7 @@ const InputBox = styled.input`
         font-size: 18px;
     }
     &:focus {
-      border-color: #379DFF;
+      border-color: #6093FF;
     }
 `;
 
@@ -70,7 +70,7 @@ const SubmitBtn = styled.button`
     background: #efefef;
     border: none;
     border-radius: 10px;
-    background: #379DFF;
+    background: #6093FF;
     font-weight: bold;
     color:#ffffff;
     font-size: 18px; 
@@ -93,7 +93,7 @@ const FileInputBtn = styled.label`
       font-size: 12px;
       font-weight: 700;
       color:#777777;
-      border: 1px solid #379DFF;
+      border: 1px solid #6093FF;
       border-radius: 5px;
       padding: 5px;
     }

@@ -122,7 +122,7 @@ const SignIn = () => {
       );
       if (loginResponse.status === 200) {
         // 2시간 후 만료되는 쿠키 생성
-        const expires = moment().add(2, "hours").toDate();
+        const expires = moment().add(48, "hours").toDate();
         setCookie("token", loginResponse.data.token, {
           path: "/",
           expires: expires,

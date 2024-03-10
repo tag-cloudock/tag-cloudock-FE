@@ -1,10 +1,7 @@
-import React, { useRef, useState,useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
-import axios from "axios";
-import moment from "moment";
-import Footer from "../../components/layout/Footer";
 
 // 로그인 form 박스
 const LoginBox = styled.div`
@@ -119,8 +116,9 @@ const ForgotPw = () => {
     }
     if (cookies.roles != "MANAGER") {
       navigate("/");
-      return;  
-    } });
+      return;
+    }
+  });
 
   return (
     <div>
@@ -134,12 +132,12 @@ const ForgotPw = () => {
         </Title>
 
         <AlertBox>
-        <ForgotPassword>아이디/비밀번호 잊었나요?</ForgotPassword>
-        <ForgotPassword>오픈 카카오톡으로 문의 하세요!</ForgotPassword>
+          <ForgotPassword>아이디/비밀번호 잊었나요?</ForgotPassword>
+          <ForgotPassword>오픈 카카오톡으로 문의 하세요!</ForgotPassword>
         </AlertBox>
 
         <Link to={"/council/signin"}>
-        <GoBack>돌아가기</GoBack></Link>
+          <GoBack>돌아가기</GoBack></Link>
       </LoginBox>
     </div>
   );

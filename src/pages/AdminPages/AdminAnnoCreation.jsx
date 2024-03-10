@@ -78,18 +78,16 @@ const AdminAnnoCreation = () => {
     const navigate = useNavigate(); // 페이지 이동 위해
     const [cookies, , removeCookie] = useCookies();
 
-      useEffect(() => {
+    useEffect(() => {
         if (!cookies.token) {
-          navigate("/signin");
-          return;
-        
+            navigate("/signin");
+            return;
+
         }
         if (cookies.roles != "ADMIN") {
             navigate("/");
             return;
-          
-          }
-
+        }
     });
 
     const handleAddAnno = async (e) => {
@@ -109,22 +107,21 @@ const AdminAnnoCreation = () => {
         const createdAt = new Date();
 
         try {
-            // 회원가입 api 요청
             const signUpResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/anno",
                 {
                     title,
                     content,
                     createdAt
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`,
                 },
-            }
-                
+                {
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`,
+                    },
+                }
+
             );
             // 성공시
-            if (signUpResponse.status === 200) {
+            if (signUpResponse.data.code === 200) {
                 window.alert("작성 완료");
                 navigate("/admin/anno-manage");
             }

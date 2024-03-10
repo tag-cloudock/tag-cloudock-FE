@@ -99,6 +99,7 @@ const ImageIcon = styled.img`
 `;
 
 const ChatRoomCount = styled.span`
+  margin-left: 5px;
   width: 17px;
   height: 17px;
   font-size: 15px;
@@ -152,23 +153,23 @@ const PostList = () => {
         const campusValue = new URLSearchParams(location.search).get('campus');
 
         var response;
-        if (locationValue != null){
+        if (locationValue != null) {
           setType("LOCATION");
           setLocationName(locationValue);
           response = await axios.get(
-            
-            "http://" + process.env.REACT_APP_BACK_URL + "/post/all/location/"+locationValue
+
+            "http://" + process.env.REACT_APP_BACK_URL + "/post/all/location/" + locationValue
           );
-        }else{
+        } else {
           setType("CAMPUS");
           setCampusName(campusValue);
           response = await axios.get(
-            "http://" + process.env.REACT_APP_BACK_URL + "/post/all/campus/"+campusValue
+            "http://" + process.env.REACT_APP_BACK_URL + "/post/all/campus/" + campusValue
           );
         }
-        
-        setPosts(response.data);
-        console.log(response);
+
+        setPosts(response.data.data);
+        console.log(response.data.data);
 
       } catch (error) {
         console.log("포스트 오류 발생: ", error);
@@ -178,31 +179,31 @@ const PostList = () => {
   }, []);
   return (
     <Container>
-      <Header headerText={type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬")+ " 최근 글"}>         
+      <Header headerText={type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬") + " 최근 글"}>
       </Header>
       <PostBox>
         <BoardBox>
-          
-          { posts.length != 0 ?posts.map((post, index) => (
-            <Link to={"/posts/"+post.postId} key={index}>
+
+          {posts.length != 0 ? posts.map((post, index) => (
+            <Link to={"/posts/" + post.postId} key={index}>
               <Item isDone={post.close}>
                 <MainImage><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></MainImage>
-              <Listbox > 
-                <NoticeTitle>{post.title}</NoticeTitle>
-                <PostDetail>{post.location.slice(2)+" "+post.locationDetail}</PostDetail>
-                <PostPrice>{post.rentalFee}원
-                <ChatRoomCount>1</ChatRoomCount><ImageIcon src={"/image/chatt.svg"} alt="" />
-                </PostPrice>
-              </Listbox>
+                <Listbox >
+                  <NoticeTitle>{post.title}</NoticeTitle>
+                  <PostDetail>{post.location.slice(2) + " " + post.locationDetail}</PostDetail>
+                  <PostPrice>{post.rentalFee}원
+                    <ChatRoomCount>{post.chatCount}</ChatRoomCount><ImageIcon src={"/image/chatt.svg"} alt="" />
+                  </PostPrice>
+                </Listbox>
               </Item>
-              
+
             </Link>
           ))
-        :
-        <NoPostBox>
-          <NoPostText>썰렁</NoPostText>
-          {type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬")} 사람들은 빌릴게 없어요
-        </NoPostBox>}
+            :
+            <NoPostBox>
+              <NoPostText>썰렁</NoPostText>
+              {type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬")} 사람들은 빌릴게 없어요
+            </NoPostBox>}
         </BoardBox>
       </PostBox>
       <MenuBar></MenuBar>

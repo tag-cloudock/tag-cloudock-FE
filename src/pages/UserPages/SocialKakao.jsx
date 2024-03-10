@@ -3,7 +3,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import moment from "moment";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     padding: 20px;
@@ -13,9 +13,9 @@ const Text = styled.div`
     /* margin: 20px auto 0 20px; */
     font-size: 25px;
     line-height: 38px;
-    font-weight: 500;
+    font-weight: 600;
     padding: 70px 0px;
-    font-family: 'Noto Sans KR'; 
+
     /* text-align: center; */
 `;
 
@@ -25,7 +25,6 @@ const Nickname = styled.input`
     background: none;
     /* padding: 10px 0px; */
     /* border-radius: 20px; */
-    font-family: 'Noto Sans KR'; 
     /* text-align: center; */
     outline: none;
     font-size: 22px;
@@ -38,7 +37,6 @@ const Nickname = styled.input`
     }
 `;
 const NicknameCnt = styled.span`
-    font-family: 'Noto Sans KR'; 
     /* z-index: 10px; */
     /* margin-top: -30px; */
       font-size: 22px;
@@ -50,11 +48,10 @@ const InputBox = styled.div`
 height: 40px;
         margin-top: 100px;
     width: 100%;
-    border-bottom: 3px solid #379DFF;
+    border-bottom: 3px solid #6093FF;
 `;
 
 const SummitBtn = styled.button`
-    font-family: 'Noto Sans KR'; 
     position: fixed;
     display: block;
     bottom: 30px;
@@ -68,9 +65,9 @@ const SummitBtn = styled.button`
     padding-right: 20px; /* 우측 여백 */
     border-radius: 10px;
     color: #ffffff;
-    font-size: 18px;
-    font-weight: 500;
-    background: ${({ isOk }) => (isOk ? '#379DFF' : '#afd9ff')};
+    font-size: 20px;
+    font-weight: 600;
+    background: ${({ isOk }) => (isOk ? '#6093FF' : '#afd9ff')};
 `;
 
 
@@ -79,13 +76,11 @@ const NicknameSetBox = styled.div`
   position: relative;
 `;
 
-
 const SocialKakao = () => {
   const navigate = useNavigate(); // 로그인 전 홈 진입 막기 위해
-  const [cookies,setCookie] = useCookies(); // 쿠키 사용하기 위해
+  const [cookies, setCookie] = useCookies(); // 쿠키 사용하기 위해
   const [newUser, setNewUser] = useState(false); // 유저 정보 상태
   const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState(""); // 유저 정보 상태
   const [cnt, setCnt] = useState(0);
   const code = new URL(window.location.href).searchParams.get("code");
   console.log(code);
@@ -96,40 +91,38 @@ const SocialKakao = () => {
         const response = await axios.get(
           "http://" + process.env.REACT_APP_BACK_URL + "/oauth/kakao/" + code
         );
-        console.log(response.data.userId);
-        if (response.status == 200) {
-          const expires = moment().add(2, "hours").toDate();
-          setCookie("token", response.data.token, {
+        console.log(response.data);
+        if (response.data.code == 200) {
+          const expires = moment().add(48, "hours").toDate();
+          setCookie("token", response.data.data.token, {
             path: "/",
             expires: expires,
           });
-          setCookie("id", response.data.id, {
+          setCookie("id", response.data.data.id, {
             path: "/",
             expires: expires,
           });
-          setCookie("userId", response.data.userId, {
+          setCookie("userId", response.data.data.userId, {
             path: "/",
             expires: expires,
           });
-          setCookie("nickname", response.data.nickname, {
+          setCookie("nickname", response.data.data.nickname, {
             path: "/",
             expires: expires,
           });
-          setCookie("roles", response.data.roles, {
+          setCookie("roles", response.data.data.roles, {
             path: "/",
             expires: expires,
           });
-          setCookie("certification", response.data.certification, {
+          setCookie("certification", response.data.data.certification, {
             path: "/",
             expires: expires,
           });
           navigate("/");
         }
-        if (response.status == 201) {
-          setEmail(response.data.userId);
+        if (response.data.code == 404) {
           setNewUser(true);
         }
-
 
       } catch (error) {
         console.log("오류 발생: ", error);
@@ -145,30 +138,30 @@ const SocialKakao = () => {
 
       const response = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/oauth/kakao",
         {
-          email,
+          code,
           nickname
         }
       );
       console.log(response)
       if (response.status === 200) {
         const expires = moment().add(2, "hours").toDate();
-        setCookie("token", response.data.token, {
+        setCookie("token", response.data.data.token, {
           path: "/",
           expires: expires,
         });
-        setCookie("userId", response.data.userId, {
+        setCookie("userId", response.data.data.userId, {
           path: "/",
           expires: expires,
         });
-        setCookie("nickname", response.data.nickname, {
+        setCookie("nickname", response.data.data.nickname, {
           path: "/",
           expires: expires,
         });
-        setCookie("roles", response.data.roles, {
+        setCookie("roles", response.data.data.roles, {
           path: "/",
           expires: expires,
         });
-        setCookie("certification", response.data.certification, {
+        setCookie("certification", response.data.data.certification, {
           path: "/",
           expires: expires,
         });
@@ -182,7 +175,6 @@ const SocialKakao = () => {
     <Container>
       {newUser ?
         <NicknameSetBox>
-
           <Text>
             환영합니다!<br />
             닉네임을 설정해주세요!
@@ -190,7 +182,6 @@ const SocialKakao = () => {
           <InputBox>
             <Nickname
               type="text"
-              // ref={passwordRef}
               name="title"
               placeholder="5글자 내로 입력해주세요"
               maxLength={5}
@@ -204,7 +195,7 @@ const SocialKakao = () => {
               {cnt}/5
             </NicknameCnt>
           </InputBox>
-          <SummitBtn isOk={cnt != 0} disabled={cnt == 0} onClick={handleSignUp} >가입완료</SummitBtn>
+          <SummitBtn isOk={cnt != 0} disabled={cnt == 0} onClick={handleSignUp} >시작하기</SummitBtn>
         </NicknameSetBox>
 
         :

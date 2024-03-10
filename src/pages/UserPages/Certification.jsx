@@ -1,6 +1,6 @@
 import Header from "../../components/layout/Header";
-import { useState,useEffect } from "react";
-import { useNavigate} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import axios from "axios";
@@ -125,9 +125,10 @@ const Certification = () => {
     const [studentIdNumber, setstudentIdNumber] = useState();
     useEffect(() => {
         if (!cookies.token) {
-          navigate("/signin");
-          return;
+            navigate("/signin");
+            return;
         }
+        
     });
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -135,7 +136,7 @@ const Certification = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (name.length < 1) {
             window.alert("이름을 입력해주세요.");
             return;
@@ -148,35 +149,33 @@ const Certification = () => {
             window.alert("사진을 선택해주세요.");
             return;
         }
-    
+
         try {
-          const formData = new FormData();
-          formData.append('request', new Blob([JSON.stringify({
-            name,
-            studentIdNumber
-          })],
-              {
-                  type: "application/json"
-              }));
-          formData.append('pic', file);
-          const signUpResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/certifi/request",
-          formData,
-          {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                authorization: `Bearer ${cookies.token}`
-            },
-          }
-          );
-          console.log(signUpResponse.data)
-            // 성공시
-            if (signUpResponse.status === 200) {
-                window.alert("요청 완료되었습니다.");
+            const formData = new FormData();
+            formData.append('request', new Blob([JSON.stringify({
+                name,
+                studentIdNumber
+            })],
+                {
+                    type: "application/json"
+                }));
+            formData.append('pic', file);
+            const signUpResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/certifi/request",
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        authorization: `Bearer ${cookies.token}`
+                    },
+                }
+            );
+            if (signUpResponse.data.code === 200) {
+                window.alert("요청 성공!");
                 navigate("/");
             }
         } catch (error) {
             console.error("오류 발생:", error);
-    
+
         }
     };
     return (
@@ -221,7 +220,7 @@ const Certification = () => {
                     }}
                 // onKeyDown={(e) => { activeEnter(e) }}
                 />
-                <FileInputBtn for="file" isFileSelected={file!=null}>
+                <FileInputBtn for="file" isFileSelected={file != null}>
                     <div>학생증 이미지 선택</div>
                     <FileInputBox type="file" name="file" id="file" onChange={handleFileChange} />
                 </FileInputBtn>

@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import axios from "axios";
 import Header from "../../components/layout/Header";
 import Loading from "../../components/layout/Loading";
+
 
 
 const ChatBox = styled.div`
@@ -88,7 +89,7 @@ const DurationDate = styled.span`
   border-radius: 20px;
   border: 1px solid #6093FF;
   font-size: 11px;
-  padding: 2px 10px;
+  padding: 1px 8px;
   font-weight: 700;
   color:#6093FF;
 `;
@@ -422,14 +423,17 @@ const Chat = () => {
           return;
         }
         // 메세지 가져오기 api요청
-        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/account?id=" +interlocutorId , {
+        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/account?id=" + interlocutorId, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
         });
-        console.log(response.data);
         // 메세지 상태 저장
-        setInterlocutorInfo(response.data);
+        setInterlocutorInfo(response.data.data);
+
+        if (response.data.code != 200) {
+          navigate("/signin");
+        }
       } catch (error) {
         console.error("오류 발생:", error);
       }
@@ -443,14 +447,13 @@ const Chat = () => {
           return;
         }
         // 메세지 가져오기 api요청
-        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/chat/message/" + id, {
+        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/message/" + id, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
         });
-        console.log(response.data);
         // 메세지 상태 저장
-        setMessageList(response.data);
+        setMessageList(response.data.data);
       } catch (error) {
         console.error("오류 발생:", error);
       }
@@ -472,8 +475,7 @@ const Chat = () => {
           },
         });
 
-        setPostInfo(response.data);
-        console.log(response.data);
+        setPostInfo(response.data.data);
       } catch (error) {
         // 없는 게시물 이라면
         if (error.response && error.response.status === 404) {
@@ -488,6 +490,24 @@ const Chat = () => {
     fetchPostInfo();
     fetchUserInfo();
 
+    let prevVisualViewport = 0
+    function handleVisualViewportResize() {  
+      const currentVisualViewport = window.visualViewport.height
+    
+      if (
+        prevVisualViewport - 30 > currentVisualViewport &&
+        prevVisualViewport - 100 < currentVisualViewport
+      ) {
+        const scrollHeight = window.document.scrollingElement.scrollHeight
+        const scrollTop = scrollHeight - window.visualViewport.height
+    
+        window.scrollTo(0, scrollTop) // 입력창이 키보드에 가려지지 않도록 조절
+      }
+    
+      prevVisualViewport = window.visualViewport.height
+    }
+    
+    window.visualViewport.onresize = handleVisualViewportResize  
     // 0.3초 동안 로딩후 로딩 종료
     setTimeout(() => {
       setLoading(false);
@@ -495,300 +515,322 @@ const Chat = () => {
 
   }, [cookies.token, id, navigate]);
 
+  // function handleKeyDown(event) {
+  //   event.preventDefault(); // 기본 동작 방지
+  //   setInputMessage(event.keyCode);
+  // }
 
-  useEffect(() => {
-    // 컴포넌트가 마운트되면 웹 소켓 연결
-    ws.current = new WebSocket('ws://' + process.env.REACT_APP_BACK_URL + '/ws/chat');
+  // let windowHeight = window.innerHeight;
+  // window.addEventListener('resize', function() {
+  //   const inputElement = document.getElementById('inputbox'); // 입력란의 id를 가정합니다.
+  //   const currentHeight = window.innerHeight;
+  
+  //   // 윈도우의 높이가 줄어들면 키보드가 열린 것으로 판단하고 입력란의 위치를 조정합니다.
+  //   if (currentHeight < windowHeight) {
+  //     const keyboardHeight = windowHeight - currentHeight; // 키보드의 높이 계산
+  //     inputElement.style.bottom = keyboardHeight + 'px'; // 입력란의 위치 조정
+  //   } else {
+  //     inputElement.style.bottom = '0'; // 키보드가 닫혔을 때 입력란의 위치를 초기화
+  //   }
+  
+  //   windowHeight = currentHeight; // 윈도우 높이 업데이트
+  // });
 
-    // 세션 등록
-    ws.current.onopen = () => {
-      const message = {
-        type: 'ENTER',
-        userType: metype === "b" ? "LENDER" : "BORROWER",
-        roomId: id,
-        sender: cookies.userId,
-        message: "",
-      };
-      // JSON 형식으로 문자열 변환 후 웹 소켓으로 전송
-      ws.current.send(JSON.stringify(message));
-    };
 
-    // 메시지를 받으면 실행될 코드
-    ws.current.onmessage = (event) => {
-      const receivedMessage = JSON.parse(event.data);
-      console.log(receivedMessage);
-      const currentDate = new Date();
+useEffect(() => {
+  // 컴포넌트가 마운트되면 웹 소켓 연결
+  ws.current = new WebSocket('ws://' + process.env.REACT_APP_BACK_URL + '/ws/chat');
 
-      // 받은 메세지 메세지 리스트 상태에 넣기위해 딕셔너리화
-      const newMessage = {
-        chatId: new Date(),
-        sentAt: [
-          currentDate.getFullYear(),
-          currentDate.getMonth() + 1,
-          currentDate.getDate(),
-          currentDate.getHours(),
-          currentDate.getMinutes(),
-          currentDate.getSeconds(),
-          currentDate.getMilliseconds()
-        ],
-        message: receivedMessage.message,
-        userType: receivedMessage.userType,
-      };
-      console.log(newMessage);
-      setMessageList(prevMessageList => [...prevMessageList, newMessage]);
-    };
-    // 컴포넌트가 언마운트될 때 웹 소켓 연결 해제
-    return () => {
-      ws.current.close();
-    };
-  }, [cookies.userId, id, metype]);
-
-  // 메세지 보내기
-  const sendMessage = () => {
-
-    // 아무 입력도 안했다면
-    if (inputMessage < 1) {
-      inputMessageRef.current.focus();
-      return;
-    }
-    // 메세지 형식으로 변환후 전송
+  // 세션 등록
+  ws.current.onopen = () => {
     const message = {
-      type: 'TALK',
-      userType: metype === "b" ? "BORROWER" : "LENDER",
+      type: 'ENTER',
+      userType: metype === "b" ? "LENDER" : "BORROWER",
       roomId: id,
       sender: cookies.userId,
-      message: inputMessage,
+      message: "",
     };
+    // JSON 형식으로 문자열 변환 후 웹 소켓으로 전송
     ws.current.send(JSON.stringify(message));
-    setInputMessage('');
+  };
+
+  // 메시지를 받으면 실행될 코드
+  ws.current.onmessage = (event) => {
+    const receivedMessage = JSON.parse(event.data);
+    console.log(receivedMessage);
+    const currentDate = new Date();
+
+    // 받은 메세지 메세지 리스트 상태에 넣기위해 딕셔너리화
+    const newMessage = {
+      chatId: new Date(),
+      sentAt: [
+        currentDate.getFullYear(),
+        currentDate.getMonth() + 1,
+        currentDate.getDate(),
+        currentDate.getHours(),
+        currentDate.getMinutes(),
+        currentDate.getSeconds(),
+        currentDate.getMilliseconds()
+      ],
+      message: receivedMessage.message,
+      userType: receivedMessage.userType,
+    };
+    console.log(newMessage);
+    setMessageList(prevMessageList => [...prevMessageList, newMessage]);
+  };
+  // 컴포넌트가 언마운트될 때 웹 소켓 연결 해제
+  return () => {
+    ws.current.close();
+  };
+}, [cookies.userId, id, metype]);
+
+// 메세지 보내기
+const sendMessage = () => {
+
+  // 아무 입력도 안했다면
+  if (inputMessage < 1) {
     inputMessageRef.current.focus();
+    return;
+  }
+  // 메세지 형식으로 변환후 전송
+  const message = {
+    type: 'TALK',
+    userType: metype === "b" ? "BORROWER" : "LENDER",
+    roomId: id,
+    sender: cookies.userId,
+    message: inputMessage,
   };
+  ws.current.send(JSON.stringify(message));
+  setInputMessage('');
+  inputMessageRef.current.focus();
+};
 
-  // 엔터 입력하면 전송하도록
-  const activeEnter = (event) => {
-    if (event.code === 'Enter') {
-      sendMessage();
-    }
-  };
+// 엔터 입력하면 전송하도록
+const activeEnter = (event) => {
+  if (event.code === 'Enter') {
+    sendMessage();
+  }
+};
 
-  const handleDone = async (e, isWrite) => {
-    e.preventDefault();
+const handleDone = async (e, isWrite) => {
+  e.preventDefault();
 
-    
-    try {
-      if (isWrite){
-        if (rateData == -1) {
-          window.alert(rateData);
-          return;
-        }
-        if (review.length == 0) {
-          window.alert("후기를 작성해주세요");
-          return;
-        }
-        const postId = postInfo.postId; 
 
-        const writerType = isBorrower ? "BORROWER" : "LENDER";
+  try {
+    if (isWrite) {
+      if (rateData == -1) {
+        window.alert(rateData);
+        return;
+      }
+      if (review.length == 0) {
+        window.alert("후기를 작성해주세요");
+        return;
+      }
+      const postId = postInfo.postId;
+
+      const writerType = isBorrower ? "BORROWER" : "LENDER";
       const recipientId = interlocutorInfo.id;
       var rate = "";
-      if  (rateData == 0){
+      if (rateData == 0) {
         rate = "LOVE";
-      }else if (rateData == 1){
+      } else if (rateData == 1) {
         rate = "GOOD";
-      }else if (rateData == 2){
+      } else if (rateData == 2) {
         rate = "BAD";
       }
       const text = review;
       const response2 = await axios.post(
         "http://" + process.env.REACT_APP_BACK_URL + "/review",
-                {
-                    postId,
-                    writerType,
-                    recipientId,
-                    rate,
-                    text
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${cookies.token}`,
-                    },
-                }
-            );
+        {
+          postId,
+          writerType,
+          recipientId,
+          rate,
+          text
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
 
       console.log(response2.data);
-      }
-      if (isBorrower){
-        const response = await axios.put(
-
-          "http://" + process.env.REACT_APP_BACK_URL + "/post/done/" + postInfo.postId + "/" + interlocutorInfo.id + "/" + cookies.id, {
-            headers: {
-              Authorization: `Bearer ${cookies.token}`,
-            },
-          });
-        console.log(response.data);
-      }
-      window.alert("감사합니다 :D");
-      navigate("/");
-    } catch (error) {
-      console.error("오류 발생:", error);
     }
+    if (isBorrower) {
+      const response = await axios.put(
+
+        "http://" + process.env.REACT_APP_BACK_URL + "/post/done/" + postInfo.postId + "/" + interlocutorInfo.id + "/" + cookies.id, {
+        headers: {
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      });
+    }
+    window.alert("감사합니다 :D");
+    navigate("/");
+  } catch (error) {
+    console.error("오류 발생:", error);
+  }
 };
-  return (
-    <ChatBox>
-      <Header headerType={"noChatIcon"} headerText={interlocutorInfo.nickname}></Header>
+return (
+  <ChatBox>
+    <Header headerType={"noChatIcon"} headerText={interlocutorInfo.nickname}></Header>
 
-      {/* 게시물 정보 */}
+    {/* 게시물 정보 */}
+    {loading ? null :
+
+      <PostInfo>
+        <Link to={'/posts/' + postInfo.postId}>
+          <PostImg><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + postInfo.postImgPath}></img></PostImg>
+          <PostText>
+            <PostTitle>{postInfo.title}</PostTitle>
+            <PostDuration>
+              <DurationDate>{postInfo.needAt.slice(5,)}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt.slice(5,)}</DurationDate> <DurationText>까지 대여희망</DurationText>
+            </PostDuration>
+          </PostText>
+        </Link>
+        {!postInfo.isClose && postInfo.userId == cookies.id ? <DoneBtn onClick={() => {
+          setIsBorrower(true);
+          setIsDoneModalOn(true);
+        }}>
+          대여 완료
+        </DoneBtn> : null}
+        {postInfo.isClose && !postInfo.lenderWriteReview && postInfo.userId != cookies.id ? <DoneBtn onClick={() => {
+          setIsBorrower(false);
+          setIsReviewModalOn(true);
+        }}>
+          후기 작성
+        </DoneBtn> : null}
+      </PostInfo>
+    }
+    <EmptyBox>
       {loading ? null :
+        <HiddenTextBox>
+          <HiddenText>까꿍</HiddenText>
+        </HiddenTextBox>}
+    </EmptyBox>
 
-        <PostInfo>
-          <Link to={'/posts/' + postInfo.postId}>
-            <PostImg><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + postInfo.postImgPath}></img></PostImg>
-            <PostText>
-                <PostTitle>{postInfo.title}</PostTitle>
-                <PostDuration>
-                  <DurationDate>{postInfo.needAt[1]}/{postInfo.needAt[2]}</DurationDate> <DurationText>부터</DurationText> <DurationDate>{postInfo.returnAt[1]}/{postInfo.returnAt[2]}</DurationDate> <DurationText>까지 대여희망</DurationText>
-                </PostDuration>
-            </PostText>
-          </Link>
-          {!postInfo.isClose && postInfo.userId == cookies.id ? <DoneBtn onClick={() => {
-            setIsBorrower(true);
-            setIsDoneModalOn(true);
-          }}>
-            대여 완료
-          </DoneBtn> : null}
-          { postInfo.isClose && !postInfo.lenderWriteReview  && postInfo.userId != cookies.id  ? <DoneBtn onClick={() => {
-            setIsBorrower(false);
-            setIsReviewModalOn(true);
-          }}>
-            후기 작성
-          </DoneBtn> : null}
-        </PostInfo>
-      }
-      <EmptyBox>
-        {loading ? null :
-          <HiddenTextBox>
-            <HiddenText>까꿍</HiddenText>
-          </HiddenTextBox>}
-      </EmptyBox>
+    {/* 메세지 */}
+    {/* {loading ? <Loading /> : null} */}
+    <MessagesBox>
+      <TestBox></TestBox>
+      {loading ? null : messageList.map((message, index) => {
+        const isMe = (message.userType === "BORROWER" && metype === "b") ||
+          (message.userType === "LENDER" && metype === "l");
+        return (
+          <div>
+            {index !== 0 && messageList[index - 1].sentAt[2] !== message.sentAt[2] ? <DateChange>{message.sentAt[0]}년 {message.sentAt[1]}월 {message.sentAt[2]}일</DateChange> : null}
+            <MessageBlock isMe={isMe}>
+              <MessageTime isMe={isMe}>{message.sentAt.slice(11, 16)}</MessageTime>
+              <Message key={message.chatId} isMe={isMe}>
+                {message.message}
+              </Message>
+            </MessageBlock>
+          </div>
+        );
 
-      {/* 메세지 */}
-      {/* {loading ? <Loading /> : null} */}
-      <MessagesBox>
-        <TestBox></TestBox>
-        {loading ? null : messageList.map((message, index) => {
-          const isMe = (message.userType === "BORROWER" && metype === "b") ||
-            (message.userType === "LENDER" && metype === "l");
-          return (
-            <div>
-              {index !== 0 && messageList[index - 1].sentAt[2] !== message.sentAt[2] ? <DateChange>{message.sentAt[0]}년 {message.sentAt[1]}월 {message.sentAt[2]}일</DateChange> : null}
-              <MessageBlock isMe={isMe}>
-                <MessageTime isMe={isMe}>{message.sentAt[3]}:{message.sentAt[4]}</MessageTime>
-                <Message key={message.chatId} isMe={isMe}>
-                  {message.message}
-                </Message>
-              </MessageBlock>
-            </div>
-          );
+      })}
+      {/* 최하단 포인트 */}
+      <BottomPoint ref={messagesEndRef}>
+      </BottomPoint>
+    </MessagesBox>
 
-        })}
-        {/* 최하단 포인트 */}
-        <BottomPoint ref={messagesEndRef}>
-        </BottomPoint>
-      </MessagesBox>
+    {/* 메세지 입력 박스 */}
+    <MessageInputBox>
+      <InputBox placeholder={postInfo.isClose ? "완료된 요청입니다" : "메세지 보내기"}
+        value={inputMessage}
+        id="inputbox"
+        onChange={(e) => {
+          setInputMessage(e.target.value);
+        }}
+        onKeyPress={(e) => { activeEnter(e) }}
+        // onKeyDown={handleKeyDown}
+        disabled={postInfo.isClose}
+        ref={inputMessageRef}
+      ></InputBox>
+      <SendBtn onClick={sendMessage} isNoText={inputMessage < 1}>
+        <img src="/image/paperplane.svg" alt="" />
+      </SendBtn>
+    </MessageInputBox>
 
-      {/* 메세지 입력 박스 */}
-      <MessageInputBox>
-        <InputBox placeholder={postInfo.isClose ? "완료된 요청입니다" : "메세지 보내기"}
-          value={inputMessage}
-          onChange={(e) => {
-            setInputMessage(e.target.value);
-          }}
-          onKeyPress={(e) => { activeEnter(e) }}
-          disabled = {postInfo.isClose}
-          ref={inputMessageRef}
-        ></InputBox>
-        <SendBtn onClick={sendMessage} isNoText={inputMessage < 1}>
-          <img src="/image/paperplane.svg" alt="" />
-        </SendBtn>
-      </MessageInputBox>
+    {isDoneModalOn ?
+      <ModalContainer>
+        <ModalBox>
+          <ModalText>
+            <Nickname>{postInfo.nickname}</Nickname> 님과 <br></br>대여를 완료하였나요?<br></br>
+          </ModalText>
+          <ModalBtnBox>
+            <ModalBtn onClick={() => {
+              setIsDoneModalOn(false);
+            }} isLeft={true}>
+              아니요
+            </ModalBtn>
+            <ModalBtn onClick={() => {
+              setIsDoneModalOn(false);
+              setIsReviewModalOn(true);
+            }} isMine={""}>
+              네
+            </ModalBtn>
+          </ModalBtnBox>
+        </ModalBox>
+      </ModalContainer>
+      : null}
 
-      {isDoneModalOn ?
-        <ModalContainer>
-          <ModalBox>
-            <ModalText>
-              <Nickname>{postInfo.nickname}</Nickname> 님과 <br></br>대여를 완료하였나요?<br></br>
-            </ModalText>
-            <ModalBtnBox>
-              <ModalBtn onClick={() => {
-                setIsDoneModalOn(false);
-              }} isLeft={true}>
-                아니요
-              </ModalBtn>
-              <ModalBtn onClick={() => {
-                setIsDoneModalOn(false);
-                setIsReviewModalOn(true);
-              }} isMine={""}>
-                네
-              </ModalBtn>
-            </ModalBtnBox>
-          </ModalBox>
-        </ModalContainer>
-        : null}
+    {isReviewModalOn ?
+      <ModalContainer>
+        <ModalBox2>
+          <ModalText2>
+            <Nickname>{postInfo.nickname}</Nickname> 님과의 <br></br> 대여는 어땠나요?<br></br>
+          </ModalText2>
+          <Stars>
 
-      {isReviewModalOn ?
-        <ModalContainer>
-          <ModalBox2>
-            <ModalText2>
-              <Nickname>{postInfo.nickname}</Nickname> 님과의 <br></br> 대여는 어땠나요?<br></br>
-            </ModalText2>
-            <Stars>
-
-              <Star isSeleted={rateData == 0} onClick={() => {
-                        setRateData(0);
-                    }}>
+            <Star isSeleted={rateData == 0} onClick={() => {
+              setRateData(0);
+            }}>
               <img src={"/image/smilingface.svg"} alt="" />
-              </Star>
-              <Star isSeleted={rateData == 1} onClick={() => {
-                        setRateData(1);
-                    }}>
+            </Star>
+            <Star isSeleted={rateData == 1} onClick={() => {
+              setRateData(1);
+            }}>
               <img src={"/image/face.svg"} alt="" />
-              </Star>
-              <Star isSeleted={rateData == 2} onClick={() => {
-                        setRateData(2);
-                    }}>
+            </Star>
+            <Star isSeleted={rateData == 2} onClick={() => {
+              setRateData(2);
+            }}>
               <img src={"/image/upsetface.svg"} alt="" />
-              </Star>
-            </Stars>
+            </Star>
+          </Stars>
 
-            <TextareaBox
-              type="text"
-              // ref={passwordRef}
-              name="content"
-              placeholder="후기를 작성해주세요!"
+          <TextareaBox
+            type="text"
+            // ref={passwordRef}
+            name="content"
+            placeholder="후기를 작성해주세요!"
             onChange={(e) => {
               setReview(e.target.value);
             }}
-            />
+          />
 
-            <ModalBtnBox>
-              {isBorrower ?<ModalBtn onClick={(e) => handleDone(e, false)} isLeft={true}>
-                안할래요
-              </ModalBtn> :
+          <ModalBtnBox>
+            {isBorrower ? <ModalBtn onClick={(e) => handleDone(e, false)} isLeft={true}>
+              안할래요
+            </ModalBtn> :
               <ModalBtn onClick={() => {
                 setIsReviewModalOn(false);
-              }}  isLeft={true}>
-               취소 하기
-            </ModalBtn>
-            }
-              
-              <ModalBtn onClick={(e) => handleDone(e, true)}  isMine={""}>
-                보내기
+              }} isLeft={true}>
+                취소 하기
               </ModalBtn>
-            </ModalBtnBox>
-          </ModalBox2>
-        </ModalContainer>
-        : null}
-    </ChatBox>
-  );
+            }
+
+            <ModalBtn onClick={(e) => handleDone(e, true)} isMine={""}>
+              보내기
+            </ModalBtn>
+          </ModalBtnBox>
+        </ModalBox2>
+      </ModalContainer>
+      : null}
+  </ChatBox>
+);
 };
 
 export default Chat;

@@ -131,43 +131,43 @@ const CouncilSignIn = () => {
       );
 
       // 성공시
-      if (loginResponse.status === 200) {
+      if (loginResponse.data.code === 200) {
         // 2시간 후 만료되는 쿠키 생성
         const expires = moment().add(2, "hours").toDate();
-        setCookie("token", loginResponse.data.token, {
+        setCookie("token", loginResponse.data.data.token, {
           path: "/",
           expires: expires,
         });
-        setCookie("userId", loginResponse.data.userId, {
+        setCookie("userId", loginResponse.data.data.userId, {
           path: "/",
           expires: expires,
         });
-        setCookie("nickname", loginResponse.data.nickname, {
+        setCookie("nickname", loginResponse.data.data.nickname, {
           path: "/",
           expires: expires,
         });
-        setCookie("roles", loginResponse.data.roles, {
+        setCookie("roles", loginResponse.data.data.roles, {
           path: "/",
           expires: expires,
         });
-        setCookie("certification", loginResponse.data.certification, {
+        setCookie("certification", loginResponse.data.data.certification, {
           path: "/",
           expires: expires,
         });
-        setCookie("id", loginResponse.data.id, {
+        setCookie("id", loginResponse.data.data.id, {
           path: "/",
           expires: expires,
         });
         navigate("/council/manage");
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 404) { // 아이디가 틀리다면
+      } else if (loginResponse.data.code === 404) { 
         window.alert("아이디를 다시 확인해주세요.");
-      } else if (error.response && error.response.status === 401) { // 비밀번호가 틀리다면
+      } else if (loginResponse.data.code === 401) { 
         window.alert("비밀번호가 올바르지 않습니다.");
-      } else {
-        console.error("오류 발생:", error);
       }
+
+    } catch (error) {
+    
+      console.error("오류 발생:", error);
     }
   };
 
@@ -217,8 +217,8 @@ const CouncilSignIn = () => {
         {/* 제출 버튼 */}
         <SubmitBtn onClick={handleLogin}>로그인</SubmitBtn>
         <Link to={"/council/forgot"}>
-        <ForgotPassword>아이디/비밀번호를 잊었나요?</ForgotPassword>
-            </Link>
+          <ForgotPassword>아이디/비밀번호를 잊었나요?</ForgotPassword>
+        </Link>
       </LoginBox>
     </div>
   );

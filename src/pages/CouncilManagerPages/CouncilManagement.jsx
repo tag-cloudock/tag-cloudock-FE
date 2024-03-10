@@ -132,9 +132,10 @@ const Subtitle = styled.div`
   font-weight: bold;
   color: #333333;
   & span{
+    display: block;
     float: right;
-    border-radius: 15px;
-    padding: 5px;
+    border-radius: 10px;
+    padding: 5px 7px;
     background: #38d9a9;
     font-size: 11px;
     color: #ffffff;
@@ -143,7 +144,7 @@ const Subtitle = styled.div`
 
 const Tag = styled.span`
   padding: 2px 7px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid #38d9a9;
   color:#38d9a9;
   font-size: 15px;
@@ -179,8 +180,12 @@ const CouncilManagement = () => {
                     },
                 });
 
-                setCouncilData(response.data);
-                console.log(response.data);
+                if (response.data.code != 200) {
+                    navigate("/council/signin");
+                  }
+                setCouncilData(response.data.data);
+
+
 
             } catch (error) {
                 console.error("오류 발생:", error);

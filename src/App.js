@@ -56,7 +56,7 @@ function App() {
           <Route path="/chat/:metype/:id/:interlocutorId/:post" Component={Chat} />
           <Route path="/notice" Component={NoticeList} />
           <Route path="/notice/:id" Component={NoticeDetail} />
-          <Route path="/test" Component={Manual} />
+          <Route path="/menual" Component={Manual} />
 
           {/* 어드민 */}
           <Route path="/admin" Component={AdminManagement} />

@@ -67,12 +67,7 @@ const HomeTitle = styled.div`
   font-size: 23px;
   color: #ffffff;
   float: left;
-  & span{
-    font-size: 17px;
-     font-family: 'Noto Sans KR';  
-     margin-left: 5px;
-     opacity: 50%;
-  }
+  display: flex;
 `;
 
 // 공지사항 박스
@@ -179,7 +174,10 @@ const CouncilName = styled.div`
   color: #c5c5c5;
   float: right;
 `;
-
+const LogoImg = styled.img`
+  margin-top:2px;
+  width: 33px;
+`;
 const Header = ({ headerType, headerText }) => {
   const navigate = useNavigate(); // 페이지 이동을 위해
   const [cookies] = useCookies();
@@ -195,7 +193,10 @@ const Header = ({ headerType, headerText }) => {
         <div>
           <HeaderBox nobg={"true"}>
             <HeaderContent>
-              <HomeTitle>Baram</HomeTitle>
+              <HomeTitle>
+              {/* <LogoImg src="/image/logow.svg"></LogoImg> */}
+                <span>Baram</span>
+                </HomeTitle>
               <AnnoBox>
                 <Link to={"/user/" + cookies.id}>
                   <Anno>
@@ -207,7 +208,7 @@ const Header = ({ headerType, headerText }) => {
                     <img src={"/image/megaphone.svg"}></img>
                   </Anno>
                 </Link>
-                <Link to={"/test"}>
+                <Link to={"/menual"}>
                   <Anno>
                     <Help>?</Help>
                   </Anno>

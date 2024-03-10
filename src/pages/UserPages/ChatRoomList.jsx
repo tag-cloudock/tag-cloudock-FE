@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import axios from "axios";
+import moment from "moment";
 import Header from "../../components/layout/Header";
 import MenuBar from "../../components/layout/MenuBar";
 
@@ -78,6 +79,7 @@ const NickName = styled.span`
 const LastMessageTime = styled.span`
   color: #aaaaaa;
   font-size: 13px;
+  margin-left: 10px;
 `;
 
 const LastMessage = styled.span`
@@ -149,10 +151,10 @@ const CampusText = styled.div`
 
 
 const ChatRoomList = () => {
-  const [chatRoomList, setChatRoomList] = useState([[],[]]);
-  const [cookies] = useCookies(); 
+  const [chatRoomList, setChatRoomList] = useState([[], []]);
+  const [cookies, setCookies] = useCookies();
   const navigate = useNavigate();
-  const [chatRoomType, setChatRoomType] = useState(0);
+  const [chatRoomType, setChatRoomType] = useState(cookies.roomType ? cookies.roomType : 0);
 
   useEffect(() => {
     if (!cookies.token) {
@@ -171,9 +173,11 @@ const ChatRoomList = () => {
             Authorization: `Bearer ${cookies.token}`,
           },
         });
+        setChatRoomList(response.data.data);
         console.log(response.data);
-
-        setChatRoomList(response.data);
+        if (response.data.code != 200) {
+          navigate("/signin");
+        }
       } catch (error) {
         console.error("오류 발생:", error);
       }
@@ -182,29 +186,55 @@ const ChatRoomList = () => {
     fetchChatRooms();
   }, [cookies.token, navigate]);
 
+  const getTimeDiff = (createdAt) => {
+    const createDate = new Date(createdAt);
+    const now = new Date();
+
+    const diffInMilliseconds = now - createDate;
+    console.log(createDate);
+
+    if (diffInMilliseconds < 60 * 60 * 1000) {
+      const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+      return `${diffInMinutes}분 전`;
+    } else if (diffInMilliseconds < 24 * 60 * 60 * 1000) {
+      const diffInHours = Math.floor(diffInMilliseconds / (1000 * 60 * 60));
+      return `${diffInHours}시간 전`;
+    } else {
+      const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+      return `${diffInDays}일 전`;
+    }
+  };
   return (
     <ChatBox>
       <Header headerType={"noChatIcon"} headerText={"채팅"}></Header>
 
       <CampusMoveBox>
-          {/* 글캠 링크 추가 */}
+        {/* 글캠 링크 추가 */}
 
-          <CampusBox onClick={() => {
-                        setChatRoomType(0);
-                    }}>
-            <CampusText isOn={chatRoomType==0}>
-              빌리고 있어요
-            </CampusText>
-          </CampusBox>
-          {/* 메캠 링크 추가 */}
-          <CampusBox onClick={() => {
-                        setChatRoomType(1);
-                    }}>
-            <CampusText isOn={chatRoomType==1}>
-              빌려주고 있어요
-            </CampusText>
-          </CampusBox>
-        </CampusMoveBox>
+        <CampusBox onClick={() => {
+          setChatRoomType(0);
+          setCookies("roomType", 0, {
+            path: "/",
+            expires: moment().add(1, "hours").toDate(),
+          });
+        }}>
+          <CampusText isOn={chatRoomType == 0}>
+            빌리고 있어요
+          </CampusText>
+        </CampusBox>
+        {/* 메캠 링크 추가 */}
+        <CampusBox onClick={() => {
+          setChatRoomType(1);
+          setCookies("roomType", 1, {
+            path: "/",
+            expires: moment().add(1, "hours").toDate(),
+          });
+        }}>
+          <CampusText isOn={chatRoomType == 1}>
+            빌려주고 있어요
+          </CampusText>
+        </CampusBox>
+      </CampusMoveBox>
 
       {chatRoomList[chatRoomType].length == 0 ?
         <NoChatBox>
@@ -214,15 +244,15 @@ const ChatRoomList = () => {
         :
         <ul>
           {chatRoomList[chatRoomType].map((chatRoom) => (
-            <Link key={chatRoom.id} to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderId : chatRoom.borrowerId)+"/"+chatRoom.postId } >
+            <Link key={chatRoom.id} to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderId : chatRoom.borrowerId) + "/" + chatRoom.postId} >
               <ChatRoom key={chatRoom.id} isDone={chatRoom.done}>
-                <Link to={"/user/"+(chatRoom.userType === "BORROWER" ? chatRoom.lenderId : chatRoom.borrowerId)}><UserImg><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + chatRoom.userImgPath}></img></UserImg></Link>
+                <Link to={"/user/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderId : chatRoom.borrowerId)}><UserImg><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderImgPath : chatRoom.borrowerImgPath)}></img></UserImg></Link>
                 <ChatRoomContent>
                   <NickName>{chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname}</NickName>
-                  <LastMessageTime>{chatRoom.lastMessage !== "no message" ? " " + chatRoom.lastMessageTime[3] + "시 " + chatRoom.lastMessageTime[4] + "분" : ""}</LastMessageTime><br></br>
+                  <LastMessageTime>{chatRoom.lastMessage !== "no message" ? getTimeDiff(chatRoom.lastMessageTime):""}</LastMessageTime><br></br>
                   <LastMessage>{chatRoom.lastMessage !== "no message" ? chatRoom.lastMessage : "채팅이 시작되었습니다!"}</LastMessage>
                 </ChatRoomContent>
-                <Link to={"/posts/"+chatRoom.postId}><PostImg><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + chatRoom.postImgPath}></img></PostImg></Link>
+                <Link to={"/posts/" + chatRoom.postId}><PostImg><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + chatRoom.postImgPath}></img></PostImg></Link>
               </ChatRoom>
             </Link>
           ))}
@@ -233,6 +263,3 @@ const ChatRoomList = () => {
 };
 
 export default ChatRoomList;
-
-
-

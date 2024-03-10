@@ -282,223 +282,223 @@ const RangeInput = styled.input`
 
 
 const PostEdit = () => {
-    const navigate = useNavigate();
-    const [cookies] = useCookies(); // 쿠키 사용을 위해
-    const [isOpen, setIsOpen] = useState(false);
-    const [todayDate, setTodayDate] = useState('');
+  const navigate = useNavigate();
+  const [cookies] = useCookies(); // 쿠키 사용을 위해
+  const [isOpen, setIsOpen] = useState(false);
+  const [todayDate, setTodayDate] = useState('');
 
-    const [title, setTitle] = useState('');
-    const [location, setLocation] = useState("G 글로벌 캠퍼스");
-    const [locationDetail, setLocationDetail] = useState('');
-    const [rentalFee, setRentalFee] = useState(0);
-    const [security, setSecurity] = useState('없음');
-    const [needAt, setNeedAt] = useState('');
-    const [returnAt, setReturnAt] = useState('');
-    const [content, setContent] = useState('');
-    const [file, setFile] = useState(null);
+  const [title, setTitle] = useState('');
+  const [location, setLocation] = useState("G 글로벌 캠퍼스");
+  const [locationDetail, setLocationDetail] = useState('');
+  const [rentalFee, setRentalFee] = useState(0);
+  const [security, setSecurity] = useState('없음');
+  const [needAt, setNeedAt] = useState('');
+  const [returnAt, setReturnAt] = useState('');
+  const [content, setContent] = useState('');
+  const [file, setFile] = useState(null);
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        setFile(file);
-    };
-
-    const handlePost = async (e) => {
-      e.preventDefault();
-
-      if (title.length < 1) {
-          window.alert("제목을 입력해주세요.");
-          // useridRef.current.focus();
-          // setUserid('');
-          return;
-        }
-      try {
-          const formData = new FormData();
-          formData.append('request', new Blob([JSON.stringify({
-              title,
-              location,
-              locationDetail,
-              rentalFee,
-              security,
-              needAt,
-              returnAt,
-              content
-          })],
-              {
-                  type: "application/json"
-              }));
-          formData.append('pic', file);
-
-          const Response = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/post",
-              formData,
-              {
-                  headers: {
-                      'Content-Type': 'multipart/form-data',
-                      Authorization: `Bearer ${cookies.token}`,
-                  },
-              }
-          );
-          if (Response.status === 200) {
-              window.alert("작성 완료");
-              navigate("/");
-          }
-      } catch (error) {
-      }
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFile(file);
   };
 
-    useEffect(() => {
-      if (!cookies.token) {
+  const handlePost = async (e) => {
+    e.preventDefault();
+
+    if (title.length < 1) {
+      window.alert("제목을 입력해주세요.");
+      return;
+    }
+    try {
+      const formData = new FormData();
+      formData.append('request', new Blob([JSON.stringify({
+        title,
+        location,
+        locationDetail,
+        rentalFee,
+        security,
+        needAt,
+        returnAt,
+        content
+      })],
+        {
+          type: "application/json"
+        }));
+      formData.append('pic', file);
+
+      const Response = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/post",
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+      if (Response.data.data.code != 200) {
         navigate("/signin");
-        return;
       }
-      window.scrollTo(0, 0);
+      if (Response.data.code === 200) {
+        window.alert("작성 완료");
+        navigate("/");
+      }
       
-        // 오늘 날짜를 얻기 위해 현재 날짜 객체를 생성
-        const today = new Date();
+    } catch (error) {
+    }
+  };
 
-        // 시작 날짜의 최소 선택일을 오늘로 설정
-        const todayString = today.toISOString().split('T')[0];
-        setTodayDate(todayString);
-        setNeedAt(todayString);
-        setReturnAt(todayString);
-    }, []);
+  useEffect(() => {
+    if (!cookies.token) {
+      navigate("/signin");
+      return;
+    }
+    window.scrollTo(0, 0);
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-    };
+    // 오늘 날짜를 얻기 위해 현재 날짜 객체를 생성
+    const today = new Date();
 
-    const handleOptionClick = (option) => {
-        setLocation(option);
-        setIsOpen(false);
-    };
-    const handleStartDateChange = (e) => {
-        setNeedAt(e.target.value);
-    };
+    // 시작 날짜의 최소 선택일을 오늘로 설정
+    const todayString = today.toISOString().split('T')[0];
+    setTodayDate(todayString);
+    setNeedAt(todayString);
+    setReturnAt(todayString);
+  }, []);
 
-    const handleEndDateChange = (e) => {
-        setReturnAt(e.target.value);
-    };
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
-    
-    return (
-        <EditBox>
-            <Header headerType={"close"} headerText={"작성"}></Header>
-            <ContentBox>
-                {/* <InputBoxTitle>제목</InputBoxTitle> */}
-                <InputBox
-                    type="text"
-                    // ref={passwordRef}
-                    name="title"
-                    placeholder="제목"
-                    onChange={(e) => {
-                        setTitle(e.target.value);
-                    }}
-                />
-                {/* <InputBoxTitle>내용</InputBoxTitle> */}
-                <TextareaBox
-                    type="text"
-                    // ref={passwordRef}
-                    name="content"
-                    placeholder="내용(최대 100글자)"
-                    onChange={(e) => {
-                        setContent(e.target.value);
-                    }}
-                />
-                <InputContainer>
-                    <DropdownWrapper>
-                        <DropdownButton onClick={toggleDropdown}>
-                            <div>{location ? location.slice(2) : '위치 선택'}</div>
-                        </DropdownButton>
-                        <DropdownContent open={isOpen}>
-                        <DropdownItem href="#" onClick={() => handleOptionClick('G 글로벌 캠퍼스')}>
-                                글로벌 캠퍼스
-                            </DropdownItem>
-                            <DropdownItem href="#" onClick={() => handleOptionClick('G 비전타워')}>
-                                비전타워
-                            </DropdownItem>
-                            <DropdownItem href="#" onClick={() => handleOptionClick('G 가천관')}>
-                                가천관
-                            </DropdownItem>
-                            <DropdownItem href="#" onClick={() => handleOptionClick('G AI공학관')}>
-                                AI공학관
-                            </DropdownItem>
-                            <DropdownItem href="#" onClick={() => handleOptionClick('M 약학대학')}>
-                                약학대학
-                            </DropdownItem>
-                        </DropdownContent>
-                    </DropdownWrapper>
-                    <HalfInputBox
-                        type="text"
-                        // ref={passwordRef}
-                        name="locationDetail"
-                        placeholder="자세한 위치"
-                        onChange={(e) => {
-                            setLocationDetail(e.target.value);
-                        }}
-                    />
-                </InputContainer>
-                
-                <InputBox
-                    type="text"
-                    // ref={passwordRef}
-                    name="security"
-                    placeholder="보증품을 입력하세요(ex 신분증, 현금)"
-                    onChange={(e) => {
-                        setSecurity(e.target.value);
-                    }}
-                />
-                <RentalFeeBox>
-                <RangeInput
-                    type="range"
-                    id="rentalFee"
-                    name="rentalFee"
-                    min={0}
-                    max={10000}
-                    step={500}
-                    value={rentalFee}
-                    onChange={(e) => {
-                        setRentalFee(e.target.value);
-                    }}
-                />
-                <RentalFee
-                >{rentalFee == 0 ? "대여금" : rentalFee+"원"}</RentalFee>
-                </RentalFeeBox>
-                
-                <DateWrapper>
-                    {/* <DateLabel htmlFor="startDate">시작 날짜:</DateLabel> */}
-                    <DateInput
-                        type="date"
-                        id="needAt"
-                        name="needAt"
-                        value={needAt}
-                        onChange={handleStartDateChange}
-                        min={todayDate}
-                        required
-                    />
-                    <span>~</span>
-                    {/* <DateLabel htmlFor="endDate">끝나는 날짜:</DateLabel> */}
-                    <DateInput
-                        type="date"
-                        id="returnAt"
-                        name="returnAt"
-                        value={returnAt}
-                        onChange={handleEndDateChange}
-                        min={needAt}  // 끝 날짜는 시작 날짜 이후만 선택 가능
-                        required
-                    />
-                </DateWrapper>
-              
-                <FileInputBtn for="file" isFileSelected={file!=null}>
-                    <div>사진 추가</div>
-                    <FileInputBox type="file" name="file" id="file" onChange={handleFileChange} />
-                </FileInputBtn>
+  const handleOptionClick = (option) => {
+    setLocation(option);
+    setIsOpen(false);
+  };
+  const handleStartDateChange = (e) => {
+    setNeedAt(e.target.value);
+  };
 
-                <SubmitBtn onClick={handlePost}>작성 완료</SubmitBtn>
-
-            </ContentBox>
+  const handleEndDateChange = (e) => {
+    setReturnAt(e.target.value);
+  };
 
 
-        </EditBox>
-    );
+  return (
+    <EditBox>
+      <Header headerType={"close"} headerText={"작성"}></Header>
+      <ContentBox>
+        {/* <InputBoxTitle>제목</InputBoxTitle> */}
+        <InputBox
+          type="text"
+          // ref={passwordRef}
+          name="title"
+          placeholder="제목"
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        />
+        {/* <InputBoxTitle>내용</InputBoxTitle> */}
+        <TextareaBox
+          type="text"
+          // ref={passwordRef}
+          name="content"
+          placeholder="내용(최대 100글자)"
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
+        />
+        <InputContainer>
+          <DropdownWrapper>
+            <DropdownButton onClick={toggleDropdown}>
+              <div>{location ? location.slice(2) : '위치 선택'}</div>
+            </DropdownButton>
+            <DropdownContent open={isOpen}>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 글로벌 캠퍼스')}>
+                글로벌 캠퍼스
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 비전타워')}>
+                비전타워
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 가천관')}>
+                가천관
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G AI공학관')}>
+                AI공학관
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('M 약학대학')}>
+                약학대학
+              </DropdownItem>
+            </DropdownContent>
+          </DropdownWrapper>
+          <HalfInputBox
+            type="text"
+            // ref={passwordRef}
+            name="locationDetail"
+            placeholder="자세한 위치"
+            onChange={(e) => {
+              setLocationDetail(e.target.value);
+            }}
+          />
+        </InputContainer>
+
+        <InputBox
+          type="text"
+          // ref={passwordRef}
+          name="security"
+          placeholder="보증품을 입력하세요(ex 신분증, 현금)"
+          onChange={(e) => {
+            setSecurity(e.target.value);
+          }}
+        />
+        <RentalFeeBox>
+          <RangeInput
+            type="range"
+            id="rentalFee"
+            name="rentalFee"
+            min={0}
+            max={10000}
+            step={500}
+            value={rentalFee}
+            onChange={(e) => {
+              setRentalFee(e.target.value);
+            }}
+          />
+          <RentalFee
+          >{rentalFee == 0 ? "대여금" : rentalFee + "원"}</RentalFee>
+        </RentalFeeBox>
+
+        <DateWrapper>
+          <DateInput
+            type="date"
+            id="needAt"
+            name="needAt"
+            value={needAt}
+            onChange={handleStartDateChange}
+            min={todayDate}
+            required
+          />
+          <span>~</span>
+          <DateInput
+            type="date"
+            id="returnAt"
+            name="returnAt"
+            value={returnAt}
+            onChange={handleEndDateChange}
+            min={needAt}  // 끝 날짜는 시작 날짜 이후만 선택 가능
+            required
+          />
+        </DateWrapper>
+
+        <FileInputBtn for="file" isFileSelected={file != null}>
+          <div>사진 추가</div>
+          <FileInputBox type="file" name="file" id="file" onChange={handleFileChange} />
+        </FileInputBtn>
+
+        <SubmitBtn onClick={handlePost}>작성 완료</SubmitBtn>
+
+      </ContentBox>
+
+
+    </EditBox>
+  );
 };
 
 export default PostEdit;
