@@ -18,7 +18,7 @@ const ContentBox = styled.div`
 `;
 
 const BoardBox = styled.div`
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid #eaeaea;
   background: #fff;
   padding: 5px 0px;
@@ -57,7 +57,7 @@ const NoticeContent = styled.div`
 `;
 
 const NoticeDetail = () => {
-  const [notice, setNotice] = useState({title: "", createdAt: []});
+  const [notice, setNotice] = useState({ title: "", createdAt: [] });
   const { id } = useParams();
 
   useEffect(() => {
@@ -65,10 +65,10 @@ const NoticeDetail = () => {
     const fetchAnno = async () => {
       try {
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/anno/"+id
+          "http://" + process.env.REACT_APP_BACK_URL + "/anno/" + id
         );
-        setNotice(response.data);
-        console.log(response.data);
+        setNotice(response.data.data);
+        console.log(response.data.data);
 
       } catch (error) {
         console.log("포스트 오류 발생: ", error);
@@ -83,11 +83,11 @@ const NoticeDetail = () => {
         <BoardBox>
           <Titlebox>
             <NoticeTitle>[공지] {notice.title}</NoticeTitle>
-            <NoticeDate>{notice.createdAt[0]+"-"+notice.createdAt[1]+"-"+notice.createdAt[2]}</NoticeDate>
+            <NoticeDate>{notice.createdAt.slice(0,10)}</NoticeDate>
           </Titlebox>
-            <NoticeContent>
-              {notice.content}
-            </NoticeContent>
+          <NoticeContent>
+            {notice.content}
+          </NoticeContent>
         </BoardBox>
       </ContentBox>
     </Container>

@@ -135,6 +135,11 @@ const AdminAnnoManagement = () => {
                     navigate("/signin");
                     return;
                 }
+                if (cookies.roles != "ADMIN") {
+                    navigate("/");
+                    return;
+
+                }
 
                 // 유저의 채팅방 모두 가져오기 api 요청
                 const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/anno/all", {
@@ -143,8 +148,8 @@ const AdminAnnoManagement = () => {
                     },
                 });
 
-                setAnnos(response.data);
-                console.log(response.data);
+                setAnnos(response.data.data);
+                console.log(response.data.data);
 
             } catch (error) {
                 console.error("오류 발생:", error);
@@ -164,7 +169,6 @@ const AdminAnnoManagement = () => {
             });
             window.alert("삭제되었습니다.");
             setKey(key + 1);
-            console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
         }
@@ -174,24 +178,24 @@ const AdminAnnoManagement = () => {
         <AdminBox>
             <Header headerType={"noChatIcon"} headerText={"공지사항 관리"}></Header>
             <ContentBox>
-            <Link to={"/admin/anno-manage/create"}>
-                <CreateCouncil>
-                    <img src={"/image/write_black.svg"}></img>
-                </CreateCouncil>
-            </Link>
-            <div>
-                {annos.map((notice, index) => (
-                <Link to={"/notice/"+notice.annoId} key={index}>
-                <NoticeListbox>
-                    <NoticeTitle>
-                    [공지] {notice.title}
-                    <ImageIcon src={"/image/arrow.svg"} alt="" />
-                    </NoticeTitle>
-                    <NoticeDate>{notice.createdAt[0]+"-"+notice.createdAt[1]+"-"+notice.createdAt[2]}</NoticeDate>
-                </NoticeListbox>
+                <Link to={"/admin/anno-manage/create"}>
+                    <CreateCouncil>
+                        <img src={"/image/write_black.svg"}></img>
+                    </CreateCouncil>
                 </Link>
-            ))}
-            </div>
+                <div>
+                    {annos.map((notice, index) => (
+                        <Link to={"/notice/" + notice.annoId} key={index}>
+                            <NoticeListbox>
+                                <NoticeTitle>
+                                    [공지] {notice.title}
+                                    <ImageIcon src={"/image/arrow.svg"} alt="" />
+                                </NoticeTitle>
+                                <NoticeDate>{notice.createdAt}</NoticeDate>
+                            </NoticeListbox>
+                        </Link>
+                    ))}
+                </div>
             </ContentBox>
         </AdminBox>
     );

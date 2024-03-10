@@ -27,14 +27,17 @@ const BoardBox = styled.div`
 `;
 
 const Item = styled.div`
-border-bottom: 1px solid #eaeaea;
+border-bottom: 1px solid #eeeeee;
 
 padding: 20px;
+& > * {
+    opacity: ${({ isDone }) => (isDone ? "30%" : '100%')};
+  }
 `;
 
 //list 박스 사이 구분선
 const Listbox = styled.div`
-  /* padding: 10px 10px 10px; */
+  
 `;
 
 //게시물 이미지
@@ -64,6 +67,7 @@ color: #1F1F1F;
 width: 70%;
 font-size: 15px;
 font-weight: 500;
+white-space: nowrap; 
 overflow: hidden; 
 text-overflow: ellipsis; 
 `;
@@ -94,6 +98,16 @@ const ImageIcon = styled.img`
   margin-left: auto;
 `;
 
+const ChatRoomCount = styled.span`
+  margin-left: 5px;
+  width: 17px;
+  height: 17px;
+  font-size: 15px;
+  color: #9a9a9a;
+  line-height: 17px;
+  float: right;
+`;
+
 const NoPostBox = styled.div`
   width: 100%;
   text-align: center;
@@ -101,13 +115,13 @@ const NoPostBox = styled.div`
   top:40%;
   display: block;
   max-width: 700px;
-  color : #cacaca;
+  color : #e6e6e6;
   font-size: 20px;
-  font-weight: 700;
+  /* font-weight: 700; */
 `;
 
 const NoPostText = styled.div`
-  font-size: 50px;
+  font-size: 60px;
   font-weight: 800;
   margin-bottom: 20px;
 `;
@@ -129,17 +143,33 @@ const PostList = () => {
   const location = useLocation();
   const [posts, setPosts] = useState([]);
   const [locationName, setLocationName] = useState("");
+  const [campusName, setCampusName] = useState("");
+  const [type, setType] = useState();
   useEffect(() => {
     // 최신 글 업로드
     const fetchPosts = async () => {
       try {
         const locationValue = new URLSearchParams(location.search).get('location');
-        const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/post/all/"+locationValue
-        );
-        setPosts(response.data);
-        setLocationName(locationValue);
-        console.log(response);
+        const campusValue = new URLSearchParams(location.search).get('campus');
+
+        var response;
+        if (locationValue != null) {
+          setType("LOCATION");
+          setLocationName(locationValue);
+          response = await axios.get(
+
+            "http://" + process.env.REACT_APP_BACK_URL + "/post/all/location/" + locationValue
+          );
+        } else {
+          setType("CAMPUS");
+          setCampusName(campusValue);
+          response = await axios.get(
+            "http://" + process.env.REACT_APP_BACK_URL + "/post/all/campus/" + campusValue
+          );
+        }
+
+        setPosts(response.data.data);
+        console.log(response.data.data);
 
       } catch (error) {
         console.log("포스트 오류 발생: ", error);
@@ -149,31 +179,31 @@ const PostList = () => {
   }, []);
   return (
     <Container>
-      <Header headerText={locationName.slice(2)}>         
+      <Header headerText={type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬") + " 최근 글"}>
       </Header>
       <PostBox>
         <BoardBox>
-          
-          { posts.length != 0 ?posts.map((post, index) => (
-            <Link to={"/posts/"+post.postId} key={index}>
-              <Item>
+
+          {posts.length != 0 ? posts.map((post, index) => (
+            <Link to={"/posts/" + post.postId} key={index}>
+              <Item isDone={post.close}>
                 <MainImage><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></MainImage>
-              <Listbox>
-                {post.close ? <DoneTag>완료</DoneTag> : null}<NoticeTitle>{post.title}</NoticeTitle>
-                <PostDetail>{post.location.slice(2)+" "+post.locationDetail}</PostDetail>
-                <PostPrice>{post.rentalFee}원
-                <ImageIcon src={"/image/chatt.svg"} alt="" />
-                </PostPrice>
-              </Listbox>
+                <Listbox >
+                  <NoticeTitle>{post.title}</NoticeTitle>
+                  <PostDetail>{post.location.slice(2) + " " + post.locationDetail}</PostDetail>
+                  <PostPrice>{post.rentalFee}원
+                    <ChatRoomCount>{post.chatCount}</ChatRoomCount><ImageIcon src={"/image/chatt.svg"} alt="" />
+                  </PostPrice>
+                </Listbox>
               </Item>
-              
+
             </Link>
           ))
-        :
-        <NoPostBox>
-          <NoPostText>썰렁~</NoPostText>
-          {locationName.slice(2)} 사람들은 빌릴게 없나봐요ㅜㅜ
-        </NoPostBox>}
+            :
+            <NoPostBox>
+              <NoPostText>썰렁</NoPostText>
+              {type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬")} 사람들은 빌릴게 없어요
+            </NoPostBox>}
         </BoardBox>
       </PostBox>
       <MenuBar></MenuBar>

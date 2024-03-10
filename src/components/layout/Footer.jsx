@@ -17,13 +17,13 @@ const FooterText = styled.div`
     color:#cccccc;
     font-size: 15px;
     position: absolute;
-    bottom: 15px;
+    bottom: 20px;
     left: 0;
     right: 0;
 `;
 
 const GotoGithub = styled.a`
-    color:#379DFF;
+    color:#6093FF;
 `;
 
 const CouncilSignIn = styled.span`

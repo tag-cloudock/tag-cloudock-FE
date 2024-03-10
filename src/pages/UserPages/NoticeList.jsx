@@ -1,6 +1,6 @@
 import Header from "../../components/layout/Header";
 import styled from "styled-components";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ const ContentBox = styled.div`
   padding: 20px;
 `;
 const BoardBox = styled.div`
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid #eaeaea;
   background: #fff;
   padding: 5px 0px;
@@ -64,8 +64,8 @@ const NoticeList = () => {
         const response = await axios.get(
           "http://" + process.env.REACT_APP_BACK_URL + "/anno/all"
         );
-        setNotices(response.data);
-        console.log(response.data);
+        setNotices(response.data.data);
+        console.log(response.data.data);
 
       } catch (error) {
         console.log("포스트 오류 발생: ", error);
@@ -80,13 +80,13 @@ const NoticeList = () => {
       <ContentBox>
         <BoardBox>
           {notices.map((notice, index) => (
-            <Link to={"/notice/"+notice.annoId} key={index}>
+            <Link to={"/notice/" + notice.annoId} key={index}>
               <NoticeListbox>
                 <NoticeTitle>
                   [공지] {notice.title}
                   <ImageIcon src={"/image/arrow.svg"} alt="" />
                 </NoticeTitle>
-                <NoticeDate>{notice.createdAt[0]+"-"+notice.createdAt[1]+"-"+notice.createdAt[2]}</NoticeDate>
+                <NoticeDate>{notice.createdAt.slice(0,10)}</NoticeDate>
               </NoticeListbox>
             </Link>
           ))}

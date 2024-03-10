@@ -180,11 +180,21 @@ const AdminCouncilCreation = () => {
     const [file, setFile] = useState(null);
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
+
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setFile(file);
     };
     useEffect(() => {
+        if (!cookies.token) {
+            navigate("/signin");
+            return;
+        }
+        if (cookies.roles != "ADMIN") {
+            navigate("/");
+            return;
+
+        }
         const fetchCouncils = async () => {
             try {
                 // 토큰 쿠키가 없다면 로그인 페이지로 이동
@@ -200,9 +210,9 @@ const AdminCouncilCreation = () => {
                     },
                 });
 
-                const groupedData = response.data.reduce((acc, item, index) => {
+                const groupedData = response.data.data.reduce((acc, item, index) => {
                     const key = item.college;
-                    if (index !== 0 && key !== response.data[index - 1].college) {
+                    if (index !== 0 && key !== response.data.data[index - 1].college) {
                         acc.push([]);
                     }
                     acc[acc.length - 1].push(item);
@@ -264,15 +274,14 @@ const AdminCouncilCreation = () => {
                 }));
             formData.append('pic', file);
             const signUpResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/manage/council",
-            formData,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-            }
+                formData,
+                {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookies.token}`,
+                }
             );
             // 성공시
-            if (signUpResponse.status === 200) {
+            if (signUpResponse.data.code === 200) {
                 window.alert("생성 성공");
                 // navigate("/");
             }
@@ -298,6 +307,11 @@ const AdminCouncilCreation = () => {
                         {college}
                     </Summary>
                     <OptionList>
+                    <OptionItem>
+                            <Button onClick={() => setCollege("G*총학생회")}>
+                                총학생회
+                            </Button>
+                        </OptionItem>
                         <OptionItem>
                             <Button onClick={() => setCollege("G경영대학")}>
                                 경영대학

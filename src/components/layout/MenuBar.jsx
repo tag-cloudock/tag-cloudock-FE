@@ -20,7 +20,7 @@ const Circle = styled.div`
   height: 60px;
   border-radius: 100px;
   box-shadow: rgba(209, 209, 209, 0.4) 0px 0px 15px;
-  background: #379dff;
+  background: #6697FF;
   text-align: center;
   position: absolute;
   bottom: 0;

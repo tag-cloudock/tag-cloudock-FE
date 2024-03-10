@@ -17,13 +17,15 @@ const LoginBox = styled.div`
 
 // 타이틀
 const Title = styled.div`
+font-family: "Poppins";
   text-align: center;
   height: 45px;
   line-height: 45px;
   margin-bottom: 150px;
-  font-size: 60px;
+  font-size: 63px;
   font-weight: 850;
   & a{
+    font-family: "Poppins";
     color : #38d9a9;
   }
 `;
@@ -51,16 +53,18 @@ const InputBox = styled.input`
   margin: 10px auto;
   height: 40px;
   background: #ffffff;
-  border: 1px solid #dddddd;
+  /* border: 1px solid #dddddd; */
+  border: none;
+  background: #f6f6f6;
   border-radius: 10px;
   color:#333333;
-  font-size: 18px; 
+  font-size: 17px; 
   outline: none;
   padding: 0px 3%;
   width: 60%;
   &::placeholder {
       color: #aaaaaa; 
-      font-size: 18px;
+      font-size: 17px;
   }
   &:focus {
     border-color: #38d9a9;
@@ -127,43 +131,43 @@ const CouncilSignIn = () => {
       );
 
       // 성공시
-      if (loginResponse.status === 200) {
+      if (loginResponse.data.code === 200) {
         // 2시간 후 만료되는 쿠키 생성
         const expires = moment().add(2, "hours").toDate();
-        setCookie("token", loginResponse.data.token, {
+        setCookie("token", loginResponse.data.data.token, {
           path: "/",
           expires: expires,
         });
-        setCookie("userId", loginResponse.data.userId, {
+        setCookie("userId", loginResponse.data.data.userId, {
           path: "/",
           expires: expires,
         });
-        setCookie("nickname", loginResponse.data.nickname, {
+        setCookie("nickname", loginResponse.data.data.nickname, {
           path: "/",
           expires: expires,
         });
-        setCookie("roles", loginResponse.data.roles, {
+        setCookie("roles", loginResponse.data.data.roles, {
           path: "/",
           expires: expires,
         });
-        setCookie("certification", loginResponse.data.certification, {
+        setCookie("certification", loginResponse.data.data.certification, {
           path: "/",
           expires: expires,
         });
-        setCookie("id", loginResponse.data.id, {
+        setCookie("id", loginResponse.data.data.id, {
           path: "/",
           expires: expires,
         });
         navigate("/council/manage");
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 404) { // 아이디가 틀리다면
+      } else if (loginResponse.data.code === 404) { 
         window.alert("아이디를 다시 확인해주세요.");
-      } else if (error.response && error.response.status === 401) { // 비밀번호가 틀리다면
+      } else if (loginResponse.data.code === 401) { 
         window.alert("비밀번호가 올바르지 않습니다.");
-      } else {
-        console.error("오류 발생:", error);
       }
+
+    } catch (error) {
+    
+      console.error("오류 발생:", error);
     }
   };
 
@@ -180,9 +184,9 @@ const CouncilSignIn = () => {
         {/* 타이틀 */}
         <Title>
           <SubTitle>
-            학생회 전용
+            학생회 로그인
           </SubTitle>
-          <Link to={"/"}>BARAM</Link>
+          <Link to={"/"}>Baram</Link>
         </Title>
 
         {/* 아이디 */}
@@ -191,7 +195,7 @@ const CouncilSignIn = () => {
           ref={useridRef}
           name="id"
           value={userid}
-          placeholder="council + 번호"
+          placeholder="아이디"
           onChange={(e) => {
             setUserid(e.target.value);
           }}
@@ -204,7 +208,7 @@ const CouncilSignIn = () => {
           ref={passwordRef}
           name="password"
           value={password}
-          placeholder="비밀번호 ( 초기: 0000 )"
+          placeholder="비밀번호"
           onChange={(e) => {
             setPassword(e.target.value);
           }}
@@ -212,7 +216,9 @@ const CouncilSignIn = () => {
 
         {/* 제출 버튼 */}
         <SubmitBtn onClick={handleLogin}>로그인</SubmitBtn>
-        <ForgotPassword>비밀 번호를 잊으셨나요?</ForgotPassword>
+        <Link to={"/council/forgot"}>
+          <ForgotPassword>아이디/비밀번호를 잊었나요?</ForgotPassword>
+        </Link>
       </LoginBox>
     </div>
   );

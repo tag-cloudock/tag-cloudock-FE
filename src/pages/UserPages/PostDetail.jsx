@@ -30,7 +30,7 @@ const BoardBox = styled.div`
 //게시물 제목
 const Title = styled.div`
 color: #000000;
-font-size: 23px;
+font-size: 20px;
 font-weight: 700;
 overflow: hidden; 
   text-overflow: ellipsis; 
@@ -44,9 +44,8 @@ const PostInfo = styled.div`
 //게시물 작성자
 const User = styled.div`
 /* margin: 15px 0px 0px; */
-color: #676767;
+color: rgb(103, 103, 103);
 font-size: 15px;
-font-weight: 700;
 & span{
   display: inline-block;
   margin-top: 3px;
@@ -60,10 +59,10 @@ const UserImage = styled.div`
   width: 25px;
   height: 25px;
   float: left;
-  border-radius: 100px;
-  overflow: hidden;
-  border: 1px solid #eeeeee;
+
   & img{
+    border-radius: 100px;
+    border: 1px solid #eeeeee;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -87,24 +86,23 @@ color: #000000;
 font-size: 17px;
 line-height: 27px;
 font-weight: 400;
-margin: 30px 0px 100px 0px;
-white-space:pre;
-
+margin: 30px 0px 20px 0px;
+white-space: pre-wrap;
+/* word-wrap: break-word; */
+& span{
+  width: 100px;
+}
 `;
 
 //게시물 이미지
 const Image = styled.div`
   margin: 10px 0px 30px 0px;
   width: 100%;
-  /* height: 300px; */
-  /* max-height: 300px; */
-  overflow: hidden;
-  /* background: #dfdfdf; */
   & img{
+    border: 1px solid #eeeeee;
     border-radius: 20px;
     width: 100%;
     height: 100%;
-    /* max-height: 400px; */
     object-fit: cover;
     object-position: center;
   }
@@ -113,9 +111,12 @@ const Image = styled.div`
 //위치 가격 보증품 
 const ListName = styled.div`
 display: inline-block;
-  color: #000000;
+  color: #6093FF;
   font-size: 17px;
-  font-weight: 700;
+  background: #f0f5ff;
+  padding: 5px 7px;
+  border-radius: 7px;
+  /* font-weight: 700; */
   /* float: left; */
   margin-right: 10px;
 `;
@@ -130,7 +131,7 @@ const ListNameDetail = styled.div`
 
 //빌린날 BOX
 const BOX = styled.div`
-  border: 2px solid #eaeaea;
+  border: 1px solid #eeeeee;
   border-radius: 20px;
   display: flex;
   justify-content: space-around;
@@ -145,14 +146,14 @@ const DateInfoBox = styled.div`
 const DateTitle = styled.div`
   color: #676767;
   font-size: 17px;
-  font-weight: 700;
+  /* font-weight: 700; */
   text-align: center;
   margin-bottom: 5px;
 `;
 //필요한날짜
 const DateText = styled.div`
   color: #676767;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   text-align: center;
 `;
@@ -169,12 +170,12 @@ margin-top: 11px;
 const ChatBox = styled.button`
 width: 100%;
 border: none;
-margin: 30px 0px;
+margin: 0px 0px 30px 0px;
   /* margin: 20px 0px 100px 0px; */
   padding: 10px;
   border-radius: 8px;
 
-  background:${({ isDone }) => (isDone ? '#b1d9ff' : '#379DFF')};
+  background:${({ isDone }) => (isDone ? '#d4e2ff' : '#6093FF')};
   color: var(--White, #FFF);
 text-align: center;
 font-size: 20px;
@@ -184,7 +185,7 @@ font-weight: 600;
 
 const InfoBox = styled.div`
   width: 100%;
-  margin: 10px 0px;
+  margin: 15px 0px;
 `;
 
 const ModalContainer = styled.div`
@@ -222,8 +223,8 @@ const ModalBtnBox = styled.div`
 const ModalBtn = styled.button`
   border: none;
   width: 40%;
-  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#379DFF')};
-  padding: 20px;
+  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#6093FF')};
+  padding: 15px 20px;
   text-align: center;
   border-radius: 15px;
 
@@ -241,7 +242,8 @@ const ModalText = styled.div`
   & span{
     display: block;
     margin-top: 20px;
-    font-size: 15px;
+    font-size: 17px;
+    color: #6093FF;
     font-weight: 400;
   }
 `;
@@ -260,6 +262,28 @@ const Done = styled.div`
   padding: 0px 10px;
   border-radius: 15px;
 `;
+
+const ChatCount = styled.div`
+  /* display: inline-block;
+  background: #ffdede;
+  padding: 0px 10px;
+  border-radius: 15px; */
+  height: 30px;
+  font-size: 15px;
+  margin-top: 30px;
+  color: #6093FF;
+  display: flex;
+  align-items: center;
+  & div{
+    margin-right: 3px;
+    margin-top: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 10px;
+    background: #6093FF;
+  }
+`;
+
 
 const PostDetail = () => {
   const navigate = useNavigate(); // 로그인 전 홈 진입 막기 위해
@@ -286,13 +310,10 @@ const PostDetail = () => {
         const response = await axios.get(
           "http://" + process.env.REACT_APP_BACK_URL + "/post/" + id
         );
-        console.log(response.data);
-        setPost(response.data);
-        const needAt = response.data.needAt[0] + "-" + response.data.needAt[1] + "-" + response.data.needAt[2];
-        const returnAt = response.data.returnAt[0] + "-" + response.data.returnAt[1] + "-" + response.data.returnAt[2];
-        console.log(needAt);
+        setPost(response.data.data);
+        const needAt = response.data.data.needAt;
+        const returnAt = response.data.data.returnAt;
         setDifference(getDateDiff(needAt, returnAt));
-
       } catch (error) {
         console.log("포스트 오류 발생: ", error);
       }
@@ -321,9 +342,8 @@ const PostDetail = () => {
                 Authorization: `Bearer ${cookies.token}`,
               },
             });
-          console.log(response.data);
-          if (response.status === 200) {
-            navigate("/chat/l/" + response.data.roomId + "/" + response.data.borrowerNickname + "/" + postId);
+          if (response.data.code === 200) {
+            navigate("/chat/l/" + response.data.data.roomId + "/" + response.data.data.borrowerId + "/" + postId);
           }
 
         } catch (error) {
@@ -340,15 +360,14 @@ const PostDetail = () => {
     try {
       const donePost = async () => {
         try {
-          const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/post/done/"+post.postId,
+          const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/post/done/" + post.postId,
             {
               headers: {
                 Authorization: `Bearer ${cookies.token}`,
               },
             });
-          console.log(response.data);
           setIsDoneModalUp(false);
-
+          navigate("/");
         } catch (error) {
           console.log("오류 발생: ", error);
         }
@@ -373,9 +392,11 @@ const PostDetail = () => {
                 <span>{post.nickname}</span>
               </User>
             </Link>
-            <PostDate>{post.createdAt[0] + "." + post.createdAt[1] + "." + post.createdAt[2]}</PostDate>
+            <PostDate>{post.createdAt.slice(0,10)}</PostDate>
           </PostInfo>
-          <Detail>{post.content}</Detail>
+          <Detail>
+            {post.content}
+          </Detail>
           {
             post.postImgPath != "default.png" ? <Image><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></Image> : null
           }
@@ -394,19 +415,25 @@ const PostDetail = () => {
           </InfoBox>
           <BOX>
             <DateInfoBox>
-              <DateTitle>필요한날</DateTitle>
-              <DateText>{post.needAt[0] + "." + post.needAt[1] + "." + post.needAt[2]}</DateText>
+              <DateTitle>필요한 날</DateTitle>
+              <DateText>{post.needAt}</DateText>
             </DateInfoBox>
             <RangeDate>{difference}일</RangeDate>
             <DateInfoBox>
-              <DateTitle>반납날짜</DateTitle>
-              <DateText>{post.returnAt[0] + "." + post.returnAt[1] + "." + post.returnAt[2]}</DateText>
+              <DateTitle>반납하는 날</DateTitle>
+              <DateText>{post.returnAt}</DateText>
             </DateInfoBox>
+            
           </BOX>
+          
+          {post.isClose ? <ChatCount></ChatCount> :
+          <ChatCount>
+            <div></div>
+            <span>{post.chatCount}명과 대화중</span></ChatCount>}
           <ChatBox onClick={() => {
-            if (post.userId == cookies.id ){
+            if (post.userId == cookies.id) {
               setIsDoneModalUp(true);
-            }else{
+            } else {
               setIsModalUp(true);
             }
           }} isDone={post.isClose} disabled={post.isClose}>{post.isClose ? "완료된 요청입니다" : post.userId == cookies.id ? "종료하기" : "대화하기"}</ChatBox>
@@ -438,8 +465,8 @@ const PostDetail = () => {
         <ModalContainer>
           <ModalBox>
             <ModalText>
-              <Nickname>{post.nickname}</Nickname> 님은<br></br> 학생증 인증이 {post.certification ? "완료된" : "안된 "}유저 입니다.<br></br>
-              <span>대화를 시작하겠습니까?</span>
+              <Nickname>{post.nickname}</Nickname> 님은<br></br> 학생증 인증이 {post.certification ? "완료된" : "안된 "}학우에요!<br></br>
+              <span>대화를 시작 할까요?</span>
             </ModalText>
             <ModalBtnBox>
               <ModalBtn onClick={() => {

@@ -14,17 +14,25 @@ const CouncilBox = styled.div`
 `;
 
 const CouncilInforContainer = styled.div`
-  padding: 30px;
+  padding: 0px 30px;
 `;
 
 const TitleBox = styled.div`
+  background: #f1f5ff;
+  /* margin-bottom: 20px; */
+  /* border-radius: 15px; */
+  /* box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px; */
+  padding: 30px;
+  @media screen and (min-width: 700px) {
+    border-radius: 20px;
+  } 
+`;
 
-  position: relative;
-  height: 50px;
-  /* border-bottom: 1px solid #c6c6c6; */
-  padding: 5px 10px;
-  border-radius: 20px;
-  background: #fafafa;
+const CouncilName = styled.div`
+  width: 100%;
+  font-weight: 800;
+  font-size: 25px;
+  color : #6093FF;
 `;
 
 const ProductContainer = styled.div`
@@ -35,14 +43,18 @@ const ProductContainer = styled.div`
     font-weight: 500;
     list-style-type: none;
     line-height: 40px;
-    border-bottom: 1px solid#E1E1E1;
+    padding-left: 15px;
+    border-bottom: 1px solid#eeeeee;
+  }
+  & ul li:last-child {
+    border-bottom: none;
   }
 `;
 const ProfileImg = styled.div`
   width: 46px;
   height: 46px;
   border-radius: 30px;
-  border: 1px solid #c8c8c8;
+  border: 1px solid #eeeeee;
   float: left;
   background: #ffffff;
   overflow: hidden;
@@ -59,20 +71,25 @@ const CouncilInfo = styled.div`
   width: 100%;
   padding: 20px 0px 10px 0px;
   color: #000000;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 400;
   line-height: 30px;
   & span {
-    font-family: 'Noto Sans KR';  
-    color: #000000;
-    margin-right: 5px;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 500;
+    display: inline-block;
+    padding: 5px 7px;
+    border-radius:5px;
+    /* font-family: 'Noto Sans KR';   */
+    color: #393939;
+    margin: 10px 5px 0px 0px;
+    font-size: 17px;
+    /* background: #e6f3ff; */
+    text-align: center;
+    font-weight: 700;
     line-height: normal;
   }
   & div{
     /* width: 100%; */
+    margin-top: 10px;
     font-size: 15px;
     background: #f8f8f8;
     border-radius: 10px;
@@ -81,73 +98,72 @@ const CouncilInfo = styled.div`
   }
 `;
 
-const CouncilName = styled.div`
-  position: absolute;
-  width: 100%;
-  color: #000000;
-  height: 45px;
-  line-height: 45px;
-  text-align: center;
-  font-size: 25px;
-  font-weight: 500;
-  font-family: 'Noto Sans KR';  
-`;
 
 const Update = styled.div`
-  width: 130px;
+display: inline-block;
   height: 21px;
-  padding: 5px;
   border-radius: 30px;
-  background: #eef6ff;
-  color: #379dff;
+  text-align: right;
+  margin-bottom: 30px;
+  padding: 2px 7px;
+  color: #6093FF;
+  background: #f1f5ff;
   text-align: center;
   font-size: 12px;
   font-weight: 400;
-  vertical-align: center;
-  & img {
-    margin-top: 4px;
-    margin-left: 3px;
-    float: left;
-  }
+  /* display: flex; */
+  align-items: center;
   & span {
     margin-left: 5px;
-    float: left;
     line-height: 21px;
+  }
+  & div{
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 100px;
+    background-color: #6093FF;
   }
 `;
 
 const CategoryTitle = styled.div`
-  color: #000000;
-  font-family: 'Noto Sans KR';  
-  font-size: 20px;
-  font-weight: 500;
-  margin-bottom: 10px;
+
+  display: inline-block;
+    padding: 7px 15px;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #6e6e6e;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: #f5f5f5;
+    /* 6093FF */
 `;
 
 const CategoryCount = styled.div`
   margin-top: 10px;
-  background: #f3f3f3;
+  /* background: #f3f3f3; */
   width: 40px;
   height: 22px;
   line-height: 22px;
   border-radius: 22px;
   float: right;
-  text-align: center;
-  font-weight: 400;
+  text-align: right;
+  margin-right:15px;
+  font-weight: 500;
   font-size: 15px;
-  color: #000000;
+  color: #6093FF;
 `;
 
 const CouncilDetail = () => {
-  const [councilData, setCouncilData] = useState({ items: [], imgPath:"default.png" }); // 채팅방 리스트 상태
+  const [councilData, setCouncilData] = useState({ items: [], imgPath: "default.png" }); // 채팅방 리스트 상태
   const { id } = useParams();
   useEffect(() => {
     const fetchCouncil = async () => {
       try {
         const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
         });
-        setCouncilData(response.data);
-        console.log(response.data);
+        setCouncilData(response.data.data);
 
       } catch (error) {
         console.error("오류 발생:", error);
@@ -160,13 +176,13 @@ const CouncilDetail = () => {
   return (
     <CouncilBox>
       <Header></Header>
-      <CouncilInforContainer>
-        <TitleBox>
-          <ProfileImg>
+      <TitleBox>
+        {/* <ProfileImg>
             <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + councilData.imgPath}></img>
-          </ProfileImg>
-          <CouncilName>{councilData.name} 학생회</CouncilName>
-        </TitleBox>
+          </ProfileImg> */}
+        <CouncilName>{councilData.name}</CouncilName>
+      </TitleBox>
+      <CouncilInforContainer>
 
         <CouncilInfo>
           <span>위치 </span> {councilData.location}
@@ -175,21 +191,26 @@ const CouncilDetail = () => {
           <br />
           <span>이용수칙 </span> <div>{councilData.usageGuidelines}</div> <br />
         </CouncilInfo>
-        <Update>
-          <img src={"/image/clockupdate.svg"}></img>
-          <span>실시간 업데이트중!</span>
-        </Update>
       </CouncilInforContainer>
+
       <ProductContainer>
+        {councilData.isCouncilSelfManage ?
+          <div>
+            <Update>
+              <div></div>
+              <span>실시간 개수 업데이트 중</span>
+            </Update></div>
+          : null}
         <CategoryTitle>제공 물품</CategoryTitle>
         <ul>
           {councilData.items.map((item) => (
-            item.type == "PROVIDED" ? 
-            <li key={item.itemId}>
-              {item.name}
-              <CategoryCount>{item.quantity}</CategoryCount>
-            </li>
-            : null
+            item.type == "PROVIDED" ?
+              <li key={item.itemId}>
+                {item.name}
+                {councilData.isCouncilSelfManage ?
+                  <CategoryCount>{item.quantity}</CategoryCount> : null}
+              </li>
+              : null
           ))}
         </ul>
       </ProductContainer>
@@ -197,16 +218,16 @@ const CouncilDetail = () => {
         <CategoryTitle>대여 물품</CategoryTitle>
         <ul>
           {councilData.items.map((item) => (
-            item.type == "RENTAL" ? 
-            <li key={item.itemId}>
-              {item.name}
-              <CategoryCount>{item.quantity}</CategoryCount>
-            </li>
-            : null
+            item.type == "RENTAL" ?
+              <li key={item.itemId}>
+                {item.name}
+                {councilData.isCouncilSelfManage ?
+                  <CategoryCount>{item.quantity}</CategoryCount> : null}
+              </li>
+              : null
           ))}
         </ul>
       </ProductContainer>
-      <MenuBar></MenuBar>
     </CouncilBox>
   );
 };

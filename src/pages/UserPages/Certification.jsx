@@ -1,6 +1,9 @@
 import Header from "../../components/layout/Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import styled from "styled-components";
+import axios from "axios";
 
 const Container = styled.div`
   position: absolute;
@@ -25,7 +28,7 @@ const Announcement = styled.div`
         margin: 10px 0;
     }
     & p span{
-        color: #379DFF;
+        color: #6093FF;
     }
 `;
 
@@ -40,20 +43,21 @@ const InputBox = styled.input`
     display: block;
     margin: 10px auto;
     height: 40px;
-    background: #ffffff;
-    border: 1px solid #dddddd;
+    background: #f7f7f7;
+    /* border: 1px solid #dddddd; */
+    border: none;
     border-radius: 10px;
     color:#333333;
-    font-size: 18px; 
+    font-size: 17px; 
     outline: none;
     padding: 0px 3%;
     width: 74%;
     &::placeholder {
         color: #aaaaaa; 
-        font-size: 18px;
+        font-size: 17px;
     }
     &:focus {
-      border-color: #379DFF;
+      border-color: #6093FF;
     }
 `;
 
@@ -64,12 +68,13 @@ const SubmitBtn = styled.button`
     background: #efefef;
     border: none;
     border-radius: 10px;
-    background: #379DFF;
+    background: #6093FF;
     font-weight: bold;
     color:#ffffff;
     font-size: 18px; 
     outline: none;
     width: 80%;
+    margin-top: 40px;
     &::placeholder {
         color: #aaaaaa; 
         font-size: 18px;
@@ -80,35 +85,98 @@ const SubmitBtn = styled.button`
 const FileInputBtn = styled.label`
     display: block;
     margin: 0 auto;
-    width: 80%;
-    text-align: left;
-    padding: 20px;
+    
     & div{
-      margin-top: 10px;
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 700;
-      color:#379DFF;
-      border: 1px solid #379DFF;
-      border-radius: 30px;
-      padding: 10px;
+        display: block;
+        margin: 0px auto;
+        height: 40px;
+        background: #efefef;
+        border: none;
+        border-radius: 10px;
+        background: ${({ isFileSelected }) => (isFileSelected ? "#6093FF" : "#d6e3ff")};
+        font-weight: bold;
+        color:#ffffff;
+        text-align: center;
+        line-height: 40px;
+        font-size: 18px; 
+        outline: none;
+        width: 80%;
+        &::placeholder {
+            color: #aaaaaa; 
+            font-size: 18px;
+        }
     }
 `;
-
 const FileInputBox = styled.input`
+    /* width: 66%; */
+    display: none;
     border: none;
     background: none;
-    margin-left: 5px;
     &::file-selector-button{
       display: none;
     }
 `;
 
 const Certification = () => {
+    const [cookies, , removeCookie] = useCookies();
     const [file, setFile] = useState(null);
+    const navigate = useNavigate(); // 페이지 이동을 위해
+    const [name, setName] = useState();
+    const [studentIdNumber, setstudentIdNumber] = useState();
+    useEffect(() => {
+        if (!cookies.token) {
+            navigate("/signin");
+            return;
+        }
+        
+    });
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setFile(file);
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (name.length < 1) {
+            window.alert("이름을 입력해주세요.");
+            return;
+        }
+        if (studentIdNumber.length < 1) {
+            window.alert("학번을 입력해주세요.");
+            return;
+        }
+        if (file == null) {
+            window.alert("사진을 선택해주세요.");
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('request', new Blob([JSON.stringify({
+                name,
+                studentIdNumber
+            })],
+                {
+                    type: "application/json"
+                }));
+            formData.append('pic', file);
+            const signUpResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/certifi/request",
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        authorization: `Bearer ${cookies.token}`
+                    },
+                }
+            );
+            if (signUpResponse.data.code === 200) {
+                window.alert("요청 성공!");
+                navigate("/");
+            }
+        } catch (error) {
+            console.error("오류 발생:", error);
+
+        }
     };
     return (
         <Container>
@@ -116,14 +184,14 @@ const Certification = () => {
             {/* 이미지 형식 제한해야함 */}
             <Announcement>
                 <p>
-                    대여글을 작성하려면 <span>학생증을 인증</span>해야 합니다.
+                    더욱 원활한 대여를 위해 <span>학생증 인증</span>을 하세요.
                 </p>
                 <p>
                     <span>모바일 학생증</span>의 캡처 사진 또는
-                    <span>실물 학생증</span>의 촬영 사진을 업로드해주세요. <br /><span>*이름과 학번, 얼굴사진이 보여야합니다.</span>
+                    <span> 실물 학생증</span>의 촬영 사진을 업로드해주세요. <br /><span>*이름과 학번, 얼굴사진이 보여야합니다.</span>
                 </p>
                 <p>
-                    제공한 정보는 목적 외에는 사용되지 않습니다.
+                    제공한 정보는 학생증 인증 유무 표시 용도 외에는 사용되지 않습니다.
                 </p>
                 <p>
                     승인은 요청 후 24시간 이내에 이루어집니다.
@@ -137,7 +205,7 @@ const Certification = () => {
                     // value={userid}
                     placeholder="이름 (ex 홍길동)"
                     onChange={(e) => {
-                        // setUserid(e.target.value);
+                        setName(e.target.value);
                     }}
                 // onKeyDown={(e) => { activeEnter(e) }}
                 />
@@ -148,15 +216,15 @@ const Certification = () => {
                     // value={""}
                     placeholder="학번 (ex 2024xxxxx)"
                     onChange={(e) => {
-                        // setUserid(e.target.value);
+                        setstudentIdNumber(e.target.value);
                     }}
                 // onKeyDown={(e) => { activeEnter(e) }}
                 />
-                <FileInputBtn for="file">
+                <FileInputBtn for="file" isFileSelected={file != null}>
                     <div>학생증 이미지 선택</div>
                     <FileInputBox type="file" name="file" id="file" onChange={handleFileChange} />
                 </FileInputBtn>
-                <SubmitBtn onClick={" "}>인증 요청하기</SubmitBtn>
+                <SubmitBtn onClick={handleSubmit}>인증 요청하기</SubmitBtn>
             </CertifiBox>
         </Container>
     );

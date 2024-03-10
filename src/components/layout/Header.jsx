@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 // 헤더 박스
 const HeaderBox = styled.div`
   z-index: 1;
-  background: ${({ nobg }) => (nobg ? '#379DFF' : '#ffffff')};
+  background: ${({ nobg }) => (nobg ? '#6093FF' : '#ffffff')};
   position: fixed;
   left: 0;
   right: 0;
@@ -37,7 +37,7 @@ const Help = styled.div`
   text-align: center;
   line-height: 25px;
   font-weight: 900px;
-  color: #aaaaaa;
+  color: #379DFF;
   margin: 2px auto 0px auto;
 `;
 
@@ -55,16 +55,19 @@ const HeaderText = styled.span`
 
 // 홈 헤더의 타이틀
 const HomeTitle = styled.div`
-  font-family: 'Noto Sans KR';  
-  width: 30%;
+  /* font-family: 'Noto Sans KR';   */
+  font-family: "Poppins";
+  width: 50%;
   padding-left: 20px;
   height: 50px;
   text-align: left;
   line-height: 50px;
   font-weight: 800;
-  font-size: 25px;
+  
+  font-size: 23px;
   color: #ffffff;
   float: left;
+  display: flex;
 `;
 
 // 공지사항 박스
@@ -148,13 +151,14 @@ const ChatBtn = styled.div`
 `;
 
 const CouncilTitle = styled.div`
+font-family: "Poppins";
 display: inline-block;
     width: 30%;
   padding-left: 20px;
   height: 50px;
   text-align: left;
   line-height: 50px;
-  font-weight: 800;
+  font-weight: 850;
   font-size: 25px;
   color: #c5c5c5;
   /* float: left; */
@@ -170,7 +174,10 @@ const CouncilName = styled.div`
   color: #c5c5c5;
   float: right;
 `;
-
+const LogoImg = styled.img`
+  margin-top:2px;
+  width: 33px;
+`;
 const Header = ({ headerType, headerText }) => {
   const navigate = useNavigate(); // 페이지 이동을 위해
   const [cookies] = useCookies();
@@ -186,7 +193,10 @@ const Header = ({ headerType, headerText }) => {
         <div>
           <HeaderBox nobg={"true"}>
             <HeaderContent>
-              <HomeTitle>Baram</HomeTitle>
+              <HomeTitle>
+              {/* <LogoImg src="/image/logow.svg"></LogoImg> */}
+                <span>Baram</span>
+                </HomeTitle>
               <AnnoBox>
                 <Link to={"/user/" + cookies.id}>
                   <Anno>
@@ -198,7 +208,7 @@ const Header = ({ headerType, headerText }) => {
                     <img src={"/image/megaphone.svg"}></img>
                   </Anno>
                 </Link>
-                <Link to={"/test"}>
+                <Link to={"/menual"}>
                   <Anno>
                     <Help>?</Help>
                   </Anno>

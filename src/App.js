@@ -28,6 +28,8 @@ import KSignIn from "./pages/UserPages/KSignIn";
 import SocialKakao from "./pages/UserPages/SocialKakao";
 import AdminAnnoManagement from "./pages/AdminPages/AdminAnnoManagement";
 import AdminAnnoCreation from "./pages/AdminPages/AdminAnnoCreation";
+import AdminCertificationManagementDetail from "./pages/AdminPages/AdminCertificationManagementDetail";
+import ForgotPw from "./pages/CouncilManagerPages/ForgotPw";
 
 const MainLayout = styled.div`
 `;
@@ -51,10 +53,10 @@ function App() {
           
           <Route path="/signup" Component={SignUp} />
           <Route path="/chat" Component={ChatRoomList} />
-          <Route path="/chat/:metype/:id/:other/:post" Component={Chat} />
+          <Route path="/chat/:metype/:id/:interlocutorId/:post" Component={Chat} />
           <Route path="/notice" Component={NoticeList} />
           <Route path="/notice/:id" Component={NoticeDetail} />
-          <Route path="/test" Component={Manual} />
+          <Route path="/menual" Component={Manual} />
 
           {/* 어드민 */}
           <Route path="/admin" Component={AdminManagement} />
@@ -62,11 +64,13 @@ function App() {
           <Route path="/admin/cimanage/create" Component={AdminCouncilCreation} />{/* admin/manage/council/create */}
           <Route path="/admin/cimanage/add/:id" Component={AdminCouncilItemManagement} /> {/* admin/manage/council/items */}
           <Route path="/admin/certimanage" Component={AdminCertificationManagement} /> {/* admin/manage/certification */}
+          <Route path="/admin/certimanage/:id" Component={AdminCertificationManagementDetail} /> 
           <Route path="/admin/anno-manage" Component={AdminAnnoManagement} />
           <Route path="/admin/anno-manage/create" Component={AdminAnnoCreation} />
   
           {/* 학생회 */}
           <Route path="/council/signin" Component={CouncilSignIn} />
+          <Route path="/council/forgot" Component={ForgotPw} />
           <Route path="/council/manage" Component={CouncilManagement} />
           <Route path="/council/manage/info" Component={EditCouncilInfo} />{/* /council/manage/edit */}
           <Route path="/council/manage/item" Component={CreationCouncilItem} />{/* /council/manage/add */}

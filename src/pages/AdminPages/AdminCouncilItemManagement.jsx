@@ -25,7 +25,7 @@ const InputBox = styled.input`
     margin-top: 10px;
     width: 94%;
     font-size: 15px;
-    font-weight: 800;
+    font-weight: 500;
     color: #333333;
     border-radius: 10px;
     border: 1px solid #E8E8E8;
@@ -45,7 +45,7 @@ const SummitBtn = styled.button`
     font-weight: 800;
     border: none;
     color: #ffffff;
-    margin-top: 20px;
+    margin: 10px 0px;
     border-radius: 10px;
     background: #559BFF;
 `;
@@ -55,7 +55,7 @@ const Details = styled.details`
     margin-top: 10px;
     width: 100%;
     font-size: 15px;
-    font-weight: 800;
+    font-weight: 400;
     background: #ffffff;
     border-radius: 10px;
     border: 1px solid #E8E8E8;
@@ -193,6 +193,62 @@ const Tag = styled.span`
   margin-right: 10px;
 `;
 
+const Toggle = styled.div`
+  display: flex;
+  margin: 10px 0px;
+  float: right;
+`;
+
+
+const ToggleBtn = styled.button`
+    border: none;
+    background: none;
+`;
+
+const ToggleBox = styled.div`
+  width: 30px;
+  height: 15px;
+  border-radius: 50px;
+  padding: 5px;
+  background: ${({ isOn }) => (isOn ? '#2be149' : '#eeeeee')};
+  display: flex;
+`;
+
+const ToggleCircle = styled.div`
+  width: 15px;
+  height: 15px;
+  background: #ffffff;
+  border-radius: 50px;
+  ${({ isOn }) => (isOn ? 'none' : 'opacity: 0%')};
+
+`;
+
+const ToggleText = styled.div`
+    align-items: center;
+    line-height: 25px;
+    font-size: 15px;
+    color: #aaaaaa;
+    margin-right: 5px;
+`;
+const TextareaBox = styled.textarea`
+    width: 94%;
+    height: 50px;
+    resize: none;
+    margin-top: 10px;
+    background: #ffffff;
+    border: 1px solid #E8E8E8;
+    border-radius: 10px;
+    color:#333333;
+    font-size: 15px; 
+    outline: none;
+    padding: 20px 3%;
+    &::placeholder {
+        color: #aaaaaa; 
+    }
+    &:focus {
+      border-color: #38d9a9;
+    }
+`;
 const AdminCouncilItemManagement = () => {
     const [councilData, setCouncilData] = useState({
         college: '',
@@ -205,7 +261,20 @@ const AdminCouncilItemManagement = () => {
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
 
+    const [location, setLocation] = useState("");
+  const [operatingHours, setOperatingHours] = useState("");
+  const [usageGuidelines, setUsageGuidelines] = useState("");
+
     useEffect(() => {
+        if (!cookies.token) {
+            navigate("/signin");
+            return;
+        }
+        if (cookies.roles != "ADMIN") {
+            navigate("/");
+            return;
+          
+          }
         const fetchCouncils = async () => {
             try {
                 // 토큰 쿠키가 없다면 로그인 페이지로 이동
@@ -217,10 +286,8 @@ const AdminCouncilItemManagement = () => {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
-                });
-
-                setCouncilData(response.data);
-                console.log(response.data);
+                });           
+                setCouncilData(response.data.data);
 
             } catch (error) {
                 console.error("오류 발생:", error);
@@ -231,6 +298,33 @@ const AdminCouncilItemManagement = () => {
     }, [cookies.token, navigate, key]); // [] 와 같이 비워도 됨.
 
 
+    const handleUpdateCouncil = async (e) => {
+        e.preventDefault();
+    
+        try {
+    
+          const PutResponse = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + councilData.councilId,
+            {
+              location,
+              operatingHours,
+              usageGuidelines,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${cookies.token}`,
+              },
+            }
+          );
+          // 성공시
+          if (PutResponse.data.code === 200) {
+            window.alert("수정 성공");
+            navigate("/council/manage");
+          }
+        } catch (error) {
+          console.error("오류 발생:", error);
+    
+        }
+      };
     const handleAddCouncil = async (e) => {
         e.preventDefault();
 
@@ -256,7 +350,7 @@ const AdminCouncilItemManagement = () => {
                 }
             );
             // 성공시
-            if (signUpResponse.status === 200) {
+            if (signUpResponse.data.code === 200) {
                 window.alert("생성 성공");
                 setKey(key + 1);
                 // navigate("/");
@@ -276,7 +370,6 @@ const AdminCouncilItemManagement = () => {
             });
             window.alert("삭제되었습니다.");
             setKey(key + 1);
-            console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
         }
@@ -297,15 +390,42 @@ const AdminCouncilItemManagement = () => {
                     },
                 });
             setKey(key + 1);
-            console.log(response);
+        } catch (error) {
+            console.error("오류 발생:", error);
+        }
+    };
+
+    const managerChange = async (id, isCouncilSelfManage) => {
+        try {
+            const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + id + "/" + isCouncilSelfManage,
+                {
+                    headers: {
+                        Authorization: `Bearer ${cookies.token}`,
+                    },
+                });
+            setKey(key + 1);
         } catch (error) {
             console.error("오류 발생:", error);
         }
     };
     return (
         <AdminBox>
-            <Header headerType={"noChatIcon"} headerText={"물품 추가"}></Header>
+            <Header headerType={"noChatIcon"} headerText={councilData.name}></Header>
             <ContentBox>
+            <Toggle>
+                <ToggleText>개수 정보 제공</ToggleText>
+                <ToggleBtn onClick={() => managerChange(councilData.councilId, !councilData.isCouncilSelfManage )}>
+                <ToggleBox isOn ={councilData.isCouncilSelfManage}>
+                    <ToggleCircle isOn ={councilData.isCouncilSelfManage == false}>
+                    </ToggleCircle>
+                    <ToggleCircle isOn ={councilData.isCouncilSelfManage == true}>   
+                    </ToggleCircle>
+                </ToggleBox>
+                </ToggleBtn>
+                
+            </Toggle>
+        
+            
                 <InputBox type="text" name="name" placeholder="물품명"
                     value={name}
                     onChange={(e) => {
@@ -332,7 +452,7 @@ const AdminCouncilItemManagement = () => {
                 </Details>
                 {/* 제출 버튼 */}
                 <SummitBtn onClick={handleAddCouncil}>추가</SummitBtn>
-                <CouncilName>{councilData.name}</CouncilName>
+                <CouncilName>{"물품 리스트"}</CouncilName>
                 <Items>
                     {councilData.items.map((item) => (
                         <Item key={item.itemId}>
@@ -350,6 +470,27 @@ const AdminCouncilItemManagement = () => {
                         </Item>
                     ))}
                 </Items>
+                <InputBox type="text" name="location" placeholder="위치 (ex AI공학관 505호)"
+          value={location}
+          onChange={(e) => {
+            setLocation(e.target.value);
+          }}
+        />
+        <InputBox type="text" name="operatingHours" placeholder="운영 시간 (ex 9시 ~ 16시)"
+          value={operatingHours}
+          onChange={(e) => {
+            setOperatingHours(e.target.value);
+          }}
+        />
+        <TextareaBox type="text" name="usageGuidelines" placeholder="이용 수칙 (ex 뒷정리 필수)"
+          value={usageGuidelines}
+          onChange={(e) => {
+            setUsageGuidelines(e.target.value);
+          }}
+        />
+
+        {/* 제출 버튼 */}
+        <SummitBtn onClick={handleUpdateCouncil}>수정</SummitBtn>
 
             </ContentBox>
         </AdminBox>

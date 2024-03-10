@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -48,20 +48,15 @@ const RequestsBox = styled.ul`
 `;
 
 const UserImg = styled.div`
-    width: 60px;
-    height: 60px;
+    width: 100%;
     border: 1px solid #eeeeee;
-    border-radius: 50px;
     float: left;
     margin-right: 10px;
     overflow: hidden;
     position: relative;
     & img{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    ${({ isVertical }) => (isVertical ? 'width: 50px' : 'height: 50px')};
+    width: 100%;
+    height: 100%;
    }
 `;
 
@@ -95,11 +90,32 @@ const CertifiState = styled.div`
         width: 50px;
     }
 `;
-const AdminCertificationManagement = () => {
-    const [certiRequest, setCertificationRequest] = useState([]); // 채팅방 리스트 상태
+
+const ModalBtnBox = styled.div`
+  width: 100%;
+  bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ModalBtn = styled.button`
+ margin-top: 30px;
+  border: none;
+  width: 48%;
+  background: ${({ isLeft }) => (isLeft ? '#c9c9c9' : '#38d9a9')};
+  padding: 15px;
+  text-align: center;
+  border-radius: 15px;
+
+  font-size: 15px;
+  color:#FFFFFF;
+`;
+const AdminCertificationManagementDetail = () => {
+    const [certiRequest, setCertificationRequest] = useState({user:{}, requestAt:[]}); // 채팅방 리스트 상태
     const [key, setKey] = useState(0);
     const [cookies] = useCookies(); // 쿠키 사용하기 위해
     const navigate = useNavigate(); // 페이지 이동 위해
+    const { id } = useParams(); 
 
 
     useEffect(() => {
@@ -114,7 +130,7 @@ const AdminCertificationManagement = () => {
           }
         const fetchCertificationRequests = async () => {
             try {
-                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/certifi/requests", {
+                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/certifi/requests/"+id, {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
@@ -130,47 +146,70 @@ const AdminCertificationManagement = () => {
 
         fetchCertificationRequests();
     }, [cookies.token, navigate, key]); // [] 와 같이 비워도 됨.
-
+    const handleChange = async (e) => {
+        e.preventDefault();
+        
+        const isCertification = true;
+        try {
+          const signUpResponse = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/certifi/approval/"+certiRequest.user.userId,
+          {
+            isCertification
+          },
+          {
+              headers: {
+                  Authorization: `Bearer ${cookies.token}`,
+    
+              },
+          }
+          );
+            // 성공시
+            if (signUpResponse.status === 200) {
+                // setIsDoneModalOn(false);
+                setKey(key+1);
+            }
+        } catch (error) {
+            console.error("오류 발생:", error);
+    
+        }
+    };
+    
 
     return (
         <AdminBox>
             <Header headerType={"noChatIcon"} headerText={"학생증 인증 관리"}></Header>
-            <Subtitle>DASHBOARD</Subtitle>
-            <Dashboard>
-                <ul>
-                    <DashBoardDataLine>
-                        <DashBoardDataName>승인되지 않은 회원 수</DashBoardDataName>
-                        <DashBoardData>명</DashBoardData>
-                    </DashBoardDataLine>
-                    <DashBoardDataLine>
-                        <DashBoardDataName>승인된 회원 수</DashBoardDataName>
-                        <DashBoardData>명</DashBoardData>
-                    </DashBoardDataLine>
-                </ul>
-            </Dashboard>
             <RequestsBox>
-                {certiRequest.map((request, index) => {
-                    return (
-                        <Link to={"/admin/certimanage/" + request.certiId} key={request.certiId} >
-                            <Council key={request.certiId}>
-                                {/* <UserImg isVertical={imgInfo.isVertical}>
-                                    <img src={imgInfo.path} />
-                                </UserImg> */}
+            <Council key={certiRequest.certiId}>
+                               
                                 <UserInfo>
-                                    <span>아이디</span>{request.user.userId}<br /> <span>닉네임</span>{request.user.nickName}<br />
-                                    <span>이름</span>{request.name} <span>학번</span>{request.studentIdNumber}<br />
-                                    <span>요청 시각</span>{request.requestAt[1]}/{request.requestAt[2]} {request.requestAt[3]}:{request.requestAt[4]}
+                                    <span>아이디</span>{certiRequest.user.userId}<br /> <span>닉네임</span>{certiRequest.user.nickName}<br />
+                                    <span>이름</span>{certiRequest.name} <span>학번</span>{certiRequest.studentIdNumber}<br />
+                                    <span>요청 시각</span>{certiRequest.requestAt[1]}/{certiRequest.requestAt[2]} {certiRequest.requestAt[3]}:{certiRequest.requestAt[4]}
                                 </UserInfo>
-                                <CertifiState isCertifi={request.user.certification}>
+                                <CertifiState isCertifi={certiRequest.user.certification}>
                                     <img src={"/image/check.svg"}></img>
                                 </CertifiState>
                             </Council>
-                        </Link>
-                    );
-                })}
+                            
             </RequestsBox>
-        </AdminBox>
-    );
+            <UserImg >
+                                    <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + certiRequest.imgPath}/>
+                                </UserImg>
+
+                               {certiRequest.user.certification ==false ?
+                                <ModalBtnBox>
+
+                            <ModalBtn  isLeft={true}>
+                            거절
+                            </ModalBtn>
+
+                            <ModalBtn  onClick={handleChange}>
+                            승인
+                            </ModalBtn >
+                            </ModalBtnBox>
+                            : null}
+                                    </AdminBox>
+                                    
+                                );
 };
 
-export default AdminCertificationManagement;
+export default AdminCertificationManagementDetail;
