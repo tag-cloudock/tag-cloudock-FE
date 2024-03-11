@@ -457,6 +457,7 @@ const Chat = () => {
       } catch (error) {
         console.error("오류 발생:", error);
       }
+
     };
 
     // 게시물 정보 가져오기
@@ -562,9 +563,10 @@ useEffect(() => {
 
     // 받은 메세지 메세지 리스트 상태에 넣기위해 딕셔너리화
     console.log(new Date().toLocaleString());
+    var d= new Date();
     const newMessage = {
       chatId: new Date(),
-      sentAt: " "+new Date().toLocaleString(),
+      sentAt: new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString(),
       message: receivedMessage.message,
       userType: receivedMessage.userType,
     };
@@ -712,9 +714,9 @@ return (
           (message.userType === "LENDER" && metype === "l");
         return (
           <div>
-            {index !== 0 && messageList[index - 1].sentAt.slice(6,10) !== message.sentAt.slice(6,10) ? <DateChange>{ message.sentAt.slice(0,10).split("-").join("/") }</DateChange> : null}
+            {index !== 0 && messageList[index - 1].sentAt.slice(5,10) !== message.sentAt.slice(5,10) ? <DateChange>{ message.sentAt.slice(0,10).split("-").join("/") }</DateChange> : null}
             <MessageBlock isMe={isMe}>
-              <MessageTime isMe={isMe}>{message.sentAt.slice(11, 16)}</MessageTime>
+              <MessageTime isMe={isMe}>{message.sentAt.slice(11,16)}</MessageTime>
               <Message key={message.chatId} isMe={isMe}>
                 {message.message}
               </Message>
