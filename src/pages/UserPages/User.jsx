@@ -617,7 +617,7 @@ const User = () => {
             <InfoTopBox>
             <NicknameBox>
               <Nickname>{userInfo.nickname}</Nickname>
-              {cookies.certification == true ? <img src="/image/certifi.svg"></img> : null}
+              {userInfo.certification == true ? <img src="/image/certifi.svg"></img> : null}
             </NicknameBox>
             <Option>
               <OptionBox onClick={() => {
@@ -694,7 +694,7 @@ const User = () => {
       </PostBox>
 
 
-      {userid == cookies.id  && cookies.certification == false ? (
+      {userid == cookies.id  && userInfo.certification == false ? (
         <Link to={"/certification"}>
           <MoveCertifi>학생증 인증하기</MoveCertifi>
         </Link>
