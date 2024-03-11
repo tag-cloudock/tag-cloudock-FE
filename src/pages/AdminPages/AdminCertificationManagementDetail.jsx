@@ -135,9 +135,8 @@ const AdminCertificationManagementDetail = () => {
                         Authorization: `Bearer ${cookies.token}`,
                     },
                 });
-
-                setCertificationRequest(response.data);
-                console.log(response.data);
+                setCertificationRequest(response.data.data);
+                // console.log(response.data);
 
             } catch (error) {
                 console.error("오류 발생:", error);
@@ -163,7 +162,7 @@ const AdminCertificationManagementDetail = () => {
           }
           );
             // 성공시
-            if (signUpResponse.status === 200) {
+            if (signUpResponse.data.code === 200) {
                 // setIsDoneModalOn(false);
                 setKey(key+1);
             }
@@ -183,7 +182,7 @@ const AdminCertificationManagementDetail = () => {
                                 <UserInfo>
                                     <span>아이디</span>{certiRequest.user.userId}<br /> <span>닉네임</span>{certiRequest.user.nickName}<br />
                                     <span>이름</span>{certiRequest.name} <span>학번</span>{certiRequest.studentIdNumber}<br />
-                                    <span>요청 시각</span>{certiRequest.requestAt[1]}/{certiRequest.requestAt[2]} {certiRequest.requestAt[3]}:{certiRequest.requestAt[4]}
+                                    <span>요청 시각</span>{certiRequest.requestAt}
                                 </UserInfo>
                                 <CertifiState isCertifi={certiRequest.user.certification}>
                                     <img src={"/image/check.svg"}></img>

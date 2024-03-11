@@ -7,7 +7,7 @@ const ManualBox = styled.div`
   /* padding: 10px; */
   align-items: center;
   & > div:first-child{
-    margin-top:200px;
+    margin-top:300px;
   }
   
 `;
@@ -23,10 +23,7 @@ const ManualContent = styled.div`
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 1s, transform 1s;
-  margin-top: 400px;
-  & :first{
-    margin-top:0px;
-  }
+  margin-top: 200px;
   
 `;
 
@@ -90,6 +87,7 @@ const Manual = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => {

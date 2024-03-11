@@ -132,8 +132,9 @@ const ForgotPw = () => {
         </Title>
 
         <AlertBox>
-          <ForgotPassword>아이디/비밀번호 잊었나요?</ForgotPassword>
-          <ForgotPassword>오픈 카카오톡으로 문의 하세요!</ForgotPassword>
+          <ForgotPassword>아이디/비밀번호를 잊었나요?</ForgotPassword>
+          <ForgotPassword>아래 인스타그램을 통해 문의하세요!</ForgotPassword>
+          <ForgotPassword>@baram_official_</ForgotPassword>
         </AlertBox>
 
         <Link to={"/council/signin"}>

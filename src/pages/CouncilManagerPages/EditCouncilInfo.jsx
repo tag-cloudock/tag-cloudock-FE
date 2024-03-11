@@ -117,6 +117,9 @@ const EditCouncilInfo = () => {
           },
         });
 
+        if (response.data.code != 200) {
+          navigate("/council/signin");
+        }
         setCouncilData(response.data.data);
         setLocation(response.data.data.location);
         setOperatingHours(response.data.data.operatingHours);

@@ -139,6 +139,8 @@ const DropdownButton = styled.button`
 `;
 
 const DropdownContent = styled.div`
+height: 200px;
+overflow: auto; 
     margin-top: 10px;
   display: ${props => (props.open ? 'block' : 'none')};
   border-radius: 10px;
@@ -147,7 +149,7 @@ const DropdownContent = styled.div`
   width: 100%;
   box-shadow: 0px 8px 16px 0px rgba(96, 96, 96, 0.2);
   z-index: 1;
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 const DropdownItem = styled.a`
@@ -335,7 +337,7 @@ const PostEdit = () => {
           },
         }
       );
-      if (Response.data.data.code != 200) {
+      if (Response.data.code != 200) {
         navigate("/signin");
       }
       if (Response.data.code === 200) {
@@ -344,6 +346,8 @@ const PostEdit = () => {
       }
       
     } catch (error) {
+      window.alert("사진이 너무 크거나 잘못된 형식입니다.")
+      setFile(null);
     }
   };
 
@@ -414,6 +418,9 @@ const PostEdit = () => {
               <DropdownItem href="#" onClick={() => handleOptionClick('G 글로벌 캠퍼스')}>
                 글로벌 캠퍼스
               </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('M 메디컬 캠퍼스')}>
+                메디컬 캠퍼스
+              </DropdownItem>
               <DropdownItem href="#" onClick={() => handleOptionClick('G 비전타워')}>
                 비전타워
               </DropdownItem>
@@ -425,6 +432,81 @@ const PostEdit = () => {
               </DropdownItem>
               <DropdownItem href="#" onClick={() => handleOptionClick('M 약학대학')}>
                 약학대학
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 바나대')}>
+                바나대
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 중앙도서관')}>
+                중앙도서관
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 공과대학1')}>
+                공과대학1
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 공과대학2')}>
+                공과대학2
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 반도체대학')}>
+                반도체대학
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 한의과대학')}>
+                한의과대학
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 예체대1')}>
+                예체대1
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 예체대2')}>
+                예체대2
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 전자정보도서관')}>
+                전자정보도서관
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 대학원')}>
+                대학원
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 교육대학원')}>
+                교육대학원
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 바이오나노연구원')}>
+                바이오나노연구원
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 학생회관')}>
+                학생회관
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 제1기숙사')}>
+                제1기숙사
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 제2기숙사')}>
+                제2기숙사
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 제3기숙사')}>
+                제3기숙사
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 글로벌센터')}>
+                글로벌센터
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 법과대학')}>
+                법과대학
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 바개동')}>
+                바개동
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('G 광장')}>
+                광장
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('M 보건과학대학')}>
+                보건과학대학
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('M 간호대학')}>
+                간호대학
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('M 학생회관')}>
+                메디컬 학생회관
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('M 의과대학')}>
+                의과대학
+              </DropdownItem>
+              <DropdownItem href="#" onClick={() => handleOptionClick('M 기숙사')}>
+                메디컬 기숙사
               </DropdownItem>
             </DropdownContent>
           </DropdownWrapper>
