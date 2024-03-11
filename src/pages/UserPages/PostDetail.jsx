@@ -310,6 +310,7 @@ const PostDetail = () => {
         const response = await axios.get(
           "http://" + process.env.REACT_APP_BACK_URL + "/post/" + id
         );
+        console.log(response.data.data);
         setPost(response.data.data);
         const needAt = response.data.data.needAt;
         const returnAt = response.data.data.returnAt;
@@ -318,6 +319,7 @@ const PostDetail = () => {
         console.log("포스트 오류 발생: ", error);
       }
     };
+    
     fetchPosts();
   }, [cookies.token, navigate]);
 
@@ -383,7 +385,7 @@ const PostDetail = () => {
         <BoardBox>
           <Title>{post.title}</Title>
           <PostInfo>
-            <Link to={"/user/" + post.postId}>
+            <Link to={"/user/"+post.userId}>
               <User>
                 <UserImage>
                   <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.userImgPath}>

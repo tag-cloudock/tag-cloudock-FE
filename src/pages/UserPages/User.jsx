@@ -481,18 +481,19 @@ const User = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        if (!cookies.token) {
-          navigate("/signin");
-          return;
-        }
+        // if (!cookies.token) {
+        //   navigate("/signin");
+        //   return;
+        // }
         const response = await axios.get(
           "http://" + process.env.REACT_APP_BACK_URL + "/account?id=" + userid,
           {
-            headers: {
-              Authorization: `Bearer ${cookies.token}`,
-            },
+            // headers: {
+            //   Authorization: `Bearer ${cookies.token}`,
+            // },
           }
         );
+        console.log(response.data);
 
         if (response.data.code != 200) {
           navigate("/signin");
@@ -507,10 +508,10 @@ const User = () => {
     const fetchReview = async () => {
       try {
         // 토큰 쿠키가 없다면 로그인 페이지로 이동
-        if (!cookies.token) {
-          navigate("/signin");
-          return;
-        }
+        // if (!cookies.token) {
+        //   navigate("/signin");
+        //   return;
+        // }
         const response = await axios.get(
           "http://" + process.env.REACT_APP_BACK_URL + "/review/" + userid,
           {
@@ -519,6 +520,10 @@ const User = () => {
             },
           }
         );
+        if (response.data.code != 200) {
+          navigate("/signin");
+        }
+
         setReviewData(response.data.data);
         // 유저 상태 등록
       } catch (error) {
@@ -528,10 +533,10 @@ const User = () => {
     const fetchUserPosts = async () => {
       try {
         // 토큰 쿠키가 없다면 로그인 페이지로 이동
-        if (!cookies.token) {
-          navigate("/signin");
-          return;
-        }
+        // if (!cookies.token) {
+        //   navigate("/signin");
+        //   return;
+        // }
         const response = await axios.get(
           "http://" + process.env.REACT_APP_BACK_URL + "/post/user/" + userid,
           {
@@ -540,6 +545,10 @@ const User = () => {
             },
           }
         );
+        if (response.data.code != 200) {
+          navigate("/signin");
+        }
+
         setUserPosts(response.data.data);
       } catch (error) {
         console.error("오류 발생:", error);
@@ -614,7 +623,8 @@ const User = () => {
               <OptionBox onClick={() => {
                 setIsDoneModalOn(true);
               }}>
-                <ImageIcon3 src={"/image/settingbutton.svg"} alt="" />
+                {userid == cookies.id ? 
+                <ImageIcon3 src={"/image/settingbutton.svg"} alt="" />:null}
               </OptionBox>
             </Option>
             </InfoTopBox>
@@ -635,15 +645,15 @@ const User = () => {
         <RateBox>
           <RateInfoBox1>
             <ImageIcon2 src={"/image/smilingface.svg"} alt="" />
-            <br></br>{reviewData.loveCount}
+            <br></br>{reviewData.loveCount ?reviewData.loveCount:0 }
           </RateInfoBox1>
           <RateInfoBox2>
             <ImageIcon2 src={"/image/face.svg"} alt="" />
-            <br></br>{reviewData.goodCount}
+            <br></br>{reviewData.goodCount ?reviewData.goodCount:0}
           </RateInfoBox2>
           <RateInfoBox3>
             <ImageIcon2 src={"/image/upsetface.svg"} alt="" />
-            <br></br>{reviewData.badCount}
+            <br></br>{reviewData.badCount ?reviewData.badCount:0}
           </RateInfoBox3>
         </RateBox>
       </PostBox>
@@ -682,12 +692,15 @@ const User = () => {
             <NoData>아직 작성한 글이 없어요!</NoData>}
         </PostInfoBox>
       </PostBox>
-      {cookies.certification == false ? (
+
+
+      {userid == cookies.id  && cookies.certification == false ? (
         <Link to={"/certification"}>
           <MoveCertifi>학생증 인증하기</MoveCertifi>
         </Link>
       ) : null}
-      <Logout onClick={removeCookies}>로그아웃</Logout>
+       {userid == cookies.id ? 
+      <Logout onClick={removeCookies}>로그아웃</Logout> :null}
 
 
 

@@ -5,6 +5,8 @@ import styled, { keyframes } from "styled-components";
 import { useState } from 'react';
 import RecentPosts from "../../components/page/Home/RecentPosts";
 import Footer from "../../components/layout/Footer";
+import { useCookies } from "react-cookie";
+import moment from "moment";
 
 // 홈 각 박스 제목
 const SubTitle = styled.div`
@@ -279,7 +281,10 @@ const Intro = styled.div`
 `;
 
 const Home = () => {
-  const [campus, setCampus] = useState(0);
+  const [cookies, setCookies] = useCookies();
+  const [campus, setCampus] = useState(cookies.campus ? cookies.campus:0);
+  
+
   return (
     <HomeContainer>
       <Header headerType={"home"}></Header>
@@ -287,9 +292,9 @@ const Home = () => {
       <HomeMainTextBox>
         <HomeMainText>
         {/* <BlurBar isLeft={true}></BlurBar> */}
-        <a href="https://www.leets.land">
+        {/* <a href="https://www.leets.land">
           <img src={"/image/ad.svg"}></img>
-          </a>
+          </a> */}
           {/* <Intro>가천대 대여 중개 사이트</Intro> */}
           {/* <AdAlert>교내 홍보 문의</AdAlert> */}
         </HomeMainText>
@@ -302,6 +307,10 @@ const Home = () => {
 
           <CampusBox onClick={() => {
                         setCampus(0);
+                        setCookies("campus", 0, {
+                          path: "/",
+                          expires: moment().add(1, "hours").toDate(),
+                        });
                     }} isOn={campus==0}>
             <CampusText isOn={campus==0}>
               글로벌
@@ -310,6 +319,10 @@ const Home = () => {
           {/* 메캠 링크 추가 */}
           <CampusBox onClick={() => {
                         setCampus(1);
+                        setCookies("campus", 1, {
+                          path: "/",
+                          expires: moment().add(1, "hours").toDate(),
+                        });
                     }} isOn={campus==1}>
             <CampusText isOn={campus==1}>
               메디컬
@@ -412,23 +425,35 @@ const Home = () => {
             <Link to={"/posts?location=G 비전타워"}>
               <LocationItem>비전타워</LocationItem>
             </Link>
-            <Link to={"/posts?location=G 교육대학"}>
+            <Link to={"/posts?location=G 법과대학"}>
               <LocationItem>법과대학</LocationItem>
             </Link>
-            <Link to={"/posts?location=G 제1기숙사"}>
+            <Link to={"/posts?location=G 바개동"}>
               <LocationItem>바개동</LocationItem>
             </Link>
-            <Link to={"/posts?location=G 제1기숙사"}>
+            <Link to={"/posts?location=G 광장"}>
               <LocationItem>광장</LocationItem>
             </Link>
             </div>
             :
             <div>
-              <Link to={"/posts?location=G 비전타워"}>
-              <LocationItem>약학대학</LocationItem>
+              <Link to={"/posts?location=M 보건과학대학"}>
+              <LocationItem>보건과학대학</LocationItem>
               </Link>
-              <Link to={"/posts?location=G 교육대학"}>
+              <Link to={"/posts?location=M 약학대학"}>
+                <LocationItem>약학대학</LocationItem>
+              </Link>
+              <Link to={"/posts?location=M 간호대학"}>
+                <LocationItem>간호대학</LocationItem>
+              </Link>
+              <Link to={"/posts?location=M 학생회관"}>
                 <LocationItem>학생회관</LocationItem>
+              </Link>
+              <Link to={"/posts?location=M 의과대학"}>
+                <LocationItem>의과대학</LocationItem>
+              </Link>
+              <Link to={"/posts?location=M 기숙사"}>
+                <LocationItem>기숙사</LocationItem>
               </Link>
             </div>
             }

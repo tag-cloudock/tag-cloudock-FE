@@ -170,6 +170,9 @@ const CreationCouncilItem = () => {
                     },
                 }
             );
+            if (PostResponse.data.code != 200) {
+                navigate("/council/signin");
+              }
             // 성공시
             if (PostResponse.data.code === 200) {
                 window.alert("생성 성공");

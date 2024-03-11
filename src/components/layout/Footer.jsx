@@ -14,17 +14,25 @@ const FooterBox = styled.div`
 // 푸터 텍스트
 const FooterText = styled.div`
     text-align: center;
-    color:#cccccc;
-    font-size: 15px;
+    color:#c8c8c8;
+    font-size: 13px;
     position: absolute;
     bottom: 20px;
     left: 0;
     right: 0;
 `;
 
-const GotoGithub = styled.a`
-    color:#6093FF;
+const GotoGithub = styled.span`
 `;
+
+
+const Insta = styled.a`
+display: block;
+    color:#6093FF;
+    margin-bottom: 20px;
+    font-size: 15px;
+`;
+
 
 const CouncilSignIn = styled.span`
     & a{
@@ -37,7 +45,8 @@ const Footer = () => {
     return (
         <FooterBox>
             <FooterText>
-                © C<CouncilSignIn><Link to={"/council/signin"}>o</Link></CouncilSignIn>pyright <GotoGithub href="https://github.com/Eggis0">Eggis0</GotoGithub> All Rights Reserved
+            <Insta href="https://www.instagram.com/baram_official_/">@baram_official</Insta>
+                © C<CouncilSignIn><Link to={"/council/signin"}>o</Link></CouncilSignIn>pyright <GotoGithub >Eggis0</GotoGithub> All Rights Reserved 
             </FooterText>
         </FooterBox>
     );

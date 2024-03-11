@@ -561,17 +561,10 @@ useEffect(() => {
     const currentDate = new Date();
 
     // 받은 메세지 메세지 리스트 상태에 넣기위해 딕셔너리화
+    console.log(new Date().toLocaleString());
     const newMessage = {
       chatId: new Date(),
-      sentAt: [
-        currentDate.getFullYear(),
-        currentDate.getMonth() + 1,
-        currentDate.getDate(),
-        currentDate.getHours(),
-        currentDate.getMinutes(),
-        currentDate.getSeconds(),
-        currentDate.getMilliseconds()
-      ],
+      sentAt: " "+new Date().toLocaleString(),
       message: receivedMessage.message,
       userType: receivedMessage.userType,
     };
@@ -693,7 +686,7 @@ return (
           setIsBorrower(true);
           setIsDoneModalOn(true);
         }}>
-          대여 완료
+          대여 완료하기
         </DoneBtn> : null}
         {postInfo.isClose && !postInfo.lenderWriteReview && postInfo.userId != cookies.id ? <DoneBtn onClick={() => {
           setIsBorrower(false);
@@ -719,7 +712,7 @@ return (
           (message.userType === "LENDER" && metype === "l");
         return (
           <div>
-            {index !== 0 && messageList[index - 1].sentAt[2] !== message.sentAt[2] ? <DateChange>{message.sentAt[0]}년 {message.sentAt[1]}월 {message.sentAt[2]}일</DateChange> : null}
+            {index !== 0 && messageList[index - 1].sentAt.slice(6,10) !== message.sentAt.slice(6,10) ? <DateChange>{ message.sentAt.slice(0,10).split("-").join("/") }</DateChange> : null}
             <MessageBlock isMe={isMe}>
               <MessageTime isMe={isMe}>{message.sentAt.slice(11, 16)}</MessageTime>
               <Message key={message.chatId} isMe={isMe}>

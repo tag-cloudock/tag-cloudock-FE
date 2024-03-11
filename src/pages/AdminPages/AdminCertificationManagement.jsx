@@ -119,9 +119,8 @@ const AdminCertificationManagement = () => {
                         Authorization: `Bearer ${cookies.token}`,
                     },
                 });
-
-                setCertificationRequest(response.data);
-                console.log(response.data);
+                console.log(response.data.data);
+                setCertificationRequest(response.data.data);
 
             } catch (error) {
                 console.error("오류 발생:", error);
@@ -159,7 +158,7 @@ const AdminCertificationManagement = () => {
                                 <UserInfo>
                                     <span>아이디</span>{request.user.userId}<br /> <span>닉네임</span>{request.user.nickName}<br />
                                     <span>이름</span>{request.name} <span>학번</span>{request.studentIdNumber}<br />
-                                    <span>요청 시각</span>{request.requestAt[1]}/{request.requestAt[2]} {request.requestAt[3]}:{request.requestAt[4]}
+                                    <span>요청 시각</span>{request.requestAt}
                                 </UserInfo>
                                 <CertifiState isCertifi={request.user.certification}>
                                     <img src={"/image/check.svg"}></img>
