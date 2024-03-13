@@ -151,7 +151,7 @@ const CouncilList = () => {
     setCampus(campusValue);
     const fetchCouncils = async () => {
       try {
-        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/all?campus=" + campusValue, {
+        const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/council/all?campus=" + campusValue, {
 
         });
 
@@ -209,7 +209,7 @@ const CouncilList = () => {
                 <Link to={"/councils/" + council.councilId} >
                   <CouncilItem key={council.councilId}>
                     <CouncilImgBox>
-                      <CouncilImg src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + council.imgPath}></CouncilImg>
+                      <CouncilImg src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + council.imgPath}></CouncilImg>
                     </CouncilImgBox>
 
                     <CouncilContent>

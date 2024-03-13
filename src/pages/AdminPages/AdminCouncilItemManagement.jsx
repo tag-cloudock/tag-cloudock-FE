@@ -282,7 +282,7 @@ const AdminCouncilItemManagement = () => {
                     navigate("/signin");
                     return;
                 }
-                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
+                const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
@@ -303,7 +303,7 @@ const AdminCouncilItemManagement = () => {
     
         try {
     
-          const PutResponse = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + councilData.councilId,
+          const PutResponse = await axios.put("https://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + councilData.councilId,
             {
               location,
               operatingHours,
@@ -342,7 +342,7 @@ const AdminCouncilItemManagement = () => {
         try {
             // 회원가입 api 요청
             const councilId = id;
-            const signUpResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/council-item",
+            const signUpResponse = await axios.post("https://" + process.env.REACT_APP_BACK_URL + "/council-item",
                 {
                     councilId,
                     name,
@@ -363,7 +363,7 @@ const AdminCouncilItemManagement = () => {
     const removeItem = async (id) => {
         try {
             console.log(id);
-            const response = await axios.delete("http://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id, {
+            const response = await axios.delete("https://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id, {
                 headers: {
                     Authorization: `Bearer ${cookies.token}`,
                 },
@@ -380,7 +380,7 @@ const AdminCouncilItemManagement = () => {
             if (quantity < 0) {
                 return;
             }
-            const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id,
+            const response = await axios.put("https://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id,
                 {
                     quantity
                 },
@@ -397,7 +397,7 @@ const AdminCouncilItemManagement = () => {
 
     const managerChange = async (id, isCouncilSelfManage) => {
         try {
-            const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + id + "/" + isCouncilSelfManage,
+            const response = await axios.put("https://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + id + "/" + isCouncilSelfManage,
                 {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,

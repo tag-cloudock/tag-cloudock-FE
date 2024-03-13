@@ -174,7 +174,7 @@ const CouncilManagement = () => {
                 
 
                 // 유저의 채팅방 모두 가져오기 api 요청
-                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/manage/council", {
+                const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/manage/council", {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
@@ -199,7 +199,7 @@ const CouncilManagement = () => {
     const removeItem = async (id) => {
         try {
             console.log(id);
-            const response = await axios.delete("http://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id, {
+            const response = await axios.delete("https://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id, {
                 headers: {
                     Authorization: `Bearer ${cookies.token}`,
                 },
@@ -218,7 +218,7 @@ const CouncilManagement = () => {
             if (quantity < 0) {
                 return;
             }
-            const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id,
+            const response = await axios.put("https://" + process.env.REACT_APP_BACK_URL + "/council-item/" + id,
                 {
                     quantity
                 },

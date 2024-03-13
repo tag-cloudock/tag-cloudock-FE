@@ -89,7 +89,7 @@ const SocialKakao = () => {
     const kakaoSignIn = async () => {
       try {
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/oauth/kakao/" + code
+          "https://" + process.env.REACT_APP_BACK_URL + "/oauth/kakao/" + code
         );
         console.log(response.data);
         if (response.data.code == 200) {
@@ -136,7 +136,7 @@ const SocialKakao = () => {
 
     try {
 
-      const response = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/oauth/kakao",
+      const response = await axios.post("https://" + process.env.REACT_APP_BACK_URL + "/oauth/kakao",
         {
           code,
           nickname

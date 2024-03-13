@@ -62,7 +62,7 @@ const NoticeList = () => {
     const fetchAnnos = async () => {
       try {
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/anno/all"
+          "https://" + process.env.REACT_APP_BACK_URL + "/anno/all"
         );
         setNotices(response.data.data);
         console.log(response.data.data);

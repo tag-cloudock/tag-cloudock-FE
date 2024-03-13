@@ -125,7 +125,7 @@ const AdminCouncilManagement = () => {
                 }
 
                 // 유저의 채팅방 모두 가져오기 api 요청
-                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/all", {
+                const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/council/all", {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
@@ -154,7 +154,7 @@ const AdminCouncilManagement = () => {
     const removeCouncil = async (id) => {
         try {
             console.log(id);
-            const response = await axios.delete("http://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + id, {
+            const response = await axios.delete("https://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + id, {
                 headers: {
                     Authorization: `Bearer ${cookies.token}`,
                 },
@@ -184,7 +184,7 @@ const AdminCouncilManagement = () => {
                                 {college.map((council) => (
                                     <Council key={council.councilId}>
                                         <CouncilImg>
-                                            <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + council.imgPath}></img>
+                                            <img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + council.imgPath}></img>
                                         </CouncilImg>
                                         <Link to={"/admin/cimanage/add/" + council.councilId} >
                                             <CouncilContent>

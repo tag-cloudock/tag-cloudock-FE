@@ -486,7 +486,7 @@ const User = () => {
         //   return;
         // }
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/account?id=" + userid,
+          "https://" + process.env.REACT_APP_BACK_URL + "/account?id=" + userid,
           {
             // headers: {
             //   Authorization: `Bearer ${cookies.token}`,
@@ -513,7 +513,7 @@ const User = () => {
         //   return;
         // }
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/review/" + userid,
+          "https://" + process.env.REACT_APP_BACK_URL + "/review/" + userid,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
@@ -538,7 +538,7 @@ const User = () => {
         //   return;
         // }
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/post/user/" + userid,
+          "https://" + process.env.REACT_APP_BACK_URL + "/post/user/" + userid,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
@@ -575,7 +575,7 @@ const User = () => {
           type: "application/json"
         }));
       formData.append('pic', file);
-      const signUpResponse = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/account/update",
+      const signUpResponse = await axios.put("https://" + process.env.REACT_APP_BACK_URL + "/account/update",
         formData,
         {
           headers: {
@@ -610,7 +610,7 @@ const User = () => {
         <UserInfoBox>
           <ProfilImgBox>
             <ProfilImg >
-              <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + userInfo.imgPath}></img>
+              <img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + userInfo.imgPath}></img>
             </ProfilImg>
           </ProfilImgBox>
           <UserInfoContentBox>

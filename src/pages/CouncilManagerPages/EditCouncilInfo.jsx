@@ -111,7 +111,7 @@ const EditCouncilInfo = () => {
 
 
         // 유저의 채팅방 모두 가져오기 api 요청
-        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/manage/council", {
+        const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/manage/council", {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -139,7 +139,7 @@ const EditCouncilInfo = () => {
 
     try {
 
-      const PutResponse = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + councilData.councilId,
+      const PutResponse = await axios.put("https://" + process.env.REACT_APP_BACK_URL + "/manage/council/" + councilData.councilId,
         {
           location,
           operatingHours,

@@ -142,7 +142,7 @@ const AdminAnnoManagement = () => {
                 }
 
                 // 유저의 채팅방 모두 가져오기 api 요청
-                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/anno/all", {
+                const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/anno/all", {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
@@ -162,7 +162,7 @@ const AdminAnnoManagement = () => {
     const removeAnno = async (id) => {
         try {
             console.log(id);
-            const response = await axios.delete("http://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
+            const response = await axios.delete("https://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
                 headers: {
                     Authorization: `Bearer ${cookies.token}`,
                 },

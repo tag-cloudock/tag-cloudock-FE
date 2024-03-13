@@ -65,7 +65,7 @@ const NoticeDetail = () => {
     const fetchAnno = async () => {
       try {
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/anno/" + id
+          "https://" + process.env.REACT_APP_BACK_URL + "/anno/" + id
         );
         setNotice(response.data.data);
         console.log(response.data.data);

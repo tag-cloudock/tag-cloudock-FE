@@ -204,7 +204,7 @@ const AdminCouncilCreation = () => {
                 }
 
                 // 유저의 채팅방 모두 가져오기 api 요청
-                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/councils/all", {
+                const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/councils/all", {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
@@ -273,7 +273,7 @@ const AdminCouncilCreation = () => {
                     type: "application/json"
                 }));
             formData.append('pic', file);
-            const signUpResponse = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/manage/council",
+            const signUpResponse = await axios.post("https://" + process.env.REACT_APP_BACK_URL + "/manage/council",
                 formData,
                 {
                     'Content-Type': 'multipart/form-data',

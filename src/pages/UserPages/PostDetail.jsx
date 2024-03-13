@@ -308,7 +308,7 @@ const PostDetail = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/post/" + id
+          "https://" + process.env.REACT_APP_BACK_URL + "/post/" + id
         );
         console.log(response.data.data);
         setPost(response.data.data);
@@ -333,7 +333,7 @@ const PostDetail = () => {
     try {
       const makeChatRoom = async () => {
         try {
-          const response = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/chat",
+          const response = await axios.post("https://" + process.env.REACT_APP_BACK_URL + "/chat",
             {
               borrowerId,
               renderId,
@@ -362,7 +362,7 @@ const PostDetail = () => {
     try {
       const donePost = async () => {
         try {
-          const response = await axios.put("http://" + process.env.REACT_APP_BACK_URL + "/post/done/" + post.postId,
+          const response = await axios.put("https://" + process.env.REACT_APP_BACK_URL + "/post/done/" + post.postId,
             {
               headers: {
                 Authorization: `Bearer ${cookies.token}`,
@@ -388,7 +388,7 @@ const PostDetail = () => {
             <Link to={"/user/"+post.userId}>
               <User>
                 <UserImage>
-                  <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.userImgPath}>
+                  <img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + post.userImgPath}>
                   </img>
                 </UserImage>
                 <span>{post.nickname}</span>
@@ -400,7 +400,7 @@ const PostDetail = () => {
             {post.content}
           </Detail>
           {
-            post.postImgPath != "default.png" ? <Image><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></Image> : null
+            post.postImgPath != "default.png" ? <Image><img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></Image> : null
           }
 
           <InfoBox>

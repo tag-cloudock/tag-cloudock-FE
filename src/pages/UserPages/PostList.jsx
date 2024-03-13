@@ -158,13 +158,13 @@ const PostList = () => {
           setLocationName(locationValue);
           response = await axios.get(
 
-            "http://" + process.env.REACT_APP_BACK_URL + "/post/all/location/" + locationValue
+            "https://" + process.env.REACT_APP_BACK_URL + "/post/all/location/" + locationValue
           );
         } else {
           setType("CAMPUS");
           setCampusName(campusValue);
           response = await axios.get(
-            "http://" + process.env.REACT_APP_BACK_URL + "/post/all/campus/" + campusValue
+            "https://" + process.env.REACT_APP_BACK_URL + "/post/all/campus/" + campusValue
           );
         }
 
@@ -187,7 +187,7 @@ const PostList = () => {
           {posts.length != 0 ? posts.map((post, index) => (
             <Link to={"/posts/" + post.postId} key={index}>
               <Item isDone={post.close}>
-                <MainImage><img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></MainImage>
+                <MainImage><img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></MainImage>
                 <Listbox >
                   <NoticeTitle>{post.title}</NoticeTitle>
                   <PostDetail>{post.location.slice(2) + " " + post.locationDetail}</PostDetail>

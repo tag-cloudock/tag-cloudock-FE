@@ -328,7 +328,7 @@ const PostEdit = () => {
         }));
       formData.append('pic', file);
 
-      const Response = await axios.post("http://" + process.env.REACT_APP_BACK_URL + "/post",
+      const Response = await axios.post("https://" + process.env.REACT_APP_BACK_URL + "/post",
         formData,
         {
           headers: {

@@ -161,7 +161,7 @@ const CouncilDetail = () => {
   useEffect(() => {
     const fetchCouncil = async () => {
       try {
-        const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
+        const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
         });
         setCouncilData(response.data.data);
 
@@ -178,7 +178,7 @@ const CouncilDetail = () => {
       <Header></Header>
       <TitleBox>
         {/* <ProfileImg>
-            <img src={"http://" + process.env.REACT_APP_BACK_URL + "/image/" + councilData.imgPath}></img>
+            <img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + councilData.imgPath}></img>
           </ProfileImg> */}
         <CouncilName>{councilData.name}</CouncilName>
       </TitleBox>

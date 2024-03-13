@@ -114,7 +114,7 @@ const AdminCertificationManagement = () => {
           }
         const fetchCertificationRequests = async () => {
             try {
-                const response = await axios.get("http://" + process.env.REACT_APP_BACK_URL + "/certifi/requests", {
+                const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/certifi/requests", {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
