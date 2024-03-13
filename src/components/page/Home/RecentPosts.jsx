@@ -75,7 +75,7 @@ const RecentPosts = (prop) => {
     const fetchPosts = async () => {
       try {
         const response1 = await axios.get(
-          "http://" + process.env.REACT_APP_BACK_URL + "/post/news?campus=" + (prop.campus == 0 ? "global" : "medical")
+          "https://" + process.env.REACT_APP_BACK_URL + "/post/news?campus=" + (prop.campus == 0 ? "global" : "medical")
         )
         setPosts(response1.data.data);
       } catch (error) {
