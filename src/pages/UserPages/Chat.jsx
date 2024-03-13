@@ -752,7 +752,7 @@ return (
       <ModalContainer>
         <ModalBox>
           <ModalText>
-            <Nickname>{postInfo.nickname}</Nickname> 님과 <br></br>대여를 완료하였나요?<br></br>
+            <Nickname>{interlocutorInfo.nickname}</Nickname> 님과 <br></br>대여를 완료하였나요?<br></br>
           </ModalText>
           <ModalBtnBox>
             <ModalBtn onClick={() => {
