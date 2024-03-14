@@ -540,7 +540,7 @@ const Chat = () => {
 
 useEffect(() => {
   // 컴포넌트가 마운트되면 웹 소켓 연결
-  ws.current = new WebSocket('ws://' + process.env.REACT_APP_BACK_URL + '/ws/chat');
+  ws.current = new WebSocket('wss://' + process.env.REACT_APP_BACK_URL + '/ws/chat');
 
   // 세션 등록
   ws.current.onopen = () => {
