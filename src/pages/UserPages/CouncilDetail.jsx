@@ -5,6 +5,8 @@ import MenuBar from "../../components/layout/MenuBar";
 import styled from "styled-components";
 import Header from "../../components/layout/Header";
 
+const {kakao} = window;
+
 const CouncilBox = styled.div`
   position: absolute;
   width: 100%;
@@ -50,22 +52,7 @@ const ProductContainer = styled.div`
     border-bottom: none;
   }
 `;
-const ProfileImg = styled.div`
-  width: 46px;
-  height: 46px;
-  border-radius: 30px;
-  border: 1px solid #eeeeee;
-  float: left;
-  background: #ffffff;
-  overflow: hidden;
 
-  & img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-`;
 const CouncilInfo = styled.div`
   display: inline-block;
   width: 100%;
@@ -74,13 +61,20 @@ const CouncilInfo = styled.div`
   font-size: 17px;
   font-weight: 400;
   line-height: 30px;
+
+
+`;
+
+const InfoItem = styled.div`
+  display: flex;
+  &:last-child{
+    display: block;
+  }
   & span {
     display: inline-block;
     padding: 5px 7px;
     border-radius:5px;
-    /* font-family: 'Noto Sans KR';   */
     color: #393939;
-    margin: 10px 5px 0px 0px;
     font-size: 17px;
     /* background: #e6f3ff; */
     text-align: center;
@@ -88,14 +82,23 @@ const CouncilInfo = styled.div`
     line-height: normal;
   }
   & div{
-    /* width: 100%; */
-    margin-top: 10px;
+    margin-left: 5px;
+  }
+  & img{
+    display: inline-block;
+    margin-left: 10px;
+    width: 20px;
+  }
+`;
+
+const Guidelines = styled.div`
+  margin-top: 10px;
     font-size: 15px;
     background: #f8f8f8;
     border-radius: 10px;
     white-space:pre;
     padding: 10px;
-  }
+    margin-bottom: 20px;
 `;
 
 
@@ -155,13 +158,90 @@ const CategoryCount = styled.div`
   color: #6093FF;
 `;
 
+const MapButton = styled.button`
+  border: none;
+  background: none;
+  cursor: pointer;
+
+`;
+
+const ModalContainer = styled.div`
+  z-index: 1000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000077;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const ModalBox2 = styled.div`
+  margin: 0 auto;
+  width: 80%;
+  height: 370px;
+  max-width: 400px;
+  border-radius: 30px;
+  background: #ffffff;
+  
+  position: relative;
+  text-align: center;
+
+`;
+
+const ModalText = styled.div`
+  margin-top: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  color:#535353;
+  /* line-height: 30px; */
+`;
+
+
+const ModalBtnBox = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 22px;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const ModalBtn = styled.button`
+  border: none;
+  width: 100%;
+  margin: 0px 20px;
+  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#6093FF')};
+  padding: 15px;
+  text-align: center;
+  border-radius: 15px;
+  font-weight: 500;
+  font-size: 18px;
+  color:${({ isLeft }) => (isLeft ? '#aaaaaa' : '#FFFFFF')};
+`;
+
+const Map = styled.div`
+  border-radius: 15px;
+  margin: 20px 20px;
+  /* width: 100%; */
+  height: 100%;
+  height: 200px;
+`;
+
+
 const CouncilDetail = () => {
+  const [isDoneModalOn, setIsDoneModalOn] = useState(false);
   const [councilData, setCouncilData] = useState({ items: [], imgPath: "default.png" }); // 채팅방 리스트 상태
   const { id } = useParams();
   useEffect(() => {
+
+   
+
     const fetchCouncil = async () => {
       try {
-        const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/council/" + id, {
+        const response = await axios.get(process.env.REACT_APP_BACK_URL + "/council/" + id, {
         });
         setCouncilData(response.data.data);
 
@@ -173,23 +253,52 @@ const CouncilDetail = () => {
     fetchCouncil();
   }, []);
 
+  useEffect(() => {
+    console.log(document.getElementById('map'))
+    if (document.getElementById('map') != null ){
+      var container = document.getElementById('map');
+      var options = {
+        center: new kakao.maps.LatLng(37.45324570186913, 127.13436283275537),
+        level: 3
+      };
+      var map = new kakao.maps.Map(container, options);
+
+      
+      var markerPosition  = new kakao.maps.LatLng(37.45324570186913, 127.13436283275537); 
+      var marker = new kakao.maps.Marker({
+        position: markerPosition
+    });
+    marker.setMap(map);
+    }
+  }, )
+ 
+
   return (
     <CouncilBox>
       <Header></Header>
       <TitleBox>
         {/* <ProfileImg>
-            <img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + councilData.imgPath}></img>
+            <img src={ process.env.REACT_APP_BACK_URL + "/image/" + councilData.imgPath}></img>
           </ProfileImg> */}
         <CouncilName>{councilData.name}</CouncilName>
       </TitleBox>
       <CouncilInforContainer>
 
         <CouncilInfo>
-          <span>위치 </span> {councilData.location}
-          <br />
-          <span>이용시간 </span> {councilData.operatingHours}
-          <br />
-          <span>이용수칙 </span> <div>{councilData.usageGuidelines}</div> <br />
+          <InfoItem>
+            <span>위치 </span>
+            <div>{councilData.location}</div>
+            <MapButton onClick={() => {
+              setIsDoneModalOn(true);
+            }}><img src="/image/map.svg"></img></MapButton>
+          </InfoItem>
+          <InfoItem>
+            <span>이용시간 </span><div>{councilData.operatingHours}</div>
+          </InfoItem>
+          <InfoItem>
+            <span>이용수칙 </span> <Guidelines>{councilData.usageGuidelines}</Guidelines>
+          </InfoItem>
+
         </CouncilInfo>
       </CouncilInforContainer>
 
@@ -228,6 +337,25 @@ const CouncilDetail = () => {
           ))}
         </ul>
       </ProductContainer>
+
+      {isDoneModalOn ?
+        <ModalContainer>
+          <ModalBox2>
+            <ModalText>
+              위치
+            </ModalText>
+
+            <Map id="map" ></Map>
+            <ModalBtnBox>
+              <ModalBtn onClick={() => {
+                setIsDoneModalOn(false);
+              }} isLeft={true}>
+                닫기
+              </ModalBtn>
+            </ModalBtnBox>
+          </ModalBox2>
+        </ModalContainer>
+        : null}
     </CouncilBox>
   );
 };

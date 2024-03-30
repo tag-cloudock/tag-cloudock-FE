@@ -19,16 +19,16 @@ const ContentBox = styled.div`
 
 const BoardBox = styled.div`
   border-radius: 10px;
-  border: 1px solid #eaeaea;
   background: #fff;
   padding: 5px 0px;
 `;
 
 const Titlebox = styled.div`
-  border-bottom: 1px solid #eaeaea;
+  background: #f7f7f7;
   margin: 0px;
-  padding: 20px 20px 5px 20px;
-  height: 30px;
+  padding: 20px;
+  border-radius: 15px;
+  display: flex;
 `;
 
 const NoticeTitle = styled.div`
@@ -36,6 +36,12 @@ const NoticeTitle = styled.div`
   font-size: 15px;
   font-weight: 700;
   float: left;
+  overflow: hidden;
+  /* white-space: pre-wrap; */
+  white-space: nowrap; 
+  overflow: hidden; 
+  flex: 1;
+  text-overflow: ellipsis; 
 `;
 
 const NoticeDate = styled.div`
@@ -53,7 +59,9 @@ const NoticeContent = styled.div`
   font-weight: 400;
   line-height: 180%;
   padding: 20px 20px 80px;
-  white-space:pre;
+  white-space: pre-wrap;
+  word-break: break-all;
+  
 `;
 
 const NoticeDetail = () => {
@@ -65,7 +73,7 @@ const NoticeDetail = () => {
     const fetchAnno = async () => {
       try {
         const response = await axios.get(
-          "https://" + process.env.REACT_APP_BACK_URL + "/anno/" + id
+           process.env.REACT_APP_BACK_URL + "/anno/" + id
         );
         setNotice(response.data.data);
         console.log(response.data.data);

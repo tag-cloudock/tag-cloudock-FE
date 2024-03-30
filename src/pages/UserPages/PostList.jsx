@@ -29,6 +29,8 @@ const BoardBox = styled.div`
 const Item = styled.div`
 border-bottom: 1px solid #eeeeee;
 
+display: flex;
+/* justify-content: space-evenly; */
 padding: 20px;
 & > * {
     opacity: ${({ isDone }) => (isDone ? "30%" : '100%')};
@@ -37,7 +39,9 @@ padding: 20px;
 
 //list 박스 사이 구분선
 const Listbox = styled.div`
-  
+  position: relative;
+  /* width: 100%; */
+  flex-grow: 1; 
 `;
 
 //게시물 이미지
@@ -45,7 +49,7 @@ const MainImage = styled.div`
   margin-right: 15px;
   width: 75px;
   height: 75px;
-  float: left;
+  /* float: left; */
   /* border-radius: 10px; */
 
   /* overflow: hidden; */
@@ -74,26 +78,34 @@ text-overflow: ellipsis;
 
 //게시물 상세설명(건물 위치등)
 const PostDetail = styled.div`
+display: inline-block;
 color: #606060;
 font-size: 12px;
 font-weight: 400;
 margin-top: 5px;
 `;
-
+const CreatedAt = styled.div`
+display: inline-block;
+color: #606060;
+font-size: 12px;
+font-weight: 400;
+margin-top: 5px;
+`;
 //게시물 가격
 const PostPrice = styled.div`
 color: #000;
 
 font-size: 14px;
 font-weight: 500;
-margin-top: 20px;
+/* margin-top: 20px; */
+position: absolute;
+bottom: 0;
 `;
 
 //게시물 옆에 채팅? 댓글 아이콘
 const ImageIcon = styled.img`
   width: 17px;
   height: 17px;
-  float: right;
   vertical-align: middle;
   margin-left: auto;
 `;
@@ -105,7 +117,14 @@ const ChatRoomCount = styled.span`
   font-size: 15px;
   color: #9a9a9a;
   line-height: 17px;
-  float: right;
+  /* float: right; */
+  
+`;
+
+const ChatRoomCntBox = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
 `;
 
 const NoPostBox = styled.div`
@@ -158,13 +177,13 @@ const PostList = () => {
           setLocationName(locationValue);
           response = await axios.get(
 
-            "https://" + process.env.REACT_APP_BACK_URL + "/post/all/location/" + locationValue
+            process.env.REACT_APP_BACK_URL + "/post/all/location/" + locationValue
           );
         } else {
           setType("CAMPUS");
           setCampusName(campusValue);
           response = await axios.get(
-            "https://" + process.env.REACT_APP_BACK_URL + "/post/all/campus/" + campusValue
+            process.env.REACT_APP_BACK_URL + "/post/all/campus/" + campusValue
           );
         }
 
@@ -177,6 +196,24 @@ const PostList = () => {
     };
     fetchPosts();
   }, []);
+  const getTimeDiff = (createdAt) => {
+    const createDate = new Date(createdAt);
+    const now = new Date();
+
+    const diffInMilliseconds = now - createDate;
+    console.log(createDate);
+
+    if (diffInMilliseconds < 60 * 60 * 1000) {
+      const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+      return `${diffInMinutes}분 전`;
+    } else if (diffInMilliseconds < 24 * 60 * 60 * 1000) {
+      const diffInHours = Math.floor(diffInMilliseconds / (1000 * 60 * 60));
+      return `${diffInHours}시간 전`;
+    } else {
+      const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+      return `${diffInDays}일 전`;
+    }
+  };
   return (
     <Container>
       <Header headerText={type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬") + " 최근 글"}>
@@ -187,13 +224,21 @@ const PostList = () => {
           {posts.length != 0 ? posts.map((post, index) => (
             <Link to={"/posts/" + post.postId} key={index}>
               <Item isDone={post.close}>
-                <MainImage><img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></MainImage>
+                <MainImage><img src={process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></MainImage>
                 <Listbox >
                   <NoticeTitle>{post.title}</NoticeTitle>
-                  <PostDetail>{post.location.slice(2) + " " + post.locationDetail}</PostDetail>
-                  <PostPrice>{post.rentalFee}원
-                    <ChatRoomCount>{post.chatCount}</ChatRoomCount><ImageIcon src={"/image/chatt.svg"} alt="" />
-                  </PostPrice>
+                  <div>
+                  <PostDetail>{post.location.slice(2) + " " + post.locationDetail}</PostDetail>·
+                  <CreatedAt>{getTimeDiff(post.createdAt)}</CreatedAt>
+                  </div>
+
+                  {/* <PostDetail>{post.location.slice(2) + " " + post.locationDetail}</PostDetail> */}
+                  <PostPrice>{post.rentalFee}원</PostPrice>
+                  <ChatRoomCntBox>
+                  <ImageIcon src={"/image/chatt.svg"} alt="" />
+                  <ChatRoomCount>{post.chatCount}</ChatRoomCount>
+                  </ChatRoomCntBox>
+                  
                 </Listbox>
               </Item>
 

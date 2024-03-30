@@ -107,7 +107,7 @@ const AdminAnnoCreation = () => {
         const createdAt = new Date();
 
         try {
-            const signUpResponse = await axios.post("https://" + process.env.REACT_APP_BACK_URL + "/anno",
+            const signUpResponse = await axios.post( process.env.REACT_APP_BACK_URL + "/anno",
                 {
                     title,
                     content,

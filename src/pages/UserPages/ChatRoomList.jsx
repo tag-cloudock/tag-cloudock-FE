@@ -168,7 +168,7 @@ const ChatRoomList = () => {
           return;
         }
 
-        const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/chat/user", {
+        const response = await axios.get( process.env.REACT_APP_BACK_URL + "/chat/user", {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -246,13 +246,13 @@ const ChatRoomList = () => {
           {chatRoomList[chatRoomType].map((chatRoom) => (
             <Link key={chatRoom.id} to={"/chat/" + (chatRoom.userType === "BORROWER" ? 'b' : 'l') + "/" + chatRoom.roomId + "/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderId : chatRoom.borrowerId) + "/" + chatRoom.postId} >
               <ChatRoom key={chatRoom.id} isDone={chatRoom.done}>
-                <Link to={"/user/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderId : chatRoom.borrowerId)}><UserImg><img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderImgPath : chatRoom.borrowerImgPath)}></img></UserImg></Link>
+                <Link to={"/user/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderId : chatRoom.borrowerId)}><UserImg><img src={ process.env.REACT_APP_BACK_URL + "/image/" + (chatRoom.userType === "BORROWER" ? chatRoom.lenderImgPath : chatRoom.borrowerImgPath)}></img></UserImg></Link>
                 <ChatRoomContent>
                   <NickName>{chatRoom.userType === "BORROWER" ? chatRoom.lenderNickname : chatRoom.borrowerNickname}</NickName>
                   <LastMessageTime>{chatRoom.lastMessage !== "no message" ? getTimeDiff(chatRoom.lastMessageTime):""}</LastMessageTime><br></br>
                   <LastMessage>{chatRoom.lastMessage !== "no message" ? chatRoom.lastMessage : "채팅이 시작되었습니다!"}</LastMessage>
                 </ChatRoomContent>
-                <Link to={"/posts/" + chatRoom.postId}><PostImg><img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + chatRoom.postImgPath}></img></PostImg></Link>
+                <Link to={"/posts/" + chatRoom.postId}><PostImg><img src={ process.env.REACT_APP_BACK_URL + "/image/" + chatRoom.postImgPath}></img></PostImg></Link>
               </ChatRoom>
             </Link>
           ))}

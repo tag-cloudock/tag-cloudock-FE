@@ -56,7 +56,9 @@ const HeaderText = styled.span`
 // 홈 헤더의 타이틀
 const HomeTitle = styled.div`
   /* font-family: 'Noto Sans KR';   */
-  font-family: "Poppins";
+  & span{
+    font-family: "Poppins";
+  }
   width: 50%;
   padding-left: 20px;
   height: 50px;

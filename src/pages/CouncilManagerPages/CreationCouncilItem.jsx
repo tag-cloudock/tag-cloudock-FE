@@ -159,7 +159,7 @@ const CreationCouncilItem = () => {
         }
 
         try {
-            const PostResponse = await axios.post("https://" + process.env.REACT_APP_BACK_URL + "/manage/council-item",
+            const PostResponse = await axios.post( process.env.REACT_APP_BACK_URL + "/manage/council-item",
                 {
                     name,
                     type,

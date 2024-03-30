@@ -130,7 +130,7 @@ const AdminCertificationManagementDetail = () => {
           }
         const fetchCertificationRequests = async () => {
             try {
-                const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/certifi/requests/"+id, {
+                const response = await axios.get( process.env.REACT_APP_BACK_URL + "/certifi/requests/"+id, {
                     headers: {
                         Authorization: `Bearer ${cookies.token}`,
                     },
@@ -150,7 +150,7 @@ const AdminCertificationManagementDetail = () => {
         
         const isCertification = true;
         try {
-          const signUpResponse = await axios.put("https://" + process.env.REACT_APP_BACK_URL + "/certifi/approval/"+certiRequest.user.userId,
+          const signUpResponse = await axios.put( process.env.REACT_APP_BACK_URL + "/certifi/approval/"+certiRequest.user.userId,
           {
             isCertification
           },
@@ -191,7 +191,7 @@ const AdminCertificationManagementDetail = () => {
                             
             </RequestsBox>
             <UserImg >
-                                    <img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + certiRequest.imgPath}/>
+                                    <img src={ process.env.REACT_APP_BACK_URL + "/image/" + certiRequest.imgPath}/>
                                 </UserImg>
 
                                {certiRequest.user.certification ==false ?

@@ -308,7 +308,7 @@ const PostDetail = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          "https://" + process.env.REACT_APP_BACK_URL + "/post/" + id
+           process.env.REACT_APP_BACK_URL + "/post/" + id
         );
         console.log(response.data.data);
         setPost(response.data.data);
@@ -333,7 +333,12 @@ const PostDetail = () => {
     try {
       const makeChatRoom = async () => {
         try {
-          const response = await axios.post("https://" + process.env.REACT_APP_BACK_URL + "/chat",
+
+          if (!cookies.token) {
+            navigate("/signin");
+            return;
+          }
+          const response = await axios.post( process.env.REACT_APP_BACK_URL + "/chat",
             {
               borrowerId,
               renderId,
@@ -346,6 +351,8 @@ const PostDetail = () => {
             });
           if (response.data.code === 200) {
             navigate("/chat/l/" + response.data.data.roomId + "/" + response.data.data.borrowerId + "/" + postId);
+          }else{
+            navigate("/signin");
           }
 
         } catch (error) {
@@ -362,7 +369,7 @@ const PostDetail = () => {
     try {
       const donePost = async () => {
         try {
-          const response = await axios.put("https://" + process.env.REACT_APP_BACK_URL + "/post/done/" + post.postId,
+          const response = await axios.put( process.env.REACT_APP_BACK_URL + "/post/done/" + post.postId,
             {
               headers: {
                 Authorization: `Bearer ${cookies.token}`,
@@ -388,19 +395,19 @@ const PostDetail = () => {
             <Link to={"/user/"+post.userId}>
               <User>
                 <UserImage>
-                  <img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + post.userImgPath}>
+                  <img src={ process.env.REACT_APP_BACK_URL + "/image/" + post.userImgPath}>
                   </img>
                 </UserImage>
                 <span>{post.nickname}</span>
               </User>
             </Link>
-            <PostDate>{post.createdAt.slice(0,10)}</PostDate>
+            <PostDate>{post.createdAt.slice(0,10)}{" · "}{post.createdAt.slice(11,16)}</PostDate>
           </PostInfo>
           <Detail>
             {post.content}
           </Detail>
           {
-            post.postImgPath != "default.png" ? <Image><img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></Image> : null
+            post.postImgPath != "default.png" ? <Image><img src={ process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></Image> : null
           }
 
           <InfoBox>

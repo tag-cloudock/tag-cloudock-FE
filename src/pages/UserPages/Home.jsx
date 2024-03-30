@@ -144,16 +144,16 @@ const HomeMainTextBox = styled.div`
 
   margin-top: 30px;
 `;
-const BlurBar= styled.div`
+const BlurBar = styled.div`
   z-index: 100;
   width: 50px;
   height: 500px;
   position: absolute;
-  ${({ isLeft }) => (isLeft ? "left: 0;"  : "right: 0;"   )}
-  background: linear-gradient(${({ isLeft }) => (isLeft ? "to left"  : "to right"   )}, #379eff00, #6093FF 90%);
+  ${({ isLeft }) => (isLeft ? "left: 0;" : "right: 0;")}
+  background: linear-gradient(${({ isLeft }) => (isLeft ? "to left" : "to right")}, #379eff00, #6093FF 90%);
 `
 
-const HomeMainText= styled.div`
+const HomeMainText = styled.div`
   position: relative;
   margin: 50px auto;
   max-width:701px;
@@ -219,7 +219,7 @@ const ArrowIcon = styled.img`
 
 const CouncilBtn = styled.div`
   /* border-radius: 20px; */
-  padding: 30px 30px;
+  padding: 60px 20px;
   /* box-shadow: 0px 2px 15px 0px rgba(181, 181, 181, 0.25); */
   /* border: 1px solid #f2f2f2; */
   background: #f1f5ff;
@@ -227,29 +227,31 @@ const CouncilBtn = styled.div`
   height: 50px;
   margin: 30px 0px 0px 0px;
   @media screen and (min-width: 700px) {
-    &:hover div{
-    margin-left: 30px; /* 마우스 호버 시 이동할 거리 */
-  }
-  &:hover img{
-    transform: scale(1.2); 
-  }
+
   } 
   
 `;
 const CouncilBtnText = styled.div`
   float: left;
-  font-size: 25px;
-  /* color: #6093FF; */
-  
+  & div{
+    margin-top: 7px;
+    font-size: 27px;
   color : #6093FF;
-  line-height: 27px;
+  line-height: 10px;
+  padding-right: 20px;
   transition: margin-left 0.3s ease; /* transition 속성 추가 */
-  font-weight: 700;
+  font-weight: 800;
+  @media screen and (max-width: 700px) {
+    font-size: 23px;
+  } 
+  border-bottom: 15px solid rgb(215, 229, 255);
+  }
+ 
   & span {
-    font-weight: 400;
-    margin-top: 2px;
-    font-size: 15px;
-    color: #2e2e2e;
+    font-weight: 500;
+    /* margin-top: 5px; */
+    font-size: 17px;
+    color: #646464;
     display: block;
   }
 `;
@@ -273,17 +275,19 @@ width: 50px;
 
 const Intro = styled.div`
   /* position: absolute; */
-  font-size: 20px;
-  /* font-weight: 700; */
+  margin-top: 70px;
+  font-size: 60px;
+  font-weight: 700;
   width: 100%;
   text-align: center;
+  color: #ffffff;
   bottom: 0px;
 `;
 
 const Home = () => {
   const [cookies, setCookies] = useCookies();
-  const [campus, setCampus] = useState(cookies.campus ? cookies.campus:0);
-  
+  const [campus, setCampus] = useState(cookies.campus ? cookies.campus : 0);
+
 
   return (
     <HomeContainer>
@@ -291,14 +295,14 @@ const Home = () => {
       {/* 학생회 대여 */}
       <HomeMainTextBox>
         <HomeMainText>
-        {/* <BlurBar isLeft={true}></BlurBar> */}
-        {/* <a href="https://www.leets.land">
+          {/* <BlurBar isLeft={true}></BlurBar> */}
+          {/* <a href="https://www.leets.land">
           <img src={"/image/ad.svg"}></img>
           </a> */}
-          {/* <Intro>가천대 대여 중개 사이트</Intro> */}
+          {/* <Intro>대여 활성화 서비스</Intro> */}
           {/* <AdAlert>교내 홍보 문의</AdAlert> */}
         </HomeMainText>
-       
+
       </HomeMainTextBox>
       <Container>
         <Bar></Bar>
@@ -306,47 +310,47 @@ const Home = () => {
           {/* 글캠 링크 추가 */}
 
           <CampusBox onClick={() => {
-                        setCampus(0);
-                        setCookies("campus", 0, {
-                          path: "/",
-                          expires: moment().add(1, "hours").toDate(),
-                        });
-                    }} isOn={campus==0}>
-            <CampusText isOn={campus==0}>
+            setCampus(0);
+            setCookies("campus", 0, {
+              path: "/",
+              expires: moment().add(1, "hours").toDate(),
+            });
+          }} isOn={campus == 0}>
+            <CampusText isOn={campus == 0}>
               글로벌
             </CampusText>
           </CampusBox>
           {/* 메캠 링크 추가 */}
           <CampusBox onClick={() => {
-                        setCampus(1);
-                        setCookies("campus", 1, {
-                          path: "/",
-                          expires: moment().add(1, "hours").toDate(),
-                        });
-                    }} isOn={campus==1}>
-            <CampusText isOn={campus==1}>
+            setCampus(1);
+            setCookies("campus", 1, {
+              path: "/",
+              expires: moment().add(1, "hours").toDate(),
+            });
+          }} isOn={campus == 1}>
+            <CampusText isOn={campus == 1}>
               메디컬
             </CampusText>
           </CampusBox>
         </CampusMoveBox>
 
         {/* 일반 대여 목록 */}
-        <Link to={campus == 0 ?"/councils?campus=global" : "/councils?campus=medical"}>
+        <Link to={campus == 0 ? "/councils?campus=global" : "/councils?campus=medical"}>
           <CouncilBtn>
             <CouncilBtnText>
-              {campus == 0 ?"글" : "메"}캠 학생회 대여품 보러 GO!
+              <div>{campus == 0 ? "글" : "메"}캠 학생회 구비물품 확인하기!</div>
               <span>
-                총학생회에서 18가지 물품을 대여, 제공 중이에요
+                수량 확인과 물건을 예약이 가능해요!
               </span>
             </CouncilBtnText>
-           
+
           </CouncilBtn>
         </Link>
 
 
 
         <SubTitle>
-          최근에 빌리길 바람 <Link to={"/posts?campus="+(campus == 0 ? "global" : "medical")}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
+          학우들이 요청중이에요! <Link to={"/posts?campus=" + (campus == 0 ? "global" : "medical")}><ArrowIcon src={"/image/arrow.svg"} alt="" /></Link>
         </SubTitle>
         <ContentAreaBox>
           <RecentPostBox>
@@ -355,113 +359,113 @@ const Home = () => {
         </ContentAreaBox>
         {/* 장소 선택 목록 */}
         <SubTitle>
-          어딘가요? 내 물건을 바라는 곳!
+          내 근처 요청 보기!
         </SubTitle>
         <ContentAreaBox>
           <LocationItems>
-            {campus == 0 ? 
-            <div>
-            <Link to={"/posts?location=G 바나대"}>
-              <LocationItem>바나대</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G AI공학관"}>
-              <LocationItem>AI공학관</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 중앙도서관"}>
-              <LocationItem>중앙도서관</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 가천관"}>
-              <LocationItem>가천관</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 공과대학1"}>
-              <LocationItem>공과대학1</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 공과대학2"}>
-              <LocationItem>공과대학2</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 반도체대학"}>
-              <LocationItem>반도체대학</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 한의과대학"}>
-              <LocationItem>한의과대학</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 예체대1"}>
-              <LocationItem>예체대1</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 예체대2"}>
-              <LocationItem>예체대2</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 전자정보도서관"}>
-              <LocationItem>전자정보도서관</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 대학원"}>
-              <LocationItem>대학원</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 교육대학원"}>
-              <LocationItem>교육대학원</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 바이오나노연구원"}>
-              <LocationItem>바이오나노연구원</LocationItem>
-            </Link>
-              
-            <Link to={"/posts?location=G 학생회관"}>
-              <LocationItem>학생회관</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 제1기숙사"}>
-              <LocationItem>제1기숙사</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 제2기숙사"}>
-              <LocationItem>제2기숙사</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 제3기숙사"}>
-              <LocationItem>제3기숙사</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 글로벌센터"}>
-              <LocationItem>글로벌센터</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 반도체대학"}>
-              <LocationItem>반도체대학</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 비전타워"}>
-              <LocationItem>비전타워</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 법과대학"}>
-              <LocationItem>법과대학</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 바개동"}>
-              <LocationItem>바개동</LocationItem>
-            </Link>
-            <Link to={"/posts?location=G 광장"}>
-              <LocationItem>광장</LocationItem>
-            </Link>
-            </div>
-            :
-            <div>
-              <Link to={"/posts?location=M 보건과학대학"}>
-              <LocationItem>보건과학대학</LocationItem>
-              </Link>
-              <Link to={"/posts?location=M 약학대학"}>
-                <LocationItem>약학대학</LocationItem>
-              </Link>
-              <Link to={"/posts?location=M 간호대학"}>
-                <LocationItem>간호대학</LocationItem>
-              </Link>
-              <Link to={"/posts?location=M 학생회관"}>
-                <LocationItem>학생회관</LocationItem>
-              </Link>
-              <Link to={"/posts?location=M 의과대학"}>
-                <LocationItem>의과대학</LocationItem>
-              </Link>
-              <Link to={"/posts?location=M 기숙사"}>
-                <LocationItem>기숙사</LocationItem>
-              </Link>
-            </div>
+            {campus == 0 ?
+              <div>
+                <Link to={"/posts?location=G 바나대"}>
+                  <LocationItem>바나대</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G AI공학관"}>
+                  <LocationItem>AI공학관</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 중앙도서관"}>
+                  <LocationItem>중앙도서관</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 가천관"}>
+                  <LocationItem>가천관</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 공과대학1"}>
+                  <LocationItem>공과대학1</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 공과대학2"}>
+                  <LocationItem>공과대학2</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 반도체대학"}>
+                  <LocationItem>반도체대학</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 한의과대학"}>
+                  <LocationItem>한의과대학</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 예체대1"}>
+                  <LocationItem>예체대1</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 예체대2"}>
+                  <LocationItem>예체대2</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 전자정보도서관"}>
+                  <LocationItem>전자정보도서관</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 대학원"}>
+                  <LocationItem>대학원</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 교육대학원"}>
+                  <LocationItem>교육대학원</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 바이오나노연구원"}>
+                  <LocationItem>바이오나노연구원</LocationItem>
+                </Link>
+
+                <Link to={"/posts?location=G 학생회관"}>
+                  <LocationItem>학생회관</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 제1기숙사"}>
+                  <LocationItem>제1기숙사</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 제2기숙사"}>
+                  <LocationItem>제2기숙사</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 제3기숙사"}>
+                  <LocationItem>제3기숙사</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 글로벌센터"}>
+                  <LocationItem>글로벌센터</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 반도체대학"}>
+                  <LocationItem>반도체대학</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 비전타워"}>
+                  <LocationItem>비전타워</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 법과대학"}>
+                  <LocationItem>법과대학</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 바개동"}>
+                  <LocationItem>바개동</LocationItem>
+                </Link>
+                <Link to={"/posts?location=G 광장"}>
+                  <LocationItem>광장</LocationItem>
+                </Link>
+              </div>
+              :
+              <div>
+                <Link to={"/posts?location=M 보건과학대학"}>
+                  <LocationItem>보건과학대학</LocationItem>
+                </Link>
+                <Link to={"/posts?location=M 약학대학"}>
+                  <LocationItem>약학대학</LocationItem>
+                </Link>
+                <Link to={"/posts?location=M 간호대학"}>
+                  <LocationItem>간호대학</LocationItem>
+                </Link>
+                <Link to={"/posts?location=M 학생회관"}>
+                  <LocationItem>학생회관</LocationItem>
+                </Link>
+                <Link to={"/posts?location=M 의과대학"}>
+                  <LocationItem>의과대학</LocationItem>
+                </Link>
+                <Link to={"/posts?location=M 기숙사"}>
+                  <LocationItem>기숙사</LocationItem>
+                </Link>
+              </div>
             }
           </LocationItems>
         </ContentAreaBox>
         <Footer></Footer>
       </Container>
-      
+
       <MenuBar></MenuBar>
     </HomeContainer>
   );

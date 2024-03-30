@@ -15,7 +15,7 @@ const FooterBox = styled.div`
 const FooterText = styled.div`
     text-align: center;
     color:#c8c8c8;
-    font-size: 13px;
+    font-size: 15px;
     position: absolute;
     bottom: 20px;
     left: 0;
@@ -27,10 +27,14 @@ const GotoGithub = styled.span`
 
 
 const Insta = styled.a`
-display: block;
-    color:#6093FF;
-    margin-bottom: 20px;
-    font-size: 15px;
+    /* color:#6093FF; */
+    display: block;
+    /* margin-left: 10px; */
+    margin-bottom: 12px;
+
+    & img{
+        width: 20px;
+    }
 `;
 
 
@@ -45,8 +49,9 @@ const Footer = () => {
     return (
         <FooterBox>
             <FooterText>
-            <Insta href="https://www.instagram.com/baram_official_/">@baram_official</Insta>
-                © C<CouncilSignIn><Link to={"/council/signin"}>o</Link></CouncilSignIn>pyright <GotoGithub >Eggis0</GotoGithub> All Rights Reserved 
+            <Insta href="https://www.instagram.com/baram_official_/"><img src="/image/insta.svg"></img></Insta>
+                <CouncilSignIn><Link to={"/council/signin"}>©</Link></CouncilSignIn> Copyright 나우 Ai Way All Rights Reserved 
+                
             </FooterText>
         </FooterBox>
     );

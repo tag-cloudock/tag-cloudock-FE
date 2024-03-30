@@ -48,6 +48,19 @@ const CreatedTime = styled.div`
   color: #555555;
 `;
 
+
+const NewSign = styled.span`
+  background: #ffb700;
+  display: inline-block;
+  line-height: 17px;
+  padding: 0px 4px;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 12px;
+  color: #ffffff;
+  margin-right: 5px;
+`;
+
 const RecentPosts = (prop) => {
   const navigate = useNavigate(); 
   const [posts, setPosts] = useState([]); 
@@ -71,11 +84,23 @@ const RecentPosts = (prop) => {
       return `${diffInDays}일 전`;
     }
   };
+
+  const isNewPost = (createdAt) => {
+    const createDate = new Date(createdAt);
+    const now = new Date();
+
+    const diffInMilliseconds = now - createDate;
+
+    if (diffInMilliseconds < 60 * 60 * 1000) {
+      return true;
+    } 
+    return false;
+  };
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response1 = await axios.get(
-          "https://" + process.env.REACT_APP_BACK_URL + "/post/news?campus=" + (prop.campus == 0 ? "global" : "medical")
+          process.env.REACT_APP_BACK_URL + "/post/news?campus=" + (prop.campus == 0 ? "global" : "medical")
         )
         setPosts(response1.data.data);
       } catch (error) {
@@ -87,13 +112,14 @@ const RecentPosts = (prop) => {
 
   return (
     <div>
-      {posts.map((post, index) => (
+      {posts.slice(0,6).map((post, index) => (
         <Item key={post.postId}>
           <Link to={"/posts/" + post.postId}>
             <Wrapped isDone={post.close}>
               <div>{post.location.slice(2)}</div>
-              <Title> {post.title}</Title>
-              <CreatedTime>{getTimeDiff(post.createdAt)}</CreatedTime>
+              <Title>{post.title}</Title>
+             
+              <CreatedTime>{isNewPost(post.createdAt) ?  <NewSign>N</NewSign> : null}{getTimeDiff(post.createdAt)} </CreatedTime>
             </Wrapped>
           </Link>
         </Item>

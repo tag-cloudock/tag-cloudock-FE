@@ -57,12 +57,12 @@ const RealTime = styled.span`
 
 
 const ContentBox = styled.div`
-  padding: 20px;
+  padding: 0px 20px;
 `;
 
 const CollegeBox = styled.ul`
   background: #ffffff;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-radius: 5px;
   /* border: 1px solid #eeeeee; */
   /* box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px; */
@@ -129,21 +129,78 @@ const Alert = styled.div`
     color: #d2d2d2aa;
 `;
 const AlertBox = styled.div`
-
+    margin-top: 50px;
     background: #f4f4f49c;
     padding: 20px;
     border-radius: 20px;
 `;
 
+const SearchContainer = styled.div`
+    padding: 20px 0px;
+    /* margin-bottom:20px; */
+`;
+
+const SearchBox = styled.div`
+    /* margin: 0px auto; */
+    margin-left: auto;
+    margin-right: 20px;
+    display: block;
+    /* float: right; */
+    
+    width: 250px;
+    background: #f4f4f4af;
+    padding: 7px 10px;
+    border-radius: 10px;
+    display: flex;
+    &:focus {
+      border: none;
+    }
+    & img{
+      width: 20px;
+    }
+
+`;
+const InputBox = styled.input`
+    display: block;
+    /* float: right; */
+    border: none;
+    width: 250px;
+    background: none;
+    /* border-radius: 10px; */
+    outline: none;
+    font-size: 16px;
+    color: #484848; 
+    font-weight: 600;
+    &::placeholder {
+      color: #d1d1d1; 
+      font-weight: 600;
+      /* font-size: 15px; */
+  }
+
+`;
+
+
 const CouncilList = () => {
   const [groupedCouncilList, setGroupedCouncilList] = useState([]); // 채팅방 리스트 상태
   const [councilCount, setCouncilCount] = useState();
+  const [keyword, setKeyword] = useState("");
   const [key, setKey] = useState(0);
   const [cookies] = useCookies(); // 쿠키 사용하기 위해
   const navigate = useNavigate(); // 페이지 이동 위해
   const location = useLocation();
   const [campus, setCampus] = useState();
-  console.log(campus);
+
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState('');
+  const DEBOUNCE_TIME = 200;
+
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      setDebouncedSearchValue(keyword);
+  }, DEBOUNCE_TIME); // 새로운 타이머 설정
+
+  return () => clearTimeout(debounce); 
+
+  }, [keyword]);
 
 
   useEffect(() => {
@@ -151,7 +208,7 @@ const CouncilList = () => {
     setCampus(campusValue);
     const fetchCouncils = async () => {
       try {
-        const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/council/all?campus=" + campusValue, {
+        const response = await axios.get( process.env.REACT_APP_BACK_URL + "/council/all?campus=" + campusValue, {
 
         });
 
@@ -161,7 +218,6 @@ const CouncilList = () => {
           if (index !== 0 && key !== response.data.data[index - 1].college) {
             acc.push([]);
           }
-
           acc[acc.length - 1].push(item);
           return acc;
         }, [[]]);
@@ -175,7 +231,7 @@ const CouncilList = () => {
     };
 
     fetchCouncils();
-  }, [cookies.token, navigate, key]); // [] 와 같이 비워도 됨.
+  }, [cookies.token, navigate, key]);  // [] 와 같이 비워도 됨.
 
   return (
     <CouncilBox>
@@ -185,6 +241,24 @@ const CouncilList = () => {
         <BigText>{campus == 'global' ? "글" : campus == 'medical' ? "메" : "까아꿍"}캠에서 빌리길 바람</BigText>
         <SmallText>총 {councilCount}개의 학생회에서 물품대여중</SmallText>
       </CampusAnnoBox>
+      <SearchContainer>
+        <SearchBox>
+        <InputBox placeholder={ "학생회를 검색하세요"}
+        value={keyword}
+        id="inputbox"
+        onChange={(e) => {
+          setKeyword(e.target.value);
+        }}
+        onKeyPress={(e) => {}}
+        // onKeyDown={handleKeyDown}
+        // disabled={postInfo.isClose}
+        // ref={inputMessageRef}
+        >
+        </InputBox>
+        <img src="/image/search.svg"></img>
+        </SearchBox>
+       
+      </SearchContainer>
       <ContentBox>
         {/* <div>
           <CollegeName>{"총학생회"}</CollegeName>
@@ -203,13 +277,17 @@ const CouncilList = () => {
         </div> */}
         {groupedCouncilList.map((college, index) => (
           <div key={index}>
+            {debouncedSearchValue == "" ?
             <CollegeName>{college[0] != null ? college[0].college.slice(1) : null}</CollegeName>
+            :null
+          }
             <CollegeBox>
               {college.map((council) => (
+                council.name.includes(debouncedSearchValue) ?
                 <Link to={"/councils/" + council.councilId} >
                   <CouncilItem key={council.councilId}>
                     <CouncilImgBox>
-                      <CouncilImg src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + council.imgPath}></CouncilImg>
+                      <CouncilImg src={ process.env.REACT_APP_BACK_URL + "/image/" + council.imgPath}></CouncilImg>
                     </CouncilImgBox>
 
                     <CouncilContent>
@@ -218,6 +296,7 @@ const CouncilList = () => {
                     </CouncilContent>
                   </CouncilItem>
                 </Link>
+                : null
               ))}
             </CollegeBox>
           </div>

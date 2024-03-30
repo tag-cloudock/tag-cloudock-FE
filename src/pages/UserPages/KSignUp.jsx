@@ -205,7 +205,7 @@ const SignUp = () => {
       }));
       formData.append('pic', file);
 
-      const signUpResponse = await axios.post("https://"+process.env.REACT_APP_BACK_URL+"/register",
+      const signUpResponse = await axios.post(process.env.REACT_APP_BACK_URL+"/register",
         formData,
         {
           headers: {

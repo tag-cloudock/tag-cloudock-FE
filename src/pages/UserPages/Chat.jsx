@@ -225,9 +225,9 @@ const PostText = styled.div`
     margin-right: 20px;
 `;
 const DoneBtn = styled.button`
-  position: fixed;
-  right: 10px;
-  top:10px;
+  /* position: fixed; */
+  margin-top: -95px;
+  margin-right: 10px;
   border: none;
   /* margin-top: 12px; */
   float: right;
@@ -423,7 +423,7 @@ const Chat = () => {
           return;
         }
         // 메세지 가져오기 api요청
-        const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/account?id=" + interlocutorId, {
+        const response = await axios.get(process.env.REACT_APP_BACK_URL + "/account?id=" + interlocutorId, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -447,7 +447,7 @@ const Chat = () => {
           return;
         }
         // 메세지 가져오기 api요청
-        const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/message/" + id, {
+        const response = await axios.get(process.env.REACT_APP_BACK_URL + "/message/" + id, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -470,7 +470,7 @@ const Chat = () => {
         }
 
         // 게시물 정보 가져오기 api 요청
-        const response = await axios.get("https://" + process.env.REACT_APP_BACK_URL + "/post/" + postId, {
+        const response = await axios.get(process.env.REACT_APP_BACK_URL + "/post/" + postId, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
@@ -540,7 +540,7 @@ const Chat = () => {
 
 useEffect(() => {
   // 컴포넌트가 마운트되면 웹 소켓 연결
-  ws.current = new WebSocket('wss://' + process.env.REACT_APP_BACK_URL + '/ws/chat');
+  ws.current = new WebSocket(process.env.REACT_APP_BACK_SOKET_URL + '/ws/chat');
 
   // 세션 등록
   ws.current.onopen = () => {
@@ -635,7 +635,7 @@ const handleDone = async (e, isWrite) => {
       }
       const text = review;
       const response2 = await axios.post(
-        "https://" + process.env.REACT_APP_BACK_URL + "/review",
+        process.env.REACT_APP_BACK_URL + "/review",
         {
           postId,
           writerType,
@@ -655,7 +655,7 @@ const handleDone = async (e, isWrite) => {
     if (isBorrower) {
       const response = await axios.put(
 
-        "https://" + process.env.REACT_APP_BACK_URL + "/post/done/" + postInfo.postId + "/" + interlocutorInfo.id + "/" + cookies.id, {
+        process.env.REACT_APP_BACK_URL + "/post/done/" + postInfo.postId + "/" + interlocutorInfo.id + "/" + cookies.id, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
         },
@@ -676,7 +676,7 @@ return (
 
       <PostInfo>
         <Link to={'/posts/' + postInfo.postId}>
-          <PostImg><img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + postInfo.postImgPath}></img></PostImg>
+          <PostImg><img src={process.env.REACT_APP_BACK_URL + "/image/" + postInfo.postImgPath}></img></PostImg>
           <PostText>
             <PostTitle>{postInfo.title}</PostTitle>
             <PostDuration>

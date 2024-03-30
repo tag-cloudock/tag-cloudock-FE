@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import Header from "../../components/layout/Header";
-import MenuBar from "../../components/layout/MenuBar";
 
 // 로그아웃 버튼
 const Logout = styled.button`
@@ -159,6 +158,10 @@ const Certifi = styled.div`
 //후기 박스
 const PostBox = styled.div`
   padding: 10px 20px;
+
+  &:last-child{
+    margin-bottom: 80px;
+  }
 `;
 //
 const PostInfoBox = styled.div`
@@ -257,7 +260,8 @@ const ImageIcon2 = styled.img`
 `;
 
 const ImageIcon3 = styled.img`
-  width: 10px;
+  margin-top: 5px;
+  max-width: 25px;
 `;
 
 const RateBox = styled.div`
@@ -486,7 +490,7 @@ const User = () => {
         //   return;
         // }
         const response = await axios.get(
-          "https://" + process.env.REACT_APP_BACK_URL + "/account?id=" + userid,
+           process.env.REACT_APP_BACK_URL + "/account?id=" + userid,
           {
             // headers: {
             //   Authorization: `Bearer ${cookies.token}`,
@@ -500,6 +504,7 @@ const User = () => {
         }
 
         setUserInfo(response.data.data);
+        setNickname(response.data.data.nickname);
 
       } catch (error) {
         console.error("오류 발생:", error);
@@ -513,7 +518,7 @@ const User = () => {
         //   return;
         // }
         const response = await axios.get(
-          "https://" + process.env.REACT_APP_BACK_URL + "/review/" + userid,
+           process.env.REACT_APP_BACK_URL + "/review/" + userid,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
@@ -538,7 +543,7 @@ const User = () => {
         //   return;
         // }
         const response = await axios.get(
-          "https://" + process.env.REACT_APP_BACK_URL + "/post/user/" + userid,
+           process.env.REACT_APP_BACK_URL + "/post/user/" + userid,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
@@ -561,10 +566,10 @@ const User = () => {
   const handleChange = async (e) => {
     e.preventDefault();
 
-    if (nickname.length < 1) {
-      window.alert("닉네임을 입력해주세요.");
-      return;
-    }
+    // if (nickname.length < 1) {
+    //   window.alert("닉네임을 입력해주세요.");
+    //   return;
+    // }
 
     try {
       const formData = new FormData();
@@ -575,7 +580,7 @@ const User = () => {
           type: "application/json"
         }));
       formData.append('pic', file);
-      const signUpResponse = await axios.put("https://" + process.env.REACT_APP_BACK_URL + "/account/update",
+      const signUpResponse = await axios.put( process.env.REACT_APP_BACK_URL + "/account/update",
         formData,
         {
           headers: {
@@ -586,6 +591,8 @@ const User = () => {
         }
       );
       setIsDoneModalOn(false);
+      setNickname("");
+      setFile(null);
       setKey(key + 1);
     } catch (error) {
       console.error("오류 발생:", error);
@@ -610,7 +617,7 @@ const User = () => {
         <UserInfoBox>
           <ProfilImgBox>
             <ProfilImg >
-              <img src={"https://" + process.env.REACT_APP_BACK_URL + "/image/" + userInfo.imgPath}></img>
+              <img src={process.env.REACT_APP_BACK_URL + "/image/" + userInfo.imgPath}></img>
             </ProfilImg>
           </ProfilImgBox>
           <UserInfoContentBox>
@@ -715,7 +722,8 @@ const User = () => {
             <InputBox
               type="text"
               name="nickname"
-              placeholder="새로운 닉네임"
+              placeholder="새로운 닉네임(5글자)"
+              value={nickname}
               onChange={(e) => {
                 setNickname(e.target.value);
               }}

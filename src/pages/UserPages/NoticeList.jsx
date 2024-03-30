@@ -16,9 +16,6 @@ const ContentBox = styled.div`
   padding: 20px;
 `;
 const BoardBox = styled.div`
-  border-radius: 10px;
-  border: 1px solid #eaeaea;
-  background: #fff;
   padding: 5px 0px;
   & a:last-child div {
     border-bottom: none;
@@ -26,15 +23,20 @@ const BoardBox = styled.div`
 `;
 
 const NoticeListbox = styled.div`
-  border-bottom: 1px solid #eaeaea;
-  margin: 0px;
+  margin-bottom: 10px;
   padding: 20px 20px 15px;
+  background: #f7f7f7;
+  border-radius: 15px;
 `;
 
 const NoticeTitle = styled.div`
   color: #000000;
   font-size: 15px;
   font-weight: 700;
+  white-space: nowrap; 
+  overflow: hidden; 
+  flex: 1;
+  text-overflow: ellipsis; 
 `;
 
 const NoticeDate = styled.div`
@@ -62,7 +64,7 @@ const NoticeList = () => {
     const fetchAnnos = async () => {
       try {
         const response = await axios.get(
-          "https://" + process.env.REACT_APP_BACK_URL + "/anno/all"
+           process.env.REACT_APP_BACK_URL + "/anno/all"
         );
         setNotices(response.data.data);
         console.log(response.data.data);
@@ -84,7 +86,7 @@ const NoticeList = () => {
               <NoticeListbox>
                 <NoticeTitle>
                   [공지] {notice.title}
-                  <ImageIcon src={"/image/arrow.svg"} alt="" />
+                  {/* <ImageIcon src={"/image/arrow.svg"} alt="" /> */}
                 </NoticeTitle>
                 <NoticeDate>{notice.createdAt.slice(0,10)}</NoticeDate>
               </NoticeListbox>

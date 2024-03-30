@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from 'styled-components';
+
+// 키 프레임 애니메이션 정의
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* 시작 위치 조정 */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* 최종 위치 */
+  }
+`;
 
 const LoginBox = styled.div`
     margin: 0px auto;
@@ -43,15 +55,49 @@ const KakaoLoginBtn = styled.button`
     }
 `;
 
+const TitleBox = styled.div`
+  margin-top: 120px;
+  text-align: center;
+`;
 
 const Title = styled.div`
-  text-align: center;
-  font-size: 60px;
+  font-size: 70px;
   font-weight: 850;
   font-family: "Poppins";
-  margin-top: 100px;
   color: #6093FF;
+  @media screen and (min-width: 700px) {
+    font-size: 70px;
+}
+
 `;
+
+const SubTitle = styled.div`
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: #6093FF;
+  margin-bottom: -20px;
+`;
+const Collabo = styled.div`
+  text-align: center;
+  font-size: 25px;
+  /* font-weight: 500; */
+  color: #6093FF;
+  margin-top: -12px;
+  animation: ${fadeIn} 1s ease-in-out;
+`;
+
+const CollaboText = styled.div`
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: #6093FF;
+  margin-top: 15px;
+  animation: ${fadeIn} 1s ease-in-out; /* 애니메이션 적용 */
+`;
+
+
+
 
 const KSignIn = () => {
   const [index, setIndex] = useState(0);
@@ -59,8 +105,16 @@ const KSignIn = () => {
   return (
     <div>
       <LoginBox>
-        <img src="/image/logo.svg">
-        </img>
+        {/* 대여 플렛폼 */}
+        {/* <img src="/image/logo.svg">
+        </img> */}
+
+        <TitleBox>
+          <SubTitle>가천대학교 대여 활성화 서비스</SubTitle>
+          <Title>Baram</Title>
+          <Collabo>x</Collabo>
+          <CollaboText>제 40대 총학생회 청</CollaboText>
+        </TitleBox>
 
         <a href="https://kauth.kakao.com/oauth/authorize?client_id=cd1ddaf4965cd20d1500023af8129185&redirect_uri=https://baram.today/oauth/kakao&response_type=code">
           <KakaoLoginBtn>

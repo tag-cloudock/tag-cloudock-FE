@@ -114,7 +114,7 @@ const SignIn = () => {
     }
 
     try {
-      const loginResponse = await axios.post("https://"+process.env.REACT_APP_BACK_URL+"/login",
+      const loginResponse = await axios.post(process.env.REACT_APP_BACK_URL+"/login",
         {
           userid,
           password
