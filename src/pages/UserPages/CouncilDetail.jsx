@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import MenuBar from "../../components/layout/MenuBar";
 import styled from "styled-components";
 import Header from "../../components/layout/Header";
 
