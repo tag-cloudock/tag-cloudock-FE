@@ -136,7 +136,6 @@ const AdminCertificationManagementDetail = () => {
                     },
                 });
                 setCertificationRequest(response.data.data);
-                // console.log(response.data);
 
             } catch (error) {
                 console.error("오류 발생:", error);

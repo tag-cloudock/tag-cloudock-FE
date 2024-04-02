@@ -310,7 +310,6 @@ const PostDetail = () => {
         const response = await axios.get(
            process.env.REACT_APP_BACK_URL + "/post/" + id
         );
-        console.log(response.data.data);
         setPost(response.data.data);
         const needAt = response.data.data.needAt;
         const returnAt = response.data.data.returnAt;
@@ -427,7 +426,7 @@ const PostDetail = () => {
               <DateTitle>필요한 날</DateTitle>
               <DateText>{post.needAt}</DateText>
             </DateInfoBox>
-            <RangeDate>{difference}일</RangeDate>
+            <RangeDate>{difference==0 ?"당일" :difference+"일"}</RangeDate>
             <DateInfoBox>
               <DateTitle>반납하는 날</DateTitle>
               <DateText>{post.returnAt}</DateText>

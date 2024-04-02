@@ -174,7 +174,6 @@ const ChatRoomList = () => {
           },
         });
         setChatRoomList(response.data.data);
-        console.log(response.data);
         if (response.data.code != 200) {
           navigate("/signin");
         }
@@ -191,7 +190,6 @@ const ChatRoomList = () => {
     const now = new Date();
 
     const diffInMilliseconds = now - createDate;
-    console.log(createDate);
 
     if (diffInMilliseconds < 60 * 60 * 1000) {
       const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));

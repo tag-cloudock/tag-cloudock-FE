@@ -430,6 +430,7 @@ const Chat = () => {
         });
         // 메세지 상태 저장
         setInterlocutorInfo(response.data.data);
+        
 
         if (response.data.code != 200) {
           navigate("/signin");
@@ -558,11 +559,9 @@ useEffect(() => {
   // 메시지를 받으면 실행될 코드
   ws.current.onmessage = (event) => {
     const receivedMessage = JSON.parse(event.data);
-    console.log(receivedMessage);
     const currentDate = new Date();
 
     // 받은 메세지 메세지 리스트 상태에 넣기위해 딕셔너리화
-    console.log(new Date().toLocaleString());
     var d= new Date();
     const newMessage = {
       chatId: new Date(),
@@ -570,7 +569,6 @@ useEffect(() => {
       message: receivedMessage.message,
       userType: receivedMessage.userType,
     };
-    console.log(newMessage);
     setMessageList(prevMessageList => [...prevMessageList, newMessage]);
   };
   // 컴포넌트가 언마운트될 때 웹 소켓 연결 해제
@@ -649,8 +647,6 @@ const handleDone = async (e, isWrite) => {
           },
         }
       );
-
-      console.log(response2.data);
     }
     if (isBorrower) {
       const response = await axios.put(
@@ -775,7 +771,7 @@ return (
       <ModalContainer>
         <ModalBox2>
           <ModalText2>
-            <Nickname>{postInfo.nickname}</Nickname> 님과의 <br></br> 대여는 어땠나요?<br></br>
+            <Nickname>{interlocutorInfo.nickname}</Nickname> 님과의 <br></br> 대여는 어땠나요?<br></br>
           </ModalText2>
           <Stars>
 

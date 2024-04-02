@@ -24,7 +24,7 @@ const BoardBox = styled.div`
 `;
 
 const Titlebox = styled.div`
-  background: #f7f7f7;
+  background: #f7f7f7d4;
   margin: 0px;
   padding: 20px;
   border-radius: 15px;
@@ -76,7 +76,6 @@ const NoticeDetail = () => {
            process.env.REACT_APP_BACK_URL + "/anno/" + id
         );
         setNotice(response.data.data);
-        console.log(response.data.data);
 
       } catch (error) {
         console.log("포스트 오류 발생: ", error);

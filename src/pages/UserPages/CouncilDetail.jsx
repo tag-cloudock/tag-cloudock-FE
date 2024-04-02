@@ -161,7 +161,17 @@ const MapButton = styled.button`
   border: none;
   background: none;
   cursor: pointer;
-
+  display: flex;
+  & img{
+    margin-top: 5px;
+  }
+  & span{
+    display: inline-block;
+    color:#6093FF;
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: -5px;
+  }
 `;
 
 const ModalContainer = styled.div`
@@ -243,7 +253,6 @@ const CouncilDetail = () => {
         const response = await axios.get(process.env.REACT_APP_BACK_URL + "/council/" + id, {
         });
         setCouncilData(response.data.data);
-
       } catch (error) {
         console.error("오류 발생:", error);
       }
@@ -253,17 +262,16 @@ const CouncilDetail = () => {
   }, []);
 
   useEffect(() => {
-    console.log(document.getElementById('map'))
     if (document.getElementById('map') != null ){
       var container = document.getElementById('map');
       var options = {
-        center: new kakao.maps.LatLng(37.45324570186913, 127.13436283275537),
+        center: new kakao.maps.LatLng(councilData.latitude, councilData.longitude),
         level: 3
       };
       var map = new kakao.maps.Map(container, options);
 
       
-      var markerPosition  = new kakao.maps.LatLng(37.45324570186913, 127.13436283275537); 
+      var markerPosition  = new kakao.maps.LatLng(councilData.latitude, councilData.longitude);
       var marker = new kakao.maps.Marker({
         position: markerPosition
     });
@@ -289,7 +297,7 @@ const CouncilDetail = () => {
             <div>{councilData.location}</div>
             <MapButton onClick={() => {
               setIsDoneModalOn(true);
-            }}><img src="/image/map.svg"></img></MapButton>
+            }}><img src="/image/map.svg"></img><span>지도보기</span></MapButton>
           </InfoItem>
           <InfoItem>
             <span>이용시간 </span><div>{councilData.operatingHours}</div>

@@ -362,7 +362,6 @@ const AdminCouncilItemManagement = () => {
     };
     const removeItem = async (id) => {
         try {
-            console.log(id);
             const response = await axios.delete( process.env.REACT_APP_BACK_URL + "/council-item/" + id, {
                 headers: {
                     Authorization: `Bearer ${cookies.token}`,
@@ -376,7 +375,6 @@ const AdminCouncilItemManagement = () => {
     };
     const ItemQuantityChange = async (id, quantity) => {
         try {
-            console.log(id);
             if (quantity < 0) {
                 return;
             }

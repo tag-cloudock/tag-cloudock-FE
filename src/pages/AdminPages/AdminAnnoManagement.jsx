@@ -149,7 +149,6 @@ const AdminAnnoManagement = () => {
                 });
 
                 setAnnos(response.data.data);
-                console.log(response.data.data);
 
             } catch (error) {
                 console.error("오류 발생:", error);
@@ -161,7 +160,6 @@ const AdminAnnoManagement = () => {
 
     const removeAnno = async (id) => {
         try {
-            console.log(id);
             const response = await axios.delete( process.env.REACT_APP_BACK_URL + "/council/" + id, {
                 headers: {
                     Authorization: `Bearer ${cookies.token}`,

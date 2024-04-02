@@ -13,6 +13,7 @@ const SignUpBox = styled.div`
 `;
 
 const Title = styled.div`
+font-family: "Poppins";
     text-align: center;
     height: 45px;
     line-height: 45px;
@@ -239,9 +240,9 @@ const SignUp = () => {
       <SignUpBox>
         <Title>
           <SubTitle>
-            당장 필요할때 바로 빌리자
+            가천대 대여 플랫폼
           </SubTitle>
-          대학빌림
+          Baram
         </Title>
 
         {/* 별명 */}
@@ -255,7 +256,6 @@ const SignUp = () => {
             setNickname(e.target.value);
           }}
           onKeyDown={(e) => { activeEnter(e) }} />
-        <Requirements>최대 10글자</Requirements>
 
         {/* 이메일(제작중) */}
         {/* <InputBox
@@ -275,45 +275,16 @@ const SignUp = () => {
           ref={useridRef}
           name="id"
           value={userid}
-          placeholder="아이디"
+          placeholder="전화번호"
           onChange={(e) => {
             setUserid(e.target.value);
           }}
           onKeyDown={(e) => { activeEnter(e) }}
         />
-        <Requirements>영문 소문자, 숫자 조합 5~15자리</Requirements>
 
-        {/* 비밀번호 */}
-        <InputBox
-          type="password"
-          ref={passwordRef}
-          name="password"
-          value={password}
-          placeholder="비밀번호"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          onKeyDown={(e) => { activeEnter(e) }} />
-
-        {/* 비밀번호 확인*/}
-        <InputBox
-          type="password"
-          ref={password2Ref}
-          name="password2"
-          value={password2}
-          placeholder="비밀번호 확인"
-          onChange={(e) => {
-            setPassword2(e.target.value);
-          }}
-          onKeyDown={(e) => { activeEnter(e) }} />
-        <Requirements>대소문자, 숫자, @!? 조합 5~15자리</Requirements>
-
-        {/* 이미지 형식 제한해야함 */}
-        <FileInputBtn for="file">
-          <div>프로필 사진 추가</div>
-        </FileInputBtn>
-        <FileInputBox type="file" name="file" id="file" onChange={handleFileChange} />
-
+       
+      
+       
         <SubmitBtn onClick={handleSignUp}>회원가입</SubmitBtn>
         <Link to={"/signin"}>
           <GoToSignIn>로그인 하러가기</GoToSignIn>

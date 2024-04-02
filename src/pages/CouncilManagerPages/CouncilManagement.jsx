@@ -198,7 +198,6 @@ const CouncilManagement = () => {
 
     const removeItem = async (id) => {
         try {
-            console.log(id);
             const response = await axios.delete( process.env.REACT_APP_BACK_URL + "/council-item/" + id, {
                 headers: {
                     Authorization: `Bearer ${cookies.token}`,
@@ -206,7 +205,6 @@ const CouncilManagement = () => {
             });
             window.alert("삭제되었습니다.");
             setKey(key + 1);
-            console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
         }
@@ -214,7 +212,6 @@ const CouncilManagement = () => {
 
     const ItemQuantityChange = async (id, quantity) => {
         try {
-            console.log(id);
             if (quantity < 0) {
                 return;
             }
@@ -228,7 +225,6 @@ const CouncilManagement = () => {
                     },
                 });
             setKey(key + 1);
-            console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
         }

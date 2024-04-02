@@ -21,7 +21,7 @@ const PostBox = styled.div`
 const BoardBox = styled.div`
   background: #fff;
   padding: 5px 0px;
-  & a:last-child div {
+  & div a:last-child div {
     border-bottom: none;
   }
 `;
@@ -145,63 +145,66 @@ const NoPostText = styled.div`
   margin-bottom: 20px;
 `;
 
-const DoneTag = styled.div`
-  float: left;
-  font-size: 13px;
-  padding: 3px 5px;
-  color: #ffffff;
-  background-color: #2edb5c;
-  /* border: 1px solid #3cf858; */
-  border-radius:15px;
-  margin-right: 3px;
-  margin-top: -1px;
+const PageMove = styled.div`
+  text-align: center;
+  height: 60px;
+  line-height: 60px;
+  color: #6093FF;
+  & a{
+    color: #6093FF;
+  }
+
+`;
+
+
+const MoveBtn = styled.span`
+  ${({ isLimited}) => (isLimited ? "color: #b1b1b1;" : null)};
 
 `;
 
 const PostList = () => {
   const location = useLocation();
   const [posts, setPosts] = useState([]);
+  const [isLast, setIsLast] = useState(false);
   const [locationName, setLocationName] = useState("");
   const [campusName, setCampusName] = useState("");
   const [type, setType] = useState();
+  const locationValue = new URLSearchParams(location.search).get('location');
+  const campusValue = new URLSearchParams(location.search).get('campus');
+  const pageValue = parseInt(new URLSearchParams(location.search).get('page'));
   useEffect(() => {
     // 최신 글 업로드
     const fetchPosts = async () => {
       try {
-        const locationValue = new URLSearchParams(location.search).get('location');
-        const campusValue = new URLSearchParams(location.search).get('campus');
-
         var response;
         if (locationValue != null) {
           setType("LOCATION");
           setLocationName(locationValue);
           response = await axios.get(
-
-            process.env.REACT_APP_BACK_URL + "/post/all/location/" + locationValue
+          process.env.REACT_APP_BACK_URL + "/post/all/location/" + locationValue + "/" + pageValue
           );
         } else {
           setType("CAMPUS");
           setCampusName(campusValue);
           response = await axios.get(
-            process.env.REACT_APP_BACK_URL + "/post/all/campus/" + campusValue
+            process.env.REACT_APP_BACK_URL + "/post/all/campus/" + campusValue + "/" + pageValue
           );
         }
 
-        setPosts(response.data.data);
-        console.log(response.data.data);
+        setPosts(response.data.data.posts);
+        setIsLast(response.data.data.last);
 
       } catch (error) {
         console.log("포스트 오류 발생: ", error);
       }
     };
     fetchPosts();
-  }, []);
+  }, [pageValue, locationValue, campusValue]);
   const getTimeDiff = (createdAt) => {
     const createDate = new Date(createdAt);
     const now = new Date();
 
     const diffInMilliseconds = now - createDate;
-    console.log(createDate);
 
     if (diffInMilliseconds < 60 * 60 * 1000) {
       const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
@@ -221,7 +224,9 @@ const PostList = () => {
       <PostBox>
         <BoardBox>
 
-          {posts.length != 0 ? posts.map((post, index) => (
+          {posts.length != 0 ? 
+          <div>
+            {posts.map((post, index) => (
             <Link to={"/posts/" + post.postId} key={index}>
               <Item isDone={post.close}>
                 <MainImage><img src={process.env.REACT_APP_BACK_URL + "/image/" + post.postImgPath}></img></MainImage>
@@ -238,17 +243,19 @@ const PostList = () => {
                   <ImageIcon src={"/image/chatt.svg"} alt="" />
                   <ChatRoomCount>{post.chatCount}</ChatRoomCount>
                   </ChatRoomCntBox>
-                  
                 </Listbox>
               </Item>
-
             </Link>
-          ))
+          ))}
+          <PageMove><Link to={"/posts?campus=global&page="+(pageValue-1 < 0 ? 0 : pageValue-1)}><MoveBtn isLimited={pageValue == 0}>이전</MoveBtn></Link> | <Link to={"/posts?campus=global&page="+(isLast ? pageValue : pageValue + 1)}><MoveBtn isLimited={isLast}>다음</MoveBtn></Link></PageMove>
+          </div>
+      
             :
             <NoPostBox>
               <NoPostText>썰렁</NoPostText>
               {type == "LOCATION" ? locationName.slice(2) : (campusName == "global" ? "글로벌" : "메디컬")} 사람들은 빌릴게 없어요
-            </NoPostBox>}
+            </NoPostBox>
+            }
         </BoardBox>
       </PostBox>
       <MenuBar></MenuBar>

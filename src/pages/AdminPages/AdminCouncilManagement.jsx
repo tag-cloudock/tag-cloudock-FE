@@ -141,7 +141,6 @@ const AdminCouncilManagement = () => {
                 }, [[]]);
 
                 setGroupedCouncilList(groupedData);
-                console.log(groupedData);
 
             } catch (error) {
                 console.error("오류 발생:", error);
@@ -153,7 +152,6 @@ const AdminCouncilManagement = () => {
 
     const removeCouncil = async (id) => {
         try {
-            console.log(id);
             const response = await axios.delete( process.env.REACT_APP_BACK_URL + "/manage/council/" + id, {
                 headers: {
                     Authorization: `Bearer ${cookies.token}`,
@@ -161,7 +159,6 @@ const AdminCouncilManagement = () => {
             });
             window.alert("삭제되었습니다.");
             setKey(key + 1);
-            console.log(response);
         } catch (error) {
             console.error("오류 발생:", error);
         }

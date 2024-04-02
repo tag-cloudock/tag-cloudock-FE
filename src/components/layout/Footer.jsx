@@ -50,7 +50,7 @@ const Footer = () => {
         <FooterBox>
             <FooterText>
             <Insta href="https://www.instagram.com/baram_official_/"><img src="/image/insta.svg"></img></Insta>
-                <CouncilSignIn><Link to={"/council/signin"}>©</Link></CouncilSignIn> Copyright 나우 Ai Way All Rights Reserved 
+                <CouncilSignIn><Link to={"/council/signin"}>©</Link></CouncilSignIn> 나우 Ai Way All Rights Reserved 
                 
             </FooterText>
         </FooterBox>

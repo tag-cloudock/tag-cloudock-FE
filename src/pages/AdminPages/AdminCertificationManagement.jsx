@@ -119,7 +119,6 @@ const AdminCertificationManagement = () => {
                         Authorization: `Bearer ${cookies.token}`,
                     },
                 });
-                console.log(response.data.data);
                 setCertificationRequest(response.data.data);
 
             } catch (error) {

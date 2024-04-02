@@ -387,7 +387,7 @@ const PostEdit = () => {
 
   return (
     <EditBox>
-      <Header headerType={"close"} headerText={"작성"}></Header>
+      <Header headerType={"close"} headerText={"학우들에게 요청하기"}></Header>
       <ContentBox>
         {/* <InputBoxTitle>제목</InputBoxTitle> */}
         <InputBox

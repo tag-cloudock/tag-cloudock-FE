@@ -159,20 +159,17 @@ const Certifi = styled.div`
 const PostBox = styled.div`
   padding: 10px 20px;
 
+  
   &:last-child{
     margin-bottom: 80px;
   }
 `;
-//
 const PostInfoBox = styled.div`
-  background: #ffffff;
-  padding: 20px 10px;
+  background: #f5f5f592;;
+  padding: 5px 10px;
+
   border-radius: 15px;
-  /* box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 10px; */
-  border: 1px solid #eeeeee;
-  & a:last-child div{
-    border-bottom: none;
-  }
+
 `;
 //박스 제목
 const BoxTitle = styled.div`
@@ -267,7 +264,7 @@ const ImageIcon3 = styled.img`
 const RateBox = styled.div`
   display: flex;
   border-radius: 10px;
-  background: #f5f5f5c5;
+  background: #f5f5f592;
   overflow: hidden;
   /* border: 1px solid #eeeeee; */
   @media screen and (max-width: 700px) {
@@ -277,10 +274,7 @@ const RateBox = styled.div`
 const RecentRateBox = styled.div`
   /* padding: 10px; */
   align-items: center;
-  &:last-child{
-    border-bottom: none;
-  }
-  border-bottom: 1px solid #eaeaea;
+  /* border-bottom: 1px solid #eaeaea; */
 
   display: flex;
   justify-content: space-between;
@@ -306,9 +300,9 @@ const LendCheckBox = styled.div`
   display: inline-block;
   border-radius: 30px;
   font-weight:600;
-  font-size: 10px;
+  font-size: 12px;
   color: white;
-  padding: 6px;
+  padding: 3px 7px;
   white-space: nowrap; 
   background: #6093FF;
 `;
@@ -317,9 +311,9 @@ const BorrowCheckBox = styled.div`
   display: inline-block;
   border-radius: 30px;
   font-weight:600;
-  font-size: 10px;
+  font-size: 12px;
   color: white;
-  padding: 6px 13px;
+  padding: 3px 10px;
   background: #aac5ff;
   white-space: nowrap; 
 `;
@@ -330,7 +324,7 @@ const UserPostItemBox = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 40px;
-  border-bottom: 1px solid #eaeaea;
+  /* border-bottom: 1px solid #eaeaea; */
   
 `;
 
@@ -497,7 +491,6 @@ const User = () => {
             // },
           }
         );
-        console.log(response.data);
 
         if (response.data.code != 200) {
           navigate("/signin");

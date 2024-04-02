@@ -83,7 +83,6 @@ const SocialKakao = () => {
   const [nickname, setNickname] = useState("");
   const [cnt, setCnt] = useState(0);
   const code = new URL(window.location.href).searchParams.get("code");
-  console.log(code);
 
   useEffect(() => {
     const kakaoSignIn = async () => {
@@ -91,7 +90,6 @@ const SocialKakao = () => {
         const response = await axios.get(
            process.env.REACT_APP_BACK_URL + "/oauth/kakao/" + code
         );
-        console.log(response.data);
         if (response.data.code == 200) {
           const expires = moment().add(48, "hours").toDate();
           setCookie("token", response.data.data.token, {
@@ -142,7 +140,6 @@ const SocialKakao = () => {
           nickname
         }
       );
-      console.log(response)
       if (response.status === 200) {
         const expires = moment().add(2, "hours").toDate();
         setCookie("token", response.data.data.token, {

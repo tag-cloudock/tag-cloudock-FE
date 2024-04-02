@@ -71,7 +71,6 @@ const RecentPosts = (prop) => {
     const now = new Date();
 
     const diffInMilliseconds = now - createDate;
-    console.log(createDate);
 
     if (diffInMilliseconds < 60 * 60 * 1000) {
       const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));

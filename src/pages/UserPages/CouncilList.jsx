@@ -133,6 +133,7 @@ const AlertBox = styled.div`
     background: #f4f4f49c;
     padding: 20px;
     border-radius: 20px;
+    margin-bottom: 30px;
 `;
 
 const SearchContainer = styled.div`
@@ -157,6 +158,7 @@ const SearchBox = styled.div`
     }
     & img{
       width: 20px;
+      margin-right: 10px;
     }
 
 `;
@@ -223,7 +225,6 @@ const CouncilList = () => {
         }, [[]]);
 
         setGroupedCouncilList(groupedData);
-        console.log(groupedData);
 
       } catch (error) {
         console.error("오류 발생:", error);
@@ -260,24 +261,10 @@ const CouncilList = () => {
        
       </SearchContainer>
       <ContentBox>
-        {/* <div>
-          <CollegeName>{"총학생회"}</CollegeName>
-          <Link to={"/councils/" + 1} >
-            <CouncilItem key={-1}>
-              <CouncilImgBox>
-                <CouncilImg src={"image/tc.jpg"}></CouncilImg>
-              </CouncilImgBox>
 
-              <CouncilContent>
-                <CouncilName>{"총학생회"}</CouncilName>
-                <ItemInfo>제공품 {0} 대여품 {0}</ItemInfo>
-              </CouncilContent>
-            </CouncilItem>
-          </Link>
-        </div> */}
         {groupedCouncilList.map((college, index) => (
           <div key={index}>
-            {debouncedSearchValue == "" ?
+            {debouncedSearchValue == "" && college.length != 0 ?
             <CollegeName>{college[0] != null ? college[0].college.slice(1) : null}</CollegeName>
             :null
           }

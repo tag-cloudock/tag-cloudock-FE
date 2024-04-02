@@ -25,7 +25,7 @@ const BoardBox = styled.div`
 const NoticeListbox = styled.div`
   margin-bottom: 10px;
   padding: 20px 20px 15px;
-  background: #f7f7f7;
+  background: #f7f7f7d4;
   border-radius: 15px;
 `;
 
@@ -67,7 +67,6 @@ const NoticeList = () => {
            process.env.REACT_APP_BACK_URL + "/anno/all"
         );
         setNotices(response.data.data);
-        console.log(response.data.data);
 
       } catch (error) {
         console.log("포스트 오류 발생: ", error);

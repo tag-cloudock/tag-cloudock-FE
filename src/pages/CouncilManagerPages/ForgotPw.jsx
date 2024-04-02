@@ -12,13 +12,12 @@ const LoginBox = styled.div`
   border-radius: 20px;
 `;
 
-// 타이틀
 const Title = styled.div`
-
+font-family: "Poppins";
   text-align: center;
   height: 45px;
   line-height: 45px;
-  margin-bottom: 100px;
+  margin-bottom: 150px;
   font-size: 63px;
   font-weight: 850;
   & a{
@@ -106,20 +105,6 @@ const AlertBox = styled.div`
 
 
 const ForgotPw = () => {
-  const navigate = useNavigate(); // 페이지 이동을 위해
-  const [cookies, setCookie] = useCookies(); // 쿠키 생성을 위해
-
-  useEffect(() => {
-    if (!cookies.token) {
-      navigate("/signin");
-      return;
-    }
-    if (cookies.roles != "MANAGER") {
-      navigate("/");
-      return;
-    }
-  });
-
   return (
     <div>
       <LoginBox>
