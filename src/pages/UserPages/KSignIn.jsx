@@ -116,7 +116,7 @@ const KSignIn = () => {
           <CollaboText>제 40대 총학생회 청</CollaboText>
         </TitleBox>
 
-        <a href={"https://kauth.kakao.com/oauth/authorize?client_id="+process.env.REST_API_KEY+"&redirect_uri=https://baram.today/oauth/kakao&response_type=code"}>
+        <a href={"https://kauth.kakao.com/oauth/authorize?client_id=ddef038fa084012b787cdc2e0ac14a40&redirect_uri=https://baram.today/oauth/kakao&response_type=code"}>
           <KakaoLoginBtn>
             <img src={"/image/kakao.svg"}></img>
             카카오로 3초만에 로그인
