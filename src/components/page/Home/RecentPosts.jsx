@@ -111,7 +111,7 @@ const RecentPosts = (prop) => {
 
   return (
     <div>
-      {posts.slice(0,6).map((post, index) => (
+      {posts.map((post, index) => (
         <Item key={post.postId}>
           <Link to={"/posts/" + post.postId}>
             <Wrapped isDone={post.close}>
