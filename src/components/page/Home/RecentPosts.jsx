@@ -111,7 +111,7 @@ const RecentPosts = (prop) => {
 
   return (
     <div>
-      {posts.map((post, index) => (
+      {/* {posts.map((post, index) => (
         <Item key={post.postId}>
           <Link to={"/posts/" + post.postId}>
             <Wrapped isDone={post.close}>
@@ -122,7 +122,7 @@ const RecentPosts = (prop) => {
             </Wrapped>
           </Link>
         </Item>
-      ))}
+      ))} */}
     </div>
   );
 };
