@@ -734,6 +734,7 @@ return (
         onChange={(e) => {
           setInputMessage(e.target.value);
         }}
+        autocomplete="off"
         onKeyPress={(e) => { activeEnter(e) }}
         // onKeyDown={handleKeyDown}
         disabled={postInfo.isClose}

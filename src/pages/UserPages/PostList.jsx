@@ -158,7 +158,8 @@ const PageMove = styled.div`
 
 
 const MoveBtn = styled.span`
-  ${({ isLimited}) => (isLimited ? "color: #b1b1b1;" : null)};
+  ${({ isLimited}) => (isLimited ? "color: #b1b1b1; pointer-events: none;" : null)};
+  pointer-events: none;
 
 `;
 
@@ -174,6 +175,7 @@ const PostList = () => {
   const pageValue = parseInt(new URLSearchParams(location.search).get('page'));
   useEffect(() => {
     // 최신 글 업로드
+    window.scrollTo(0, 0);
     const fetchPosts = async () => {
       try {
         var response;
@@ -193,6 +195,7 @@ const PostList = () => {
 
         setPosts(response.data.data.posts);
         setIsLast(response.data.data.last);
+        console.log(response.data.data);
 
       } catch (error) {
         console.log("포스트 오류 발생: ", error);
@@ -247,7 +250,10 @@ const PostList = () => {
               </Item>
             </Link>
           ))}
-          <PageMove><Link to={"/posts?campus=global&page="+(pageValue-1 < 0 ? 0 : pageValue-1)}><MoveBtn isLimited={pageValue == 0}>이전</MoveBtn></Link> | <Link to={"/posts?campus=global&page="+(isLast ? pageValue : pageValue + 1)}><MoveBtn isLimited={isLast}>다음</MoveBtn></Link></PageMove>
+          <PageMove>
+            <Link style={{ pointerEvents: pageValue == 0 ? "none" : null}} to={"/posts?"+(type == "LOCATION" ? "location="+locationValue : "campus="+campusValue )+"&page="+(pageValue-1 < 0 ? 0 : pageValue-1)} ><MoveBtn isLimited={pageValue == 0}>이전</MoveBtn></Link> |
+           <Link style={{ pointerEvents: isLast ? "none" : null}} to={"/posts?"+(type == "LOCATION" ? "location="+locationValue : "campus="+campusValue )+"&page="+(isLast ? pageValue : pageValue + 1)} ><MoveBtn isLimited={isLast}>다음</MoveBtn></Link>
+           </PageMove>
           </div>
       
             :

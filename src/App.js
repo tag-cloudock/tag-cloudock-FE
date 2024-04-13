@@ -51,7 +51,7 @@ function App() {
           <Route path="/signin" Component={KSignIn} />
           <Route path="/oauth/kakao" Component={SocialKakao} />
           
-          <Route path="/signup" Component={SignUp} />
+          {/* <Route path="/signup" Component={SignUp} /> */}
           <Route path="/chat" Component={ChatRoomList} />
           <Route path="/chat/:metype/:id/:interlocutorId/:post" Component={Chat} />
           <Route path="/notice" Component={NoticeList} />

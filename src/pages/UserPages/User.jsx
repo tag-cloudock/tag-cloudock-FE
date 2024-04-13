@@ -588,7 +588,8 @@ const User = () => {
       setFile(null);
       setKey(key + 1);
     } catch (error) {
-      console.error("오류 발생:", error);
+      window.alert("사진이 너무 크거나 잘못된 형식입니다.")
+      setFile(null);
     }
   };
 

@@ -121,8 +121,8 @@ const Certification = () => {
     const [cookies, , removeCookie] = useCookies();
     const [file, setFile] = useState(null);
     const navigate = useNavigate(); // 페이지 이동을 위해
-    const [name, setName] = useState();
-    const [studentIdNumber, setstudentIdNumber] = useState();
+    const [name, setName] = useState("");
+    const [studentIdNumber, setstudentIdNumber] = useState("");
     useEffect(() => {
         if (!cookies.token) {
             navigate("/signin");
@@ -188,13 +188,15 @@ const Certification = () => {
                 </p>
                 <p>
                     <span>모바일 학생증</span>의 캡처 사진 또는
-                    <span> 실물 학생증</span>의 촬영 사진을 업로드해주세요. <br /><span>*이름과 학번, 얼굴사진이 보여야합니다.</span>
+                    <span> 카드형 학생증</span>의 촬영 사진을 업로드해주세요. <br /><span>*이름과 학번이 보여야합니다. <br />
+                    *이를 제외한 정보는 가려주시기 바랍니다.</span>
                 </p>
                 <p>
                     제공한 정보는 학생증 인증 유무 표시 용도 외에는 사용되지 않습니다.
                 </p>
                 <p>
-                    승인은 요청 후 24시간 이내에 이루어집니다.
+                    승인은  <span>1일~3일</span> 이내에 이루어집니다.<br />
+                    3일 이후에도 승인 되지 않은 경우는 반려된 것이며, 반려 사유 문의는  <span>@baram_official_</span>로 부탁드립니다.
                 </p>
             </Announcement>
             <CertifiBox>
@@ -204,6 +206,7 @@ const Certification = () => {
                     name="name"
                     // value={userid}
                     placeholder="이름 (ex 홍길동)"
+                    autocomplete="off"
                     onChange={(e) => {
                         setName(e.target.value);
                     }}
@@ -215,6 +218,7 @@ const Certification = () => {
                     name="id"
                     // value={""}
                     placeholder="학번 (ex 2024xxxxx)"
+                    autocomplete="off"
                     onChange={(e) => {
                         setstudentIdNumber(e.target.value);
                     }}
