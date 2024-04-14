@@ -466,10 +466,12 @@ const Home = () => {
           </CouncilBtn>
         </Link>
 
-
-        {/* <Ad>
-          <img src={"/image/adgh.png"} alt="" />
-        </Ad>   */}
+        <Link to={"/notice/2"}>
+          <Ad>
+            <img src={"/image/event.jpg"} alt="" />
+          </Ad>  
+        </Link>  
+        
         <SubTitle>
           학우들이 요청중이에요! <Link to={"/posts?campus=" + (campus == 0 ? "global" : "medical") + "&page=0"}><span>모두보기</span></Link>
         </SubTitle>
