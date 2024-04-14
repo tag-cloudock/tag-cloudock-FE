@@ -40,7 +40,7 @@ padding: 20px;
 //list 박스 사이 구분선
 const Listbox = styled.div`
   position: relative;
-  /* width: 100%; */
+  width: 1px;
   flex-grow: 1; 
 `;
 
@@ -57,8 +57,8 @@ const MainImage = styled.div`
   & img{
     border: 1px solid #eeeeee;
     border-radius: 15px;
-    width: 100%;
-    height: 100%;
+    width: 75px;
+    height: 75px;
     /* max-height: 400px; */
     object-fit: cover;
     object-position: center;
@@ -68,7 +68,7 @@ const MainImage = styled.div`
 //게시물 제목
 const NoticeTitle = styled.div`
 color: #1F1F1F;
-width: 70%;
+width: 100%;
 font-size: 15px;
 font-weight: 500;
 white-space: nowrap; 
