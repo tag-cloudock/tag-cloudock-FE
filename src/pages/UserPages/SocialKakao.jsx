@@ -213,8 +213,12 @@ const SocialKakao = () => {
         }
       );
       if (response.status === 200) {
-        const expires = moment().add(2, "hours").toDate();
+        const expires = moment().add(48, "hours").toDate();
         setCookie("token", response.data.data.token, {
+          path: "/",
+          expires: expires,
+        });
+        setCookie("id", response.data.data.id, {
           path: "/",
           expires: expires,
         });

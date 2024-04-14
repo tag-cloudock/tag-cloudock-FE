@@ -251,7 +251,7 @@ const PostList = () => {
             </Link>
           ))}
           <PageMove>
-            <Link style={{ pointerEvents: pageValue == 0 ? "none" : null}} to={"/posts?"+(type == "LOCATION" ? "location="+locationValue : "campus="+campusValue )+"&page="+(pageValue-1 < 0 ? 0 : pageValue-1)} ><MoveBtn isLimited={pageValue == 0}>이전</MoveBtn></Link> | 
+            <Link style={{ pointerEvents: pageValue == 0 ? "none" : null}} to={"/posts?"+(type == "LOCATION" ? "location="+locationValue : "campus="+campusValue )+"&page="+(pageValue-1 < 0 ? 0 : pageValue-1)} ><MoveBtn isLimited={pageValue == 0}>이전</MoveBtn></Link>{" | "}
            <Link style={{ pointerEvents: isLast ? "none" : null}} to={"/posts?"+(type == "LOCATION" ? "location="+locationValue : "campus="+campusValue )+"&page="+(isLast ? pageValue : pageValue + 1)} ><MoveBtn isLimited={isLast}>다음</MoveBtn></Link>
            </PageMove>
           </div>
