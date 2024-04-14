@@ -20,11 +20,11 @@ const ContentBox = styled.div`
 `;
 
 const InputBox = styled.input`
-    display: block;
     border: none;
     padding: 15px 10px;
     margin-top: 10px;
-    width: calc(100%);
+    box-sizing: border-box;
+    width: 100%;
     font-size: 15px;
     font-weight: 600;
     color:#5d5d5d;
