@@ -413,10 +413,10 @@ const PostDetail = () => {
             <ListName>위치</ListName>
             <ListNameDetail>{post.location.slice(2) + " " + post.locationDetail}</ListNameDetail>
           </InfoBox>
-          <InfoBox>
+          {/* <InfoBox>
             <ListName>대여금</ListName>
             <ListNameDetail>{post.rentalFee}원</ListNameDetail>
-          </InfoBox>
+          </InfoBox> */}
           <InfoBox>
             <ListName>보증품</ListName>
             <ListNameDetail>{post.security}</ListNameDetail>

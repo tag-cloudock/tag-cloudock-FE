@@ -1,115 +1,20 @@
+import styled from "styled-components";
+import Header from "../../components/layout/Header";
+import { useParams } from "react-router-dom";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useCookies } from "react-cookie";
-import styled from "styled-components";
-import moment from "moment";
-import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
-    padding: 20px;
-`;
-
-const Text = styled.div`
-    /* margin: 20px auto 0 20px; */
-    font-size: 25px;
-    line-height: 38px;
-    font-weight: 600;
-    padding: 70px 0px;
-
-    /* text-align: center; */
-`;
-
-const Nickname = styled.input`
-    border: none;
-    height: 35px;
-    background: none;
-    /* padding: 10px 0px; */
-    /* border-radius: 20px; */
-    /* text-align: center; */
-    outline: none;
-    font-size: 22px;
-      font-weight: 500;
-      color:#000000;
-    &::placeholder {
-      font-size: 22px;
-      font-weight: 500;
-      color:#d1d1d1;
-    }
-`;
-const NicknameCnt = styled.span`
-    /* z-index: 10px; */
-    /* margin-top: -30px; */
-      font-size: 22px;
-      font-weight: 500;
-      color:#bcbcbc;
-      float: right;
-`;
-const InputBox = styled.div`
-height: 40px;
-        margin-top: 100px;
-    width: 100%;
-    border-bottom: 3px solid #6093FF;
-`;
-
-const SummitBtn = styled.button`
-    position: fixed;
-    display: block;
-    bottom: 30px;
-    height: 40px;
-    border: none;
-    width: calc(100% - 40px); /* 100%에서 좌우 여백만큼 뺀 값 */
-    left: 50%;
-    transform: translateX(-50%); /* 가운데 정렬을 위해 추가 */
-    max-width: 701px;
-    padding-left: 20px; /* 좌측 여백 */
-    padding-right: 20px; /* 우측 여백 */
-    border-radius: 10px;
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 600;
-    background: ${({ isOk }) => (isOk ? '#6093FF' : '#afd9ff')};
-`;
-
-
-
-const NicknameSetBox = styled.div`
-  position: relative;
-`;
-
-const CheckBox = styled.button`
-  /* position: relative; */
-  display: inline-block;
-  width: 19px;
-  height: 19px;
-  border-radius: 1000px;
-  border: 3px solid #f1f1f1;
-  background: ${({ isChecked }) => (isChecked ? '#6093FF' : '#f1f1f1')};
-    
-  /* border: none; */
-  margin-right: 7px;
-`;
-
-const Agree = styled.div`
-  background: #ffffff;
-  font-size: 15px;
-  /* line-height: px; */
-  /* margin: 10px 0px; */
+  position: absolute;
   width: 100%;
-  padding-top: 20px;
-  padding-bottom: 80px;
-  position: fixed;
-  bottom: 0px;
-  & span{
-    color: #6093FF;
-  }
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
 `;
 
-
-const Title = styled.div`
-  font-weight: bold;
-  font-size: 13px;
-  margin: 10px 0px;
-    
+const ContentBox = styled.div`
+  padding: 20px;
 `;
 
 const AgreeTitle = styled.div`
@@ -125,7 +30,7 @@ const AgreeTitle = styled.div`
 `;
 
 const Doc = styled.div`
-  margin: 50px 0px 100px 0px;
+  margin: 0px 0px 70px 0px;
   resize: none;
   width: 100%;
   /* height: 500px; */
@@ -143,139 +48,21 @@ const AgreeContainer = styled.div`
     flex-direction: column;
 
 `;
+const Title = styled.div`
+  font-weight: bold;
+  font-size: 13px;
+  margin: 10px 0px;
+    
+`;
 
-
-
-const SocialKakao = () => {
-  const navigate = useNavigate(); // 로그인 전 홈 진입 막기 위해
-  const [cookies, setCookie] = useCookies(); // 쿠키 사용하기 위해
-  const [newUser, setNewUser] = useState(false); // 유저 정보 상태
-  const [agree, setAgree] = useState(false);
-  const [isCheckAgree, setIsCheckAgree] = useState(false);
-  const [nickname, setNickname] = useState("");
-  const [cnt, setCnt] = useState(0);
-  const code = new URL(window.location.href).searchParams.get("code");
-
-  useEffect(() => {
-    const kakaoSignIn = async () => {
-      try {
-        const response = await axios.get(
-          process.env.REACT_APP_BACK_URL + "/oauth/kakao/" + code
-        );
-        if (response.data.code == 200) {
-          const expires = moment().add(48, "hours").toDate();
-          setCookie("token", response.data.data.token, {
-            path: "/",
-            expires: expires,
-          });
-          setCookie("id", response.data.data.id, {
-            path: "/",
-            expires: expires,
-          });
-          setCookie("userId", response.data.data.userId, {
-            path: "/",
-            expires: expires,
-          });
-          setCookie("nickname", response.data.data.nickname, {
-            path: "/",
-            expires: expires,
-          });
-          setCookie("roles", response.data.data.roles, {
-            path: "/",
-            expires: expires,
-          });
-          setCookie("certification", response.data.data.certification, {
-            path: "/",
-            expires: expires,
-          });
-          navigate("/");
-        }
-        if (response.data.code == 404) {
-          setAgree(true);
-        }
-
-      } catch (error) {
-        console.log("오류 발생: ", error);
-      }
-    };
-    kakaoSignIn();
-  }, []);
-
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-
-    try {
-
-      const response = await axios.post(process.env.REACT_APP_BACK_URL + "/oauth/kakao",
-        {
-          code,
-          nickname
-        }
-      );
-      if (response.status === 200) {
-        const expires = moment().add(48, "hours").toDate();
-        setCookie("token", response.data.data.token, {
-          path: "/",
-          expires: expires,
-        });
-        setCookie("id", response.data.data.id, {
-          path: "/",
-          expires: expires,
-        });
-        setCookie("userId", response.data.data.userId, {
-          path: "/",
-          expires: expires,
-        });
-        setCookie("nickname", response.data.data.nickname, {
-          path: "/",
-          expires: expires,
-        });
-        setCookie("roles", response.data.data.roles, {
-          path: "/",
-          expires: expires,
-        });
-        setCookie("certification", response.data.data.certification, {
-          path: "/",
-          expires: expires,
-        });
-        navigate("/");
-      }
-    } catch (error) {
-    }
-  };
+const Privacy = () => {
+  window.scrollTo(0, 0);
 
   return (
     <Container>
-      {newUser ?
-        <NicknameSetBox>
-          <Text>
-            환영합니다!<br />
-            닉네임을 설정해주세요!
-          </Text>
-          <InputBox>
-            <Nickname
-              type="text"
-              name="title"
-              placeholder="5글자 내로 입력해주세요"
-              maxLength={5}
-              onChange={(e) => {
-                setCnt(e.target.value.length);
-                setNickname(e.target.value);
-              }}>
-
-            </Nickname>
-            <NicknameCnt>
-              {cnt}/5
-            </NicknameCnt>
-          </InputBox>
-          <SummitBtn isOk={cnt != 0} disabled={cnt == 0} onClick={handleSignUp} >시작하기</SummitBtn>
-        </NicknameSetBox>
-
-        :
-        null}
-      {agree ?
-        <AgreeContainer>
-          <AgreeTitle>개인정보 처리 방침</AgreeTitle>
+      <Header headerType={"close"} headerText={"개인정보 처리방침"}></Header>
+      <ContentBox>
+      <AgreeContainer>
           <Doc>
             <Title>제1조(목적)</Title>
             나우 Ai Way(이하 '회사'라고 함)는 회사가 제공하고자 하는 서비스(이하 '회사 서비스')를 이용하는 개인(이하 '이용자' 또는 '개인')의 정보(이하 '개인정보')를 보호하기 위해, 개인정 보보호법, 정보통신망 이용촉진 및 정보보호 등에 관한 법률(이하 '정보통신망법') 등 관련 법령을 준수하고, 서비스 이용자의 개인정보 보호 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보처리방침(이하 '본 방침')을 수립합니다.
@@ -404,21 +191,11 @@ const SocialKakao = () => {
             <br/>부칙<br/>
             제1조 본 방침은 2024.04.05. 부터 시행됩니다.<br/>
           </Doc>
-
-          <Agree>
-            <CheckBox isChecked={isCheckAgree} onClick={() => { isCheckAgree ? setIsCheckAgree(false) : setIsCheckAgree(true) }}></CheckBox>
-            개인정보 처리방침에 동의합니다. <span>(필수)</span>
-          </Agree>
-
-          <SummitBtn isOk={isCheckAgree} disabled={!isCheckAgree} onClick={() => { setAgree(false); setNewUser(true); }} >다음</SummitBtn>
-
         </AgreeContainer>
 
-        :
-        null}
-
+      </ContentBox>
     </Container>
   );
 };
 
-export default SocialKakao;
+export default Privacy;

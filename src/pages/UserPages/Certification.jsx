@@ -11,6 +11,7 @@ const Container = styled.div`
   height: 100%;
   max-width: 700px;
   background: #ffffff;
+  padding-bottom: 100px;
 `;
 
 const Announcement = styled.div`

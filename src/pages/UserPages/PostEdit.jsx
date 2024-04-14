@@ -204,10 +204,9 @@ border-radius: 0px;
 
 const FileInputBtn = styled.label`
     display: block;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     
     & div{
-      /* width: 80%; */
       margin-top: 10px;
       display: inline-block;
       font-size: 13px;
@@ -216,6 +215,7 @@ const FileInputBtn = styled.label`
       background: ${({ isFileSelected }) => (isFileSelected ? "#6093FF" : "#c4d6ff")};
       border-radius: 10px;
       padding: 10px 10px;
+      
     }
 `;
 const FileInputBox = styled.input`
@@ -281,7 +281,89 @@ const RangeInput = styled.input`
   } */
 `;
 
+const ModalContainer = styled.div`
+  z-index: 1000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000077;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalBox = styled.div`
+  margin: 0 auto;
+  width: 80%;
+  height: 280px;
+  max-width: 400px;
+  border-radius: 30px;
+  background: #ffffff;
+  position: relative;
+`;
+
+const ModalBox2 = styled.div`
+  margin: 0 auto;
+  width: 80%;
+  height: 400px;
+  max-width: 400px;
+  border-radius: 30px;
+  background: #ffffff;
+  
+  position: relative;
+  text-align: center;
+
+`;
+
+const ModalBtnBox = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 22px;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const ModalBtn = styled.button`
+  border: none;
+  width: 40%;
+  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#6093FF')};
+  padding: 15px;
+  text-align: center;
+  border-radius: 15px;
+
+  font-size: 15px;
+  color:${({ isLeft }) => (isLeft ? '#aaaaaa' : '#FFFFFF')};
+`;
+
+
+const ModalText = styled.div`
+  margin-top: 40px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 30px;
+  padding: 0px 35px;
+  color: #000000;
+
+  & span{
+    font-weight: 700;
+    color: #f7d724;
+  }
+
+`;
+
+const ModalText2 = styled.div`
+    margin-top: 17px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  /* line-height: 20px; */
+  padding: 0px 35px;
+  color: #c0c0c0;
+`;
 
 const PostEdit = () => {
   const navigate = useNavigate();
@@ -298,6 +380,8 @@ const PostEdit = () => {
   const [returnAt, setReturnAt] = useState('');
   const [content, setContent] = useState('');
   const [file, setFile] = useState(null);
+
+  const [isDoneModalOn, setIsDoneModalOn] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -530,7 +614,7 @@ const PostEdit = () => {
             setSecurity(e.target.value);
           }}
         />
-        <RentalFeeBox>
+        {/* <RentalFeeBox>
           <RangeInput
             type="range"
             id="rentalFee"
@@ -545,7 +629,7 @@ const PostEdit = () => {
           />
           <RentalFee
           >{rentalFee == 0 ? "대여금" : rentalFee + "원"}</RentalFee>
-        </RentalFeeBox>
+        </RentalFeeBox> */}
 
         <DateWrapper>
           <DateInput
@@ -574,11 +658,31 @@ const PostEdit = () => {
           <FileInputBox type="file" name="file" id="file" onChange={handleFileChange} />
         </FileInputBtn>
 
-        <SubmitBtn onClick={handlePost}>작성 완료</SubmitBtn>
+        <SubmitBtn onClick={() => {
+              setIsDoneModalOn(true);
+            }} >작성 완료</SubmitBtn>
 
       </ContentBox>
 
-
+      {isDoneModalOn ?
+      <ModalContainer>
+        <ModalBox>
+          <ModalText> 빌려주려는 학우가 대화를 원하는 경우 <span>카카오톡 알림톡</span>을 보내드려요! </ModalText>
+          <ModalText2> *글을 작성한 후에는 수정과 삭제가 불가능합니다 </ModalText2>
+          <ModalText2> *형법 제329조(절도) 타인의 재물을 절취한 자는 6년 이하의 징역 또는 1천만원 이하의 벌금에 처합니다 </ModalText2>
+          <ModalBtnBox>
+            <ModalBtn onClick={() => {
+              setIsDoneModalOn(false);
+            }} isLeft={true}>
+              취소
+            </ModalBtn>
+            <ModalBtn onClick={handlePost} isMine={""}>
+              확인
+            </ModalBtn>
+          </ModalBtnBox>
+        </ModalBox>
+      </ModalContainer>
+      : null}
     </EditBox>
   );
 };

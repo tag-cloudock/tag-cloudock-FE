@@ -44,15 +44,27 @@ const CouncilSignIn = styled.span`
     }
 `;
 
+const Info = styled.span`
+display: block;
+    color:#cccccc;
+    font-size: 12px;
+    margin-top: 5px;
+    & a{
+        color:#cccccc;
+    }
+`;
 
 const Footer = () => {
     return (
         <FooterBox>
             <FooterText>
             <Insta href="https://www.instagram.com/baram_official_/"><img src="/image/insta.svg"></img></Insta>
-                <CouncilSignIn><Link to={"/council/signin"}>©</Link></CouncilSignIn> 나우 Ai Way All Rights Reserved 
-                
+                <CouncilSignIn><Link to={"/council/signin"}>© </Link></CouncilSignIn>2024. 나우 Ai Way All Rights Reserved 
+                <Info>
+                   <Link to={"/privacy"}>개인정보 처리방침</Link>  
+                </Info>
             </FooterText>
+            
         </FooterBox>
     );
 };

@@ -15,7 +15,7 @@ const AdminBox = styled.div`
 `;
 
 const ContentBox = styled.div`
-    padding: 0px 20px;
+    padding: 40px 20px;
 `;
 
 const InfoBox = styled.div`

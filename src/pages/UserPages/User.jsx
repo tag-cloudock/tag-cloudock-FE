@@ -23,6 +23,26 @@ const Logout = styled.button`
     background: #f7f7f7;
   }
 `;
+
+// 로그아웃 버튼
+const Withdrawal = styled.button`
+  display: block;
+  margin: 10px auto 20px auto;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  color: #d7d7d7;
+  font-size: 17px;
+  line-height: 30px;
+  font-weight: 400;
+  width: 200px;
+  height: 40px;
+  cursor: pointer;
+  &:hover {
+    background: #f7f7f7;
+  }
+`;
+
 const MoveCertifi = styled.button`
   display: block;
   margin: 10px auto 0px auto;
@@ -388,6 +408,19 @@ const ModalBox2 = styled.div`
 
 `;
 
+const ModalBox3 = styled.div`
+  margin: 0 auto;
+  width: 80%;
+  height: 400px;
+  max-width: 400px;
+  border-radius: 30px;
+  background: #ffffff;
+  
+  position: relative;
+  text-align: center;
+
+`;
+
 const ModalBtnBox = styled.div`
   position: absolute;
   width: 100%;
@@ -400,6 +433,18 @@ const ModalBtn = styled.button`
   border: none;
   width: 40%;
   background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#6093FF')};
+  padding: 15px;
+  text-align: center;
+  border-radius: 15px;
+
+  font-size: 15px;
+  color:${({ isLeft }) => (isLeft ? '#aaaaaa' : '#FFFFFF')};
+`;
+
+const ModalBtn2 = styled.button`
+  border: none;
+  width: 40%;
+  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#ff7d60')};
   padding: 15px;
   text-align: center;
   border-radius: 15px;
@@ -454,10 +499,22 @@ const FileInputBox = styled.input`
 
 const ModalText = styled.div`
   margin-top: 20px;
+  margin-bottom: 15px;
   text-align: center;
   font-size: 17px;
   font-weight: 600;
   /* line-height: 30px; */
+`;
+
+const ModalText2 = styled.li`
+  /* margin-top: 40px; */
+  text-align: left;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 30px;
+  padding: 0px 35px;
+  color: #adadad;
+
 `;
 
 const User = () => {
@@ -467,6 +524,7 @@ const User = () => {
   const [reviewData, setReviewData] = useState({ reviews: [] });
   const [userPosts, setUserPosts] = useState([]);
   const [isDoneModalOn, setIsDoneModalOn] = useState(false);
+  const [isWithdrawalModalOn, setIsWithdrawalModalOn] = useState(false);
   const [nickname, setNickname] = useState("");
   const [key, setKey] = useState(0);
   const [file, setFile] = useState(null);
@@ -604,6 +662,27 @@ const User = () => {
     navigate("/");
   };
 
+  const withdrawal = async (e) => {
+
+        try {
+        // 토큰 쿠키가 없다면 로그인 페이지로 이동
+        // if (!cookies.token) {
+        //   navigate("/signin");
+        //   return;
+        // }
+        axios.defaults.headers.common["Authorization"] = `Bearer ${cookies.token}`;
+
+        const response = await axios.put( process.env.REACT_APP_BACK_URL + "/account/withdrawal");
+        if (response.data.code == 200) {
+          removeCookies();
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("오류 발생:", error);
+      }
+  };
+
+  
   return (
     <div>
       <Header></Header>
@@ -702,6 +781,11 @@ const User = () => {
       ) : null}
        {userid == cookies.id ? 
       <Logout onClick={removeCookies}>로그아웃</Logout> :null}
+      {userid == cookies.id ? 
+      <Withdrawal onClick={() => {
+        setIsWithdrawalModalOn(true);
+      }}>회원 탈퇴</Withdrawal>
+ :null}
 
 
 
@@ -739,6 +823,33 @@ const User = () => {
               <ModalBtn onClick={handleChange} isMine={""}>
                 적용 하기
               </ModalBtn>
+            </ModalBtnBox>
+          </ModalBox2>
+        </ModalContainer>
+        : null}
+
+{isWithdrawalModalOn ?
+        <ModalContainer>
+          <ModalBox2>
+            <ModalText>
+            회원 탈퇴
+            </ModalText>
+            <ModalText2>회원탈퇴 시 회원전용 웹 서비스 이용이 불가합니다.</ModalText2>
+            <ModalText2>회원탈퇴 후 바람 서비스에 입력하신 글 및 후기등은 삭제되지 않습니다.</ModalText2>
+
+            
+
+            <ModalBtnBox>
+
+              <ModalBtn2 onClick={() => {
+                setIsWithdrawalModalOn(false);
+              }} isLeft={true}>
+                취소 하기
+              </ModalBtn2>
+
+              <ModalBtn2 onClick={withdrawal} isMine={""}>
+                탈퇴 하기
+              </ModalBtn2>
             </ModalBtnBox>
           </ModalBox2>
         </ModalContainer>

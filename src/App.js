@@ -30,6 +30,7 @@ import AdminAnnoManagement from "./pages/AdminPages/AdminAnnoManagement";
 import AdminAnnoCreation from "./pages/AdminPages/AdminAnnoCreation";
 import AdminCertificationManagementDetail from "./pages/AdminPages/AdminCertificationManagementDetail";
 import ForgotPw from "./pages/CouncilManagerPages/ForgotPw";
+import Privacy from "./pages/UserPages/Privacy";
 
 const MainLayout = styled.div`
 `;
@@ -50,6 +51,7 @@ function App() {
           <Route path="/councils/:id" Component={CouncilDetail} /> {/* council/:id */}
           <Route path="/signin" Component={KSignIn} />
           <Route path="/oauth/kakao" Component={SocialKakao} />
+          <Route path="/privacy" Component={Privacy} />
           
           {/* <Route path="/signup" Component={SignUp} /> */}
           <Route path="/chat" Component={ChatRoomList} />

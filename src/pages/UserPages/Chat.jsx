@@ -686,7 +686,7 @@ return (
         }}>
           대여 완료하기
         </DoneBtn> : null}
-        {postInfo.isClose && !postInfo.lenderWriteReview && postInfo.userId != cookies.id ? <DoneBtn onClick={() => {
+        {postInfo.isClose && !postInfo.lenderWriteReview && postInfo.lenderId == cookies.id ? <DoneBtn onClick={() => {
           setIsBorrower(false);
           setIsReviewModalOn(true);
         }}>

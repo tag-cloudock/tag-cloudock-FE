@@ -241,7 +241,7 @@ const PostList = () => {
                   </div>
 
                   {/* <PostDetail>{post.location.slice(2) + " " + post.locationDetail}</PostDetail> */}
-                  <PostPrice>{post.rentalFee}원</PostPrice>
+                  {/* <PostPrice>{post.rentalFee}원</PostPrice> */}
                   <ChatRoomCntBox>
                   <ImageIcon src={"/image/chatt.svg"} alt="" />
                   <ChatRoomCount>{post.chatCount}</ChatRoomCount>

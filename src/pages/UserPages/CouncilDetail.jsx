@@ -37,7 +37,7 @@ const CouncilName = styled.div`
 `;
 
 const ProductContainer = styled.div`
-  padding: 0px 30px 30px 30px;
+  padding: 0px 30px 80px 30px;
   & ul li {
     color: #676767;
     font-size: 15px;
