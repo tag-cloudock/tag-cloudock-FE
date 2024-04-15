@@ -317,6 +317,11 @@ const AdminCouncilCreation = () => {
                             </Button>
                         </OptionItem>
                         <OptionItem>
+                            <Button onClick={() => setCollege("G반도체대학")}>
+                                반도체대학
+                            </Button>
+                        </OptionItem>
+                        <OptionItem>
                             <Button onClick={() => setCollege("G사회과학대학")}>
                                 사회과학대학
                             </Button>

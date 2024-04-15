@@ -298,7 +298,7 @@ const ModalContainer = styled.div`
 const ModalBox = styled.div`
   margin: 0 auto;
   width: 80%;
-  height: 280px;
+  height: 315px;
   max-width: 400px;
   border-radius: 30px;
   background: #ffffff;

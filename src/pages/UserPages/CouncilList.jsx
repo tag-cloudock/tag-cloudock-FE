@@ -57,7 +57,8 @@ const RealTime = styled.span`
 
 
 const ContentBox = styled.div`
-  padding: 0px 20px;
+  padding: 0px 20px 20px 20px;
+
 `;
 
 const CollegeBox = styled.ul`
