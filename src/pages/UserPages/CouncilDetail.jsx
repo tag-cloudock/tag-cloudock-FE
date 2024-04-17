@@ -263,6 +263,8 @@ const CouncilDetail = () => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    
     if (document.getElementById('map') != null ){
       var container = document.getElementById('map');
       var options = {
