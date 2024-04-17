@@ -95,9 +95,10 @@ const Guidelines = styled.div`
     font-size: 15px;
     background: #f8f8f8;
     border-radius: 10px;
-    white-space:pre;
+    white-space: pre-wrap;
     padding: 10px;
     margin-bottom: 20px;
+    word-break: break-all;
 `;
 
 

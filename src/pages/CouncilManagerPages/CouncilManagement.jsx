@@ -37,7 +37,7 @@ const InfoBox = styled.div`
   & div{
     margin-top: 10px;
     border-radius: 10px;
-    white-space:pre;
+    white-space: pre-wrap;
     background: #f6f6f6;
     padding: 20px;
   }

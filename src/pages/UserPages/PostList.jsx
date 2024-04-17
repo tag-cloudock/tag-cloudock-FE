@@ -195,7 +195,6 @@ const PostList = () => {
 
         setPosts(response.data.data.posts);
         setIsLast(response.data.data.last);
-        console.log(response.data.data);
 
       } catch (error) {
         console.log("포스트 오류 발생: ", error);
