@@ -31,6 +31,7 @@ import AdminAnnoCreation from "./pages/AdminPages/AdminAnnoCreation";
 import AdminCertificationManagementDetail from "./pages/AdminPages/AdminCertificationManagementDetail";
 import ForgotPw from "./pages/CouncilManagerPages/ForgotPw";
 import Privacy from "./pages/UserPages/Privacy";
+import GachonHerald from "./pages/UserPages/\bEventPages/GachonHerald";
 
 const MainLayout = styled.div`
 `;
@@ -52,6 +53,7 @@ function App() {
           <Route path="/signin" Component={KSignIn} />
           <Route path="/oauth/kakao" Component={SocialKakao} />
           <Route path="/privacy" Component={Privacy} />
+          <Route path="/gachonherald" Component={GachonHerald} />
           
           {/* <Route path="/signup" Component={SignUp} /> */}
           <Route path="/chat" Component={ChatRoomList} />

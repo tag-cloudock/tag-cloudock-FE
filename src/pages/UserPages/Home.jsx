@@ -206,7 +206,7 @@ const CouncilBtn = styled.div`
   background: #f1f5ff;
   /* background: #f4f4f4a2; */
   height: 50px;
-  margin: 30px 0px 0px 0px;
+  margin: 30px 0px 30px 0px;
   @media screen and (min-width: 700px) {
 
   } 
@@ -350,7 +350,7 @@ width: 50px;
 `;
 
 const Ad = styled.div`
-  margin-top: 30px;
+  margin-top: 5px;
   padding: 0px 20px;
   & img{
     width: 100%;
@@ -471,6 +471,12 @@ const Home = () => {
             <img src={"/image/event.jpg"} alt="" />
           </Ad>  
         </Link>  
+
+        {/* <Link to={"/gachonherald"}>
+          <Ad>
+            <img src={"/image/gachonherald.jpg"} alt="" />
+          </Ad>  
+        </Link>  */}
         
         <SubTitle>
           학우들이 요청중이에요! <Link to={"/posts?campus=" + (campus == 0 ? "global" : "medical") + "&page=0"}><span>모두보기</span></Link>

@@ -187,6 +187,9 @@ const Header = ({ headerType, headerText }) => {
   const handleGoBack = () => {
     navigate(-1);
   };
+  const handleGoHome = () => {
+    navigate("/");
+  };
 
   // 홈, 기본, 챗룸, 챗방
   switch (headerType) {
@@ -227,6 +230,20 @@ const Header = ({ headerType, headerText }) => {
           <HeaderBox>
             <HeaderContent>
               <HeaderBackBtn onClick={handleGoBack}>
+                <img src="/image/close.svg" alt="" />
+              </HeaderBackBtn>
+              <HeaderCenterText>{headerText}</HeaderCenterText>
+            </HeaderContent>
+          </HeaderBox>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+      case "goHome": // 작성하기
+      return (
+        <div>
+          <HeaderBox>
+            <HeaderContent>
+              <HeaderBackBtn onClick={handleGoHome}>
                 <img src="/image/close.svg" alt="" />
               </HeaderBackBtn>
               <HeaderCenterText>{headerText}</HeaderCenterText>
