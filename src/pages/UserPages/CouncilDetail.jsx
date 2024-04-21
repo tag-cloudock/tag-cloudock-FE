@@ -66,10 +66,12 @@ const CouncilInfo = styled.div`
 
 const InfoItem = styled.div`
   display: flex;
+  
   &:last-child{
     display: block;
   }
   & span {
+    white-space: nowrap;
     display: inline-block;
     padding: 5px 7px;
     border-radius:5px;
@@ -264,7 +266,7 @@ const CouncilDetail = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
+
     if (document.getElementById('map') != null ){
       var container = document.getElementById('map');
       var options = {

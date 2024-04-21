@@ -60,7 +60,7 @@ const PageHeader = styled.div`
   font-weight: 900;
   font-family: "Crimson Text";
   /* background-color: #eeeeee; */
-  border: 1px solid #eeeeee;
+  border-top: 1px solid #eeeeee;
   color:#3B4D8C;
   & div{
     font-size: 16px;
@@ -72,13 +72,21 @@ const PageHeader = styled.div`
 
 const Event = styled.div`
   padding: 20px 20px;
-  background: #eeeeee;
+  background: #f6f6f6;
+
+  
+  @media screen and (min-width: 701px) {
+    border-radius: 15px;
+  }
+
 `;
 
 const EventTitle = styled.div`
  text-align: center;
  font-size: 30px;
  font-weight: 700;
+ color: #000000;
+ border-bottom : 3px solid #e2e2e2;
 `;
 const EventDesc = styled.div`
 padding: 15px 0px;
@@ -287,30 +295,31 @@ const GachonHerald = () => {
           return;
       }
 
-      setIsDoneModalOn(true);
-      removeCookie("opinion", { path: "/" });
-      setOpinion("");
+      // setIsDoneModalOn(true);
+      // removeCookie("opinion", { path: "/" });
+      // setOpinion("");
 
-      // try {
-      //     const signUpResponse = await axios.post( process.env.REACT_APP_BACK_URL + "/gachonherald",
-      //         {
-      //             opinion
-      //         },
-      //         {
-      //             headers: {
-      //                 Authorization: `Bearer ${cookies.token}`,
-      //             },
-      //         }
+      try {
+          const signUpResponse = await axios.post( process.env.REACT_APP_BACK_URL + "/gachon-herald",
+              {
+                  opinion
+              },
+              {
+                  headers: {
+                      Authorization: `Bearer ${cookies.token}`,
+                  },
+              }
 
-      //     );
-      //     if (signUpResponse.data.code === 200) {
-      //         setIsDoneModalOn(true);
-      //         removeCookie("opinion", { path: "/" });
-      //     }
-      // } catch (error) {
-      //     console.error("오류 발생:", error);
+          );
+          if (signUpResponse.data.code === 200) {
+              setIsDoneModalOn(true);
+              removeCookie("opinion", { path: "/" });
+              setOpinion("");
+          }
+      } catch (error) {
+          console.error("오류 발생:", error);
 
-      // }
+      }
   };
 
   useEffect(() => {

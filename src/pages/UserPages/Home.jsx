@@ -415,7 +415,7 @@ const Home = () => {
           >
           </SearchBox>
           <ResultBox isVisiable = {keyword.length != 0}>
-          {results.map((result, index) => (
+          {results.slice(0,3).map((result, index) => (
             <Link to={"/councils/"+result.councilId}><li key={index}><span>{result.name}</span><CouncilName>{result.councilName}</CouncilName></li></Link>
           ))}
             <li><AlertBox>!</AlertBox><NoResult>물품을 찾을 수 없나요?</NoResult> <Link to={"/write"}><Request>요청하기</Request></Link></li>
