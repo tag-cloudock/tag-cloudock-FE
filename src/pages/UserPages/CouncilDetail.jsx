@@ -66,7 +66,7 @@ const CouncilInfo = styled.div`
 
 const InfoItem = styled.div`
   display: flex;
-  
+
   &:last-child{
     display: block;
   }

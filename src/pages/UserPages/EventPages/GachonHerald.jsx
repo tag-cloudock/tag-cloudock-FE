@@ -46,10 +46,13 @@ const Title = styled.div`
   font-weight: 700;
 `;
 
-const Image = styled.div`
+const Image = styled.img`
+  border-top:1px solid #eeeeee;
+  display: block;
   width: 100%;
-  height: 200px;
   background-color: #eeeeee;
+  margin: 0px;
+  padding: 0px;
 `;
 
 const PageHeader = styled.div`
@@ -233,33 +236,110 @@ const ModalText3 = styled.div`
   color: #c0c0c0;
 `;
 
+const Truncate = styled.div`
+  border-top: 1px solid #eeeeee;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px;
+  color: #aaaaaa;
+`;
 
 const GachonHerald = () => {
   const navigate = useNavigate();
   const [articles, setArticles] = useState([
     {
       section : "Cover Story",
-      title : "Animal Diplomacy Is Like A Double-Edged Sword.",
-      imgName : "cover1.jpg",
-      url: "http://www.gachonherald.com/news/articleView.html?idxno=1205"
+      title : "South Korea's Environmental Policy in Retreat",
+      imgName : "cover_story.jpg",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1219"
     },
     {
       section : "Brief",
-      title : "European Scenes on the Subway",
-      imgName : "cover1.jpg",
-      url: "http://www.gachonherald.com/news/articleView.html?idxno=1205"
+      title : "Gachon University Establishes the First AI College in South Korea",
+      imgName : "brief1.png",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1214"
     },
     {
       section : "Brief",
-      title : "European Scenes on the Subway",
-      imgName : "cover1.jpg",
-      url: "http://www.gachonherald.com/news/articleView.html?idxno=1205"
+      title : "Shining College Life with English, a New Beginning",
+      imgName : "",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1217",
+      truncate: "Seeking meaningful activities for the new semester or being concerned about English proficiency is common among students. As a new student, one may seek enjoyable campus activities while studying English, while current students may pursue opportunities for TOEIC preparation and studying abroad. "
     },
     {
       section : "Brief",
-      title : "European Scenes on the Subway",
-      imgName : "cover1.jpg",
+      title : "Increasing Early and Regular Admission Applications of Gachon University in 2024",
+      imgName : "",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1207",
+      truncate: "Gachon University's early and regular admission applicants continue to show an increasing trend. As of early admission in 2024, Gachon University had the second most applicants in Korea with 76,264 applicants, which is 28.9% more than last year. "
+    },
+    {
+      section : "Feature",
+      title : "Seoul's Spring - The Intersection of History and Desire in 1979",
+      imgName : "feature1.png",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1215"
+    },
+    {
+      section : "Feature",
+      title : "Continued Deficit Prompts Carrot Market to Adopt a New Name",
+      imgName : "feature2.jpg",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1222"
+    },
+    {
+      section : "Gachonian",
+      title : "We are Students and Entrepreneurs; Stories of Cocone School Entrepreneurs",
+      imgName : "",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1218",
+      truncate: "If you are a student at Gachon University, you may have heard of ‘Gachon Cocone School,’ a student entrepreneurship curriculum. But do you know more about Cocone School? Cocone School, which opened in 2022, is relatively new, so there are inevitably only a few students who know the information. "
+    },
+    {
+      section : "Photo Essay",
+      title : "Flowers that bloom once a year",
+      imgName : "photo_essay.png",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1216"
+    },
+    {
+      section : "World Wide",
+      title : "What Will the Russia-Ukraine War Look Like in 2024?",
+      imgName : "",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1209",
+      truncate: "On February 24th, 2022, Vladimir Putin declared war against Ukraine under the guise of \"a special military operation,\" purportedly aimed at restoring order and combating alleged Neo-Nazis. "
+    },
+    {
+      section : "World Wide",
+      title : "Bedbugs Invade France",
+      imgName : "world_wide1.png",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1212"
+    },
+    {
+      section : "Campus Talk",
+      title : "Would You Participate in Dating Reality Shows like 'Exchange'?",
+      imgName : "campus_talk.png",
       url: "http://www.gachonherald.com/news/articleView.html?idxno=1205"
+    },
+    {
+      section : "Experience",
+      title : "Seeing Beyond Sight, 'Dialogue in the Dark'",
+      imgName : "experience.png",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1211"
+    },
+    {
+      section : "Movie",
+      title : "The Tragic Life of Alan Turing",
+      imgName : "movie.jpg",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1221"
+    },
+    {
+      section : "Book",
+      title : "How People Conform to an Unjust Society",
+      imgName : "book.png",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1208"
+    },
+    {
+      section : "Drama",
+      title : "Different Cultures, Different Dramas",
+      imgName : "drama.png",
+      url: "http://www.gachonherald.com/news/articleView.html?idxno=1210"
     }
   ]);
 
@@ -364,7 +444,11 @@ const GachonHerald = () => {
               <ArticleBox>
                 <Section>{article.section}</Section>
                 <Title>{article.title}</Title>
-                <Image></Image>
+                { article.imgName == "" 
+                ? <Truncate>{"\u00A0" + article.truncate.slice(0,150) + "..."}</Truncate>
+
+                : <Image src={"image/gachonherald/"+article.imgName}></Image>
+          }
               </ArticleBox>
             </a>
           ))}

@@ -468,15 +468,15 @@ const Home = () => {
 
         <Link to={"/notice/2"}>
           <Ad>
-            <img src={"/image/event.jpg"} alt="" />
+            <img src={"/image/eventanno.jpg"} alt="" />
           </Ad>  
         </Link>  
 
-        {/* <Link to={"/gachonherald"}>
+        <Link to={"/gachonherald"}>
           <Ad>
             <img src={"/image/gachonherald.jpg"} alt="" />
           </Ad>  
-        </Link>  */}
+        </Link> 
         
         <SubTitle>
           학우들이 요청중이에요! <Link to={"/posts?campus=" + (campus == 0 ? "global" : "medical") + "&page=0"}><span>모두보기</span></Link>
