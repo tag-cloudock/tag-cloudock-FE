@@ -466,7 +466,7 @@ const Home = () => {
           </CouncilBtn>
         </Link>
 
-        <Link to={"/notice/2"}>
+        <Link to={"/notice/7"}>
           <Ad>
             <img src={"/image/eventanno.jpg"} alt="" />
           </Ad>  
