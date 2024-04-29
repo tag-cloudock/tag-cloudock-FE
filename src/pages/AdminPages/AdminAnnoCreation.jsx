@@ -72,7 +72,6 @@ const TextareaBox = styled.textarea`
       border-color: #379DFF;
     }
 `;
-
 const AdminAnnoCreation = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");

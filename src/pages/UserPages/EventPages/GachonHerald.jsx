@@ -424,7 +424,7 @@ const GachonHerald = () => {
           Publication Event
           </EventTitle>
           <EventDesc>
-          Read our articles and share your opinion! We will choose two people to receive Starbucks coupons on April 30th. Have a great campus life!
+          Read our articles and share your opinion! We will choose two people to receive Starbucks coupons on May 31st. Have a great campus life!
           </EventDesc>
           <OpinionInput 
           value={opinion}
