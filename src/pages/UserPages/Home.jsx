@@ -11,7 +11,7 @@ import axios from "axios";
 
 // 홈 각 박스 제목
 const SubTitle = styled.div`
-  margin-top: 10px;
+  margin-top: 30px;
   padding-bottom: 5px;
   padding-left: 20px;
   text-align: left;
@@ -199,22 +199,25 @@ const ArrowIcon = styled.img`
 `;
 
 const CouncilBtn = styled.div`
-  /* border-radius: 20px; */
-  padding: 60px 20px;
+  border-radius: 20px;
+  padding: 70px 10px;
   /* box-shadow: 0px 2px 15px 0px rgba(181, 181, 181, 0.25); */
-  /* border: 1px solid #f2f2f2; */
+  /* border: 5px solid #e9f0ff; */
   background: #f1f5ff;
   /* background: #f4f4f4a2; */
   height: 50px;
-  margin: 30px 0px 30px 0px;
+  margin: 30px 20px 45px 20px;
+  overflow: hidden;
   @media screen and (min-width: 700px) {
 
   } 
   
 `;
+
 const CouncilBtnText = styled.div`
   float: left;
   & div{
+    white-space: pre;
     margin-top: 7px;
     font-size: 27px;
   color : #6093FF;
@@ -227,7 +230,14 @@ const CouncilBtnText = styled.div`
   } 
   border-bottom: 15px solid rgb(215, 229, 255);
   }
- 
+
+  & div strong{
+    font-size: 30px;
+  @media screen and (max-width: 700px) {
+    font-size: 25px;
+  } 
+  }
+
   & span {
     font-weight: 500;
     /* margin-top: 5px; */
@@ -350,7 +360,6 @@ width: 50px;
 `;
 
 const Ad = styled.div`
-  margin-top: 5px;
   padding: 0px 20px;
   & img{
     width: 100%;
@@ -466,11 +475,11 @@ const Home = () => {
           </CouncilBtn>
         </Link>
 
-        <Link to={"/notice/7"}>
+        {/* <Link to={"/notice/7"}>
           <Ad>
             <img src={"/image/eventanno.jpg"} alt="" />
           </Ad>  
-        </Link>  
+        </Link>   */}
 
         <Link to={"/gachonherald"}>
           <Ad>
@@ -487,7 +496,7 @@ const Home = () => {
           </RecentPostBox>
         </ContentAreaBox>
         {/* 장소 선택 목록 */}
-        <SubTitle>
+        {/* <SubTitle>
           내 근처 요청 보기!
         </SubTitle>
         <ContentAreaBox>
@@ -591,7 +600,7 @@ const Home = () => {
               </div>
             }
           </LocationItems>
-        </ContentAreaBox>
+        </ContentAreaBox> */}
         <Footer></Footer>
       </Container>
 
