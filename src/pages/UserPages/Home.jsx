@@ -201,6 +201,7 @@ const ArrowIcon = styled.img`
 const CouncilBtn = styled.div`
   border-radius: 20px;
   padding: 70px 10px;
+  text-align: center;
   /* box-shadow: 0px 2px 15px 0px rgba(181, 181, 181, 0.25); */
   /* border: 5px solid #e9f0ff; */
   background: #f1f5ff;
@@ -215,19 +216,22 @@ const CouncilBtn = styled.div`
 `;
 
 const CouncilBtnText = styled.div`
-  float: left;
+  /* float: left; */
+  display: inline-block;
+  text-align: center;
   & div{
     white-space: pre;
     margin-top: 7px;
     font-size: 27px;
   color : #6093FF;
   line-height: 10px;
-  padding-right: 20px;
+  /* padding-right: 20px; */
   transition: margin-left 0.3s ease; /* transition 속성 추가 */
   font-weight: 800;
   @media screen and (max-width: 700px) {
     font-size: 23px;
   } 
+  padding: 0px 10px;
   border-bottom: 15px solid rgb(215, 229, 255);
   }
 
@@ -242,7 +246,7 @@ const CouncilBtnText = styled.div`
     font-weight: 500;
     /* margin-top: 5px; */
     font-size: 17px;
-    color: #646464;
+    color: #aaaaaa;
     display: block;
   }
 `;
