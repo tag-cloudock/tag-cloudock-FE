@@ -416,7 +416,7 @@ const GachonHerald = () => {
       <PageHeader>
           THE GACHON HERALD
           <div>
-            No.160 APRIL 2024
+            no.160 Spring 2024
           </div>
         </PageHeader>
         <Event>
