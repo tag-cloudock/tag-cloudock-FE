@@ -200,8 +200,8 @@ const ArrowIcon = styled.img`
 
 const CouncilBtn = styled.div`
   border-radius: 20px;
-  padding: 70px 10px;
-  text-align: center;
+  padding: 70px 20px;
+  text-align: left;
   /* box-shadow: 0px 2px 15px 0px rgba(181, 181, 181, 0.25); */
   /* border: 5px solid #e9f0ff; */
   background: #f1f5ff;
@@ -218,7 +218,7 @@ const CouncilBtn = styled.div`
 const CouncilBtnText = styled.div`
   /* float: left; */
   display: inline-block;
-  text-align: center;
+  text-align: left;
   & div{
     white-space: pre;
     margin-top: 7px;
@@ -231,7 +231,7 @@ const CouncilBtnText = styled.div`
   @media screen and (max-width: 700px) {
     font-size: 23px;
   } 
-  padding: 0px 10px;
+  /* padding-right: 30px; */
   border-bottom: 15px solid rgb(215, 229, 255);
   }
 
