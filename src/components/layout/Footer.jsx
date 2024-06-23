@@ -14,7 +14,7 @@ const FooterBox = styled.div`
 // 푸터 텍스트
 const FooterText = styled.div`
     text-align: center;
-    color:#c8c8c8;
+    color:#ffffff;
     font-size: 15px;
     position: absolute;
     bottom: 20px;
@@ -40,7 +40,7 @@ const Insta = styled.a`
 
 const CouncilSignIn = styled.span`
     & a{
-        color:#cccccc;
+        color:#ffffff;
     }
 `;
 
@@ -50,7 +50,7 @@ display: block;
     font-size: 12px;
     margin-top: 5px;
     & a{
-        color:#cccccc;
+        color:#ffffff;
     }
 `;
 
@@ -58,7 +58,7 @@ const Footer = () => {
     return (
         <FooterBox>
             <FooterText>
-            <Insta href="https://www.instagram.com/baram_official_/"><img src="/image/insta.svg"></img></Insta>
+            {/* <Insta href="https://www.instagram.com/baram_official_/"><img src="/image/insta.svg"></img></Insta> */}
                 <CouncilSignIn><Link to={"/council/signin"}>© </Link></CouncilSignIn>2024. 나우 Ai Way All Rights Reserved 
                 <Info>
                    <Link to={"/privacy"}>개인정보 처리방침</Link>  

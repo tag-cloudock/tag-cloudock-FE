@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Home from "./pages/UserPages/Home";
+import Home2 from "./pages/UserPages/Home2";
 import User from "./pages/UserPages/User";
 import PostList from "./pages/UserPages/PostList";
 import PostDetail from "./pages/UserPages/PostDetail";
@@ -42,7 +43,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* 유저 */}
-          <Route path="/" Component={Home} />
+          <Route path="/" Component={Home2} />
           <Route path="/certification" Component={Certification} /> 
           <Route path="/user/:userid" Component={User} />
           <Route path="/write" Component={PostEdit} />{/* post/edit */}
