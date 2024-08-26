@@ -147,6 +147,7 @@ const Logos = styled.img`
   color: #828282;
   /* padding-bottom: 20px; */
   /* flex: 1; */
+  height: 50px;
   
   margin: auto 0;
   padding: 15px 50px;
@@ -200,7 +201,7 @@ const Header = ({ headerType, headerText }) => {
                     본 서비스는 42대 총학생회 청의 지원을 받고 있습니다.
                   </Text>
                 </TextBox>
-                <Logos src="/image/cheongwithbaram.svg">
+                <Logos src="/image/cheongwithbaram.jpg">
 
                 </Logos>
                 <ModalBtnBox>

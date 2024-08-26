@@ -13,15 +13,14 @@ import CouncilList from "./CouncilList";
 // 학생회 캠퍼스 선택 박스 Parent
 const CampusMoveBox = styled.div`
   position: sticky;
-  top: 0px;
+  top: -5px;
   z-index: 10;
-  /* display: flex; */
-  /* justify-content: space-evenly; */
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.7); /* 반투명 배경 색상 */
   padding: 0px 20px;
-  /* position: relative; */
   border-bottom: 1px solid #eeeeee;
+  backdrop-filter: blur(10px); /* 블러 효과 */
 `;
+
 
 // 학생회 캠퍼스 선택 박스 Child
 const CampusBox = styled.button`
@@ -30,7 +29,7 @@ const CampusBox = styled.button`
   width: 50%;
   outline: none;
   padding-top: 5px;
-  background: #ffffff;
+  /* background: #ffffff; */
   box-sizing: border-box;
   position: relative;
 `;
@@ -68,6 +67,7 @@ const ActiveBorder = styled.div`
 
 const ActiveBorderColor = styled.div`
   height: 3px;
+  border-radius: 100px;
   width: 100px;
   margin: 0px auto;
   background-color: #6093FF;
@@ -200,7 +200,144 @@ const CancleIcon = styled.img`
   height: 18px;
 `;
 
+const HearTheVoiceBox = styled.div`
+  /* background: #eeeeee; */
+  width: 100%;
+  /* height: 300px; */
+  padding: 0px 20px;
+  box-sizing: border-box;
+`;
+
+const HearTheVoiceTitle = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+`;
+
+const WriteHearTheVoice = styled.div`
+  box-sizing: border-box;
+  border-radius: 100px;
+  width: 100%;
+  background: #6093FF;
+  color: #eeeeee;
+  text-align: center;
+  padding: 7px;
+  font-size: 16px;
+  font-weight: 700;
+  
+`;
+
+
+const Voices = styled.div`
+  margin: 20px 0px;
+  text-align: center;
+  height: 100px;
+  overflow: scroll;
+  border: 1px solid #eeeeee;
+  padding: 10px 0px;
+  border-radius: 10px;
+`;
+
+const Voice = styled.span`
+  padding: 7px 10px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  color:#bcbcbc;
+`;
+
+const ModalContainer = styled.div`
+  z-index: 1000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000077;
+
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+`;
+const ModalBox2 = styled.div`
+
+  margin: 0 auto;
+  width: 100%;
+  height: 450px;
+  max-width: 400px;
+  border-radius: 30px 30px 0px 0px;
+  background: #ffffff;
+  
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+`;
+
+const ModalText = styled.div`
+  margin-top: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  color:#000000;
+  /* line-height: 30px; */
+`;
+
+
+const ModalBtnBox = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 22px;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+`;
+
+const ModalBtn = styled.button`
+  box-sizing: border-box;
+  border: none;
+  width: 100%;
+  /* margin: 0px 20px; */
+  background: ${({ isLeft }) => (isLeft ? '#f5f5f5' : '#6093FF')};
+  padding: 15px;
+  text-align: center;
+  border-radius: 15px;
+  font-weight: 500;
+  font-size: 18px;
+  color:${({ isLeft }) => (isLeft ? '#828282' : '#FFFFFF')};
+`;
+
+const WriteVoiceBox = styled.div`
+  padding: 20px 20px 0px 20px;
+  text-align: left;
+`;
+const TextBoxTitle = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+  
+`;
+const TextBoxSubTitle = styled.div`
+  font-size: 14px;
+  color: #bcbcbc;
+  
+`;
+
+const TextBox = styled.input`
+  margin-top: 10px;
+  background: #f5f5f5;
+  height: 40px;
+  border-radius: 10px;
+  width: 100%;
+  border:none;
+  outline: none;
+  padding: 0px 10px;
+  box-sizing: border-box;
+`;
+
+WriteVoiceBox
+
 const Home = () => {
+  const [isDoneModalOn, setIsDoneModalOn] = useState(false);
   const [cookies, setCookies] = useCookies();
   const [campus, setCampus] = useState("global");
 
@@ -275,7 +412,7 @@ const Home = () => {
           </CancleBtn>}
         </SearchBox>
         <ResultBox isVisiable={keyword.length !== 0}>
-          {results.slice(0, 3).map((result, index) => (
+          {results.map((result, index) => (
             <Link to={`/councils/${result.councilId}`} key={index}>
               <li>
                 <span>{result.name}</span>
@@ -283,13 +420,14 @@ const Home = () => {
               </li>
             </Link>
           ))}
+          {results.length == 0 ?
           <li>
-            <AlertBox>!</AlertBox>
-            <NoResult>물품을 찾을 수 없나요?</NoResult>
-            <Link to={"/write"}>
+            <NoResult>조회된 물품이 없습니다.</NoResult>
+            {/* <Link to={"/write"}>
               <Request>요청하기</Request>
-            </Link>
+            </Link> */}
           </li>
+          : null }
         </ResultBox>
       </Search>
       <CampusMoveBox>
@@ -317,7 +455,216 @@ const Home = () => {
       <Container>
         <CouncilList campus={campus} />
       </Container>
+
+      <HearTheVoiceBox>
+            <HearTheVoiceTitle>
+              학우들의 소리함
+            </HearTheVoiceTitle>
+            <Voices>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+              <Voice>
+                경제학과 최고
+              </Voice>
+              <Voice>
+                컴공 최고
+              </Voice>
+              <Voice>
+                총학 최고
+              </Voice>
+            </Voices>
+
+            <WriteHearTheVoice onClick={() => {
+              setIsDoneModalOn(true);
+            }}>
+              작성하기
+            </WriteHearTheVoice>
+      </HearTheVoiceBox>
       <Footer></Footer>
+
+      {isDoneModalOn ?
+        <ModalContainer>
+          <ModalBox2>
+            <ModalText>
+              작성하기
+            </ModalText>
+
+            <WriteVoiceBox>
+            <TextBoxTitle>
+              한마디
+            </TextBoxTitle>
+            <TextBox 
+             type="text"
+             name="voice"
+             placeholder="응원의 한마디나 요청사항을 적어주세요!"
+            //  onChange={}
+             autoComplete="off">
+
+            </TextBox>
+            </WriteVoiceBox>
+
+            <WriteVoiceBox>
+            <TextBoxTitle>
+              전화번호
+            </TextBoxTitle>
+            <TextBoxSubTitle>
+            * 이벤트기간에만 수집하는 항목이며 추첨을 위해서만 사용됩니다.
+            </TextBoxSubTitle>
+            <TextBoxSubTitle>
+            * 중복 응모하여도, 추첨확률은 동일합니다.
+            </TextBoxSubTitle>
+            <TextBoxSubTitle>
+            * 이벤트 기간 9.2~9.6
+            </TextBoxSubTitle>
+
+            <TextBox 
+             type="text"
+             name="phone"
+             placeholder="010-XXXX-XXXX"
+            //  onChange={}
+             autoComplete="off">
+
+            </TextBox>
+            </WriteVoiceBox>
+            <ModalBtnBox>
+              <ModalBtn onClick={() => {
+                setIsDoneModalOn(false);
+              }} isLeft={true}>
+                닫기
+              </ModalBtn>
+              <ModalBtn onClick={() => {
+                setIsDoneModalOn(false);
+              }} isLeft={false}>
+                완료
+              </ModalBtn>
+            </ModalBtnBox>
+          </ModalBox2>
+        </ModalContainer>
+        : null}
     </HomeContainer>
   );
 };
