@@ -143,7 +143,7 @@ const AlertBox = styled.div`
 
 const Home = () => {
   const [cookies, setCookies] = useCookies();
-  const [campus, setCampus] = useState(cookies.campus ? cookies.campus : 0);
+  const [campus, setCampus] = useState("global");
 
   const [keyword, setKeyword] = useState("");
   const [debouncedSearchValue, setDebouncedSearchValue] = useState('');
