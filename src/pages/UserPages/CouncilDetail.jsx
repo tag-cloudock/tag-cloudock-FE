@@ -154,7 +154,7 @@ const ModalText = styled.div`
   text-align: center;
   font-size: 20px;
   font-weight: 800;
-  color:#535353;
+  color:#000000;
   /* line-height: 30px; */
 `;
 

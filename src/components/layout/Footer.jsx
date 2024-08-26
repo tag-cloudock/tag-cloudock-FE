@@ -4,7 +4,7 @@ import styled from "styled-components";
 // 푸터 박스
 const FooterBox = styled.div`
 
-    height: 300px;
+    height: 100px;
     width: 100%;
     background: #ffffff;
     /* position: absolute; */
@@ -13,9 +13,12 @@ const FooterBox = styled.div`
 
 // 푸터 텍스트
 const FooterText = styled.div`
+    display: flex;
+    flex-direction: column;
     text-align: center;
-    color:#ffffff;
-    font-size: 15px;
+    color:#bcbcbc;
+    font-size: 14px;
+    font-weight: 300;
     position: absolute;
     bottom: 20px;
     left: 0;
@@ -27,20 +30,17 @@ const GotoGithub = styled.span`
 
 
 const Insta = styled.a`
-    /* color:#6093FF; */
-    display: block;
-    /* margin-left: 10px; */
-    margin-bottom: 12px;
-
-    & img{
-        width: 20px;
-    }
+    text-align: center;
+    color:#bcbcbc;
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 10px;
 `;
 
 
 const CouncilSignIn = styled.span`
     & a{
-        color:#ffffff;
+        color:#bcbcbc;
     }
 `;
 
@@ -50,7 +50,7 @@ display: block;
     font-size: 12px;
     margin-top: 5px;
     & a{
-        color:#ffffff;
+        color:#bcbcbc;
     }
 `;
 
@@ -58,11 +58,12 @@ const Footer = () => {
     return (
         <FooterBox>
             <FooterText>
-            {/* <Insta href="https://www.instagram.com/baram_official_/"><img src="/image/insta.svg"></img></Insta> */}
-                <CouncilSignIn><Link to={"/council/signin"}>© </Link></CouncilSignIn>2024. 나우 Ai Way All Rights Reserved 
-                <Info>
+            <Insta href="https://www.instagram.com/baram_official_/">@baram_official_</Insta>
+               <div><CouncilSignIn><Link to={"/council/signin"}>© </Link></CouncilSignIn>2024 Baram. All Rights Reserved
+                </div>  
+                {/* <Info>
                    <Link to={"/privacy"}>개인정보 처리방침</Link>  
-                </Info>
+                </Info> */}
             </FooterText>
             
         </FooterBox>
