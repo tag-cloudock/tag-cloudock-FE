@@ -13,13 +13,13 @@ import CouncilList from "./CouncilList";
 // 학생회 캠퍼스 선택 박스 Parent
 const CampusMoveBox = styled.div`
   position: sticky;
-  top: -5px;
-  z-index: 1;
+  top: 0px;
+  z-index: 10;
   /* display: flex; */
   /* justify-content: space-evenly; */
   background: #ffffff;
   padding: 0px 20px;
-  position: relative;
+  /* position: relative; */
   border-bottom: 1px solid #eeeeee;
 `;
 

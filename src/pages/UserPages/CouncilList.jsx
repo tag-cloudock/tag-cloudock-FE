@@ -132,7 +132,6 @@ const HeartBox = styled.div`
   margin-left: auto;
   display: flex;
   flex-direction: column;
-  z-index: 100;
   overflow: visible;
 `;
 
