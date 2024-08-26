@@ -15,10 +15,9 @@ const CampusMoveBox = styled.div`
   position: sticky;
   top: -5px;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.7); /* 반투명 배경 색상 */
+  background: rgb(255, 255, 255); /* 반투명 배경 색상 */
   padding: 0px 20px;
   border-bottom: 1px solid #eeeeee;
-  backdrop-filter: blur(10px); /* 블러 효과 */
 `;
 
 
@@ -233,7 +232,7 @@ const Voices = styled.div`
   height: 100px;
   overflow: scroll;
   border: 1px solid #eeeeee;
-  padding: 10px 0px;
+  padding: 10px 5px;
   border-radius: 10px;
 `;
 
