@@ -193,8 +193,8 @@ const ModalContainer = styled.div`
 const ModalBox2 = styled.div`
   margin: 0 auto;
   width: 80%;
-  height: 370px;
-  max-width: 400px;
+  height: 100%;
+  width: 100%;
   border-radius: 30px;
   background: #ffffff;
   
@@ -239,7 +239,7 @@ const Map = styled.div`
   margin: 20px 20px;
   /* width: 100%; */
   height: 100%;
-  height: 200px;
+  height: 100%;
 `;
 
 
@@ -248,8 +248,6 @@ const CouncilDetail = () => {
   const [councilData, setCouncilData] = useState({ items: [], imgPath: "default.png" }); // 채팅방 리스트 상태
   const { id } = useParams();
   useEffect(() => {
-
-   
 
     const fetchCouncil = async () => {
       try {
@@ -266,30 +264,66 @@ const CouncilDetail = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+      
+      
 
     if (document.getElementById('map') != null ){
       var container = document.getElementById('map');
       var options = {
         // center: new kakao.maps.LatLng(councilData.latitude, councilData.longitude),
-        center: new kakao.maps.LatLng(37.45218283, 127.133048),
+        center: new kakao.maps.LatLng(34.6080529518653, 127.21258125362934),
+        mapTypeId: kakao.maps.MapTypeId.SKYVIEW,
         level: 3
       };
       var map = new kakao.maps.Map(container, options);
 
-      // var markerPosition  = new kakao.maps.LatLng(councilData.latitude, councilData.longitude);
 
-      var markerPosition  = new kakao.maps.LatLng(37.45218283, 127.133048);
-      var marker = new kakao.maps.Marker({
-        position: markerPosition
-    });
-    marker.setMap(map);
+
+      // // 다각형을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 다각형을 표시합니다
+      // const polygonPath = locations.map(location => 
+      //   new kakao.maps.LatLng(location.lat, location.lng)
+      // );
+
+// // 지도에 표시할 다각형을 생성합니다
+// var polygon = new kakao.maps.Polygon({
+//   path:polygonPath, // 그려질 다각형의 좌표 배열입니다
+//   strokeWeight: 3, // 선의 두께입니다
+//   strokeColor: '#de2a2a', // 선의 색깔입니다
+//   strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+//   fillColor: '#de2a2a', // 채우기 색깔입니다
+//   // fillOpacity:1 // 채우기 불투명도 입니다
+// });
+
+// 지도에 다각형을 표시합니다
+// polygon.setMap(map);
+
+    // locations.forEach(location => {
+    //   var markerPosition = new kakao.maps.LatLng();
+    //   var marker = new kakao.maps.Marker({
+    //     position: markerPosition
+    //   });
+    //   marker.setMap(map);
+
+    //   var circle = new kakao.maps.Circle({
+    //     center : new kakao.maps.LatLng(location.lat, location.lng),  // 원의 중심좌표 입니다 
+    //     radius: 0.5, // 미터 단위의 원의 반지름입니다 
+    //     strokeWeight: 1, // 선의 두께입니다 
+    //     strokeColor: '#d42525', // 선의 색깔입니다
+    //     strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    //     fillOpacity: 1  // 채우기 불투명도 입니다   
+    // }); 
+    
+    // // 지도에 원을 표시합니다 
+    // circle.setMap(map); 
+    // });
     }
   }, )
  
 
   return (
     <CouncilBox>
-       <Header headerType={"council"}></Header>
+      <Header></Header>
       <TitleBox>
         {/* <ProfileImg>
             <img src={ process.env.REACT_APP_BACK_URL + "/image/" + councilData.imgPath}></img>

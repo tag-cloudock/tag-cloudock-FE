@@ -43,7 +43,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* 유저 */}
-          <Route path="/" Component={Home2} />
+          <Route path="/" Component={Home} />
           <Route path="/certification" Component={Certification} /> 
           <Route path="/user/:userid" Component={User} />
           <Route path="/write" Component={PostEdit} />{/* post/edit */}
