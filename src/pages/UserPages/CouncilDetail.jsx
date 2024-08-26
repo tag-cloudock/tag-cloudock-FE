@@ -15,148 +15,95 @@ const CouncilBox = styled.div`
 `;
 
 const CouncilInforContainer = styled.div`
-  padding: 0px 30px;
+  box-sizing: content-box;
+  padding: 0px 20px;
+  margin-bottom: 40px;
+
 `;
 
 const TitleBox = styled.div`
-  background: #f1f5ff;
-  /* margin-bottom: 20px; */
-  /* border-radius: 15px; */
-  /* box-shadow: rgba(215, 218, 220, 0.5) 0px 0px 15px; */
-  padding: 30px;
-  @media screen and (min-width: 700px) {
-    border-radius: 20px;
-  } 
+  /* background: #f1f5ff; */
+  padding: 20px 20px;
+  display: flex;
+  align-items: center;
 `;
 
 const CouncilName = styled.div`
-  width: 100%;
-  font-weight: 800;
-  font-size: 25px;
-  color : #6093FF;
+  font-weight: 700;
+  font-size: 20px;
+  color : #000000;
 `;
 
 const ProductContainer = styled.div`
-  padding: 0px 30px 80px 30px;
+  padding: 0px 20px 40px 20px;
   & ul li {
-    color: #676767;
-    font-size: 15px;
+    color: #000000;
+    font-size: 16px;
     font-weight: 500;
     list-style-type: none;
-    line-height: 40px;
-    padding-left: 15px;
-    border-bottom: 1px solid#eeeeee;
-  }
-  & ul li:last-child {
-    border-bottom: none;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 `;
 
 const CouncilInfo = styled.div`
   display: inline-block;
   width: 100%;
-  padding: 20px 0px 10px 0px;
-  color: #000000;
-  font-size: 17px;
+  padding: 20px 0px;
+  color: #828282;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 30px;
-
+  border-bottom: 1px solid #eeeeee;
 
 `;
 
 const InfoItem = styled.div`
-  display: flex;
-
-  &:last-child{
-    display: block;
-  }
+  display: block;
+  margin-bottom: 20px;
   & span {
     white-space: nowrap;
     display: inline-block;
-    padding: 5px 7px;
+    padding: 5px 0px;
     border-radius:5px;
-    color: #393939;
-    font-size: 17px;
+    color: #000000;
+    font-size: 16px;
     /* background: #e6f3ff; */
     text-align: center;
     font-weight: 700;
     line-height: normal;
   }
-  & div{
-    margin-left: 5px;
-  }
-  & img{
-    display: inline-block;
-    margin-left: 10px;
-    width: 20px;
-  }
-`;
-
-const Guidelines = styled.div`
-  margin-top: 10px;
-    font-size: 15px;
-    background: #f8f8f8;
-    border-radius: 10px;
-    white-space: pre-wrap;
-    padding: 10px;
-    margin-bottom: 20px;
-    word-break: break-all;
 `;
 
 
 const Update = styled.div`
 display: inline-block;
-  height: 21px;
+  /* height: 21px; */
   border-radius: 30px;
-  text-align: right;
+  /* text-align: right; */
   margin-bottom: 30px;
-  padding: 2px 7px;
+  padding: 5px 7px;
   color: #6093FF;
   background: #f1f5ff;
   text-align: center;
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 500;
   /* display: flex; */
   align-items: center;
-  & span {
-    margin-left: 5px;
-    line-height: 21px;
-  }
-  & div{
-    display: inline-block;
-    width: 9px;
-    height: 9px;
-    border-radius: 100px;
-    background-color: #6093FF;
-  }
 `;
 
 const CategoryTitle = styled.div`
-
-  display: inline-block;
-    padding: 7px 15px;
-    border-radius: 7px;
-    font-size: 15px;
-    font-weight: 400;
-    color: #6e6e6e;
+    font-size: 20px;
+    font-weight: 700;
+    color: #000000;
     font-weight: 700;
     margin-bottom: 10px;
-    background: #f5f5f5;
-    /* 6093FF */
 `;
 
 const CategoryCount = styled.div`
-  margin-top: 10px;
-  /* background: #f3f3f3; */
-  width: 40px;
-  height: 22px;
-  line-height: 22px;
-  border-radius: 22px;
-  float: right;
-  text-align: right;
-  margin-right:15px;
-  font-weight: 500;
-  font-size: 15px;
+  font-weight: 300;
+  font-size: 16px;
   color: #6093FF;
 `;
 
@@ -165,15 +112,13 @@ const MapButton = styled.button`
   background: none;
   cursor: pointer;
   display: flex;
-  & img{
-    margin-top: 5px;
-  }
+  margin-left: 10px;
   & span{
     display: inline-block;
     color:#6093FF;
     font-size: 15px;
     font-weight: 500;
-    margin-left: -5px;
+    margin-left: 5px;
   }
 `;
 
@@ -188,19 +133,20 @@ const ModalContainer = styled.div`
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 `;
 const ModalBox2 = styled.div`
+
   margin: 0 auto;
-  width: 80%;
-  height: 370px;
+  width: 100%;
+  height: 500px;
   max-width: 400px;
-  border-radius: 30px;
+  border-radius: 30px 30px 0px 0px;
   background: #ffffff;
   
-  position: relative;
+  position: absolute;
+  bottom: 0;
   text-align: center;
-
 `;
 
 const ModalText = styled.div`
@@ -231,7 +177,7 @@ const ModalBtn = styled.button`
   border-radius: 15px;
   font-weight: 500;
   font-size: 18px;
-  color:${({ isLeft }) => (isLeft ? '#aaaaaa' : '#FFFFFF')};
+  color:${({ isLeft }) => (isLeft ? '#828282' : '#FFFFFF')};
 `;
 
 const Map = styled.div`
@@ -239,7 +185,30 @@ const Map = styled.div`
   margin: 20px 20px;
   /* width: 100%; */
   height: 100%;
-  height: 200px;
+  height: 330px;
+`;
+
+const ProfileImg = styled.div`
+  border-radius: 1000px;
+  /* margin: 20px 20px; */
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  & img{
+    border-radius: 1000px;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const OneLine = styled.div`
+  display: flex;
+`;
+
+const Info = styled.div`
+  display: flex;
+  white-space: pre-wrap;
+  word-break: break-all;
 `;
 
 
@@ -270,15 +239,13 @@ const CouncilDetail = () => {
     if (document.getElementById('map') != null ){
       var container = document.getElementById('map');
       var options = {
-        // center: new kakao.maps.LatLng(councilData.latitude, councilData.longitude),
-        center: new kakao.maps.LatLng(37.45218283, 127.133048),
+        center: new kakao.maps.LatLng(councilData.latitude, councilData.longitude),
         level: 3
       };
       var map = new kakao.maps.Map(container, options);
 
-      // var markerPosition  = new kakao.maps.LatLng(councilData.latitude, councilData.longitude);
+      var markerPosition  = new kakao.maps.LatLng(councilData.latitude, councilData.longitude);
 
-      var markerPosition  = new kakao.maps.LatLng(37.45218283, 127.133048);
       var marker = new kakao.maps.Marker({
         position: markerPosition
     });
@@ -291,9 +258,9 @@ const CouncilDetail = () => {
     <CouncilBox>
        <Header headerType={"council"}></Header>
       <TitleBox>
-        {/* <ProfileImg>
+        <ProfileImg>
             <img src={ process.env.REACT_APP_BACK_URL + "/image/" + councilData.imgPath}></img>
-          </ProfileImg> */}
+          </ProfileImg>
         <CouncilName>{councilData.name}</CouncilName>
       </TitleBox>
       <CouncilInforContainer>
@@ -301,29 +268,32 @@ const CouncilDetail = () => {
         <CouncilInfo>
           <InfoItem>
             <span>위치 </span>
-            <div>{councilData.location}</div>
+            <OneLine>
+            <Info>{councilData.location}</Info>
             <MapButton onClick={() => {
               setIsDoneModalOn(true);
             }}><img src="/image/map.svg"></img><span>지도보기</span></MapButton>
+            </OneLine>
+
           </InfoItem>
           <InfoItem>
-            <span>이용시간 </span><div>{councilData.operatingHours}</div>
+            <span>이용시간 </span><Info>{councilData.operatingHours}</Info>
           </InfoItem>
           <InfoItem>
-            <span>이용수칙 </span> <Guidelines>{councilData.usageGuidelines}</Guidelines>
+            <span>이용수칙 </span> <Info>{councilData.usageGuidelines}</Info>
           </InfoItem>
 
         </CouncilInfo>
       </CouncilInforContainer>
-
+      
       <ProductContainer>
-        {councilData.isCouncilSelfManage ?
+        {/* {councilData.isCouncilSelfManage ?
           <div>
             <Update>
               <div></div>
               <span>실시간 개수 업데이트 중</span>
             </Update></div>
-          : null}
+          : null} */}
         <CategoryTitle>제공 물품</CategoryTitle>
         <ul>
           {councilData.items.map((item) => (
