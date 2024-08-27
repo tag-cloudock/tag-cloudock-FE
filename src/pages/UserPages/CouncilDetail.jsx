@@ -112,6 +112,7 @@ const MapButton = styled.button`
   background: none;
   cursor: pointer;
   display: flex;
+  align-items: center;
   margin-left: 10px;
   & span{
     display: inline-block;
@@ -119,6 +120,10 @@ const MapButton = styled.button`
     font-size: 15px;
     font-weight: 500;
     margin-left: 5px;
+  }
+  & img{
+    width: 20px;
+    height: 20px;
   }
 `;
 
@@ -203,6 +208,7 @@ const ProfileImg = styled.div`
 
 const OneLine = styled.div`
   display: flex;
+  /* align-items: ce; */
 `;
 
 const Info = styled.div`
@@ -256,7 +262,7 @@ const CouncilDetail = () => {
 
   return (
     <CouncilBox>
-       <Header headerType={"council"}></Header>
+       <Header headerType={"council"} headerText={councilData.name}></Header>
       <TitleBox>
         <ProfileImg>
             <img src={ process.env.REACT_APP_BACK_URL + "/image/" + councilData.imgPath}></img>

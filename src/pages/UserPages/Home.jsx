@@ -99,6 +99,7 @@ const SearchBox = styled.div`
   border-radius: 100px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const InputBox = styled.input`
@@ -129,19 +130,39 @@ const ResultBox = styled.ul`
 
   & li {
     padding: 10px 0px;
-    line-height: 17px;
+    line-height: 18px;
     list-style: none;
-    font-size: 15px;
-    color: #575757;
+    font-size: 16px;
+    color: #828282;
     display: flex;
     justify-content: space-between;
   }
 `;
 
+const ResultPart = styled.div`
+  padding: 10px 0px;
+  border-bottom:   ${({ isCouncilResult }) => (isCouncilResult ? "1px solid #eeeeee" : "none")};
+`;
+
+const CouncilName2 = styled.div`
+  color : #828282; 
+`;
+const CouncilImg = styled.div`
+  width: 32px;
+  height: 32px;
+  background: #ffffff;
+  border-radius: 100px;
+  margin-right: 10px;
+`;
+const CouncilResult = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 10px 0px;
+`;
+
+
 const CouncilName = styled.span`
   color : #6093FF; 
-  border-left: 1px solid #6093FF; 
-  padding-left: 5px;
 `;
 
 const Request = styled.span`
@@ -190,7 +211,7 @@ const CancleBtn = styled.div`
   text-align: center;
   display: flex;
   align-items: center;
-  margin-left: auto;
+  margin-left: 10px;
 `;
 
 const CancleIcon = styled.img`
@@ -229,7 +250,7 @@ const WriteHearTheVoice = styled.div`
 const Voices = styled.div`
   margin: 20px 0px;
   text-align: center;
-  height: 100px;
+  height: 200px;
   overflow: scroll;
   border: 1px solid #eeeeee;
   padding: 10px 5px;
@@ -411,6 +432,17 @@ const Home = () => {
           </CancleBtn>}
         </SearchBox>
         <ResultBox isVisiable={keyword.length !== 0}>
+          <ResultPart isCouncilResult={true}>
+          {results.map((result, index) => (
+            <Link to={`/councils/${result.councilId}`} key={index}>
+              <CouncilResult>
+              <CouncilImg></CouncilImg>
+              <CouncilName2>{result.councilName}</CouncilName2>
+              </CouncilResult>
+            </Link>
+          ))}
+          </ResultPart>
+          <ResultPart>
           {results.map((result, index) => (
             <Link to={`/councils/${result.councilId}`} key={index}>
               <li>
@@ -419,6 +451,8 @@ const Home = () => {
               </li>
             </Link>
           ))}
+          </ResultPart>
+
           {results.length == 0 ?
           <li>
             <NoResult>조회된 물품이 없습니다.</NoResult>

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useCookies } from "react-cookie";
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 
 // 헤더 박스
 const HeaderBox = styled.div`
@@ -153,8 +153,27 @@ const Logos = styled.img`
   padding: 15px 50px;
 `;
 
+const CouncilName = styled.div`
+  /* text-align: center; */
+  flex: 1;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 20px;
+  margin-top: -5px;
+  color: #000000;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  transform: ${({ show }) => (show ? 'translateY(0)' : 'translateY(10px)')};
+  opacity: ${({ show }) => (show ? 1 : 0)};
+
+
+  /* margin: auto 0; */
+`;
+
+
+
 const Header = ({ headerType, headerText }) => {
   const [isDoneModalOn, setIsDoneModalOn] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const [cookies] = useCookies();
   const handleGoBack = () => {
@@ -163,6 +182,18 @@ const Header = ({ headerType, headerText }) => {
   const handleGoHome = () => {
     navigate("/");
   };
+
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
+    setScrolled(scrollTop > 100);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // 홈, 기본, 챗룸, 챗방
   switch (headerType) {
@@ -224,6 +255,7 @@ const Header = ({ headerType, headerText }) => {
             <HeaderBackBtn onClick={handleGoHome}>
               <img src="/image/back.svg" alt="" />
             </HeaderBackBtn>
+            <CouncilName show={scrolled}>{headerText}</CouncilName>
           </HeaderBox2>
           <EmptyBox></EmptyBox>
         </div>
