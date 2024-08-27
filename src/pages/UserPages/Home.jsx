@@ -109,7 +109,9 @@ const InputBox = styled.input`
   outline: none;
   border: none;
   background: none;
+  display: block;
   flex: 1;
+  width: 0px;
   &::placeholder {
     color: #bcbcbc; 
     font-weight: 400;
