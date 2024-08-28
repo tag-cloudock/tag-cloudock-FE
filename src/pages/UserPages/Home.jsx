@@ -9,6 +9,7 @@ import { useCookies } from "react-cookie";
 import moment from "moment";
 import axios from "axios";
 import CouncilList from "./CouncilList";
+import { useNavigate } from "react-router-dom";
 
 // 학생회 캠퍼스 선택 박스 Parent
 const CampusMoveBox = styled.div`
@@ -149,7 +150,7 @@ const ResultPart = styled.div`
 const CouncilName2 = styled.div`
   color : #828282; 
 `;
-const CouncilImg = styled.div`
+const CouncilImg = styled.img`
   width: 32px;
   height: 32px;
   background: #ffffff;
@@ -359,16 +360,37 @@ const TextBox = styled.input`
 WriteVoiceBox
 
 const Home = () => {
+  const navigate = useNavigate();
   const [isDoneModalOn, setIsDoneModalOn] = useState(false);
   const [cookies, setCookies] = useCookies();
   const [campus, setCampus] = useState("global");
 
+
+  const [opinion, setOpinion] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
   const [keyword, setKeyword] = useState("");
   const [debouncedSearchValue, setDebouncedSearchValue] = useState('');
   const [results, setResults] = useState([]);
+  const [results2, setResults2] = useState([]);
   const [borderPosition, setBorderPosition] = useState(0);
   const [borderWidth, setBorderWidth] = useState(0);
   const DEBOUNCE_TIME = 300;
+
+  const [voiceData, setVoiceData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(process.env.REACT_APP_BACK_URL + "/voice", {
+        });
+        console.log(response.data.data);
+        setVoiceData(response.data.data);
+      } catch (error) {
+        console.error("오류 발생:", error);
+      }
+    };
+    fetchData();
+  }, [isDoneModalOn]);
 
   useEffect(() => {
     const debounce = setTimeout(() => {
@@ -383,13 +405,18 @@ const Home = () => {
       try {
         if (debouncedSearchValue.length === 0) {
           setResults([]);
+          setResults2([]);
           return;
         }
         const response = await axios.get(
           `${process.env.REACT_APP_BACK_URL}/council-item/search/${debouncedSearchValue}`
         );
-
         setResults(response.data.data);
+        const response2 = await axios.get(
+          `${process.env.REACT_APP_BACK_URL}/council/search/${debouncedSearchValue}`
+        );
+        console.log(response2.data.data);
+        setResults2(response2.data.data);
       } catch (error) {
         console.log("오류 발생: ", error);
       }
@@ -414,6 +441,37 @@ const Home = () => {
     setBorderPosition(position);
   };
 
+  const handleAddVoice = async (e) => {
+    e.preventDefault();
+
+    // 입력을 아에 안했는지 검사
+    if (opinion.length < 1) {
+        window.alert("한마디를 입력해주세요!");
+        setOpinion('');
+        return;
+    }
+    if (phoneNumber.length < 1) {
+        window.alert("전화번호 미입력시 이벤트 응모에 포함되지 않습니다.");
+        setPhoneNumber('응모X');
+    }
+    try {
+        const signUpResponse = await axios.post( process.env.REACT_APP_BACK_URL + "/voice",
+            {
+                opinion,
+                phoneNumber
+            }
+        );
+        // 성공시
+        if (signUpResponse.data.code === 200) {
+            window.alert("작성 완료");
+            setIsDoneModalOn(false);
+        }
+    } catch (error) {
+        console.error("오류 발생:", error);
+
+    }
+};
+
   return (
     <HomeContainer>
       <Header headerType={"home"}></Header>
@@ -435,10 +493,10 @@ const Home = () => {
         </SearchBox>
         <ResultBox isVisiable={keyword.length !== 0}>
           <ResultPart isCouncilResult={true}>
-          {results.map((result, index) => (
+          {results2.map((result, index) => (
             <Link to={`/councils/${result.councilId}`} key={index}>
               <CouncilResult>
-              <CouncilImg></CouncilImg>
+              <CouncilImg src={ process.env.REACT_APP_BACK_URL + "/image/" + result.imgPath}></CouncilImg>
               <CouncilName2>{result.councilName}</CouncilName2>
               </CouncilResult>
             </Link>
@@ -455,7 +513,7 @@ const Home = () => {
           ))}
           </ResultPart>
 
-          {results.length == 0 ?
+          {results.length == 0 && results2.length == 0 ?
           <li>
             <NoResult>조회된 물품이 없습니다.</NoResult>
             {/* <Link to={"/write"}>
@@ -496,141 +554,9 @@ const Home = () => {
               학우들의 소리함
             </HearTheVoiceTitle>
             <Voices>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
-              <Voice>
-                경제학과 최고
-              </Voice>
-              <Voice>
-                컴공 최고
-              </Voice>
-              <Voice>
-                총학 최고
-              </Voice>
+            {voiceData.map((voice) => (
+              <Voice>{voice.opinion}</Voice>
+          ))}
             </Voices>
 
             <WriteHearTheVoice onClick={() => {
@@ -649,7 +575,7 @@ const Home = () => {
             </ModalText>
 
             <WriteVoiceBox>
-            <TextBoxTitle>
+            <TextBoxTitle >
               한마디
             </TextBoxTitle>
             <TextBox 
@@ -657,7 +583,10 @@ const Home = () => {
              name="voice"
              placeholder="응원의 한마디나 요청사항을 적어주세요!"
             //  onChange={}
-             autoComplete="off">
+             autoComplete="off"
+             onChange={(e) => {
+              setOpinion(e.target.value);
+          }}>
 
             </TextBox>
             </WriteVoiceBox>
@@ -681,7 +610,10 @@ const Home = () => {
              name="phone"
              placeholder="010-XXXX-XXXX"
             //  onChange={}
-             autoComplete="off">
+             autoComplete="off"
+             onChange={(e) => {
+              setPhoneNumber(e.target.value);
+          }}>
 
             </TextBox>
             </WriteVoiceBox>
@@ -691,9 +623,7 @@ const Home = () => {
               }} isLeft={true}>
                 닫기
               </ModalBtn>
-              <ModalBtn onClick={() => {
-                setIsDoneModalOn(false);
-              }} isLeft={false}>
+              <ModalBtn onClick={handleAddVoice} isLeft={false}>
                 완료
               </ModalBtn>
             </ModalBtnBox>

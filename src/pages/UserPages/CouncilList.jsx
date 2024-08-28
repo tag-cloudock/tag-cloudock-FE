@@ -7,15 +7,20 @@ import Header from "../../components/layout/Header";
 // 애니메이션 정의
 const heartBounce = keyframes`
   0% {
-    transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0) translateX(0);
+    fill: #eeeeee; 
   }
   50% {
-    transform: scale(1.2) translateY(-10px);
+    transform: scale(1.2) translateY(-10px) translateX(-2px);
+    fill: #F54D5F;
   }
   100% {
-    transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0) translateX(0);
+    fill: #eeeeee; 
   }
 `;
+
+
 
 // 스타일 정의
 const CouncilBox = styled.div`
@@ -135,15 +140,23 @@ const HeartBox = styled.div`
   overflow: visible;
 `;
 
-const HeartBtn = styled.img`
+const HeartBtn = styled.div`
   width: 30px;
+  overflow: visible;
+  
+`;
+
+const Heart = styled.path`
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
   &.active {
     animation: ${heartBounce} 0.5s ease-in-out;
   }
-`;
+  margin-left: -5px;
+  fill: #eeeeee;
+  overflow: visible;
 
+`;
 const HeartCount = styled.div`
   text-align: center;
   font-size: 14px;
@@ -155,8 +168,8 @@ const HeartCount = styled.div`
 const CouncilList = ({ campus }) => {
   const [groupedGlobalCouncilList, setGroupedGlobalCouncilList] = useState([]);
   const [groupedMedicalCouncilList, setGroupedMedicalCouncilList] = useState([]);
-  const [likedCouncils, setLikedCouncils] = useState({});
   const [hearts, setHearts] = useState({});
+  const [activeHearts, setActiveHearts] = useState({});
 
   useEffect(() => {
     const fetchCouncils = async () => {
@@ -186,6 +199,14 @@ const CouncilList = ({ campus }) => {
           return acc;
         }, [[]]);
         setGroupedMedicalCouncilList(groupedData2);
+
+        // Initialize hearts state
+        const heartsState = response.data.data.reduce((acc, item) => {
+          acc[item.councilId] = item.heart;
+          return acc;
+        }, {});
+        setHearts(heartsState);
+
       } catch (error) {
         console.error("오류 발생:", error);
       }
@@ -193,23 +214,32 @@ const CouncilList = ({ campus }) => {
     fetchCouncils();
   }, []);
 
-  const handleHeartClick = (councilId) => {
-    setLikedCouncils(prevState => ({
+  const handleHeartClick = async (councilId) => {
+    // Toggle heart state immediately
+    setHearts(prevState => ({
       ...prevState,
-      [councilId]: !prevState[councilId]
+      [councilId]: (prevState[councilId] || 0) + 1
     }));
 
-    setHearts(prevState => ({
+    // Add active class to trigger animation
+    setActiveHearts(prevState => ({
       ...prevState,
       [councilId]: true
     }));
 
+    try {
+      await axios.put(`${process.env.REACT_APP_BACK_URL}/council/${councilId}`);
+    } catch (error) {
+      console.error("오류 발생:", error);
+    }
+
+    // Remove active class after animation duration
     setTimeout(() => {
-      setHearts(prevState => ({
+      setActiveHearts(prevState => ({
         ...prevState,
         [councilId]: false
       }));
-    }, 500);
+    }, 500); // Match this time with the animation duration
   };
 
   return (
@@ -232,12 +262,21 @@ const CouncilList = ({ campus }) => {
                   </Link>
                   <HeartBox>
                     <HeartBtn
-                      src="/image/heart.svg"
-                      className={hearts[council.councilId] ? 'active' : ''}
+                      // src="/image/heart.svg"
+                      className={activeHearts[council.councilId] ? 'active' : ''}
                       onClick={() => handleHeartClick(council.councilId)}
-                    />
+                    >
+                        <svg  overflow="visible" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <Heart className={activeHearts[council.councilId] ? 'active' : ''} d="M17.5 1.9165C16.3739 1.93402 15.2724 2.24836 14.3067 2.82778C13.341 3.40719 12.5453 4.23117 12 5.2165C11.4546 4.23117 10.6589 3.40719 9.6932 2.82778C8.7275 2.24836 7.62601 1.93402 6.49996 1.9165C4.7049 1.99449 3.01366 2.77976 1.79574 4.10074C0.577818 5.42171 -0.0677922 7.17103 -4.17093e-05 8.9665C-4.17093e-05 13.5135 4.78596 18.4795 8.79996 21.8465C9.69618 22.5996 10.8293 23.0125 12 23.0125C13.1706 23.0125 14.3037 22.5996 15.2 21.8465C19.214 18.4795 24 13.5135 24 8.9665C24.0677 7.17103 23.4221 5.42171 22.2042 4.10074C20.9863 2.77976 19.295 1.99449 17.5 1.9165Z" />
+                          <defs>
+                            <clipPath id="clip0_406_1997">
+                              <rect width="24" height="24" fill="none"/>
+                            </clipPath>
+                          </defs>
+                        </svg>
+                    </HeartBtn>
                     <HeartCount>
-                      {likedCouncils[council.councilId] ? '1' : '0'}
+                      {hearts[council.councilId] || 0}
                     </HeartCount>
                   </HeartBox>
                 </CouncilItem>
