@@ -641,6 +641,9 @@ const Home = () => {
               전화번호
             </TextBoxTitle>
             <TextBoxSubTitle>
+            * 이벤트 기간에만 수집되는 항목입니다.
+            </TextBoxSubTitle>
+            <TextBoxSubTitle>
             * 외부에 공개되지 않으며 추첨을 위해서만 사용됩니다.
             </TextBoxSubTitle>
 
