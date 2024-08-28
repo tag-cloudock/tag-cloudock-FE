@@ -114,13 +114,6 @@ const MapButton = styled.button`
   display: flex;
   align-items: center;
   margin-left: 10px;
-  & span{
-    display: inline-block;
-    color:#6093FF;
-    font-size: 15px;
-    font-weight: 500;
-    margin-left: 5px;
-  }
   & img{
     width: 20px;
     height: 20px;
@@ -195,7 +188,6 @@ const Map = styled.div`
 
 const ProfileImg = styled.div`
   border-radius: 1000px;
-  /* margin: 20px 20px; */
   width: 40px;
   height: 40px;
   margin-right: 10px;
@@ -208,7 +200,8 @@ const ProfileImg = styled.div`
 
 const OneLine = styled.div`
   display: flex;
-  /* align-items: ce; */
+
+  align-items: center;
 `;
 
 const Info = styled.div`
@@ -278,7 +271,7 @@ const CouncilDetail = () => {
             <Info>{councilData.location}</Info>
             <MapButton onClick={() => {
               setIsDoneModalOn(true);
-            }}><img src="/image/map.svg"></img><span>지도보기</span></MapButton>
+            }}><img src="/image/map.svg"></img></MapButton>
             </OneLine>
 
           </InfoItem>

@@ -357,7 +357,44 @@ const TextBox = styled.input`
   box-sizing: border-box;
 `;
 
-WriteVoiceBox
+const Ad = styled.div`
+  padding: 20px;
+  /* height: 50px; */
+  background: #f7f7f7;
+  margin: 20px 0px;
+`;
+
+const Title = styled.div`
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #828282;
+
+`;
+
+const SubTitle = styled.div`
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  
+`;
+
+const Info = styled.div`
+ 
+  font-size: 14px;
+  color: #828282;
+  font-weight: 500;
+  & span{
+    color: #bcbcbc;
+    margin-right: 5px;
+  }
+  & div{
+    margin: 5px 0px;
+  }
+`;
+
+
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -383,7 +420,6 @@ const Home = () => {
       try {
         const response = await axios.get(process.env.REACT_APP_BACK_URL + "/voice", {
         });
-        console.log(response.data.data);
         setVoiceData(response.data.data);
       } catch (error) {
         console.error("오류 발생:", error);
@@ -415,7 +451,6 @@ const Home = () => {
         const response2 = await axios.get(
           `${process.env.REACT_APP_BACK_URL}/council/search/${debouncedSearchValue}`
         );
-        console.log(response2.data.data);
         setResults2(response2.data.data);
       } catch (error) {
         console.log("오류 발생: ", error);
@@ -548,7 +583,6 @@ const Home = () => {
       <Container>
         <CouncilList campus={campus} />
       </Container>
-
       <HearTheVoiceBox>
             <HearTheVoiceTitle>
               학우들의 소리함
@@ -565,6 +599,17 @@ const Home = () => {
               작성하기
             </WriteHearTheVoice>
       </HearTheVoiceBox>
+      <Ad>
+  <Title>리뉴얼 기념 이벤트 · 한마디 남기고 치킨 먹자</Title>
+
+  <Info>
+    <div><span>방법:</span> 아래 학우들의 소리함에 전화번호와 함께 방명록 남기기</div>
+    <div><span>기간:</span> 9/2 ~ 9/7</div>
+    <div><span>발표:</span> 9/8 오후 1시, 사이트 메인에서 공지</div>
+    <div><span>상품:</span> 황금올리브 치킨 2명</div>
+    <div>* 같은 전화번호로 여러 번 응모해도 추첨 확률은 동일합니다.</div>
+  </Info>
+</Ad>
       <Footer></Footer>
 
       {isDoneModalOn ?
@@ -596,13 +641,7 @@ const Home = () => {
               전화번호
             </TextBoxTitle>
             <TextBoxSubTitle>
-            * 이벤트기간에만 수집하는 항목이며 추첨을 위해서만 사용됩니다.
-            </TextBoxSubTitle>
-            <TextBoxSubTitle>
-            * 중복 응모하여도, 추첨확률은 동일합니다.
-            </TextBoxSubTitle>
-            <TextBoxSubTitle>
-            * 이벤트 기간 9.2~9.6
+            * 외부에 공개되지 않으며 추첨을 위해서만 사용됩니다.
             </TextBoxSubTitle>
 
             <TextBox 

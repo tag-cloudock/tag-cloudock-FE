@@ -66,9 +66,6 @@ const InputBox = styled.input`
       color: #aaaaaa; 
       font-size: 17px;
   }
-  &:focus {
-    border-color: #6093FF;
-  }
 `;
 
 // 제출 버튼
