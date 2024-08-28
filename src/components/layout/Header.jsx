@@ -239,7 +239,7 @@ const Header = ({ headerType, headerText }) => {
                     학생회 운영 시간, 위치, 이용 수칙 등을 확인할 수 있으며, 실시간으로 업데이트되는 복지 품의 개수도 확인할 수 있습니다.
                   </Text>
                   <Text>
-                    본 서비스는 42대 총학생회 청의 지원을 받고 있습니다.
+                    본 서비스는 42대 총학생회 청과 함께 합니다.
                   </Text>
                 </TextBox>
                 <Logos src="/image/cheongwithbaram.jpg">
