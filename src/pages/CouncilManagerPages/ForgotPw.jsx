@@ -22,7 +22,7 @@ font-family: "Poppins";
   font-weight: 850;
   & a{
     font-family: "Poppins";
-    color : #38d9a9;
+    color : #6093FF;
   }
 `;
 
@@ -61,7 +61,7 @@ const InputBox = styled.input`
       font-size: 18px;
   }
   &:focus {
-    border-color: #38d9a9;
+    border-color: #6093FF;
   }
 `;
 
@@ -73,7 +73,7 @@ const SubmitBtn = styled.button`
   background: #efefef;
   border: none;
   border-radius: 10px;
-  background: #38d9a9;
+  background: #6093FF;
   font-weight: bold;
   color:#ffffff;
   font-size: 18px; 
@@ -90,7 +90,7 @@ const GoBack = styled.span`
   margin-top: 30px;
   display: block;
   text-align: center;
-  color : #38d9a9;
+  color : #6093FF;
 `;
 
 const AlertBox = styled.div`
@@ -117,8 +117,8 @@ const ForgotPw = () => {
         </Title>
 
         <AlertBox>
-          <ForgotPassword>아이디/비밀번호를 잊었나요?</ForgotPassword>
-          <ForgotPassword>아래 인스타그램을 통해 문의하세요!</ForgotPassword>
+          <ForgotPassword>아이디 또는 비밀번호를 잊으셨나요?</ForgotPassword>
+          <ForgotPassword>아래 인스타그램을 통해 문의해주세요.</ForgotPassword>
           <ForgotPassword>@baram_official_</ForgotPassword>
         </AlertBox>
 

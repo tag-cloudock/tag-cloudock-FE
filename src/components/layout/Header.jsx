@@ -169,6 +169,16 @@ const CouncilName = styled.div`
   /* margin: auto 0; */
 `;
 
+const CouncilNameInManage = styled.div`
+  /* text-align: center; */
+  flex: 1;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 20px;
+  margin-top: -5px;
+  color: #000000;
+`;
+
 
 
 const Header = ({ headerType, headerText }) => {
@@ -252,10 +262,22 @@ const Header = ({ headerType, headerText }) => {
       return (
         <div>
           <HeaderBox2 nobg={"true"}>
-            <HeaderBackBtn onClick={handleGoHome}>
+            <HeaderBackBtn onClick={handleGoBack}>
               <img src="/image/back.svg" alt="" />
             </HeaderBackBtn>
             <CouncilName show={scrolled}>{headerText}</CouncilName>
+          </HeaderBox2>
+          <EmptyBox></EmptyBox>
+        </div>
+      );
+      case "manage":
+      return (
+        <div>
+          <HeaderBox2 nobg={"true"}>
+            <HeaderBackBtn onClick={handleGoBack}>
+              <img src="/image/back.svg" alt="" />
+            </HeaderBackBtn>
+            <CouncilNameInManage >{headerText}</CouncilNameInManage>
           </HeaderBox2>
           <EmptyBox></EmptyBox>
         </div>

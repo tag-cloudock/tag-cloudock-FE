@@ -26,7 +26,7 @@ font-family: "Poppins";
   font-weight: 850;
   & a{
     font-family: "Poppins";
-    color : #38d9a9;
+    color : #6093FF;
   }
 `;
 
@@ -44,7 +44,7 @@ const ForgotPassword = styled.span`
   margin-top: -15px;
   display: block;
   text-align: center;
-  color : #38d9a9;
+  color : #6093FF;
 `;
 
 // 입력 박스
@@ -67,7 +67,7 @@ const InputBox = styled.input`
       font-size: 17px;
   }
   &:focus {
-    border-color: #38d9a9;
+    border-color: #6093FF;
   }
 `;
 
@@ -79,7 +79,7 @@ const SubmitBtn = styled.button`
   background: #efefef;
   border: none;
   border-radius: 10px;
-  background: #38d9a9;
+  background: #6093FF;
   font-weight: bold;
   color:#ffffff;
   font-size: 18px; 
@@ -184,7 +184,7 @@ const CouncilSignIn = () => {
         {/* 타이틀 */}
         <Title>
           <SubTitle>
-            학생회 로그인
+            학생회 전용
           </SubTitle>
           <Link to={"/"}>Baram</Link>
         </Title>

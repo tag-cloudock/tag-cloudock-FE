@@ -22,61 +22,62 @@ const ContentBox = styled.div`
 const InputBox = styled.input`
     display: block;
     border: none;
-    padding: 15px 3%;
+    padding: 15px 20px;
     margin-top: 10px;
-    width: 94%;
-    font-size: 15px;
-    font-weight: 600;
-    color:#5d5d5d;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: 500;
+    color:#000000;
     border-radius: 10px;
     /* border: 1px solid #E8E8E8; */
-    background: #f8f8f8;
+    background: #f5f5f5;
     outline: none;
     &::placeholder {
-      color: #dbdbdb; 
-        font-weight: 600;
-        font-size: 15px;
+      color: #828282; 
+        font-weight: 500;
+        font-size: 16px;
     }
     &:focus {
-      border-color: #38d9a9;
+      border-color: #6093FF;
     }
 `;
 
 
 const TextareaBox = styled.textarea`
-    width: 94%;
+    width: 100%;
+    box-sizing: border-box;
     height: 100px;
     resize: none;
     margin: 10px 0px;
-    background: #f8f8f8;
+    background: #f5f5f5;
     border: none;
     border-radius: 10px;
-    color:#5d5d5d;
-    font-size: 15px; 
-    font-weight: 600;
-        font-size: 15px;
+    color:#000000;
+    font-size: 16px; 
+    font-weight: 500;
     outline: none;
-    padding: 20px 3%;
+    padding: 20px;
     &::placeholder {
-      color: #dbdbdb; 
-        font-weight: 600;
-        font-size: 15px;
+      color: #828282; 
+        font-weight: 500;
+        font-size: 16px;
     }
     &:focus {
-      border-color: #38d9a9;
+      border-color: #6093FF;
     }
 `;
 
 const SummitBtn = styled.button`
     width: 100%;
-    height: 40px;
-    font-size: 20px;
-    font-weight: 800;
+    height: 36px;
+    font-size: 16px;
+    font-weight: 700;
     border: none;
     color: #ffffff;
     margin-top: 20px;
-    border-radius: 10px;
-    background: #38d9a9;
+    border-radius: 100px;
+    background: #6093FF;
 `;
 
 const InputTitle = styled.div`
@@ -163,7 +164,7 @@ const EditCouncilInfo = () => {
   };
   return (
     <Container>
-      <Header headerType={"noChatIcon"} headerText={"운영 정보 수정"}></Header>
+      <Header headerType={"manage"} headerText={"운영 정보 수정"}></Header>
       <ContentBox>
         <InputBox type="text" name="location" placeholder="위치 (ex AI공학관 505호)"
           value={location}

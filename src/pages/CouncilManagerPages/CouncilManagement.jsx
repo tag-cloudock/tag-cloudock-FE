@@ -5,125 +5,132 @@ import axios from "axios";
 import styled from "styled-components";
 import Header from "../../components/layout/Header";
 
-
 const AdminBox = styled.div`
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    max-width: 700px;
-    background: #ffffff;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  background: #ffffff;
 `;
 
 const ContentBox = styled.div`
-    padding: 40px 20px;
+  padding: 0px 20px;
 `;
 
 const InfoBox = styled.div`
-  margin-bottom: 50px;
-  font-size: 17px;
-  line-height: 30px;
-  font-weight: 500;
-  color: #525252;
-  /* padding: 20px; */
-  /* border-radius: 10px; */
-  background: #ffffff;
-  /* border: 1px solid #eeeeee; */
-  & span{
-    font-size: 17px;
-    font-weight: 600;
-    color: #b7b7b7;
-    margin-right: 10px;
+  & div {
+    margin-bottom: 10px;
   }
-  & div{
-    margin-top: 10px;
-    border-radius: 10px;
-    white-space: pre-wrap;
-    background: #f6f6f6;
-    padding: 20px;
+
+  font-size: 16px;
+  font-weight: 500;
+  color: #000000;
+  background: #ffffff;
+
+  & div > span {
+    font-size: 16px;
+    font-weight: 500;
+    color: #828282;
+    margin-bottom: 5px;
+    display: inline-block;
   }
 `;
 
 const CreateCouncil = styled.div`
-  /* float: right; */
-  margin: 0px auto;
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
   overflow: hidden;
-  margin-top: 30px;
-  margin-bottom: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #777777;
+  font-size: 16px;
+  font-weight: 500;
+  color: #828282;
+
   text-align: center;
   border-radius: 50px;
   background: #eeeeeeca;
-  /* border: 1px solid #eeeeee; */
-  /* box-shadow: rgba(210, 210, 210, 0.5) 0px 0px 15px; */
-  & img{
-    margin-top: 5px;
-    width: 40px;
-    height: 40px;
-    opacity: 20%;
+`;
+const CreateCouncilBox = styled.div`
+margin-top: 30px;
+  margin-bottom: 100px;
+  height: 100px;
+`;
+
+
+const Items = styled.ul`
+  background: #ffffff;
+  border-top: 1px solid #eeeeee;
+  margin-top: 50px;
+  padding-top: 30px;
+  & li:not(:last-child) {
+    border-bottom: 1px solid #eeeeee;
   }
 `;
 
-const Items = styled.ul`
-    background: #ffffff;
-    border-radius: 10px;
-    /* box-shadow: rgba(205, 207, 208, 0.5) 0px 0px 15px; */
-
-    & li:not(:last-child){
-        border-bottom: 1px solid #dddddd;
-    }
-
+const Item = styled.li`
+  list-style: none;
+  padding: 15px 0px;
+  font-weight: 500;
+  color: #000000;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-const Item = styled.li`
-    list-style: none;
-    padding: 10px 10px;
-    font-weight: 700;
-    color:#777777;
-    font-size: 15px;
-    height: 30px;
-    line-height: 30px;
+const Left = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
+const Right = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const ItemRemoveBtn = styled.button`
-    float: right;
-    border: none;
-    background: none;
-    margin-top: 5px;
+  float: right;
+  border: none;
+  background: none;
+  margin-top: 5px;
+  margin-left: 15px;
 `;
 
 const CountBox = styled.div`
-    float: right;
-    border: none;
-    background: none;
-    margin-right: 20px;
-    height: 30px;
-    line-height: 10px;
-    height: 30px;
+  display: flex;
+  align-items: center;
+
 `;
+
+const ChangeByOneBtn = styled.div`
+  width: 20px;
+  height: 20px;
+  /* font-size: 10px; */
+  font-weight: 500;
+  background: #eeeeee;
+  color: #bcbcbc;
+  border-radius: 100px;
+`;
+
 
 const CountChangeBtn = styled.button`
-    float: right;
-    margin: 5px;
-    background: none;
-    border: none;
-    & img{
-        width: 20px;
-    }
-`;
-const Count = styled.div`
-    float: right;
-    margin: 5px;
-    font-size: 15px;
-    border-radius: 30px;
-    padding: 5px 15px;
-    border: 1px solid #cccccc;
+  background: none;
+  border: none;
+  cursor: pointer;
+  & img {
+    width: 20px;
+  }
 `;
 
+const Count = styled.input`
+  font-size: 15px;
+  border-radius: 30px;
+  padding: 5px 15px;
+  margin: 0px 5px;
+  border: 1px solid #cccccc;
+  width: 60px;
+  text-align: center;
+  /* margin: 0 5px; */
+`;
 
 const Subtitle = styled.div`
   margin-top: 20px;
@@ -131,143 +138,195 @@ const Subtitle = styled.div`
   font-size: 18px;
   font-weight: bold;
   color: #333333;
-  & span{
+  & span {
     display: block;
     float: right;
-    border-radius: 10px;
-    padding: 5px 7px;
-    background: #38d9a9;
-    font-size: 11px;
+    border-radius: 100px;
+    padding: 5px 15px;
+    background: #6093FF;
+    font-size: 10px;
     color: #ffffff;
   }
 `;
 
 const Tag = styled.span`
-  padding: 2px 7px;
   border-radius: 10px;
-  border: 1px solid #38d9a9;
-  color:#38d9a9;
-  font-size: 15px;
+  color: #6093FF;
+  font-size: 16px;
   font-weight: 700;
-  background: #e7fff8;
   margin-right: 10px;
 `;
 
 const CouncilManagement = () => {
-    const [councilData, setCouncilData] = useState({ items: [] }); // 채팅방 리스트 상태
-    const [key, setKey] = useState(0);
-    const [cookies] = useCookies(); // 쿠키 사용하기 위해
-    const navigate = useNavigate(); // 페이지 이동 위해
+  const [councilData, setCouncilData] = useState({ items: [] });
+  const [cookies] = useCookies();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!cookies.token) {
-            navigate("/signin");
-            return;
-        }
-        if (cookies.roles != "MANAGER") {
-            navigate("/");
-            return;  
+  useEffect(() => {
+    if (!cookies.token) {
+      navigate("/signin");
+      return;
+    }
+    if (cookies.roles !== "MANAGER") {
+      navigate("/");
+      return;
+    }
+    const fetchCouncils = async () => {
+      try {
+        const response = await axios.get(
+          process.env.REACT_APP_BACK_URL + "/manage/council",
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.token}`,
+            },
           }
-        const fetchCouncils = async () => {
-            try {
-                // 토큰 쿠키가 없다면 로그인 페이지로 이동
-                
+        );
 
-                // 유저의 채팅방 모두 가져오기 api 요청
-                const response = await axios.get( process.env.REACT_APP_BACK_URL + "/manage/council", {
-                    headers: {
-                        Authorization: `Bearer ${cookies.token}`,
-                    },
-                });
-
-                if (response.data.code != 200) {
-                    navigate("/council/signin");
-                  }
-                setCouncilData(response.data.data);
-
-
-
-            } catch (error) {
-                console.error("오류 발생:", error);
-            }
-        };
-
-        fetchCouncils();
-    }, [cookies.token, navigate, key]); // [] 와 같이 비워도 됨.
-
-
-    const removeItem = async (id) => {
-        try {
-            const response = await axios.delete( process.env.REACT_APP_BACK_URL + "/council-item/" + id, {
-                headers: {
-                    Authorization: `Bearer ${cookies.token}`,
-                },
-            });
-            window.alert("삭제되었습니다.");
-            setKey(key + 1);
-        } catch (error) {
-            console.error("오류 발생:", error);
+        if (response.data.code !== 200) {
+          navigate("/council/signin");
         }
+        setCouncilData(response.data.data);
+      } catch (error) {
+        console.error("오류 발생:", error);
+      }
     };
 
-    const ItemQuantityChange = async (id, quantity) => {
-        try {
-            if (quantity < 0) {
-                return;
-            }
-            const response = await axios.put( process.env.REACT_APP_BACK_URL + "/council-item/" + id,
-                {
-                    quantity
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${cookies.token}`,
-                    },
-                });
-            setKey(key + 1);
-        } catch (error) {
-            console.error("오류 발생:", error);
+    fetchCouncils();
+  }, [cookies.token, navigate]);
+
+  const removeItem = async (id) => {
+    if (window.confirm("이 아이템을 삭제하시겠습니까?")) {
+
+    try {
+      const response = await axios.delete(
+        process.env.REACT_APP_BACK_URL + "/council-item/" + id,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
         }
-    };
-    return (
-        <AdminBox>
-            <Header headerType={"council"} headerText={councilData.name + " 학생회"}></Header>
-            <ContentBox>
-                    <Subtitle>
-                    <Link to={"/council/manage/info"}>
-                        <span>수정하기</span>
-                    </Link>
-                </Subtitle>
-                <InfoBox>
-                    <span>위치</span> {councilData.location}<br />
-                    <span>운영시간</span> {councilData.operatingHours}<br />
-                    <span>이용수칙</span> <div>{councilData.usageGuidelines}</div>
-                </InfoBox>
-                <Items>
-                    {councilData.items.map((item) => (
-                        <Item key={item.itemId}>
-                            <Tag>{item.type === "RENTAL" ? "대여" : "제공"}</Tag>{item.name}
+      );
+      window.alert("삭제되었습니다.");
+      // Fetch updated data or update state to reflect removal
+      setCouncilData((prevState) => ({
+        ...prevState,
+        items: prevState.items.filter((item) => item.itemId !== id),
+      }));
+    } catch (error) {
+      console.error("오류 발생:", error);
+    }
+}
+  };
 
-                            <ItemRemoveBtn onClick={() => removeItem(item.itemId)}>
-                                <img src={"/image/remove.svg"}></img>
-                            </ItemRemoveBtn>
+  const handleQuantityChange = async (id, quantity) => {
+    try {
+      if (quantity < 0) return;
+      const response = await axios.put(
+        process.env.REACT_APP_BACK_URL + "/council-item/" + id,
+        { quantity },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+      // Update state with new quantity
+      setCouncilData((prevState) => ({
+        ...prevState,
+        items: prevState.items.map((item) =>
+          item.itemId === id ? { ...item, quantity } : item
+        ),
+      }));
+    } catch (error) {
+      console.error("오류 발생:", error);
+    }
+  };
 
-                            <CountBox>
-                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity + 1)}><img src={"/image/up.svg"}></img></CountChangeBtn>
-                                <Count>{item.quantity}</Count>
-                                <CountChangeBtn onClick={() => ItemQuantityChange(item.itemId, item.quantity - 1)}><img src={"/image/down.svg"}></img></CountChangeBtn>
-                            </CountBox>
-                        </Item>
-                    ))}
-                </Items>
-                <Link to={"/council/manage/item"}>
-                    <CreateCouncil>
-                        <img src={"/image/write_black.svg"}></img>
-                    </CreateCouncil>
-                </Link>
-            </ContentBox>
-        </AdminBox>
-    );
+  const handleInputChange = (id, event) => {
+    const newValue = Number(event.target.value);
+    handleQuantityChange(id, newValue);
+  };
+
+  const handleIncrement = (id, currentQuantity) => {
+    handleQuantityChange(id, currentQuantity + 1);
+  };
+
+  const handleDecrement = (id, currentQuantity) => {
+    if (currentQuantity > 1) {
+      handleQuantityChange(id, currentQuantity - 1);
+    }
+  };
+
+  return (
+    <AdminBox>
+      <Header headerType={"manage"} headerText={councilData.name+" 관리자 페이지"}></Header>
+      <ContentBox>
+        <Subtitle>
+          <Link to={"/council/manage/info"}>
+            <span>수정하기</span>
+          </Link>
+        </Subtitle>
+        <InfoBox>
+          <div>
+            <span>위치</span>{" "}
+            <div>{councilData.location}</div>
+          </div>
+          <div>
+            <span>운영시간</span>{" "}
+            <div>
+              {councilData.operatingHours}
+              <br />
+            </div>
+          </div>
+          <div>
+            <span>이용수칙</span>{" "}
+            <div>{councilData.usageGuidelines}</div>
+          </div>
+        </InfoBox>
+        <Items>
+          {councilData.items.map((item) => (
+            <Item key={item.itemId}>
+              <Left>
+                <Tag>
+                  {item.type === "RENTAL" ? "대여" : "제공"}
+                </Tag>
+                {item.name}
+              </Left>
+
+              <Right>
+                <CountBox>
+                  <CountChangeBtn onClick={() => handleDecrement(item.itemId, item.quantity)}>
+                  <ChangeByOneBtn>-</ChangeByOneBtn>
+                  </CountChangeBtn>
+                  <Count
+                    type="number"
+                    min="0"
+                    step="1"
+                    value={item.quantity}
+                    onChange={(e) => handleInputChange(item.itemId, e)}
+                  />
+                  <CountChangeBtn onClick={() => handleIncrement(item.itemId, item.quantity)}>
+                  <ChangeByOneBtn>+</ChangeByOneBtn>
+                  </CountChangeBtn>
+                </CountBox>
+                <ItemRemoveBtn onClick={() => removeItem(item.itemId)}>
+                  <img src={"/image/cancle-gray.svg"} alt="Remove" />
+                </ItemRemoveBtn>
+              </Right>
+            </Item>
+          ))}
+        </Items>
+        <CreateCouncilBox>
+        <Link to={"/council/manage/item"}>
+          <CreateCouncil>
+            추가하기
+          </CreateCouncil>
+        </Link>
+        </CreateCouncilBox>
+
+      </ContentBox>
+    </AdminBox>
+  );
 };
 
 export default CouncilManagement;
