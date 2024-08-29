@@ -59,7 +59,7 @@ const HomeTitle = styled.div`
 const HeaderBackBtn = styled.button`
   height: 40px;
   width: 40px;
-  margin-left: 20px;
+  margin-left: 10px;
   background: none;
   border: none;
   cursor: pointer;
