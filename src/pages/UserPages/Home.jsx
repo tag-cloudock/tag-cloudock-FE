@@ -604,7 +604,7 @@ const Home = () => {
 
   <Info>
     <div><span>방법:</span> 아래 학우들의 소리함에 전화번호와 함께 방명록 남기기</div>
-    <div><span>기간:</span> 9/2 ~ 9/7</div>
+    <div><span>기간:</span> 9/1 ~ 9/7</div>
     <div><span>발표:</span> 9/8 오후 1시, 사이트 메인에서 공지</div>
     <div><span>상품:</span> 황금올리브 치킨 1명 · 스타벅스 아메리카노 2명</div>
     <div>* 같은 전화번호로 여러 번 응모해도 추첨 확률은 동일합니다.</div>
