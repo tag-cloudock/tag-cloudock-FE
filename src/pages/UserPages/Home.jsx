@@ -241,7 +241,7 @@ const WriteHearTheVoice = styled.div`
   border-radius: 100px;
   width: 100%;
   background: #6093FF;
-  color: #eeeeee;
+  color: #ffffff;
   text-align: center;
   padding: 7px;
   font-size: 16px;
