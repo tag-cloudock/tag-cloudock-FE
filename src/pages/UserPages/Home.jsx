@@ -651,6 +651,7 @@ const Home = () => {
              type="text"
              name="phone"
              placeholder="010-XXXX-XXXX"
+             value={phoneNumber}
             //  onChange={}
              autoComplete="off"
              onChange={(e) => {

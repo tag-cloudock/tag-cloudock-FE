@@ -287,3 +287,4 @@ const Header = ({ headerType, headerText }) => {
 };
 
 export default Header;
+
