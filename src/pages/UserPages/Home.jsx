@@ -256,7 +256,7 @@ const Voices = styled.div`
   height: 200px;
   overflow: scroll;
   border: 1px solid #eeeeee;
-  padding: 10px 5px;
+  padding: 10px 20px;
   border-radius: 10px;
 `;
 
@@ -264,7 +264,7 @@ const Voice = styled.span`
   padding: 7px 10px;
   font-size: 14px;
   font-weight: 700;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   color:#bcbcbc;
 `;
 
