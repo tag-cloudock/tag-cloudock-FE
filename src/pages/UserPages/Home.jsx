@@ -285,7 +285,7 @@ const ModalBox2 = styled.div`
 
   margin: 0 auto;
   width: 100%;
-  height: 450px;
+  height: 300px;
   max-width: 400px;
   border-radius: 30px 30px 0px 0px;
   background: #ffffff;
@@ -485,10 +485,10 @@ const Home = () => {
         setOpinion('');
         return;
     }
-    if (phoneNumber.length < 1) {
-        window.alert("전화번호 미입력시 이벤트 응모에 포함되지 않습니다.");
-        setPhoneNumber('응모X');
-    }
+    // if (phoneNumber.length < 1) {
+    //     window.alert("전화번호 미입력시 이벤트 응모에 포함되지 않습니다.");
+    //     setPhoneNumber('응모X');
+    // }
     try {
         const signUpResponse = await axios.post( process.env.REACT_APP_BACK_URL + "/voice",
             {
@@ -600,14 +600,13 @@ const Home = () => {
             </WriteHearTheVoice>
       </HearTheVoiceBox>
       <Ad>
-  <Title>리뉴얼 기념 이벤트 · 한마디 남기고 치킨 먹자</Title>
+  <Title>(종료)리뉴얼 기념 이벤트 · 한마디 남기고 치킨 먹자</Title>
 
   <Info>
-    <div><span>방법:</span> 아래 학우들의 소리함에 전화번호와 함께 방명록 남기기</div>
-    <div><span>기간:</span> 9/1 ~ 9/7</div>
-    <div><span>발표:</span> 9/8 오후 1시, 사이트 메인에서 공지</div>
-    <div><span>상품:</span> 황금올리브 치킨 1명 · 스타벅스 아메리카노 2명</div>
-    <div>* 같은 전화번호로 여러 번 응모해도 추첨 확률은 동일합니다.</div>
+    <div><span>치킨</span> 010-XXXX-2899</div>
+    <div><span>커피</span> 010-XXXX-2512</div>
+    <div><span>커피</span> 010-XXXX-6763</div>
+    <div>참여해주신 모든 분들 감사드립니다!</div>
   </Info>
 </Ad>
       <Footer></Footer>
@@ -635,7 +634,7 @@ const Home = () => {
 
             </TextBox>
             </WriteVoiceBox>
-
+{/* 
             <WriteVoiceBox>
             <TextBoxTitle>
               전화번호
@@ -659,7 +658,7 @@ const Home = () => {
           }}>
 
             </TextBox>
-            </WriteVoiceBox>
+            </WriteVoiceBox> */}
             <ModalBtnBox>
               <ModalBtn onClick={() => {
                 setIsDoneModalOn(false);
