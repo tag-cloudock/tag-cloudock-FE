@@ -599,7 +599,7 @@ const Home = () => {
               작성하기
             </WriteHearTheVoice>
       </HearTheVoiceBox>
-      <Ad>
+      {/* <Ad>
   <Title>(종료)리뉴얼 기념 이벤트 · 한마디 남기고 치킨 먹자</Title>
 
   <Info>
@@ -608,7 +608,7 @@ const Home = () => {
     <div><span>커피</span> 010-XXXX-6763</div>
     <div>참여해주신 모든 분들 감사드립니다!</div>
   </Info>
-</Ad>
+</Ad> */}
       <Footer></Footer>
 
       {isDoneModalOn ?
