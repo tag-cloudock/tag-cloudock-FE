@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
+import Home from "./pages/UserPages/Home";
 
 const MainLayout = styled.div`
   height: 100%;
@@ -11,7 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* 유저 */}
-          {/*<Route path="/" Component={Home} />*/}
+          <Route path="/" Component={Home} />
           {/*<Route path="/councils/:id" Component={CouncilDetail} /> */}
           {/* <Route path="/certification" Component={Certification} /> 
           <Route path="/user/:userid" Component={User} />
