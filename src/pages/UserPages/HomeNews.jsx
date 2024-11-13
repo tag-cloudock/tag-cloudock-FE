@@ -3,8 +3,9 @@ import Header from "../../components/layout/Header";
 import styled from "styled-components";
 import Stocks from "./Stocks";
 import Dates from "./Dates";
-import TextCloud from "./TextCloud";
 import StockTitle from "./StockTitle";
+import KeyWord from "./KeyWord";
+import NewsList from "./NewsList";
 
 const HomeContainer = styled.div`
   position: relative;
@@ -16,35 +17,26 @@ const ContentWrapper = styled.div`
   flex: 1;
 `;
 
-// 왜인진 모르겠지만 이걸 해야 가운데로 예쁘게 됨
-const LeftContainer = styled.div`
-  display: flex;
-  width: 200px; /* 좌측 고정 너비 */
-`;
-
 const CenterContainer = styled.div`
   flex: 1;
   display: flex;
-  align-items: center;
+  margin-top: 70px;
   justify-content: center;
 `;
 
-const Home = () => {
+
+const HomeNews = () => {
     return (
         <HomeContainer>
             <Header />
             <ContentWrapper>
-                <LeftContainer>
                     <Stocks />
-                    <Dates />
-                </LeftContainer>
-                <CenterContainer>
-                    <TextCloud />
-                </CenterContainer>
                 <StockTitle/>
+                <KeyWord/>
+                <CenterContainer><NewsList/></CenterContainer>
             </ContentWrapper>
         </HomeContainer>
     );
 };
 
-export default Home;
+export default HomeNews;
