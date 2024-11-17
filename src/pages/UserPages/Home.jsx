@@ -6,6 +6,7 @@ import Dates from "./Dates";
 import TextCloud from "./TextCloud";
 import StockTitle from "./StockTitle";
 
+
 const HomeContainer = styled.div`
   position: relative;
   height: 100%;
@@ -28,6 +29,7 @@ const CenterContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 
 const Home = () => {
     return (

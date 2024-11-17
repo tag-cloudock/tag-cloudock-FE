@@ -4,12 +4,14 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import HomeNews from "./pages/UserPages/HomeNews";
 import App from "./App";
+import LoginPage from "./pages/UserPages/LoginPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // // <React.StrictMode>
   //   <HomeNews />
     <App/>
+  //   <LoginPage/>
   // </React.StrictMode>
 );
 
