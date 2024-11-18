@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Home from "./pages/UserPages/Home";
 import HomeNews from "./pages/UserPages/HomeNews";
 import LoginPage from "./pages/UserPages/LoginPage";
+import SocialKakao from "./pages/UserPages/SocialKakao";
 const MainLayout = styled.div`
   height: 100%;
 `;
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" Component={Home} />
           <Route path="/news" Component={HomeNews} />
             <Route path="/login" Component={LoginPage}/>
+            <Route path="/oauth/kakao" Component={SocialKakao} />
         </Routes>
       </BrowserRouter>
     </MainLayout>

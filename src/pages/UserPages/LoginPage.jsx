@@ -21,10 +21,16 @@ const KakaoLogin = styled.img`
 `;
 
 const LoginPage = () => {
+
     return (
         <LoginContainer>
             <LoginTitle>Cloudock</LoginTitle>
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=4fca9f8288a8698a1ae6eb544616ba9f
+&redirect_uri=http://127.0.0.1:3000/oauth/kakao
+&response_type=code">
             <KakaoLogin src="/image/kakaologin.png" alt="Kakao Login"/>
+            </a>
+
         </LoginContainer>
     );
 };
