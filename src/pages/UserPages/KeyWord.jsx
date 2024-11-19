@@ -15,12 +15,12 @@ const BackImg=styled.img`
   width: 28px;
 `;
 
-const KeyWord = () => {
+const KeyWord = ({ tag }) => {
     return (
         <div>
             <Container>
-                <BackImg src="image/backicon.svg"/>
-                <Title>외국인</Title>
+                {/* <BackImg src="image/backicon2.svg"/> */}
+                <Title>{tag}</Title>
             </Container>
         </div>
     )

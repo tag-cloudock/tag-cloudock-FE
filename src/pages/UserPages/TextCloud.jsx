@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { useState, useEffect } from 'react';
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -9,13 +10,13 @@ const Container = styled.div`
 `;
 
 const BackGround = styled.img`
-  width: 650px;
-  height: 400px;
+  width: 1000px;
+  height: 600px;
 `;
 
 const TextContainer = styled.div`
-  width: 600px;
-  height: 400px;
+  width: 1000px;
+  height: 600px;
   position: relative;
 `;
 
@@ -34,7 +35,7 @@ const Text = styled.a`
   position: absolute;
   font-weight: bold;
   font-size: ${(props) => props.size}px;
-  color: #F44D5E;
+  color: #4D9EFD;
   text-decoration: none;
   padding: 5px;
   border-radius: 3px;
@@ -45,7 +46,7 @@ const Text = styled.a`
   white-space: nowrap;
   animation: ${(props) =>
     moveAnimation(props.xStart, props.yStart, props.xEnd, props.yEnd)} 30s ease forwards;
-
+  cursor: pointer;
   &:hover {
     opacity: 1;
     transform: scale(1.1);
@@ -67,22 +68,37 @@ const Texts = styled.div`
   gap: 10px;
 `;
 
-const TextCloud = () => {
+const TextCloud = ({ stock, setTag, setIsNewsView }) => {
   const [tags, setTags] = useState([]);
   const [positions, setPositions] = useState([]);
 
+  // Function to generate random start and end positions for animation
+  const generateRandomPosition = () => {
+    const xStart = Math.random() * 800 + 50;
+    const yStart = Math.random() * 400 + 100;
+    const xEnd = Math.random() * 800 + 50;
+    const yEnd = Math.random() * 400 + 100;
+    return { xStart, yStart, xEnd, yEnd };
+  };
+
   useEffect(() => {
+    setTags([]);
     const fetchData = async () => {
       try {
-        const response = await axios.get(process.env.REACT_APP_BACK_URL + "/tags/테슬라");
-        setTags(response.data.data.tags);
-        console.log(response.data.data.tags);
+        const response = await axios.get(process.env.REACT_APP_BACK_URL + "/tags/" + stock.name);
+
+        const fetchedTags = response.data.data.tags;
+        setTags(fetchedTags);
+        // Initialize positions with random values for each tag
+        const initialPositions = fetchedTags.map(() => generateRandomPosition());
+        setPositions(initialPositions);
+
       } catch (error) {
         console.error("오류 발생:", error);
       }
     };
     fetchData();
-  }, []);
+  }, [stock]);
 
   // Define the maximum and minimum font size range
   const minFontSize = 20; // Minimum font size (for the smallest value)
@@ -102,31 +118,21 @@ const TextCloud = () => {
     return Math.min(0.5 + (value / maxTagValue) * 0.5, 1); // Max opacity of 1
   };
 
-  // Function to generate random start and end positions for animation
-  const generateRandomPosition = (position) => {
-    const xStart = position ? position.xEnd : Math.random() * 400 + 50;
-    const yStart = position ? position.yEnd : Math.random() * 300 + 50;
-    const xEnd = Math.random() * 400 + 50; // Random end X position
-    const yEnd = Math.random() * 300 + 50; // Random end Y position
-    return { xStart, yStart, xEnd, yEnd };
-  };
-  
+  // Use interval to update positions randomly every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setPositions((prevPositions) =>
-        prevPositions.map((position) => {
-          return generateRandomPosition(position); // Update each tag's position correctly
-        })
+        prevPositions.map(() => generateRandomPosition()) // Update each tag's position randomly
       );
-    }, 31000); // Update positions every 5 seconds
+    }, 31000); // Update positions every 31 seconds
 
     return () => clearInterval(interval); // Cleanup on component unmount
   }, []);
 
-  useEffect(() => {
-    // Initialize the positions when tags are loaded
-    setPositions(tags.map(() => generateRandomPosition())); // Initialize positions with random values
-  }, [tags]);
+  const goToNews = (tag) => {
+      setTag(tag);
+      setIsNewsView(true);
+  };
 
   return (
     <Container>
@@ -139,21 +145,20 @@ const TextCloud = () => {
             const { xStart, yStart, xEnd, yEnd } = positions[index] || generateRandomPosition(); // Default to random position if not yet set
 
             return (
-              <Text
-                key={tag.text}
-                size={fontSize}
-                opacity={opacity}
-                zIndex={index + 1}
-                xStart={xStart}
-                yStart={yStart}
-                xEnd={xEnd}
-                yEnd={yEnd}
-                left={`${xStart}px`}
-                top={`${yStart}px`}
-                href="#"
-              >
-                {tag.text}
-              </Text>
+                <Text
+                  size={fontSize}
+                  opacity={opacity}
+                  zIndex={index + 1}
+                  xStart={xStart}
+                  yStart={yStart}
+                  xEnd={xEnd}
+                  yEnd={yEnd}
+                  left={`${xStart}px`}
+                  top={`${yStart}px`}
+                  onClick={() => goToNews(tag.text)}
+                >
+                  {tag.text}
+                </Text>
             );
           })}
         </Texts>

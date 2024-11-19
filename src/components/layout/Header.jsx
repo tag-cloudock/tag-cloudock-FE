@@ -11,7 +11,8 @@ const HeaderBox = styled.div`
   display: flex;
   align-items: center;
   padding: 0px 20px 0px;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
+  
 `;
 
 const HeaderContent = styled.div`
@@ -48,8 +49,10 @@ const LogoutButton = styled(LoginButton)`
 `;
 
 const SearchBox = styled.div`
-  width: 166px;
+  width: 200px;
   height: 36px;
+ 
+
   background: #f3f3f3;
   border-radius: 10px;
   display: flex;
@@ -58,6 +61,16 @@ const SearchBox = styled.div`
   padding-left: 10px;
   padding-right: 10px;
   color: #bcbcbc;
+
+  & input{
+    font-size: 16px;
+    font-weight: 500;
+    &::placeholder {
+      font-size: 16px;
+    color: #aaaaaa; /* 플레이스홀더 색상 변경 */
+    font-weight: 500; /* 플레이스홀더 두께 변경 (기본 두께보다 얇게 설정) */
+  }
+  }
 `;
 
 const SearchIcon = styled.img``;
@@ -78,7 +91,7 @@ const ResultBox = styled.div`
   position: absolute;
   top: 50px;
   left: 0;
-  padding: 20px;
+  padding: 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -88,14 +101,16 @@ const ResultBox = styled.div`
 const Result = styled.div`
   font-size: 16px;
   font-weight: 500;
+  padding: 5px;
+  border-radius: 10px;
   color: #828282;
   cursor: pointer;
   &:hover {
-    color: #4d9efd;
+    background: #f5f5f5;
   }
 `;
 
-const Header = () => {
+const Header = ({key, setKey}) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [searchQuery, setSearchQuery] = useState(""); // 입력된 검색어
   const [searchResults, setSearchResults] = useState([]); // 검색 결과
@@ -121,7 +136,7 @@ const Header = () => {
           },
         }
       );
-      alert("종목이 추가되었습니다.");
+      setKey(stockCode);
       setSearchQuery("");
       setSearchResults([]);
       console.log("종목이 추가되었습니다: ", response.data);
@@ -177,7 +192,7 @@ const Header = () => {
                 type="text"
                 value={searchQuery}
                 onChange={handleSearchChange}
-                placeholder="검색 (코드 or 종목명)"
+                placeholder="코드 또는 종목명"
                 style={{ border: "none", outline: "none", background: "transparent", width: "120px" }}
               />
               <SearchIcon src="/image/search2.svg" />

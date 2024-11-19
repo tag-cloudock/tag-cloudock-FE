@@ -6,15 +6,17 @@ import axios from "axios"; // axios를 사용하여 API 호출
 
 const StockContainer = styled.div`
   background: #ffffff;
-  width: 203px;
-  height: 88vh;
+  /* width: 203px; */
+  height: 90vh;
+  /* overflow: hidden; */
+  border-top-right-radius: 10px;
 `;
 
 const StockTitlesHeader = styled.div`
   height: 50px;
   display: flex;
   align-items: center; 
-  padding-bottom: 7px;
+  white-space: nowrap;
 `;
 
 const StockTitles = styled.div`
@@ -46,51 +48,43 @@ const Logout = styled.div`
 `;
 
 const StockList = styled.div`
+  background: #f5f5f5;
   width: 182px;
-  height: 52px;
   font-size: 16px;
   font-weight: bold;
   display: flex;
   align-items: center;
-  padding: 0 0 5px 18px;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  color: #828282; /* 기본 색상 */
+
+  cursor: pointer;
+
+  /* isOn이 true일 때 글씨 색을 진하게 변경 */
+  color: ${(props) => (props.isOn ? "#333333" : "#828282")};
+
+  /* 마우스를 올렸을 때 글씨 진해지게 */
+  &:hover {
+    color: #333333; /* 진한 색으로 변경 */
+  }
 `;
 
-const StockImage = styled.img`
-  height: 40px; 
-  width: 40px; 
-  margin-right: 10px; 
-  border-radius: 20px;
+
+const StockListBox = styled.div`
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
 `;
 
-const Stocks = () => {
-  const [cookies] = useCookies(["token"]); // 쿠키에서 'token'을 가져옵니다.
-  const [stocks, setStocks] = useState([]); // 종목 목록 상태
-  const navigate = useNavigate(); // useNavigate 훅을 사용하여 리디렉션
+const Stocks = ( {stocks, setStock, nowStock, setIsNewsView} ) => {
 
-  useEffect(() => {
-    // 로그인 토큰 확인 후 API 호출
-    if (!cookies.token) {
-      navigate("/login"); // 토큰이 없으면 로그인 페이지로 리디렉션
-    } else {
-      fetchStockList();
-    }
-  }, [cookies.token, navigate]); // cookies.token이 변경되면 실행
-
-  // /stock/list API 호출 함수
-  const fetchStockList = async () => {
-    try {
-      const response = await axios.get(
-        process.env.REACT_APP_BACK_URL + "/stock/list", // API 엔드포인트
-        {
-          headers: {
-            Authorization: `Bearer ${cookies.token}`, // 헤더에 토큰 추가
-          },
-        }
-      );
-      setStocks(response.data.data.stocks); // 응답 받은 종목 데이터를 상태에 저장
-    } catch (error) {
-      console.error("API 요청 중 오류 발생: ", error);
-    }
+  const goToCloud = (stock) => {
+    setStock(stock)
+    setIsNewsView(false);
   };
 
   return (
@@ -98,17 +92,19 @@ const Stocks = () => {
       <StockTitlesHeader>
         <StockTitles>관심 종목</StockTitles>
         <StockNums>{stocks.length}</StockNums>
-        <BackIcon src="/image/backicon2.svg" />
       </StockTitlesHeader>
+      <StockListBox>
       {stocks.length > 0 ? (
         stocks.map((stock) => (
-          <StockList key={stock.stockCode}>
+          <StockList onClick={() => goToCloud(stock)} key={stock.stockCode} isOn={nowStock.stockCode == stock.stockCode}>
             {stock.name}
           </StockList>
         ))
       ) : (
         <StockList>등록된 종목이 없습니다.</StockList>
       )}
+      </StockListBox>
+     
     </StockContainer>
   );
 };

@@ -3,21 +3,23 @@ import styled from "styled-components";
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
+  background: #ffffff;
+  height: 1000px;
+  
 `;
 
 const LoginTitle = styled.div`
   color: #6093FF;
   font-weight: 800;
   font-size: 70px;
-  margin-top: 150px;
-  margin-bottom: 110px;
+  margin-top: 300px;
+  margin-bottom: 20px;
 `;
 
 const KakaoLogin = styled.img` 
-  width: 300px;  // Adjust size of the Kakao login button as needed
-  height: auto;
+  width: 350px;  // Adjust size of the Kakao login button as needed
+  /* height: auto; */
 `;
 
 const LoginPage = () => {

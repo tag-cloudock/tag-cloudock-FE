@@ -15,7 +15,6 @@ function App() {
         <Routes>
           {/* 유저 */}
           <Route path="/" Component={Home} />
-          <Route path="/news" Component={HomeNews} />
             <Route path="/login" Component={LoginPage}/>
             <Route path="/oauth/kakao" Component={SocialKakao} />
         </Routes>
