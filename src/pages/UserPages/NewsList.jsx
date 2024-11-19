@@ -14,10 +14,19 @@ const Item = styled.div`
   justify-content: flex-start;
   border-radius: 20px;
   margin-bottom: 10px;
-  & a{
+
+  & a {
     color: #333333;
+    text-decoration: none; /* 기본 링크 스타일 제거 (선 없애기) */
+    font-weight: normal; /* 기본 폰트 두께 설정 */
+    &:hover {
+    text-decoration: underline;
   }
+  }
+
+
 `;
+
 
 const Date = styled.div`
   color: #bcbcbc;
